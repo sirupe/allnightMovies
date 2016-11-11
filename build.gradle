@@ -1,0 +1,44 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+
+
+war {
+	baseName = 'movie'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+	compile('org.projectlombok:lombok')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile "org.springframework.boot:spring-boot-starter-jdbc"
+	compile "org.mybatis:mybatis:3.3.0"
+	compile "org.mybatis:mybatis-spring:1.2.3"
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+}

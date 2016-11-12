@@ -1,4 +1,4 @@
-package com.allnightMovies.service;
+ package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -59,6 +59,10 @@ public class MainService implements Action {
 		mav.addObject("keepLogin", this.params.getKeepLogin());
 		return mav;
 	}
+	
+//	public ModelAndView subMenu() throws Exception {
+//		ModelAndView modelAndView = new ModelAndView();
+//	}
 	
 	// 로그인
 	public ModelAndView login() throws Exception {

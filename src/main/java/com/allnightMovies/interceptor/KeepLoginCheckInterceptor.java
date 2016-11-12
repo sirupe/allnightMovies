@@ -23,7 +23,7 @@ public class KeepLoginCheckInterceptor extends HandlerInterceptorAdapter{
 				if(c.getName().equals("userID")) {
 					System.out.println("쿠키의 이름은 userID 이다.");
 					HttpSession session = request.getSession();
-					session.setAttribute("userID", c.getName());
+					session.setAttribute("userID", c.getValue());
 				}
 			}
 		}

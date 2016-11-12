@@ -65,6 +65,7 @@ public class MainService implements Action {
 		String userID = this.service.login(this.params);
 		HttpSession session = this.params.getSession();
 		session.setAttribute("userID", userID);
+		System.out.println("메인서비스의 login. 로그인유지 체크? " + this.params.getKeepLogin());
 		return this.getTemplate();
 	}
 	

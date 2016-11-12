@@ -3,6 +3,7 @@ package com.allnightMovies.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,12 @@ public class MainController {
 			@PathVariable("service") String service, 
 			@PathVariable("method") String method, 
 			Params params, 
-			HttpSession session) throws Throwable {
-
+			HttpServletRequest request) throws Throwable {
+		HttpSession session = request.getSession();
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 		Action action = (Action) context.getBean(service);
 		params.setMethod(method);
+		params.setRequest(request);
 		params.setSession(session);
 		ModelAndView mav = action.execute(params);
 		return mav;

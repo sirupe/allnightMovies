@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class MainService implements Action {
 		return (ModelAndView) method.invoke(this);
 	}
 	
+	// 기본 템플레이트 출력
 	public ModelAndView getTemplate() throws Exception {
 		List<MainMenu> list = this.service.getMenus();
 		Map<String, MainMenu> mainMenuMap = new MenuList(list).getMainMenuMap();
@@ -54,19 +56,29 @@ public class MainService implements Action {
 		mav.addObject("page", this.params.getPage());
 		mav.addObject("contentCSS", this.params.getContentCSS());
 		mav.addObject("contentjs", this.params.getContentjs());
+		mav.addObject("keepLogin", this.params.getKeepLogin());
 		return mav;
 	}
 	
+	// 로그인
 	public ModelAndView login() throws Exception {
 		String userID = this.service.login(this.params);
 		HttpSession session = this.params.getSession();
 		session.setAttribute("userID", userID);
-		ModelAndView mav = this.getTemplate();
-		return mav;
+		return this.getTemplate();
 	}
 	
+	// 로그아웃
 	public ModelAndView logout() throws Exception {
 		this.params.getSession().invalidate();
+		Cookie[] cookie = this.params.getRequest().getCookies();
+		if(cookie != null) {
+			for(Cookie c : cookie) {
+				if(c.getName().equals("userID")) {
+					c.setMaxAge(0);
+				}
+			}
+		}
 		return this.getTemplate();
 	}
 	

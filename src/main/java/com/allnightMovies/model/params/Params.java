@@ -1,6 +1,7 @@
 package com.allnightMovies.model.params;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Params {
+	private HttpServletRequest request;
 	private HttpSession session;
 	
 	private String main;
@@ -33,5 +35,8 @@ public class Params {
 	private String userEmailID;
 	private String userEmailAddr;
 	private String userBirth;
-// 유저회원가입--------------------------------------------------------------------------	
+// 유저회원가입------------------------------------------------------------------------------
+	
+	private String keepLogin;	// 로그인 유지 체크여부
+	
 }

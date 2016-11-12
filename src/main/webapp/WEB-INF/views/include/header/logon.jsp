@@ -10,7 +10,7 @@
 			<button type="button">
 				내정보
 			</button>
-			<button type="button" onclick="">
+			<button type="button" onclick="logout()">
 				로그아웃
 			</button>
 		</div>

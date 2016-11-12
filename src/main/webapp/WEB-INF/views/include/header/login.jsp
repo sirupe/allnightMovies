@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="header__login">
 	<div class="header__login__keep-login">
-	    <input type="checkbox"/>
+	    <input type="checkbox" name="keepLogin" value="check"/>
 	    <label>로그인 유지</label>
 	</div>
 	<div class="header__login__comp">

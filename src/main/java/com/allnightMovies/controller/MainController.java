@@ -30,8 +30,8 @@ public class MainController {
 	public ModelAndView controller() throws Exception {
 		ModelAndView mav = new ModelAndView("template");
 		List<MainMenu> list = this.service.getMenus();
-		mav.addObject("main", list.get(0));
-		mav.addObject("sub", "currentFilm");
+		mav.addObject("directory", "include");
+		mav.addObject("page", "mainPage");
 		mav.addObject("list", list);
 		return mav;
 	}

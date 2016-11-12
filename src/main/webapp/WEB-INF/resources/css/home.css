@@ -35,12 +35,13 @@ body {
     background-color: #8BACD9;
 }
 
-.header__menu-and-title__menu__menuList {
+/* .header__menu-and-title__menu__menuList {
 	flex-grow: 1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
+	height: 100%;
+} */
 	
 .header__login {
 	flex-basis: 250px;
@@ -172,9 +173,12 @@ body {
     display: flex;
 }
 
-.content__sub-menus__menu {
+/* .content__sub-menus__menu {
+	display: none;
+	position: absolute;
+	moi-width: 160px;
     padding: 5px 30px ;
-}
+} */
 
 .content__body {
 	padding: 10px;
@@ -208,9 +212,9 @@ body {
 }
 
 
-.header__menu-and-title__menu__menuList:hover {
+/* .header__menu-and-title__menu__menuList:hover {
     background-color: #A3CAFF;
-}
+} */
 
 .header__menu-and-title__menu a {
     flex-grow: 1;
@@ -292,4 +296,82 @@ body {
 }
 .header__menu-and-title__title {
 	cursor: pointer;
+}
+
+/* .dropdown {
+	position: relative;
+	display: inline-block;
+	flex-grow: 1;
+	justify-content: center;
+	align-items: center;
+} */
+/* .header__menu-and-title__menu__menuList__submenu {
+	display: block;
+} */
+/* .dropdown:hover .header__menu-and-title__menu__menuList__submenu {
+	display: block;
+}
+.dropdown:hover .content__sub-menus__menu {
+	display: block;
+} */
+/* .content__sub-menus__menu a {
+	display: block;
+} */
+
+.header__menu-and-title__menu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #8BACD9;
+    display: flex;
+}
+.dropdown__main-menu {
+	float: left;
+	flex-grow: 1;
+	text-align: center;
+}
+
+.dropdown__main-menu a {
+	display: inline-block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+.dropdown__main-menu a:hover {
+	background-color: #9BC0F2;
+}
+
+.dropdown__main-menu {
+	display: inline-block;
+}
+.dropdown__sub-menu {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown__sub-menu a{
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+}
+.dropdown__sub-menu a:hover {
+	background-color: #f1f1f1
+}
+.dropdown__main-menu:hover .dropdown__sub-menu {
+	display: block;
+}
+
+.header__menu-and-title__menu a:link {
+    text-decoration: none;
+    color: #262626;
+    display: block;
+    padding: 10px;
 }

@@ -29,9 +29,6 @@
 				<section class="content">
 					<c:choose>
 						<c:when test="${directory == '' || directory == null}">
-							<article>
-								<jsp:include page="./include/section/subMenu.jsp"/>
-							</article>
 							<article class="content__body">
 								<jsp:include page="./${main.mainMenuPage }/${sub }.jsp"/>
 							</article>

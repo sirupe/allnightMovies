@@ -1,22 +1,3 @@
-function titleMenu() {
-	var xhttp;
-	if(window.XMLHttpRequest) {
-		xmlhttp = new XMLHttpRequest();
-	} else {
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhttp.onreadystatechange = function() {
-		// 요청이 정상적으로 처리되었을 때
-		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			console.log('일단..다녀오긴 했나부다.');
-			document.getElementaById('subMenu').innerHTML = this.responseText;
-		}
-	};
-	
-	xhttp.open('GET', '/movie/mainService/getTemplate', true);
-	xhttp.send('main=${main.mainMenuPage }&sub=${subMenu.subMenuPage}');
-}
-
 function locationJoinTerms() {
 	submit(
 		'POST',

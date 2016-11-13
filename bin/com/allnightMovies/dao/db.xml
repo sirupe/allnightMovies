@@ -29,4 +29,15 @@
 		FROM USER_PERSONAL_INFO
 		WHERE USER_ID = #{userID} AND USER_PWD = #{userPWD}
 	</select>
+	
+	<select id="showtimes" resultType="com.allnightMovies.model.data.movieInfo.MovieScreeningDate" parameterType="java.lang.String" >
+		SELECT 
+			MOVIE_THEATHER,
+			SUBSTR(MOVIE_SCREENING_DATE,6,5) AS SCREENING_DATE,
+			SUBSTR(MOVIE_SCREENING_DATE,12,5) AS SCREENING_TIME,
+			MOVIE_TITLE,
+			MOVIE_PRICE
+		FROM MOVIE_SCREENING_PRICE
+		ORDER BY MOVIE_SCREENING_DATE
+	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.allnightMovies.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.movieInfo.MovieScreeningDate;
 import com.allnightMovies.model.params.Params;
 
 
@@ -27,5 +29,9 @@ public class DBService {
 	
 	public String login(Params params) {
 		return dbMapper.login(params);
+	}
+	
+	public ArrayList<MovieScreeningDate> showtimes() {
+		return dbMapper.showtimes();
 	}
 }

@@ -1,6 +1,7 @@
  package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.movieInfo.MovieScreeningDate;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 
@@ -127,7 +130,25 @@ public class MainService implements Action {
 		return mav;
 	}
 
-
-
+//
+	public ModelAndView showtimes() throws Exception {
+		this.params.setContentCSS("reservation/timeTable");
+		this.params.setContentjs("reservation/timeTable");
+		System.out.println("상영시간표 - 메인 서비스");
+		
+		ArrayList<MovieScreeningDate> list = service.showtimes();
+		
+		
+		System.out.println(list.get(0).getMovie_title() +"영화제목");
+		System.out.println(list.get(0).getScreening_Date() + "영화날짜");
+		System.out.println(list.get(0).getScreening_Time() + "영화시간");
+		System.out.println(list.get(0).getMovie_theather() + "영화관");
+		System.out.println(list + "?");
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("movie_list", list);
+		
+		return mav;
+	}
+	
 	
 }

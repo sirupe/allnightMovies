@@ -1,36 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("#flip").click(function(){
-        $("#panel").slideToggle("slow");
-    });
-});
-</script>
 
-<style>
-#panel, #flip {
-    padding: 5px;
-    text-align: center;
-    background-color: #e5eecc;
-    border: solid 1px #c3c3c3;
-}
+<h2>상영시간표</h2>
 
-#panel {
-    padding: 50px;
-    display: none;
-}
-</style>
-</head>
-<body>
- 
-<div id="flip"></div>
-<div id="panel">Hello world!</div>
 
-</body>
-</html>
+<c:forEach var="list" items="${movie_list }">
+
+	<div class = "container__movie__screening__date">
+		<button class="movie_screening_date" type="button" onclick="movie_date()" >${list.getMovie_date() }</button>
+			<div class="movie_screening_panel">
+					<div class="movie__info">
+						<span class="movie__title">
+							${list.Movie_title() }
+						</span>
+						<span class="movie__room1">
+							3:30(1관)
+						</span>
+						<span class="movie__room2">
+							시간(관)
+						</span>
+						<span class="movie__room3">
+							시간(관)
+						</span>
+					</div>
+			</div>
+	</div>
+</c:forEach>
+		
+
+

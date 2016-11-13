@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class KeepLoginCheckInterceptor extends HandlerInterceptorAdapter{
@@ -15,7 +16,6 @@ public class KeepLoginCheckInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		System.out.println("로그인 유지 상태를 체크하는 인터셉터");
 		Cookie[] cookies = request.getCookies();
-		System.out.println(cookies.length + "개의 쿠키가 있다.");
 		if(cookies != null) {
 			for(Cookie c : cookies) {
 				System.out.println("현재 쿠키의 이름은 : " + c.getName());

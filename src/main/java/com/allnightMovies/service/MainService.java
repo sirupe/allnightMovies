@@ -37,6 +37,8 @@ public class MainService implements Action {
 		Method method = this.getClass().getDeclaredMethod(params.getMethod());
 		
 		this.params = params;
+		System.out.println(">>메인서비스 execute : " + this.params);
+		
 								// invoke(Object this, Object...args)
 		return (ModelAndView) method.invoke(this);
 	}
@@ -57,6 +59,8 @@ public class MainService implements Action {
 		mav.addObject("contentCSS", this.params.getContentCSS());
 		mav.addObject("contentjs", this.params.getContentjs());
 		mav.addObject("keepLogin", this.params.getKeepLogin());
+		System.out.println("경로" + this.params.getDirectory());
+		System.out.println("메소드" + this.params.getMethod());
 		return mav;
 	}
 	
@@ -121,13 +125,29 @@ public class MainService implements Action {
 		userInfoDTO.setUserName(this.params.getUserName());
 		userInfoDTO.setUserPWD(this.params.getUserPWD());
 		userInfoDTO.setUsrBirth(this.params.getUserBirth());
-
-		
 		
 		return mav;
 	}
-
-
-
 	
+	//TODO shin
+	public ModelAndView searchID() throws Exception {
+		ModelAndView mav = new ModelAndView("searchPwd/searchPwdResult");
+		//text에 사용자가 적은 ID
+		//있으면 result == 1, 없으면 result == 0
+		
+		
+		String userID = this.params.getUserID();
+		System.out.println("콤마뭐야" + userID);
+		
+		Integer result = this.service.searchPWD(userID);
+		
+		System.out.println(result);
+		mav.addObject("result", result);
+		
+		System.out.println(">>메인서비스 serchID : " + this.params);
+		
+		
+		return this.getTemplate();
+	}
+
 }

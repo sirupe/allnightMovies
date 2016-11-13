@@ -28,4 +28,9 @@ public class DBService {
 	public String login(Params params) {
 		return dbMapper.login(params);
 	}
+	
+	public Integer searchPWD(String userID)  {
+		return dbMapper.searchPWD(userID);
+	}
+
 }

@@ -7,7 +7,7 @@
 			환영합니다. ${userID } 님.
 		</div>
 		<div class="header__logon__top__buttons">
-			<button type="button">
+			<button type="button" onclick="">
 				내정보
 			</button>
 			<button type="button" onclick="logout()">

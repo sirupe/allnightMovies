@@ -29,4 +29,8 @@
 		FROM USER_PERSONAL_INFO
 		WHERE USER_ID = #{userID} AND USER_PWD = #{userPWD}
 	</select>
+	
+	<select id="searchPWD" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
+		SELECT COUNT (*) FROM USER_PERSONAL_INFO WHERE USER_ID = #{userID}
+	</select>
 </mapper>

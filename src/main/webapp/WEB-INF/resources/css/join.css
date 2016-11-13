@@ -1,10 +1,10 @@
 @CHARSET "UTF-8";
 .background {
 	width: 1100px;
-	background-color: #FFFFF2;
+	background-color: #F1F0F2;
 }
 .join-form {
-	margin: 30px auto;
+	margin: auto;
 	width: 50%;
 	padding: 10px;
 	background-color: #FEFEFE;
@@ -38,7 +38,7 @@
 	background: rgba(252,252,252,1);
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
 	text-shadow: 1px 1px 0 rgba(255,255,255,0.66);
-	margin-bottom: 20px;
+	margin-top: 20px;
 }
 .join-form__info2 [type="email"] {
 	width: 254px;
@@ -52,7 +52,7 @@
 	background: rgba(252,252,252,1);
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
 	text-shadow: 1px 1px 0 rgba(255,255,255,0.66);
-	margin-bottom: 20px;
+	margin-top: 20px;
 }
 .join-form__info2__gender {
 	padding: 6px 10px;
@@ -64,7 +64,7 @@
 	background: rgba(252,252,252,1);
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
 	text-shadow: 1px 1px 0 rgba(255,255,255,0.66);
-	margin-bottom: 20px;
+	margin-top: 20px;
 }
 .join-form__join-btn {
 	text-align: center;
@@ -81,7 +81,7 @@
 	background: #308FBF;
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
 	text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
-	margin-bottom: 20px;
+	margin-top: 20px;
 }
 .join-button {
 	box-sizing: content-box;
@@ -94,6 +94,7 @@
 	background: #444444;
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
 	text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
+	margin-top: 20px;
 	margin-bottom: 20px;
 }
 .join-button:hover {
@@ -107,4 +108,9 @@
 }
 .join-form__info2__confirm-button:active {
     background-color: #297AA3;
+}
+.join__resultText {
+	color: #f1859b;
+    font-size: smaller;
+    font-weight: bold;
 }

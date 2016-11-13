@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class DataBaseConfig {
 	@Bean
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+
+		
 		final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
 		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();

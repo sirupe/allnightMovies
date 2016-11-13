@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
-import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 
 // @Service 어노테이션
@@ -40,7 +38,8 @@ public class MainService implements Action {
 								// invoke(Object this, Object...args)
 		return (ModelAndView) method.invoke(this);
 	}
-	
+
+/*****기본 template의 작동*****/
 	// 기본 템플레이트 출력
 	public ModelAndView getTemplate() throws Exception {
 		List<MainMenu> list = this.service.getMenus();
@@ -59,11 +58,7 @@ public class MainService implements Action {
 		mav.addObject("keepLogin", this.params.getKeepLogin());
 		return mav;
 	}
-	
-//	public ModelAndView subMenu() throws Exception {
-//		ModelAndView modelAndView = new ModelAndView();
-//	}
-	
+
 	// 로그인
 	public ModelAndView login() throws Exception {
 		String userID = this.service.login(this.params);
@@ -76,19 +71,11 @@ public class MainService implements Action {
 	// 로그아웃
 	public ModelAndView logout() throws Exception {
 		this.params.getSession().invalidate();
-		Cookie[] cookie = this.params.getRequest().getCookies();
-		if(cookie != null) {
-			for(Cookie c : cookie) {
-				if(c.getName().equals("userID")) {
-					c.setMaxAge(0);
-				}
-			}
-		}
 		return this.getTemplate();
 	}
-	
+/*****join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
-		ModelAndView mav = new ModelAndView("loginForm/join/idcheck");
+		ModelAndView mav = new ModelAndView("join/resultText");
 
 		String resultMessage = "사용이 가능한 아이디입니다.";
 		String id = this.params.getUserID();
@@ -98,32 +85,30 @@ public class MainService implements Action {
 			resultMessage = "사용할 수 없는 아이디입니다.";
 			bool = false;
 		}
-		
 		if(this.service.idCheck(id) > 0) {
 			resultMessage = "이미 사용중인 아이디입니다.";
 			bool = false;
 		}
-
-		mav.addObject("resultMessage", resultMessage);
+		
+		mav.addObject("result", resultMessage);
 		mav.addObject("resultBool", bool);
-		mav.addObject("inputID", id);
 		return mav;
 	}
 
-	
-	public ModelAndView joinService() throws Exception {
-		ModelAndView mav = new ModelAndView();
-//TODO
-		UserPersonalInfoDTO userInfoDTO = new UserPersonalInfoDTO();
-		userInfoDTO.setUserEmail(this.params.getUserEmailID() + "@" + this.params.getUserEmailAddr());
-		userInfoDTO.setUserGender(this.params.getUserGender());
-		userInfoDTO.setUserID(this.params.getUserID());
-		userInfoDTO.setUserName(this.params.getUserName());
-		userInfoDTO.setUserPWD(this.params.getUserPWD());
-		userInfoDTO.setUsrBirth(this.params.getUserBirth());
+	public ModelAndView pwdCheck() {
+		ModelAndView mav = new ModelAndView("join/resultText");
+		
+		String resultMessage = "사용 가능합니다.";
+		boolean resultBool = true;
+		String userPWD = this.params.getUserPWD();
+		if(!RegexCheck.passwdRegexCheck(userPWD)) {
+			resultMessage = "영문,숫자,특수문자 포함 8~15자 이내로 입력해주세요.";
+			resultBool = false;
+		}
 
 		
-		
+		mav.addObject("result", resultMessage);
+		mav.addObject("resultBool", resultBool);
 		return mav;
 	}
 

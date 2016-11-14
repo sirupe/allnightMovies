@@ -10,6 +10,7 @@
 			<div class="div__searchPwd__content">
 				<label class="label__searchPwd-CheckConfirm">새로운 비밀번호를 입력해 주세요</label>
 				<input id="newPWD" class="input__searchPwd-CheckConfirm" type="password" name="newPwd" onkeyup="" placeholder="새 비밀번호">
+				<div>필수입력사항</div>
 				<input id="newPWD-check" class="input__searchPwd-CheckConfirm" type="password" name="newPwdCheck" placeholder="비밀번호 재확인">
 				<button class="button__searchPwd__confirm" type="button" onclick="checkRePWD()">확인</button>
 			</div>

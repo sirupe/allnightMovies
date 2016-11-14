@@ -15,6 +15,8 @@ import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.params.Params;
+import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -95,6 +97,7 @@ public class MainService implements Action {
 		mav.addObject("resultBool", bool);
 		return mav;
 	}
+
 	public ModelAndView pwdCheck() {
 		ModelAndView mav = new ModelAndView("join/resultText");
 		
@@ -111,7 +114,7 @@ public class MainService implements Action {
 		mav.addObject("resultBool", resultBool);
 		return mav;
 	}
-	
+
 	//PWD찾기 shin
 	public ModelAndView searchID() throws Exception {
 		ModelAndView mav = this.getTemplate();

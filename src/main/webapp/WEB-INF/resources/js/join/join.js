@@ -31,13 +31,14 @@ function pwdCheck() {
 	$(document).ready(function() {
 		var pwd = $('#user-pwd').val();
 		var resultMsg = '<label style="color:green;">사용 가능합니다.</label>';
-		if(pwd == "") {
-			resultBool = false;
-			resultMsg = '필수 입력사항입니다.';
-		}
+		
 		if(!pwdRegexCheck(pwd)) {
 			resultMsg = '<label style="color:red;">영문,숫자,특수문자 포함 8~15자 이내로 입력해주세요.</label>';
 			resultBool = false;
+		}
+		if(pwd == "") {
+			resultBool = false;
+			resultMsg = '필수 입력사항입니다.';
 		}
 		$('#pwdResult').html(resultMsg);
 		
@@ -95,10 +96,10 @@ function rePwdCheck() {
 }
 
 function userNameCheck() {
-	var regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|\*]+$/;
-	var resultMsg = '<label style="color:green;">사용이 가능합니다.</label>';
-	var resultBool = true;
 	$(document).ready(function() {
+		var regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|\*]+$/;
+		var resultMsg = '<label style="color:green;">사용이 가능합니다.</label>';
+		var resultBool = true;
 		var name = $('#user-name').val();
 		if(!regex.test(name)) {
 			resultMsg = '<label style="color: red;">한글과 영문만 입력이 가능합니다.</label>';
@@ -109,8 +110,8 @@ function userNameCheck() {
 			resultBool = false;
 		}
 		$('#user-name-result').html(resultMsg);
+		return resultBool;
 	});
-	return resultBool;
 }
 
 function userBirthdayCheck() {
@@ -134,39 +135,65 @@ function userBirthdayCheck() {
 
 function userEmailCheck() {
 	
-	var regex = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
-	var resultMsg = '<label style="color:green;">사용이 가능합니다.</label>';
-	var resultBool = true;
-	$(document).ready(function() {
-		
+		var resultMsg = '<label style="color:green;">사용이 가능합니다.</label>';
+		var resultBool = true;
 		var email = $('#user-email').val();
-		if(!regex.test(email)) {
+		console.log(!emailRegexCheck(email));
+		if(!emailRegexCheck(email)) {
 			console.log('input check');
 			resultMsg = '<label style="color: red;">이메일 형식에 맞지 않습니다.</label>';
 			resultBool = false;
 		}
+		console.log(email=='');
 		if(email == '') {
 			resultMsg = '필수 입력사항입니다.';
 			resultBool = false;
 		}
 		$('#user-email-check').html(resultMsg);
-	});
-	return resultBool;
+		return resultBool;
 }
 
 function sendEmail() {
 	$(document).ready(function() {
 		var email = $('#user-email').val();
+		
 		if(userEmailCheck()) {
 			$.post(
 				'/movie/mainService/sendEmail',
 				{'userEmail' : email},
+				
+				
 				function(result) {
-					alert('이메일이 발송되었습니다.');
+					$('#user-email-check').html(result);
+					console.log(result);
 				}
+				
+				
 			);
+			
+			
+		}
+	});
+}
+
+function confirmNumCheck() {
+	$(document).ready(function() {
+		var confirmNum = $('#confirm-number').val();
+		var confirmResult = $('#confirm-result');
+		if(confirmNum.length == 6) {
+			$.post(
+				'/movie/mainService/confirmCheck',
+				{'confirmNum': confirmNum},
+				function(result) {
+					$('#confirm-result').html(result);
+					if($('#resultBool')) {
+						$($('#confirm-number')).attr({'readonly':'readonly'});
+						$($('#confirm-number')).css("background-color", "#dcdcdc");
+					}
+				}
+			)
 		} else {
-			alert('이메일을 정확하게 입력해주세요.');
+			confirmResult.html('<label style="color:red;">인증번호는 숫자 6자리 입니다.</label>');
 		}
 	});
 }
@@ -180,3 +207,4 @@ function sendAjaxRequestFocusout(elements, location, data, func) {
 		$.post(location, data, func);
 	});
 }
+

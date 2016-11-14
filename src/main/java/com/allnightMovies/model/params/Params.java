@@ -36,6 +36,7 @@ public class Params {
 	private String userGender;
 	private String userEmail;
 	private String userBirth;
+	private Integer confirmNum;
 // 유저회원가입------------------------------------------------------------------------------
 	
 	private String keepLogin;	// 로그인 유지 체크여부

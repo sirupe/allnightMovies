@@ -31,7 +31,7 @@ public class RegexCheck {
 	}
 	
 	// 비밀번호 형식체크. 형식에 맞으면 true, 형식에 맞지 않으면 false return
-	// (영문자 + 숫자 + 특수문자 1개 이상씩 포함. 6~16 자 이내의 글자수만 true.
+	// (영문자 + 숫자 + 특수문자 1개 이상씩 포함. 8~15 자 이내의 글자수만 true.
 	public static boolean passwdRegexCheck(String passwd) {
 		String regex = "^(?=.*[~`!@%$%\\^&*()-])(?=.*[0-9])(?=.*[a-zA-Z]).{8,15}$";
 		return Pattern.matches(regex, passwd);

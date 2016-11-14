@@ -16,6 +16,7 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -101,13 +102,37 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("join/resultText");
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
+		System.out.println("인증번호 : " + randNum);
+		
+		
+		
+//		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
+		
+		
+		
 		String result = "인증번호가 발송되었습니다.";
 		boolean bool = true;
-		mav.addObject("certificationNum", randNum);
+		this.params.getSession().setAttribute("certificationNum", randNum);
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
 		return mav;
 	}
 
+	public ModelAndView confirmCheck() throws Exception {
+		ModelAndView mav = new ModelAndView("join/resultText");
+		String result = "입력하신 인증번호와 일치합니다.";
+		int saveConfirmNum = this.params.getConfirmNum();
+		int inputConfirmNum = (int) this.params.getSession().getAttribute("certificationNum");
+		boolean bool = true;
+		if(!(saveConfirmNum == inputConfirmNum)) {
+			result = "인증번호가 일치하지 않습니다. 다시 확인해주세요.";
+			System.out.println(">>메인서비스 confirmCheck() : 저장된 번호-"+ this.params.getSession().getAttribute("certificationNum"));
+			System.out.println(">>메인서비스 confirmCheck() : 입력된 번호-" + this.params.getConfirmNum());
+			bool = false;
+		}
+		mav.addObject("result", result);
+		mav.addObject("resultBool", bool);
+		return mav;
+	}
 	
 }

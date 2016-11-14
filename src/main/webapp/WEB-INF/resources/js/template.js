@@ -31,6 +31,7 @@ function locationSearchPwd() {
 		'searchPwd',			 //디렉토리
 		'searchPwd',			 //페이지
 		'searchPwd/searchPwd',   //자바스크립트
+		
 		'searchPwd/searchPwd'	 //CSS
 	);
 }
@@ -50,4 +51,19 @@ function submit(method, action, directory, page, js, css) {
 		$('#hidden-css').val(css);
 		$('form').submit();
 	});
+}
+
+function pwdRegexCheck(pwd) {
+	var regex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	return regex.test(pwd);
+}
+
+function idRegexCheck(id) {
+   var regex = /^[a-zA-Z0-9]*$/;
+   return regex.test(id);
+}
+
+function emailRegexCheck(email) {
+   var regex = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+   return regex.test(email);
 }

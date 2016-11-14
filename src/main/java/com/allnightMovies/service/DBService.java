@@ -29,8 +29,12 @@ public class DBService {
 		return dbMapper.login(params);
 	}
 	
-	public Integer searchPWD(String userID)  {
-		return dbMapper.searchPWD(userID);
+	public Integer searchPWD(String userInfo)  {
+		return dbMapper.searchPWD(userInfo);
+	}
+	
+	public String searchEmail(String userInfo) {
+		return dbMapper.searchEmail(userInfo);
 	}
 
 }

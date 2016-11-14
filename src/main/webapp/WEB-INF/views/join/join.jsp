@@ -11,7 +11,7 @@
 			<input id="user-id" type="text" placeholder="아이디 입력" onkeyup="idCheck()" autocomplete="off" name="userID"/>
 			<div id="idResult" class="join__resultText">필수 입력사항입니다.</div>
 			
-			<input id="userPWD" type="password" placeholder="비밀번호 입력" name="userPWD" onkeyup="pwdCheck()"/>
+			<input id="user-pwd" type="password" placeholder="비밀번호 입력" name="userPWD" onkeyup="pwdCheck()"/>
 			<div id="pwdResult" class="join__resultText">필수 입력사항입니다.</div>
 			
 			<input id="userRePWD" name="userRePWD" type="password" placeholder="비밀번호 재입력" onkeyup="rePwdCheck()"/>
@@ -32,11 +32,11 @@
 			<div id="user-birthday-check" class="join__resultText">필수 입력사항입니다.</div>
 			
 			<div>
-				<input type="email" placeholder="이메일 입력" name="userEmail"/>
-				<button class="join-form__info2__confirm-button">
+				<input type="email" placeholder="이메일 입력" name="userEmail" onkeyup="userEmailCheck()" id="user-email"/>
+				<button class="join-form__info2__confirm-button" id="email-send-btn" onclick="sendEmail()" type="button">
 					인증번호 발송
 				</button>
-				<div id="userName" class="join__resultText">필수 입력사항입니다.</div>
+				<div id="user-email-check" class="join__resultText">필수 입력사항입니다.</div>
 			</div>    
 			<input type="number" placeholder="인증번호 입력"/>
 		</div>

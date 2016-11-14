@@ -2,7 +2,7 @@
 /* searchPwd.jsp*/
 .div__searchPwd {
 	width: 700px;
-    height: 230px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     line-height: 40px;
@@ -36,7 +36,14 @@
 }
 
 .input__searchPwd__id {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+    height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font: normal 14px/0 Tahoma, Geneva, sans-serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
     height: 20px;
     font-size: 13px;
 }
@@ -48,13 +55,13 @@
 .button__searchPwd__confirm,
 .button__searchPwd__sendMail,
 .button__searchPwd__next {
-	height: 17px;
+	
 	display: inline-block;
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
 	cursor: pointer;
-	padding: 10px 20px;
+	padding: 6px 20px;
 	border: 1px solid #018dc4;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
@@ -103,7 +110,7 @@
 /*searchPwdConfirm*/
 .div__searchPwd-confirm {
 	width: 700px;
-    height: 240px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     line-height: 40px;
@@ -114,7 +121,14 @@
 }
 
 .input__searchPwd-confirm__confirmNum {
-	margin-bottom: 20px;
+	margin-bottom: 15px;
+    height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font: normal 14px/0 Tahoma, Geneva, sans-serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
     height: 20px;
     font-size: 13px;
 }
@@ -126,20 +140,9 @@
 }
 
 /*searchPwdCheckConfirm*/
-.div__searchPwd-CheckConfirm__true {
+.div__searchPwd-CheckConfirm {
 	width: 700px;
     height: 300px;
-    display: flex;
-    flex-direction: column;
-    line-height: 40px;
-    padding: 20px;
-    background-color: #F0F0F0;
-    margin-top: 20px;
-    margin-bottom: 40px;
-}
-.div__searchPwd-CheckConfirm__false {
-	width: 700px;
-    height: 150px;
     display: flex;
     flex-direction: column;
     line-height: 40px;
@@ -168,7 +171,15 @@
 }
 
 .input__searchPwd-CheckConfirm {
-	margin-bottom: 20px;
+	margin-bottom: 5px;
+    margin-top: 5px;
+    height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font: normal 14px/0 Tahoma, Geneva, sans-serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
     height: 20px;
     font-size: 13px;
 }
@@ -206,4 +217,21 @@
     font-size: 12px;
     line-height: 1.5em;
     background-color: white;
+}
+
+/*정합성검사 글씨*/
+.div-search-userid-result {
+	color: #8BACD9;
+	margin-bottom: 10px;
+}
+.div-newPWD {
+	color: #8BACD9;
+}
+.div-newPWDCheck {
+	color: #8BACD9;
+	margin-bottom: 10px;
+}
+.div-searchpwd-confirm-num {
+	color: #8BACD9;
+	margin-bottom: 10px;
 }

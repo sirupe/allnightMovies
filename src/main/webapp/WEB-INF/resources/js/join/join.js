@@ -11,7 +11,7 @@ function idCheck() {
 		} else {
 			$.post(
 				'/movie/mainService/idCheck',
-				{'userID' : userID},
+				{'userIDCheck' : userID},
 				function(result) {
 					$('#idResult').html(result);
 				}
@@ -29,14 +29,13 @@ function idCheck() {
 function pwdCheck() {
 	var resultBool = true;
 	$(document).ready(function() {
-		var regex =  /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-		var pwd = $('#userPWD').val();
+		var pwd = $('#user-pwd').val();
 		var resultMsg = '<label style="color:green;">사용 가능합니다.</label>';
 		if(pwd == "") {
 			resultBool = false;
 			resultMsg = '필수 입력사항입니다.';
 		}
-		if(!regex.test(pwd)) {
+		if(!pwdRegexCheck(pwd)) {
 			resultMsg = '<label style="color:red;">영문,숫자,특수문자 포함 8~15자 이내로 입력해주세요.</label>';
 			resultBool = false;
 		}
@@ -125,12 +124,51 @@ function userBirthdayCheck() {
 		}
 		var birthDay = new Date($('#user-birthday').val());
 		if(birthDay > new Date()) {
-			resultMsg = '<label style="color: red;">입력하신 날짜가 정확하지 않습니다.</label>'
+			resultMsg = '<label style="color: red;">입력하신 날짜가 정확하지 않습니다.</label>';
 			resultBool = false;
 		}
 		$('#user-birthday-check').html(resultMsg);
 	});
 	return resultBool;
+}
+
+function userEmailCheck() {
+	
+	var regex = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+	var resultMsg = '<label style="color:green;">사용이 가능합니다.</label>';
+	var resultBool = true;
+	$(document).ready(function() {
+		
+		var email = $('#user-email').val();
+		if(!regex.test(email)) {
+			console.log('input check');
+			resultMsg = '<label style="color: red;">이메일 형식에 맞지 않습니다.</label>';
+			resultBool = false;
+		}
+		if(email == '') {
+			resultMsg = '필수 입력사항입니다.';
+			resultBool = false;
+		}
+		$('#user-email-check').html(resultMsg);
+	});
+	return resultBool;
+}
+
+function sendEmail() {
+	$(document).ready(function() {
+		var email = $('#user-email').val();
+		if(userEmailCheck()) {
+			$.post(
+				'/movie/mainService/sendEmail',
+				{'userEmail' : email},
+				function(result) {
+					alert('이메일이 발송되었습니다.');
+				}
+			);
+		} else {
+			alert('이메일을 정확하게 입력해주세요.');
+		}
+	});
 }
 
 function sendAjaxRequestFocusout(elements, location, data, func) {

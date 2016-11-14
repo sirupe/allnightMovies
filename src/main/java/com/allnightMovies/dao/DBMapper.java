@@ -12,5 +12,6 @@ public interface DBMapper {
 	public Integer idCheck(String id);
 	public String login(Params params);
 	public String Integer(Params params);
-	public Integer searchPWD(String userID);
+	public Integer searchPWD(String userInfo);
+	public String searchEmail(String userInfo);
 }

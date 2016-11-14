@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="div__searchPwd-result">
+	<input id="userEmail" type="hidden" value="${userEmail }" name="userEmail">
 	<c:choose>
 		<c:when test="${result == 1}">
 			<div class="div__searchPwd__title">
@@ -9,7 +10,7 @@
 			</div>
 			<div class="div__searchPwd__content">
 				<label class="label__searchPwd__id">회원가입시 입력하신 이메일로 인증번호가 발송됩니다.</label>
-				<button class="button__searchPwd__sendMail" type="button" onclick="sendConfirmNum()">인증번호발송</button>
+				<button class="button__searchPwd__sendMail" type="button" onclick="sendConfirmEmail()">인증번호발송</button>
 			</div>
 		</c:when>
 		<c:otherwise>

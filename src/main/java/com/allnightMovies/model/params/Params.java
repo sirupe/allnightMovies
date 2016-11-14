@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Getter
 @Setter
 @ToString
@@ -31,6 +30,7 @@ public class Params {
 	private String userName;
 	private String userID;
 	private String userPWD;
+	private String userRePWD;
 	private String userGender;
 	private String userEmailID;
 	private String userEmailAddr;
@@ -38,5 +38,12 @@ public class Params {
 // 유저회원가입------------------------------------------------------------------------------
 	
 	private String keepLogin;	// 로그인 유지 체크여부
+
+	
+// 패스워드 찾기---------------------------------------------------------------------------
+	private String searchUserID;
+	private String searchPWDConfirmNum;
+	
+	
 	
 }

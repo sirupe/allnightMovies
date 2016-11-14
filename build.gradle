@@ -41,4 +41,5 @@ dependencies {
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+	compile group: 'org.json', name: 'json', version: '20090211'
 }

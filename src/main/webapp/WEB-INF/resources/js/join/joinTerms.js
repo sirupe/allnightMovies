@@ -5,7 +5,7 @@ function agree() {
 			'/movie/mainService/getTemplate',
 			'join',
 			'join',
-			'',
+			'join/join',
 			'join'
 		);
 	} else {

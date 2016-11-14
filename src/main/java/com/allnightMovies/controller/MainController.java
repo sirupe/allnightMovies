@@ -41,7 +41,7 @@ public class MainController {
 			@PathVariable("method") String method, 
 			Params params, 
 			HttpServletRequest request) throws Throwable {
-		System.out.println(">>메인컨트롤러 : " + params);
+
 		HttpSession session = request.getSession();
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 		Action action = (Action) context.getBean(service);

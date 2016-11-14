@@ -13,7 +13,6 @@ public class MenuList {
 	private Map<String, MainMenu> mainMenuMap;
 	
 	public MenuList(List<MainMenu> mainMenu) throws Exception {
-		System.out.println("mainMenu : " + mainMenu);
 		this.mainMenuMap = new LinkedHashMap<String, MainMenu>();
 		
 		for(int i = 0, size = mainMenu.size(); i < size; i++) {

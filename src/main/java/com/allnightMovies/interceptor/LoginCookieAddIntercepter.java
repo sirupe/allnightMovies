@@ -14,7 +14,7 @@ public class LoginCookieAddIntercepter extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		System.out.println("로그인시 쿠키를 추가해줄지 말지 결정하는 인터셉터");
+		System.out.println("LoginCookieAddIntercepter");
 		String keepLogin = (String)modelAndView.getModelMap().get("keepLogin");
 		if(keepLogin != null) {
 			if(keepLogin.equals("check")) {
@@ -22,7 +22,7 @@ public class LoginCookieAddIntercepter extends HandlerInterceptorAdapter {
 				cookie.setCookieMaxAge(30*24*60*60);
 				cookie.setCookieName("userID");
 				cookie.addCookie(response, (String) request.getSession().getAttribute("userID"));
-				System.out.println("쿠키가 추가되었다.");
+				System.out.println("LoginCookieAddIntercepter : 쿠키가 추가되었다.");
 			}
 		}
 	}

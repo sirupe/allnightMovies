@@ -1,7 +1,7 @@
 function idCheck() {
 	var re = true;
 	$(document).ready(function() {
-		var idTextField = $('#userID');
+		var idTextField = $('#user-id');
 		var userID = idTextField.val();
 		var idLeng = userID.length;
 		var resultMsg;
@@ -42,20 +42,20 @@ function pwdCheck() {
 		}
 		$('#pwdResult').html(resultMsg);
 		
-		$('#userPWD').focusout(function(e) {
-			// 이벤트버블링을 막는다. (이벤트 버블링? - 자식 엘리먼트의 이벤트가 부모 엘리먼트에게 퍼지며 이벤트가 여러차례 실행되는 것.)
-			e.stopPropagation();
-			// 동일한 DOM에서 이벤트가 여러차례 실행되는 것을 막는다.
-			e.stopImmediatePropagation();
-			$.post(
-				'/movie/mainService/pwdCheck',
-				{'userPWD' : pwd,'userRePWD' : rePWD},
-				function(result) {
-					$('#rePwdResult').html(result);
-				}
-			);
-			console.log('포커스에서 벗어났다.');
-		});
+//		$('#userPWD').focusout(function(e) {
+//			// 이벤트버블링을 막는다. (이벤트 버블링? - 자식 엘리먼트의 이벤트가 부모 엘리먼트에게 퍼지며 이벤트가 여러차례 실행되는 것.)
+//			e.stopPropagation();
+//			// 동일한 DOM에서 이벤트가 여러차례 실행되는 것을 막는다.
+//			e.stopImmediatePropagation();
+//			$.post(
+//				'/movie/mainService/pwdCheck',
+//				{'userPWD' : pwd,'userRePWD' : rePWD},
+//				function(result) {
+//					$('#rePwdResult').html(result);
+//				}
+//			);
+//			console.log('포커스에서 벗어났다.');
+//		});
 		rePwdCheck();
 	});
 	return resultBool;
@@ -71,28 +71,65 @@ function rePwdCheck() {
 			resultBool = false;
 			resultMsg = '필수 입력사항입니다.';
 		}
-		if($('#userPWD').val() != rePWD) {
+		if($('#user-pwd').val() != rePWD) {
 			resultBool = false;
 			resultMsg = '<label style="color: red;">입력하신 비밀번호와 일치하지 않습니다.</label>';
 		}
 		$('#rePwdResult').html(resultMsg);
 	});
+//	$('#userRePWD').focusout(function(e) {
+//		// 이벤트버블링을 막는다. (이벤트 버블링? - 자식 엘리먼트의 이벤트가 부모 엘리먼트에게 퍼지며 이벤트가 여러차례 실행되는 것.)
+//		e.stopPropagation();
+//		// 동일한 DOM에서 이벤트가 여러차례 실행되는 것을 막는다.
+//		e.stopImmediatePropagation();
+//		$.post(
+//			'/movie/mainService/pwdCheck',
+//			{'userPWD' : pwd,'userRePWD' : rePWD},
+//			function(result) {
+//				$('#rePwdResult').html(result);
+//			}
+//		);
+//		console.log('포커스에서 벗어났다.');
+//	});
 	
-	$('#userRePWD').focusout(function(e) {
-		// 이벤트버블링을 막는다. (이벤트 버블링? - 자식 엘리먼트의 이벤트가 부모 엘리먼트에게 퍼지며 이벤트가 여러차례 실행되는 것.)
-		e.stopPropagation();
-		// 동일한 DOM에서 이벤트가 여러차례 실행되는 것을 막는다.
-		e.stopImmediatePropagation();
-		$.post(
-			'/movie/mainService/pwdCheck',
-			{'userPWD' : pwd,'userRePWD' : rePWD},
-			function(result) {
-				$('#rePwdResult').html(result);
-			}
-		);
-		console.log('포커스에서 벗어났다.');
+	return resultBool;
+}
+
+function userNameCheck() {
+	var regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|\*]+$/;
+	var resultMsg = '<label style="color:green;">사용이 가능합니다.</label>';
+	var resultBool = true;
+	$(document).ready(function() {
+		var name = $('#user-name').val();
+		if(!regex.test(name)) {
+			resultMsg = '<label style="color: red;">한글과 영문만 입력이 가능합니다.</label>';
+			resultBool = false;
+		}
+		if(name == '') {
+			resultMsg = '필수 입력사항입니다.';
+			resultBool = false;
+		}
+		$('#user-name-result').html(resultMsg);
 	});
-	
+	return resultBool;
+}
+
+function userBirthdayCheck() {
+	var resultMsg = '<label style="color:green;">사용이 가능합니다.</label>';
+	var resultBool = true;
+	$(document).ready(function() {
+		var birth = $('#user-birthday').val();
+		if(birth == '') {
+			resultMsg = '필수 입력사항입니다.'
+			resultBool = false;
+		}
+		var birthDay = new Date($('#user-birthday').val());
+		if(birthDay > new Date()) {
+			resultMsg = '<label style="color: red;">입력하신 날짜가 정확하지 않습니다.</label>'
+			resultBool = false;
+		}
+		$('#user-birthday-check').html(resultMsg);
+	});
 	return resultBool;
 }
 
@@ -102,12 +139,6 @@ function sendAjaxRequestFocusout(elements, location, data, func) {
 		e.stopPropagation();
 		// 동일한 DOM에서 이벤트가 여러차례 실행되는 것을 막는다.
 		e.stopImmediatePropagation();
-		$.post(
-			'/movie/mainService/pwdCheck',
-			{'userPWD' : pwd,'userRePWD' : rePWD},
-			function(result) {
-				$('#rePwdResult').html(result);
-			}
-		);
+		$.post(location, data, func);
 	});
 }

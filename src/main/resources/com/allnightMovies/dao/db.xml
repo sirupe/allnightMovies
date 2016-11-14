@@ -14,14 +14,16 @@
 	</resultMap>
 	
 	<select id="getMenus" resultMap="MainMenu">
-		SELECT 
-		    MAIN_MENU_NAME mainMenuName, 
-		    MAIN_MENU_PAGE mainMenuPage,
-		    SUB_MENU_NAME subMenuName,
-		    SUB_MENU_PAGE subMenuPage 
-		FROM SUB_MENU  
-		JOIN MAIN_MENU  
-		ON(SUB_MAIN_MENU = MAIN_MENU_PAGE)
+		<![CDATA[
+			SELECT 
+			    MAIN_MENU_NAME mainMenuName, 
+			    MAIN_MENU_PAGE mainMenuPage,
+			    SUB_MENU_NAME subMenuName,
+			    SUB_MENU_PAGE subMenuPage 
+			FROM SUB_MENU  
+			JOIN MAIN_MENU  
+			ON(SUB_MAIN_MENU = MAIN_MENU_PAGE)
+		]]>
 	</select>
 	
 	<select id="login" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">

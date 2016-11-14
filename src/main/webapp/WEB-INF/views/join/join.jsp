@@ -8,7 +8,7 @@
 		</div>
 		<div class="join-form__info1">
 			
-			<input id="userID" type="text" placeholder="아이디 입력" onkeyup="idCheck()" autocomplete="off" name="userID"/>
+			<input id="user-id" type="text" placeholder="아이디 입력" onkeyup="idCheck()" autocomplete="off" name="userID"/>
 			<div id="idResult" class="join__resultText">필수 입력사항입니다.</div>
 			
 			<input id="userPWD" type="password" placeholder="비밀번호 입력" name="userPWD" onkeyup="pwdCheck()"/>
@@ -20,16 +20,16 @@
 		</div>
 		<div class="join-form__info2">
 			
-			<input type="text" placeholder="이름 입력" name="userName"/>
-			<div id="userName" class="join__resultText">필수 입력사항입니다.</div>
+			<input id="user-name" type="text" placeholder="이름 입력" name="userName" onkeyup="userNameCheck()"/>
+			<div id="user-name-result" class="join__resultText">필수 입력사항입니다.</div>
 			
 			<select class="join-form__info2__gender" name="userGender">
 				<option>남자</option>
 				<option>여자</option>
 			</select>
 			
-			<input type="date" name="userBirth"/>
-			<div id="userName" class="join__resultText">필수 입력사항입니다.</div>
+			<input type="date" name="userBirth" id="user-birthday" onkeyup="userBirthdayCheck()"/>
+			<div id="user-birthday-check" class="join__resultText">필수 입력사항입니다.</div>
 			
 			<div>
 				<input type="email" placeholder="이메일 입력" name="userEmail"/>

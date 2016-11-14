@@ -13,9 +13,7 @@ public class KeepLoginCheckInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("KeepLoginCheckInterceptor");
 		Cookie[] cookies = request.getCookies();
-		System.out.println("KeepLoginCheckInterceptor" + cookies.length + "개의 쿠키가 있다.");
 		if(cookies != null) {
 			for(Cookie c : cookies) {
 				System.out.println("KeepLoginCheckInterceptor : 현재 쿠키의 이름은 : " + c.getName());

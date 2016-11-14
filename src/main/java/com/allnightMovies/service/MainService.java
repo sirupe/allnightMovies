@@ -14,6 +14,8 @@ import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.params.Params;
+import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -92,23 +94,6 @@ public class MainService implements Action {
 		
 		mav.addObject("result", resultMessage);
 		mav.addObject("resultBool", bool);
-		return mav;
-	}
-
-	public ModelAndView pwdCheck() {
-		ModelAndView mav = new ModelAndView("join/resultText");
-		
-		String resultMessage = "사용 가능합니다.";
-		boolean resultBool = true;
-		String userPWD = this.params.getUserPWD();
-		if(!RegexCheck.passwdRegexCheck(userPWD)) {
-			resultMessage = "영문,숫자,특수문자 포함 8~15자 이내로 입력해주세요.";
-			resultBool = false;
-		}
-
-		
-		mav.addObject("result", resultMessage);
-		mav.addObject("resultBool", resultBool);
 		return mav;
 	}
 

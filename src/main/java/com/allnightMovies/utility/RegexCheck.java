@@ -1,4 +1,4 @@
-package com.allnightMovies.service;
+package com.allnightMovies.utility;
 
 import java.util.regex.Pattern;
 

@@ -3,6 +3,7 @@
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +16,6 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
-import com.allnightMovies.utility.SendEmail;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -80,7 +80,7 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("join/resultText");
 
 		String resultMessage = "사용이 가능한 아이디입니다.";
-		String id = this.params.getUserID();
+		String id = this.params.getUserIDCheck();
 		boolean bool = true;
 		
 		if(!RegexCheck.idRegexCheck(id)) {
@@ -97,7 +97,17 @@ public class MainService implements Action {
 		return mav;
 	}
 
-
+	public ModelAndView sendEmail() throws Exception {
+		ModelAndView mav = new ModelAndView("join/resultText");
+		Random rand = new Random();
+		int randNum = rand.nextInt(900000) + 100000;
+		String result = "인증번호가 발송되었습니다.";
+		boolean bool = true;
+		mav.addObject("certificationNum", randNum);
+		mav.addObject("result", result);
+		mav.addObject("resultBool", bool);
+		return mav;
+	}
 
 	
 }

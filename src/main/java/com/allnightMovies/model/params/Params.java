@@ -30,11 +30,11 @@ public class Params {
 	
 	private String userName;
 	private String userID;
+	private String userIDCheck;
 	private String userPWD;
 	private String userRePWD;
 	private String userGender;
-	private String userEmailID;
-	private String userEmailAddr;
+	private String userEmail;
 	private String userBirth;
 // 유저회원가입------------------------------------------------------------------------------
 	

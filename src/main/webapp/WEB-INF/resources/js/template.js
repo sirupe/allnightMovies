@@ -39,3 +39,8 @@ function submit(method, action, directory, page, js, css) {
 		$('form').submit();
 	});
 }
+
+function pwdRegexCheck(pwd) {
+	var regex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	return regex.test(pwd);
+}

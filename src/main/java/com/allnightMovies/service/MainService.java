@@ -95,6 +95,7 @@ public class MainService implements Action {
 		
 		mav.addObject("result", resultMessage);
 		mav.addObject("resultBool", bool);
+		mav.addObject("resultBoolID", "id-bool");
 		return mav;
 	}
 
@@ -102,36 +103,51 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("join/resultText");
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
-		System.out.println("인증번호 : " + randNum);
-		
-		
-		
+		System.out.println(">>메인서비스 sendEmail() 인증번호 : " + randNum);
 //		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
-		
-		
-		
 		String result = "인증번호가 발송되었습니다.";
 		boolean bool = true;
 		this.params.getSession().setAttribute("certificationNum", randNum);
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
+		mav.addObject("resultBoolID", "email-bool");
 		return mav;
 	}
 
 	public ModelAndView confirmCheck() throws Exception {
 		ModelAndView mav = new ModelAndView("join/resultText");
 		String result = "입력하신 인증번호와 일치합니다.";
-		int saveConfirmNum = this.params.getConfirmNum();
-		int inputConfirmNum = (int) this.params.getSession().getAttribute("certificationNum");
+		int inputConfirmNum = this.params.getConfirmNum();
+		HttpSession session = this.params.getSession();
+		int saveConfirmNum = (int) session.getAttribute("certificationNum");
 		boolean bool = true;
-		if(!(saveConfirmNum == inputConfirmNum)) {
+		if(saveConfirmNum == 0) {
+			result = "인증번호를 받아주세요.";
+			bool = false;
+		} else if(!(saveConfirmNum == inputConfirmNum)) {
 			result = "인증번호가 일치하지 않습니다. 다시 확인해주세요.";
 			System.out.println(">>메인서비스 confirmCheck() : 저장된 번호-"+ this.params.getSession().getAttribute("certificationNum"));
 			System.out.println(">>메인서비스 confirmCheck() : 입력된 번호-" + this.params.getConfirmNum());
 			bool = false;
+		} else {
+			session.setAttribute("certificationNum", 0);
 		}
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
+		mav.addObject("resultBoolID", "confirm-bool");
+		
+		return mav;
+	}
+	
+	public ModelAndView joinSuccessCheck() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(this.params.getUserName());
+		System.out.println(this.params.getUserIDCheck());
+		System.out.println(this.params.getUserPWD());
+		System.out.println(this.params.getUserRePWD());
+		System.out.println(this.params.getUserGender());
+		System.out.println(this.params.getUserEmail());
+		System.out.println(this.params.getUserBirth());
 		return mav;
 	}
 	

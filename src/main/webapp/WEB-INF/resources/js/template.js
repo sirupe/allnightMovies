@@ -56,3 +56,18 @@ function submit(method, action, directory, page, js, css) {
 		$('form').submit();
 	});
 }
+
+function pwdRegexCheck(pwd) {
+	var regex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	return regex.test(pwd);
+}
+
+function idRegexCheck(id) {
+	var regex = /^[a-zA-Z]{1}[a-zA-Z0-9_]$/;
+	return regex.test(id);
+}
+
+function emailRegexCheck(email) {
+	var regex = /^[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+	return regex.test(email);
+}

@@ -1,4 +1,4 @@
-package com.allnightMovies.service;
+package com.allnightMovies.utility;
 
 import java.util.regex.Pattern;
 
@@ -22,7 +22,7 @@ public class RegexCheck {
 	// 아이디 형식체크. 형식에 맞으면 true, 형식에 맞지 않으면 false return
 	// (영문자+숫자 조합의 형식. 영문자만으로는 가능하나 숫자만으로는 불가능하다.)
 	public static boolean idRegexCheck(String id) {
-		String regex = "^[a-zA-Z0-9]*$";
+		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]$";
 		boolean result = Pattern.matches(regex, id);
 		if(Pattern.matches("^[0-9]*$", id)) {
 			result = false;
@@ -31,7 +31,7 @@ public class RegexCheck {
 	}
 	
 	// 비밀번호 형식체크. 형식에 맞으면 true, 형식에 맞지 않으면 false return
-	// (영문자 + 숫자 + 특수문자 1개 이상씩 포함. 6~16 자 이내의 글자수만 true.
+	// (영문자 + 숫자 + 특수문자 1개 이상씩 포함. 8~15 자 이내의 글자수만 true.
 	public static boolean passwdRegexCheck(String passwd) {
 		String regex = "^(?=.*[~`!@%$%\\^&*()-])(?=.*[0-9])(?=.*[a-zA-Z]).{8,15}$";
 		return Pattern.matches(regex, passwd);
@@ -40,7 +40,7 @@ public class RegexCheck {
 	// 이름 형식체크. 형식에 맞으면 true, 형식에 맞지 않으면 false return
 	// (한글만 true 반환.)
 	public static boolean nameRegecCheck(String name) {
-		String regex = "^([ㄱ-ㅎ가-힣])*$";
+		String regex = "^([ㄱ-ㅎ가-힣a-zA-Z])*$";
 		return Pattern.matches(regex, name);
 	}
 }

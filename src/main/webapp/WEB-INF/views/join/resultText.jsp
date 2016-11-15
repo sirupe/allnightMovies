@@ -13,4 +13,4 @@
 		</label>
 	</c:otherwise>
 </c:choose>
-<input type="hidden" value="${resultBool }" id="idCheckResult"/>
+<input type="hidden" value="${resultBool }" id="${resultBoolID }"/>

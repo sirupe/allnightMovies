@@ -13,6 +13,7 @@
 		<collection property="subMenuList" resultMap="SubMenu"/>
 	</resultMap>
 	
+
 	<!--상영시간 list-->
 	
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
@@ -30,17 +31,18 @@
 		<collection property="movieShowTitleDTO" resultMap="MovieShowTitleDTO"/>	
 	</resultMap>
 	
-	
-	
-	<select id="getMenus" resultMap="MainMenu" >
-		SELECT 
-		    MAIN_MENU_NAME mainMenuName, 
-		    MAIN_MENU_PAGE mainMenuPage,
-		    SUB_MENU_NAME subMenuName,
-		    SUB_MENU_PAGE subMenuPage 
-		FROM SUB_MENU  
-		JOIN MAIN_MENU  
-		ON(SUB_MAIN_MENU = MAIN_MENU_PAGE)
+
+	<select id="getMenus" resultMap="MainMenu">
+		<![CDATA[
+			SELECT 
+			    MAIN_MENU_NAME mainMenuName, 
+			    MAIN_MENU_PAGE mainMenuPage,
+			    SUB_MENU_NAME subMenuName,
+			    SUB_MENU_PAGE subMenuPage 
+			FROM SUB_MENU  
+			JOIN MAIN_MENU  
+			ON(SUB_MAIN_MENU = MAIN_MENU_PAGE)
+		]]>
 	</select>
 	
 	<select id="login" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
@@ -50,6 +52,7 @@
 	</select>
 	
 	<!--상영시간표  -> 상영날짜 LIST-->
+	
 	<select id="showtimes" resultMap="MovieShowTimesMap" parameterType="java.util.Map"> 
 		SELECT 
 		    DISTINCT SUBSTR(MOVIE_SCREENING_DATE,6,5) AS SCREENING_DATE,

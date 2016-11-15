@@ -33,7 +33,8 @@ public class DBService {
 	public String login(Params params) {
 		return dbMapper.login(params);
 	}
-
+	
+	//상영시간표정보
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		System.out.println("DBService");
 		return dbMapper.showtimes();

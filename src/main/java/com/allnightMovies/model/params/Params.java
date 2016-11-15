@@ -28,14 +28,15 @@ public class Params {
 	
 //메뉴경로가 아닌 페이지 호출시---------------------------------------------------------------	
 	
-	private String userName;
-	private String userID;
-	private String userPWD;
-	private String userRePWD;
-	private String userGender;
-	private String userEmailID;
-	private String userEmailAddr;
-	private String userBirth;
+	private String  userName	;
+	private String  userID		;
+	private String  userIDCheck	;
+	private String  userPWD		;
+	private String  userRePWD	;
+	private String  userGender	;
+	private String  userEmail	;
+	private String  userBirth	;
+	private Integer confirmNum	;
 // 유저회원가입------------------------------------------------------------------------------
 	
 	private String keepLogin;	// 로그인 유지 체크여부

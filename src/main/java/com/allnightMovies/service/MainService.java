@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +23,8 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.params.Params;
+import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 
 // @Service 어노테이션
@@ -87,7 +90,7 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("join/resultText");
 
 		String resultMessage = "사용이 가능한 아이디입니다.";
-		String id = this.params.getUserID();
+		String id = this.params.getUserIDCheck();
 		boolean bool = true;
 		
 		if(!RegexCheck.idRegexCheck(id)) {
@@ -101,34 +104,57 @@ public class MainService implements Action {
 		
 		mav.addObject("result", resultMessage);
 		mav.addObject("resultBool", bool);
+		mav.addObject("resultBoolID", "id-bool");
 		return mav;
 	}
 
-	public ModelAndView pwdCheck() {
+	public ModelAndView sendEmail() throws Exception {
 		ModelAndView mav = new ModelAndView("join/resultText");
-		
-		String resultMessage = "사용 가능합니다.";
-		boolean resultBool = true;
-		String userPWD = this.params.getUserPWD();
-		if(!RegexCheck.passwdRegexCheck(userPWD)) {
-			resultMessage = "영문,숫자,특수문자 포함 8~15자 이내로 입력해주세요.";
-			resultBool = false;
-		}
-
-		
-		mav.addObject("result", resultMessage);
-		mav.addObject("resultBool", resultBool);
+		Random rand = new Random();
+		int randNum = rand.nextInt(900000) + 100000;
+		System.out.println(">>메인서비스 sendEmail() 인증번호 : " + randNum);
+//		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
+		String result = "인증번호가 발송되었습니다.";
+		boolean bool = true;
+		this.params.getSession().setAttribute("certificationNum", randNum);
+		mav.addObject("result", result);
+		mav.addObject("resultBool", bool);
+		mav.addObject("resultBoolID", "email-bool");
 		return mav;
 	}
+
+	public ModelAndView confirmCheck() throws Exception {
+		ModelAndView mav = new ModelAndView("join/resultText");
+		String result = "입력하신 인증번호와 일치합니다.";
+		int inputConfirmNum = this.params.getConfirmNum();
+		HttpSession session = this.params.getSession();
+		int saveConfirmNum = (int) session.getAttribute("certificationNum");
+		boolean bool = true;
+		if(saveConfirmNum == 0) {
+			result = "인증번호를 받아주세요.";
+			bool = false;
+		} else if(!(saveConfirmNum == inputConfirmNum)) {
+			result = "인증번호가 일치하지 않습니다. 다시 확인해주세요.";
+			System.out.println(">>메인서비스 confirmCheck() : 저장된 번호-"+ this.params.getSession().getAttribute("certificationNum"));
+			System.out.println(">>메인서비스 confirmCheck() : 입력된 번호-" + this.params.getConfirmNum());
+			bool = false;
+		} else {
+			session.setAttribute("certificationNum", 0);
+		}
+		mav.addObject("result", result);
+		mav.addObject("resultBool", bool);
+		mav.addObject("resultBoolID", "confirm-bool");
+		
+		return mav;
+	}
+
 	
-	//아이디 찾기
+	/*****상영시간표List*****/
 	
-	//상영표 map
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
 		List<MovieShowTimesMap> movieTimeTable = this.service.showtimes();
-		
 		
 		for(int i = 0, size=movieTimeTable.size(); i < size; i++) {
 			MovieShowTimesMap showTime = movieTimeTable.get(i);
@@ -143,11 +169,8 @@ public class MainService implements Action {
 				}
 			}
 		}
-		
 		ModelAndView mav = this.getTemplate();
 		mav.addObject("movieTimeTable", movieTimeTable);
 		return mav;
-		
 	}
-		
 }

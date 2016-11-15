@@ -15,6 +15,7 @@ body {
     display: flex;
     flex-basis: 210px;
 }		
+
 .header__menu-and-title {
     display: flex;
     flex-direction: column;

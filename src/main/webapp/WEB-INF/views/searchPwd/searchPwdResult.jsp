@@ -2,7 +2,6 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="div__searchPwd-result">
-	<input id="userEmail" type="hidden" value="${userEmail }" name="userEmail">
 	<c:choose>
 		<c:when test="${result == 1}">
 			<div class="div__searchPwd__title">

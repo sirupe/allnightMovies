@@ -1,10 +1,13 @@
  package com.allnightMovies.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -102,9 +106,34 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("join/resultText");
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
+		System.out.println("인증번호 : " + randNum);
+		
+		
+		
+//		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
+		
+		
+		
 		String result = "인증번호가 발송되었습니다.";
 		boolean bool = true;
-		mav.addObject("certificationNum", randNum);
+		this.params.getSession().setAttribute("certificationNum", randNum);
+		mav.addObject("result", result);
+		mav.addObject("resultBool", bool);
+		return mav;
+	}
+
+	public ModelAndView confirmCheck() throws Exception {
+		ModelAndView mav = new ModelAndView("join/resultText");
+		String result = "입력하신 인증번호와 일치합니다.";
+		int saveConfirmNum = this.params.getConfirmNum();
+		int inputConfirmNum = (int) this.params.getSession().getAttribute("certificationNum");
+		boolean bool = true;
+		if(!(saveConfirmNum == inputConfirmNum)) {
+			result = "인증번호가 일치하지 않습니다. 다시 확인해주세요.";
+			System.out.println(">>메인서비스 confirmCheck() : 저장된 번호-"+ this.params.getSession().getAttribute("certificationNum"));
+			System.out.println(">>메인서비스 confirmCheck() : 입력된 번호-" + this.params.getConfirmNum());
+			bool = false;
+		}
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
 		return mav;
@@ -112,39 +141,55 @@ public class MainService implements Action {
 	
 /**********PWD찾기 이메일 인증번호 발송 shin************/
 	//PWD찾기 shin
-	public ModelAndView searchIDAndEmail() throws Exception {
+	public ModelAndView searchID() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		String userInfo = this.params.getSearchUserID();
-		//있으면 result == 1, 없으면 result == 0
-		Integer result = this.service.searchPWD(userInfo);
-		String userEmail = this.service.searchEmail(userInfo);
-		
-		System.out.println("Mainservice  >>  "+ userInfo + "  의 이메일   >>" + userEmail);
-		
-		mav.addObject("userEmail", userEmail);
+		String searchUserID = this.params.getSearchUserID();
+		Integer result = this.service.searchPWD(searchUserID);    //사용자 아이디 있으면  1, 없으면  0
+		//브라우저당 1개
+		HttpSession session =  this.params.getSession();
+		session.setAttribute("userId", searchUserID);
 		mav.addObject("result", result);
-		
 		return mav;
 	}
 	
-	public ModelAndView sendConfirmNum() throws Exception {
+	public ModelAndView searchPwdsendEmail() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
+		//HttpSession 로 가져가서 String 으로 꺼내와
+		HttpSession session = this.params.getSession();
+		String searchUserID = (String)session.getAttribute("userId");
+		String userEmail = this.service.searchEmail(searchUserID);
 		
-		System.out.println("randNum : " + randNum);
-		boolean bool = true;
+//		System.out.println("mainservice 인증번호> : " + randNum);
+//		System.out.println("mainservice 사용자아이디 : " + searchUserID);
+//		System.out.println("mainservice 사용자이메일 : " + userEmail);
 		
-		mav.addObject("certificationNum", randNum);
-		mav.addObject("resultBool", bool);
+		HttpSession sessionRand = this.params.getSession();
+		sessionRand.setAttribute("randNum", randNum); 
+		
+		//new SendEmail 하면 인증번호와, userEmail을 들고 전송함
+		new SendEmail(String.valueOf(randNum), userEmail);
 		
 		return mav;
 	}
 	
+	//TODO 수정중
 	public ModelAndView checkConfirmNum() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		String confirmNum = this.params.getSearchPWDConfirmNum();
-		mav.addObject("confirmNum", confirmNum);
+		HttpSession session = this.params.getSession();
+		Integer randNum = (Integer) session.getAttribute("randNum");
+
+		boolean ischeckConfirmNum = false;
+//		userCertificationNum
+//		if(randNum == userCertificationNum) {
+//			ischeckConfirmNum = true;
+//		} else {
+//			ischeckConfirmNum = false;
+//		}
+		//js에서 userCertificationNum 가지고와서 값 비교 해서 boolean으로 보내기
+		
+		mav.addObject("ischeckConfirmNum", ischeckConfirmNum);
 		return mav;
 	}
 	

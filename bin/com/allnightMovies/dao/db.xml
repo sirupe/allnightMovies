@@ -33,15 +33,15 @@
 	</select>
 	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
-		SELECT COUNT (*) FROM USER_PERSONAL_INFO WHERE USER_ID = #{userInfo}
+		SELECT COUNT (*) FROM USER_PERSONAL_INFO WHERE USER_ID = #{searchUserID}
 	</select>	
 		
 	<select id="idCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(USER_ID) FROM USER_PERSONAL_INFO WHERE USER_ID=#{id}
 	</select>
 	
-	<select id="searchEmail" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
-		SELECT USER_EMAIL FROM USER_PERSONAL_INFO WHERE USER_ID = #{userInfo}
+	<select id="searchEmail" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT USER_EMAIL FROM USER_PERSONAL_INFO WHERE USER_ID = #{searchUserID}
 	</select>
 	
 </mapper>

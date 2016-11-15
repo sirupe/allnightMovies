@@ -4,7 +4,7 @@ function searchPwdResult() {
 	if(useridResult) {
 		submit(
 			'POST',
-			'/movie/mainService/searchIDAndEmail',//main service 에 searchID메소드
+			'/movie/mainService/searchID',//main service 에 searchID메소드
 			'searchPwd',				  //디렉토리
 			'searchPwdResult',			  //페이지
 			'searchPwd/searchPwd',   	  //자바스크립트
@@ -16,7 +16,7 @@ function searchPwdResult() {
 function sendConfirmEmail() {
 	submit(
 		'POST',
-		'/movie/mainService/sendConfirmNum', 
+		'/movie/mainService/searchPwdsendEmail', 
 		'searchPwd',				    //디렉토리                           
 		'searchPwdConfirm',			    //페이지                            
 		'searchPwd/searchPwd',   	    //자바스크립트                         
@@ -25,29 +25,18 @@ function sendConfirmEmail() {
 }
 
 function checkConfirmNum() {
-	
 	var userCertificationNum = $('#searchpwd-confirm-num').val();
-	var certificationNum = $('#certification-num').val();
-	var resultBool = $('#result-bool').val()
-	
-	var resultMsg = '<label style="color:green;"> </label>';
-	
-	if(userCertificationNum == '') {
-		resultMsg = '<label style="color:red;">인증번호를 입력하세요</label>';
-	} else if(userCertificationNum != certificationNum){
-		resultMsg = '<label style="color:red;">인증번호를 다시 확인하세요</label>';
-	} else {
-		submit(
-			'POST',
-			'/movie/mainService/checkConfirmNum', 
-			'searchPwd',				//디렉토리                           
-			'searchPwdChangePwd',		//페이지                            
-			'searchPwd/searchPwd',   	//자바스크립트                         
-			'searchPwd/searchPwd'	 	//CSS                            
-		);
-	}
-	$('#searchpwd-confirm-num-text').html(resultMsg);
+	submit(
+		'POST',
+		'/movie/mainService/checkConfirmNum'                         
+	);
+	return userCertificationNum;
 }
+
+
+
+
+
 
 function checkRePWD() {
 	if($('#newPWD').val() != $('#newPWD-check').val()) {
@@ -71,8 +60,6 @@ function validationCheck() {
 	var repwd = validationRePWD();
 	
 	if(pwd && repwd) {
-		console.log('비번정합성' + pwd)
-		console.log('비번정합성re' + repwd)
 		submit(
 			'POST',
 			'/movie/mainService/updatePWD',

@@ -2,9 +2,6 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="div__searchPwd-confirm">
-	<input id="certification-num" type="hidden" value="${certificationNum }" name="certificationNum">
-	<input id="result-bool" type="hidden" value="${resultBool }" name="resultBool">
-
 	<div class="div__searchPwd__title"> 
 		비밀번호 찾기
 	</div>

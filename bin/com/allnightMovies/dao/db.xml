@@ -13,7 +13,26 @@
 		<collection property="subMenuList" resultMap="SubMenu"/>
 	</resultMap>
 	
-	<select id="getMenus" resultMap="MainMenu">
+	<!--상영시간 list-->
+	
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
+		<result column="screening_time"	property="screening_time"/>
+		<result column="movie_theather" property="movie_theather"/>
+	</resultMap>
+	
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO" id="MovieShowTitleDTO">
+		<result column="movie_title"	property="movie_title"/>
+		<collection property="movieshowTableDTO" resultMap="MovieshowTableDTO"/>
+	</resultMap>
+
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieShowTimesMap" id="MovieShowTimesMap">
+		<result column="screening_Date" property="screening_Date" />
+		<collection property="movieShowTitleDTO" resultMap="MovieShowTitleDTO"/>	
+	</resultMap>
+	
+	
+	
+	<select id="getMenus" resultMap="MainMenu" >
 		SELECT 
 		    MAIN_MENU_NAME mainMenuName, 
 		    MAIN_MENU_PAGE mainMenuPage,
@@ -30,14 +49,21 @@
 		WHERE USER_ID = #{userID} AND USER_PWD = #{userPWD}
 	</select>
 	
-	<select id="showtimes" resultType="com.allnightMovies.model.data.movieInfo.MovieScreeningDate" parameterType="java.lang.String" >
+	<!--상영시간표  -> 상영날짜 LIST-->
+	<select id="showtimes" resultMap="MovieShowTimesMap" parameterType="java.util.Map"> 
 		SELECT 
-			MOVIE_THEATHER,
-			SUBSTR(MOVIE_SCREENING_DATE,6,5) AS SCREENING_DATE,
-			SUBSTR(MOVIE_SCREENING_DATE,12,5) AS SCREENING_TIME,
-			MOVIE_TITLE,
-			MOVIE_PRICE
-		FROM MOVIE_SCREENING_PRICE
-		ORDER BY MOVIE_SCREENING_DATE
+		    DISTINCT SUBSTR(MOVIE_SCREENING_DATE,6,5) AS SCREENING_DATE,
+		    MOVIE_THEATHER,
+		    SUBSTR(MOVIE_SCREENING_DATE,12,5) AS SCREENING_TIME,
+		    MOVIE_TITLE
+		FROM MOVIE_SCREENING_PRICE 
+		ORDER BY SCREENING_DATE ASC, MOVIE_TITLE ASC, SCREENING_DATE ASC
 	</select>
+	
+	<select id="idCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(USER_ID) FROM USER_PERSONAL_INFO WHERE USER_ID=#{id}
+	</select>
+	
+	
+
 </mapper>

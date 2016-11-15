@@ -32,6 +32,7 @@ function locationMenus(method, action, directory, page) {
 	var getAction = action;
 	var getDirectory = directory;
 	var getPage = page;
+	console.log('Menus');
 	$(document).ready(function() {
 		$('form').attr({'method' : getMethod});
 		$('form').attr({'action' : getAction});

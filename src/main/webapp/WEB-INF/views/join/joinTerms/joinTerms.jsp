@@ -29,7 +29,7 @@
 		</div>
 		
 		<div class="content__terms__join">
-			<button onclick="agree()">
+			<button onclick="agree()" type="button">
 				회원가입
 			</button>
 

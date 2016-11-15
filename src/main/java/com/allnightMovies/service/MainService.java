@@ -1,24 +1,28 @@
  package com.allnightMovies.service;
 
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withServerError;
+
+
+
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
-import com.allnightMovies.model.data.movieInfo.MovieScreeningDate;
-import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
+import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
+import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.params.Params;
+
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -43,7 +47,8 @@ public class MainService implements Action {
 								// invoke(Object this, Object...args)
 		return (ModelAndView) method.invoke(this);
 	}
-	
+
+/*****기본 template의 작동*****/
 	// 기본 템플레이트 출력
 	public ModelAndView getTemplate() throws Exception {
 		List<MainMenu> list = this.service.getMenus();
@@ -62,11 +67,7 @@ public class MainService implements Action {
 		mav.addObject("keepLogin", this.params.getKeepLogin());
 		return mav;
 	}
-	
-//	public ModelAndView subMenu() throws Exception {
-//		ModelAndView modelAndView = new ModelAndView();
-//	}
-	
+
 	// 로그인
 	public ModelAndView login() throws Exception {
 		String userID = this.service.login(this.params);
@@ -79,19 +80,11 @@ public class MainService implements Action {
 	// 로그아웃
 	public ModelAndView logout() throws Exception {
 		this.params.getSession().invalidate();
-		Cookie[] cookie = this.params.getRequest().getCookies();
-		if(cookie != null) {
-			for(Cookie c : cookie) {
-				if(c.getName().equals("userID")) {
-					c.setMaxAge(0);
-				}
-			}
-		}
 		return this.getTemplate();
 	}
-	
+/*****join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
-		ModelAndView mav = new ModelAndView("loginForm/join/idcheck");
+		ModelAndView mav = new ModelAndView("join/resultText");
 
 		String resultMessage = "사용이 가능한 아이디입니다.";
 		String id = this.params.getUserID();
@@ -101,54 +94,60 @@ public class MainService implements Action {
 			resultMessage = "사용할 수 없는 아이디입니다.";
 			bool = false;
 		}
-		
 		if(this.service.idCheck(id) > 0) {
 			resultMessage = "이미 사용중인 아이디입니다.";
 			bool = false;
 		}
-
-		mav.addObject("resultMessage", resultMessage);
+		
+		mav.addObject("result", resultMessage);
 		mav.addObject("resultBool", bool);
-		mav.addObject("inputID", id);
 		return mav;
 	}
 
+	public ModelAndView pwdCheck() {
+		ModelAndView mav = new ModelAndView("join/resultText");
+		
+		String resultMessage = "사용 가능합니다.";
+		boolean resultBool = true;
+		String userPWD = this.params.getUserPWD();
+		if(!RegexCheck.passwdRegexCheck(userPWD)) {
+			resultMessage = "영문,숫자,특수문자 포함 8~15자 이내로 입력해주세요.";
+			resultBool = false;
+		}
+
+		
+		mav.addObject("result", resultMessage);
+		mav.addObject("resultBool", resultBool);
+		return mav;
+	}
 	
-	public ModelAndView joinService() throws Exception {
-		ModelAndView mav = new ModelAndView();
-//TODO
-		UserPersonalInfoDTO userInfoDTO = new UserPersonalInfoDTO();
-		userInfoDTO.setUserEmail(this.params.getUserEmailID() + "@" + this.params.getUserEmailAddr());
-		userInfoDTO.setUserGender(this.params.getUserGender());
-		userInfoDTO.setUserID(this.params.getUserID());
-		userInfoDTO.setUserName(this.params.getUserName());
-		userInfoDTO.setUserPWD(this.params.getUserPWD());
-		userInfoDTO.setUsrBirth(this.params.getUserBirth());
-
-		
-		
-		return mav;
-	}
-
-//
+	//아이디 찾기
+	
+	//상영표 map
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
-		System.out.println("상영시간표 - 메인 서비스");
-		
-		ArrayList<MovieScreeningDate> list = service.showtimes();
+		List<MovieShowTimesMap> movieTimeTable = this.service.showtimes();
 		
 		
-		System.out.println(list.get(0).getMovie_title() +"영화제목");
-		System.out.println(list.get(0).getScreening_Date() + "영화날짜");
-		System.out.println(list.get(0).getScreening_Time() + "영화시간");
-		System.out.println(list.get(0).getMovie_theather() + "영화관");
-		System.out.println(list + "?");
+		for(int i = 0, size=movieTimeTable.size(); i < size; i++) {
+			MovieShowTimesMap showTime = movieTimeTable.get(i);
+			List<MovieShowTitleDTO> showTitle = showTime.getMovieShowTitleDTO();
+			
+			for(int j = 0, JSize = showTitle.size(); j <JSize; j++) {
+				MovieShowTitleDTO titleDTO = showTitle.get(j);
+
+				List<MovieshowTableDTO> showTable = titleDTO.getMovieshowTableDTO();
+				for(int k = 0, kSize = showTable.size(); k < kSize; k++) {
+
+				}
+			}
+		}
+		
 		ModelAndView mav = this.getTemplate();
-		mav.addObject("movie_list", list);
-		
+		mav.addObject("movieTimeTable", movieTimeTable);
 		return mav;
+		
 	}
-	
-	
+		
 }

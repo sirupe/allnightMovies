@@ -19,6 +19,6 @@
 	</div>
 	<div class="header__login__text">
 	    <a href="#" id="a_join" onclick="locationJoinTerms()">회원가입</a> | 
-	    <a href="#" onclick="">아이디</a> / <a href="">패스워드 찾기</a>
+	    <a href="#" id="find-User-Id" onclick="user-Find-Id()">아이디</a> / <a href="">패스워드 찾기</a>
 	</div>
 </div>

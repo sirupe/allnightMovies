@@ -31,6 +31,7 @@ public class Params {
 	private String userName;
 	private String userID;
 	private String userPWD;
+	private String userRePWD;
 	private String userGender;
 	private String userEmailID;
 	private String userEmailAddr;

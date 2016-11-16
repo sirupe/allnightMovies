@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.allnightMovies.dao.DBMapper">
+
 <!-- /* SELECT MENU */ --> 	
 	<resultMap type="com.allnightMovies.model.data.SubMenu" id="SubMenu">
 		<result column="subMenuName" property="subMenuName"/>
@@ -12,6 +13,7 @@
 		<result column="mainMenuPage" property="mainMenuPage"/>
 		<collection property="subMenuList" resultMap="SubMenu"/>
 	</resultMap>
+
 	<select id="getMenus" resultMap="MainMenu">
 		<![CDATA[
 			SELECT 
@@ -25,7 +27,7 @@
 		]]>
 	</select>
 	
-<!-- JOIN -->	
+<!-- /* JOIN */ -->	
 	<select id="login" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
 		SELECT USER_ID
 		FROM USER_PERSONAL_INFO
@@ -53,4 +55,31 @@
 		    #{userGender}
 		)
 	</insert>
+
+<!-- 상영시간 list -->
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
+		<result column="screening_time"	property="screening_time"/>
+		<result column="movie_theather" property="movie_theather"/>
+	</resultMap>
+	
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO" id="MovieShowTitleDTO">
+		<result column="movie_title"	property="movie_title"/>
+		<collection property="movieshowTableDTO" resultMap="MovieshowTableDTO"/>
+	</resultMap>
+
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieShowTimesMap" id="MovieShowTimesMap">
+		<result column="screening_Date" property="screening_Date" />
+		<collection property="movieShowTitleDTO" resultMap="MovieShowTitleDTO"/>	
+	</resultMap>
+	
+<!-- 상영시간표  -> 상영날짜 LIST -->
+	<select id="showtimes" resultMap="MovieShowTimesMap" parameterType="java.util.Map"> 
+		SELECT 
+		    DISTINCT SUBSTR(MOVIE_SCREENING_DATE,6,5) AS SCREENING_DATE,
+		    MOVIE_THEATHER,
+		    SUBSTR(MOVIE_SCREENING_DATE,12,5) AS SCREENING_TIME,
+		    MOVIE_TITLE
+		FROM MOVIE_SCREENING_PRICE 
+		ORDER BY SCREENING_DATE ASC, MOVIE_TITLE ASC, SCREENING_DATE ASC
+	</select>
 </mapper>

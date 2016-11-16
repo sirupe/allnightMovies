@@ -1,0 +1,92 @@
+@CHARSET "UTF-8";
+
+.container__movie__screening__date {
+	width: 100%;	
+	
+}
+	
+button.movie_screening_date {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    
+}
+
+button.movie_screening_date.active, button.movie_screening_date:hover {
+    background-color: darkkhaki;
+}
+
+div.movie_screening_panel {
+  background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    width:1100px;
+    transition: 0.6s ease-in-out;
+    opacity: 0;
+}
+
+div.movie_screening_panel.show {
+    opacity: 1;
+    max-height: 800px;
+}
+
+.movie__info {
+	display: flex;
+	background-color: antiquewhite;
+	height: 60px;
+	line-height:70px;
+	text-align: center;
+	text-overflow:ellipsis;
+}
+	
+	
+.movie__title {
+	display: inline-block;
+	width: 35%;
+	background-color: 
+	 opacity: 1.0;
+    filter: alpha(opacity=100);
+	
+}
+
+
+.movie__room1 {
+	display: inline-block;
+	width:15%;
+	background-color:
+	opacity: 1.0;
+    filter: alpha(opacity=50);
+	
+}
+	
+.movie__room1:hover {
+	opacity: 0.5;
+	filter: alpha(opacity=100);
+}
+
+.movie__room2 {
+	display: inline-block;
+	width:15%;
+	
+}
+	
+.movie__room2:hover {
+	opacity: 0.5;
+	filter: alpha(opacity=100);
+}
+	
+.movie__room3 {
+	display: inline-block;
+	width:15%;
+}
+	
+.movie__room3:hover {
+	opacity: 0.5;
+	filter: alpha(opacity=100);
+}	

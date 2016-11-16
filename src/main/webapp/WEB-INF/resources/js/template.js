@@ -27,6 +27,23 @@ function logout() {
 	location.href = '/movie/mainService/logout';
 }
 
+function locationMenus(method, action, directory, page) {
+	var getMethod = method;
+	var getAction = action;
+	var getDirectory = directory;
+	var getPage = page;
+	console.log('Menus');
+	$(document).ready(function() {
+		$('form').attr({'method' : getMethod});
+		$('form').attr({'action' : getAction});
+		$('#hidden-dir').val(getDirectory);
+		$('#hidden-page').val(getPage);
+		$('form').submit();
+		
+		
+	});
+}
+
 function submit(method, action, directory, page, js, css) {
 	console.log('method');
 	$(document).ready(function() {

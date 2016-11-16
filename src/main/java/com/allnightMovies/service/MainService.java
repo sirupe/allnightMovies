@@ -14,9 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
-import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
+import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
+import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
+
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -143,6 +146,7 @@ public class MainService implements Action {
 		
 		return mav;
 	}
+
 	
 	public ModelAndView confirmNumInit() throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -161,5 +165,30 @@ public class MainService implements Action {
 	@Override
 	public String executeString(Params params) throws Throwable {
 		return null;
+	}
+
+/*****상영시간표List*****/
+	
+	public ModelAndView showtimes() throws Exception {
+		this.params.setContentCSS("reservation/timeTable");
+		this.params.setContentjs("reservation/timeTable");
+		List<MovieShowTimesMap> movieTimeTable = this.dbService.showtimes();
+		
+		for(int i = 0, size=movieTimeTable.size(); i < size; i++) {
+			MovieShowTimesMap showTime = movieTimeTable.get(i);
+			List<MovieShowTitleDTO> showTitle = showTime.getMovieShowTitleDTO();
+			
+			for(int j = 0, JSize = showTitle.size(); j <JSize; j++) {
+				MovieShowTitleDTO titleDTO = showTitle.get(j);
+
+				List<MovieshowTableDTO> showTable = titleDTO.getMovieshowTableDTO();
+				for(int k = 0, kSize = showTable.size(); k < kSize; k++) {
+
+				}
+			}
+		}
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("movieTimeTable", movieTimeTable);
+		return mav;
 	}
 }

@@ -1,8 +1,18 @@
 @CHARSET "UTF-8";
 
+.container__showtimes {
+	width: 90%;
+    margin: auto;
+}
+
 .container__movie__screening__date {
 	width: 100%;	
 	
+}
+	
+.container__showtimes__title {
+	border-bottom: solid black;
+    padding-bottom: 15px;
 }
 	
 button.movie_screening_date {
@@ -19,7 +29,7 @@ button.movie_screening_date {
 }
 
 button.movie_screening_date.active, button.movie_screening_date:hover {
-    background-color: darkkhaki;
+    background-color: #E2878A;
 }
 
 div.movie_screening_panel {

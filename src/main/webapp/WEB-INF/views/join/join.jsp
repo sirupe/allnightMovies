@@ -8,7 +8,7 @@
 		</div>
 		<div class="join-form__info1">
 			
-			<input id="user-id" type="text" placeholder="아이디 입력" onkeyup="idCheck()" autocomplete="off" name="userID" value="sirupe"/>
+			<input id="user-id" type="text" placeholder="아이디 입력" onkeyup="idCheck()" autocomplete="off" name="userIDCheck" value="sirupe"/>
 			<div id="idResult" class="join__resultText">필수 입력사항입니다.</div>
 			
 			<input id="user-pwd" type="password" placeholder="비밀번호 입력" name="userPWD" onkeyup="pwdCheck()" value="P@ssw0rd"/>

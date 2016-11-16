@@ -51,12 +51,27 @@ public class MainController {
 		ModelAndView mav = action.execute(params);
 		return mav;
 	}
+	@RequestMapping(value="/movie/ajax/{service}/{method}", method = {RequestMethod.GET, RequestMethod.POST})
+	public String ajaxRequest(
+			@PathVariable("service") String service, 
+			@PathVariable("method") String method,
+			Params params,
+			HttpServletRequest request) throws Throwable {
+		HttpSession session = request.getSession();
+		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
+		Action action = (Action) context.getBean(service);
+		params.setMethod(method);
+		params.setRequest(request);
+		params.setSession(session);
+		String resultStr = action.executeString(params);
+		return resultStr;
+	}
 	
-//	@RequestMapping(value="/check/{service}/{method}", method = RequestMethod.POST)
-//	public ModelAndView postMethod(@PathVariable("service") String service, @PathVariable("method") String method, Params params, HttpSession session) throws Throwable {
+//	@RequestMapping(value="/check/{dbService}/{method}", method = RequestMethod.POST)
+//	public ModelAndView postMethod(@PathVariable("dbService") String dbService, @PathVariable("method") String method, Params params, HttpSession session) throws Throwable {
 //
 //		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
-//		Action action = (Action) context.getBean(service);
+//		Action action = (Action) context.getBean(dbService);
 //		params.setMethod(method);
 //		ModelAndView mav = action.execute(params);
 //		return mav;

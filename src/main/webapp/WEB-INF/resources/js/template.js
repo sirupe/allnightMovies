@@ -46,7 +46,7 @@ function pwdRegexCheck(pwd) {
 }
 
 function idRegexCheck(id) {
-	var regex = /^[a-zA-Z]{1}[a-zA-Z0-9_]$/;
+	var regex = /^[A-Za-z0-9_-]{4,15}$/;
 	return regex.test(id);
 }
 

@@ -1,5 +1,5 @@
 function idCheck() {
-	var re = true;
+	var re	 = true;
 	var idTextField = $('#user-id');
 	var userID = idTextField.val();
 	var idLeng = userID.length;
@@ -107,6 +107,13 @@ function userEmailCheck() {
 		resultMsg = '필수 입력사항입니다.';
 		resultBool = false;
 	}
+	if(resultBool) {
+		$.post(
+			'/movie/mainService/confirmNumInit',
+			{},
+			function() {}
+		);
+	}
 	$('#user-email-check').html(resultMsg);
 	$('#confirm-number').removeAttr('readonly');
 	$('#confirm-number').css('background-color', "#FCFCFC");
@@ -140,6 +147,8 @@ function confirmNumCheck() {
 			$.post(
 				'/movie/mainService/confirmCheck',
 				{'confirmNum': confirmNum.val()},
+				
+		
 				function(result) {
 					$('#confirm-result').html(result);
 					if($('#confirm-bool').val() == 'true') {
@@ -157,11 +166,10 @@ function confirmNumCheck() {
 }
 
 function joinSuccessCheck() {
-	console.log('joinSuccessCheck');
 	
 	if(joinSuccessCheckValidation()) {
 		$.post(
-			'/movie/mainService/joinSuccessCheck',
+			'/movie/ajax/ajaxService/joinSuccessCheck',
 			{
 				'userIDCheck' : $('#user-id').val(),
 				'userPWD': $('#user-pwd').val(),
@@ -172,7 +180,11 @@ function joinSuccessCheck() {
 				'userBirth': $('#user-birth').val()
 			},
 			function(result) {
-				console.log('다녀옴');
+				if(result == 'false') {
+					alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
+				} else {
+					location.href=result;
+				}
 			}
 		);
 	}

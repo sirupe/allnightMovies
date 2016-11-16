@@ -12,7 +12,6 @@
 		<result column="mainMenuPage" property="mainMenuPage"/>
 		<collection property="subMenuList" resultMap="SubMenu"/>
 	</resultMap>
-	
 	<select id="getMenus" resultMap="MainMenu">
 		<![CDATA[
 			SELECT 
@@ -26,6 +25,7 @@
 		]]>
 	</select>
 	
+<!-- JOIN -->	
 	<select id="login" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
 		SELECT USER_ID
 		FROM USER_PERSONAL_INFO
@@ -35,4 +35,22 @@
 	<select id="idCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(USER_ID) FROM USER_PERSONAL_INFO WHERE USER_ID=#{id}
 	</select>
+	
+	<insert id="insertJoinUserInfo" parameterType="com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO">
+		INSERT INTO USER_PERSONAL_INFO(
+			USER_ID,
+		    USER_PWD,
+		    USER_NAME,
+		    USER_EMAIL,
+		    USER_BIRTH,
+		    USER_GENDER
+		) VALUES (
+			#{userID},
+		    #{userPWD},
+		    #{userName},
+		    #{userEmail},
+		    #{userBirth},
+		    #{userGender}
+		)
+	</insert>
 </mapper>

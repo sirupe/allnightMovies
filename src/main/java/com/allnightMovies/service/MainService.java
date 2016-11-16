@@ -14,9 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
-import com.allnightMovies.utility.SendEmail;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -29,8 +29,11 @@ public class MainService implements Action {
 //	@Autowired
 //	MovieMapper movieMapper;
 	@Autowired
-	DBService service;
+	DBService dbService;
 
+	@Autowired
+	SubService subService;
+	
 	// 여기서 온갖것들을 실행시켜주면 된다.
 	// ModelAndView 객체에 view 단에서 찍어내야 하는 페이지들도 올려두고 ...
 	@Override
@@ -45,7 +48,7 @@ public class MainService implements Action {
 /*****기본 template의 작동*****/
 	// 기본 템플레이트 출력
 	public ModelAndView getTemplate() throws Exception {
-		List<MainMenu> list = this.service.getMenus();
+		List<MainMenu> list = this.dbService.getMenus();
 		Map<String, MainMenu> mainMenuMap = new MenuList(list).getMainMenuMap();
 		ModelAndView mav = new ModelAndView("template");
 		String main = this.params.getMain() == null ? "movie" : this.params.getMain();
@@ -64,7 +67,7 @@ public class MainService implements Action {
 
 	// 로그인
 	public ModelAndView login() throws Exception {
-		String userID = this.service.login(this.params);
+		String userID = this.dbService.login(this.params);
 		HttpSession session = this.params.getSession();
 		session.setAttribute("userID", userID);
 		System.out.println("메인서비스의 login. 로그인유지 체크? " + this.params.getKeepLogin());
@@ -76,6 +79,8 @@ public class MainService implements Action {
 		this.params.getSession().invalidate();
 		return this.getTemplate();
 	}
+
+	
 /*****join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
 		ModelAndView mav = new ModelAndView("join/resultText");
@@ -88,7 +93,7 @@ public class MainService implements Action {
 			resultMessage = "사용할 수 없는 아이디입니다.";
 			bool = false;
 		}
-		if(this.service.idCheck(id) > 0) {
+		if(this.dbService.idCheck(id) > 0) {
 			resultMessage = "이미 사용중인 아이디입니다.";
 			bool = false;
 		}
@@ -127,10 +132,10 @@ public class MainService implements Action {
 		} else if(!(saveConfirmNum == inputConfirmNum)) {
 			result = "인증번호가 일치하지 않습니다. 다시 확인해주세요.";
 			System.out.println(">>메인서비스 confirmCheck() : 저장된 번호-"+ this.params.getSession().getAttribute("certificationNum"));
-			System.out.println(">>메인서비스 confirmCheck() : 입력된 번호-" + this.params.getConfirmNum());
 			bool = false;
 		} else {
 			session.setAttribute("certificationNum", 0);
+			session.setAttribute("isConfirm", true);
 		}
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
@@ -139,16 +144,22 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-	public ModelAndView joinSuccessCheck() throws Exception {
+	public ModelAndView confirmNumInit() throws Exception {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(this.params.getUserName());
-		System.out.println(this.params.getUserIDCheck());
-		System.out.println(this.params.getUserPWD());
-		System.out.println(this.params.getUserRePWD());
-		System.out.println(this.params.getUserGender());
-		System.out.println(this.params.getUserEmail());
-		System.out.println(this.params.getUserBirth());
+		HttpSession session = this.params.getSession();
+		session.setAttribute("isConfirm", false);
 		return mav;
 	}
 	
+	public ModelAndView locationJoinSuccess() throws Exception {
+		this.params.setDirectory("join");
+		this.params.setPage("joinResult");
+		System.out.println(this.params.getSession().getAttribute("userID"));
+		return this.getTemplate();	
+	}
+
+	@Override
+	public String executeString(Params params) throws Throwable {
+		return null;
+	}
 }

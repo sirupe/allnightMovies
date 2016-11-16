@@ -2,6 +2,8 @@ package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,7 +42,11 @@ public class AjaxService implements Action {
 		}
 		return "false";
 	}
-	
+	public String confirmNumInit() throws Exception {
+		HttpSession session = this.params.getSession();
+		session.setAttribute("isConfirm", false);
+		return "<label class=\"join__resultText\" style=\"color:red;\">인증을 받아주세요.</label>";
+	}
 	@Override
 	public ModelAndView execute(Params params) throws Throwable {
 		return null;

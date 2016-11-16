@@ -5,7 +5,7 @@ function locationJoinTerms() {
 		'join/joinTerms',	// 디렉토리
 		'joinTerms',		// 페이지
 		'join/joinTerms',	// 자바스크립트
-		'joinTerms'			// CSS
+		'join/joinTerms'	// CSS
 	);
 }
 

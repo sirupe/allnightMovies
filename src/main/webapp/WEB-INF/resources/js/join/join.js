@@ -109,7 +109,7 @@ function userEmailCheck() {
 	}
 	if(resultBool) {
 		$.post(
-			'/movie/mainService/confirmNumInit',
+			'/movie/ajax/ajaxService/confirmNumInit',
 			{},
 			function() {}
 		);

@@ -110,10 +110,11 @@ public class MainService implements Action {
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
 		System.out.println(">>메인서비스 sendEmail() 인증번호 : " + randNum);
-//		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
+		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
 		String result = "인증번호가 발송되었습니다.";
 		boolean bool = true;
 		this.params.getSession().setAttribute("certificationNum", randNum);
+		System.out.println("세션에 저장 : " + this.params.getSession().getAttribute("certificationNum"));
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
 		mav.addObject("resultBoolID", "email-bool");
@@ -155,6 +156,8 @@ public class MainService implements Action {
 	public ModelAndView locationJoinSuccess() throws Exception {
 		this.params.setDirectory("join");
 		this.params.setPage("joinResult");
+		this.params.setContentCSS("join/joinSuccess");
+		this.params.setContentjs("join/joinSuccess");
 		System.out.println(this.params.getSession().getAttribute("userID"));
 		return this.getTemplate();	
 	}

@@ -14,7 +14,7 @@ public class SubService {
 	@Autowired
 	DBService dbService;
 	
-	
+/**************************************JOIN**************************************/
 	public boolean joinSuccessCheck(Params params) throws Exception {
 		String userID = params.getUserIDCheck();
 		String userPWD = params.getUserPWD();
@@ -81,4 +81,5 @@ public class SubService {
 		System.out.println("인증을 받은 상태인지" +  params.getSession().getAttribute("isConfirm"));
 		return (boolean) params.getSession().getAttribute("isConfirm");
 	} 
+/********************************************************************************/
 }

@@ -13,10 +13,17 @@ import com.allnightMovies.model.params.Params;
 
 
 public interface DBMapper {
+/** Menu Loading **/
 	public List<MainMenu> getMenus() throws Exception;
-	public Integer idCheck(String id);
+
+/** Login **/
 	public String login(Params params);
+
+/** Join **/
+	public Integer idCheck(String id);
 	public Integer insertJoinUserInfo(UserPersonalInfoDTO userDTO);
+
+/** 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	
 }

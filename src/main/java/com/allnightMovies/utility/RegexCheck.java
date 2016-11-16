@@ -22,7 +22,7 @@ public class RegexCheck {
 	// 아이디 형식체크. 형식에 맞으면 true, 형식에 맞지 않으면 false return
 	// (영문자+숫자 조합의 형식. 영문자만으로는 가능하나 숫자만으로는 불가능하다.)
 	public static boolean idRegexCheck(String id) {
-		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]$";
+		String regex = "^[A-Za-z0-9_-]{4,15}$";
 		boolean result = Pattern.matches(regex, id);
 		if(Pattern.matches("^[0-9]*$", id)) {
 			result = false;

@@ -10,8 +10,8 @@
 			비밀번호 변경이 완료되었습니다.
 		</label>
 		<div class="div__searchPwd__changeCompleted-button">
-			<button class="button__searchPwd-changeCompleted-login" type="button" onclick="">로그인</button>
-			<button class="button__searchPwd-changeCompleted-main" type="button" onclick="">메인으로</button>
+			<button class="button__searchPwd-changeCompleted-login" type="button" onclick="locationLogin()">로그인</button>
+			<button class="button__searchPwd-changeCompleted-main" type="button" onclick="locationMain()">메인으로</button>
 		</div>
 	</div>
 </div>

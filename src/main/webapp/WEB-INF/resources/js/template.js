@@ -28,16 +28,44 @@ function locationSearchPwd() {
 	submit(
 		'POST',
 		'/movie/mainService/getTemplate',//main service 에서 기본 템플레이트 출력
-		'searchPwd',			 //디렉토리
-		'searchPwd',			 //페이지
-		'searchPwd/searchPwd',   //자바스크립트
-		
-		'searchPwd/searchPwd'	 //CSS
+		'searchPwd',					 //디렉토리
+		'searchPwd',			 		 //페이지
+		'searchPwd/searchPwd',  		 //자바스크립트
+		'searchPwd/searchPwd'	 		 //CSS
 	);
 }
 
 function logout() {
 	location.href = '/movie/mainService/logout';
+}
+
+/*shin myInfo*/
+function locationMyInfo() {
+	submit(
+		'POST',
+		'/movie/mainService/getTemplate', //main service 에서 기본 템플레이트 출력
+		'myInfo',			 			
+		'myInfoForm',	
+		'myInfo/myInfo', 
+		'myInfo/myInfo'	 
+	);
+}
+
+function locationMenus(method, action, directory, page) {
+	var getMethod = method;
+	var getAction = action;
+	var getDirectory = directory;
+	var getPage = page;
+	console.log('Menus');
+	$(document).ready(function() {
+		$('form').attr({'method' : getMethod});
+		$('form').attr({'action' : getAction});
+		$('#hidden-dir').val(getDirectory);
+		$('#hidden-page').val(getPage);
+		$('form').submit();
+		
+		
+	});
 }
 
 function submit(method, action, directory, page, js, css) {

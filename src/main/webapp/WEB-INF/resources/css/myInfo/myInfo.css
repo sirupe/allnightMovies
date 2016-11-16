@@ -1,0 +1,120 @@
+@CHARSET "UTF-8";
+/*내정보 전체*/
+.div-myinfo {
+	width: 700px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    line-height: 40px;
+    padding: 20px;
+    background-color: #F0F0F0;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+/*내정보 타이틀*/
+.div-myinfo__title {
+	background-color: #383838;
+    color: white;
+    padding-left: 20px;	
+    font-size: 20px;
+}
+
+/*내정보 내용*/
+.div-myinfo__content {
+	display: flex;
+	align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+	flex-basis: 270px;
+    border: 1px solid gray;
+    font-size: 12px;
+    line-height: 1.5em;
+    background-color: white;
+}
+
+.span-myinfo__content {
+	
+}
+
+.label-myinfo__content__id {
+	margin-right: 35px;
+	font-size: 18px;
+}
+
+.label-myinfo__content__name {
+	margin-right: 50px;
+	font-size: 18px;
+}
+
+.label-myinfo__content__gender {
+	margin-right: 50px;
+	font-size: 18px;
+}
+
+.label-myinfo__content__email {
+	margin-right: 35px;
+	font-size: 18px;
+}
+
+.label-myinfo__content__birth {
+	margin-right: 50px;
+	font-size: 18px;
+}
+
+.text-myinfo__content{
+    border: none;
+    font: normal 14px/0 Tahoma, Geneva, sans-serif;
+	margin-top: 30px;
+	font-size: 20px;
+	width: 200px;
+	
+}
+
+/*내정보 버튼*/
+
+.span-myinfo__buttons__email {
+	margin-top: 30px;
+	display: inline;
+	float: left;
+}
+.span-myinfo__buttons__pwd {
+	display: inline;
+}
+
+.button-myinfo-change-pwd,
+.button-myinfo-change-email {
+	display: inline-block;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	cursor: pointer;
+	padding: 6px 20px;
+	border: 1px solid #018dc4;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	font: normal medium/normal Arial, Helvetica, sans-serif;
+	color: rgba(255,255,255,0.9);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: #0A1F33;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) ;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) ;
+	text-shadow: -1px -1px 0 rgba(15,73,168,0.66) ;
+	-webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);	
+}
+
+.button-myinfo-change-pwd:hover,
+.button-myinfo-change-email:hover {
+	border: 1px solid #007cad;
+	background: #12385b;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}

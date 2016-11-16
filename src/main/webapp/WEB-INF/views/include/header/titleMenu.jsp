@@ -11,7 +11,8 @@
 				<a href="#" class="dropdown__main-menu__a">${mainMenu.mainMenuName }</a>
 				<div class="dropdown__sub-menu">
 					<c:forEach items="${mainMenu.subMenuList }" var="subMenu">
-						<a href="/movie/mainService/getTemplate?main=${mainMenu.mainMenuPage }&sub=${subMenu.subMenuPage}">
+						<a href="#" onclick="locationMenus('POST','/movie/mainService/${subMenu.subMenuPage}','${mainMenu.mainMenuPage }','${subMenu.subMenuPage}' )">
+					<!--	/movie/mainService/getTemplate?main=${mainMenu.mainMenuPage }&sub=${subMenu.subMenuPage}  -->
 							${subMenu.subMenuName }
 						</a>
 					</c:forEach>

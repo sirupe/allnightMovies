@@ -44,4 +44,5 @@ public class Params {
 	private String searchPwdUserID;
 	private String searchPwdConfirmNum;
 	private String searchPwdNewPwd;
+	
 }

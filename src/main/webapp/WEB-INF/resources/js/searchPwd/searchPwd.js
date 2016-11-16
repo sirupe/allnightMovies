@@ -25,8 +25,6 @@ function sendConfirmEmail() {
 }
 
 function checkConfirmNum() {
-	
-	console.log($('#searchpwd-confirm-num').val());
 	var userConfirmNum = $('#searchpwd-confirm-num');
 	var checkConfirmNumText = $('#searchpwd-confirm-num-text');
 	var isSearchPwdChange = true;
@@ -75,24 +73,47 @@ function changePWD() {
 }
 
 function checkRePWD() {
-	var isNewPwdResult = true;
 	var pwd = validationPWD();
 	var repwd = validationRePWD();
 	var newPwd = $('#newPWD').val();
 	var newPwdText = $('#newPWD-re-text');
 	
 	if(pwd && repwd) {
-		isNewPwdResult = true;
-		$.post(//정보를 요청할 URL, 서버로보낼 data, 요청성공시 콜백함수/서버에서 반횐되는 데이터타입
-			'/movie/mainService/updatePWD',
-			{'searchPwdNewPwd' : newPwd ,} //params변수명 : value
-			
+		submit(
+			'POST',
+			'/movie/mainService/updatePWD', 
+			'searchPwd',				    //디렉토리                           
+			'searchPwdChangeCompleted',		//페이지                            
+			'searchPwd/searchPwd',   	    //자바스크립트                         
+			'searchPwd/searchPwd'	 	    //CSS                            
 		);
 	} else {
-		isNewPwdResult = false;
 		newPwdText.html('<label style="color: red;">입력하신 비밀번호와 일치하지 않습니다.</label>');
 	}
-//	return isNewPwdResult;
+}
+
+//이동
+
+function locationLogin() {
+	submit(
+		'POST',
+		'/movie/mainService/getTemplate', 
+		'include',				    //디렉토리                           
+		'mainPage',		//페이지                            
+		'template',   	    //자바스크립트                         
+		'home'	 	    //CSS                            
+	);	
+}
+
+function locationMain() {
+	submit(
+		'POST',
+		'/movie/mainService/getTemplate', 
+		'include',				    //디렉토리                           
+		'mainPage',		//페이지                            
+		'template',   	    //자바스크립트                         
+		'home'	 	    //CSS                            
+	);	
 }
 
 //정합성검사

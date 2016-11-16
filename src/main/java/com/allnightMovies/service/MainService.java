@@ -14,8 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
+import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
+import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -28,8 +32,11 @@ public class MainService implements Action {
 //	@Autowired
 //	MovieMapper movieMapper;
 	@Autowired
-	DBService service;
+	DBService dbService;
 
+	@Autowired
+	SubService subService;
+	
 	// 여기서 온갖것들을 실행시켜주면 된다.
 	// ModelAndView 객체에 view 단에서 찍어내야 하는 페이지들도 올려두고 ...
 	@Override
@@ -44,7 +51,7 @@ public class MainService implements Action {
 /*****기본 template의 작동*****/
 	// 기본 템플레이트 출력
 	public ModelAndView getTemplate() throws Exception {
-		List<MainMenu> list = this.service.getMenus();
+		List<MainMenu> list = this.dbService.getMenus();
 		Map<String, MainMenu> mainMenuMap = new MenuList(list).getMainMenuMap();
 		ModelAndView mav = new ModelAndView("template");
 		String main = this.params.getMain() == null ? "movie" : this.params.getMain();
@@ -63,7 +70,7 @@ public class MainService implements Action {
 
 	// 로그인
 	public ModelAndView login() throws Exception {
-		String userID = this.service.login(this.params);
+		String userID = this.dbService.login(this.params);
 		HttpSession session = this.params.getSession();
 		session.setAttribute("userID", userID);
 		return this.getTemplate();
@@ -87,7 +94,7 @@ public class MainService implements Action {
 			resultMessage = "사용할 수 없는 아이디입니다.";
 			bool = false;
 		}
-		if(this.service.idCheck(id) > 0) {
+		if(this.dbService.idCheck(id) > 0) {
 			resultMessage = "이미 사용중인 아이디입니다.";
 			bool = false;
 		}
@@ -126,10 +133,10 @@ public class MainService implements Action {
 		} else if(!(saveConfirmNum == inputConfirmNum)) {
 			result = "인증번호가 일치하지 않습니다. 다시 확인해주세요.";
 			System.out.println(">>메인서비스 confirmCheck() : 저장된 번호-"+ this.params.getSession().getAttribute("certificationNum"));
-			System.out.println(">>메인서비스 confirmCheck() : 입력된 번호-" + this.params.getConfirmNum());
 			bool = false;
 		} else {
 			session.setAttribute("certificationNum", 0);
+			session.setAttribute("isConfirm", true);
 		}
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
@@ -137,31 +144,38 @@ public class MainService implements Action {
 		
 		return mav;
 	}
-	
-	public ModelAndView joinSuccessCheck() throws Exception {
+
+	public ModelAndView confirmNumInit() throws Exception {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(this.params.getUserName());
-		System.out.println(this.params.getUserIDCheck());
-		System.out.println(this.params.getUserPWD());
-		System.out.println(this.params.getUserRePWD());
-		System.out.println(this.params.getUserGender());
-		System.out.println(this.params.getUserEmail());
-		System.out.println(this.params.getUserBirth());
+		HttpSession session = this.params.getSession();
+		session.setAttribute("isConfirm", false);
 		return mav;
 	}
+		
+	public ModelAndView locationJoinSuccess() throws Exception {
+		this.params.setDirectory("join");
+		this.params.setPage("joinResult");
+		System.out.println(this.params.getSession().getAttribute("userID"));
+		return this.getTemplate();	
+	}
+
+	@Override
+	public String executeString(Params params) throws Throwable {
+		return null;
+	}
 	
-	/*******PWD찾기 SHIN*******/
+/*******PWD찾기 SHIN*******/
 	public ModelAndView searchID() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String searchPwdUserID = this.params.getSearchPwdUserID();
-		Integer result = this.service.searchPWD(searchPwdUserID);//사용자 아이디 있으면  1, 없으면  0
+		Integer result = this.dbService.searchPWD(searchPwdUserID);//사용자 아이디 있으면  1, 없으면  0
 		HttpSession session =  this.params.getSession();		 //브라우저당 1개
 		session.setAttribute("userId", searchPwdUserID);
 		mav.addObject("result", result);
 		return mav;
 	}
 	
-	/*******PWD찾기 SHIN*******/
+/*******PWD찾기 SHIN*******/
 	public ModelAndView searchPwdsendEmail() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		Random rand = new Random();
@@ -170,14 +184,14 @@ public class MainService implements Action {
 		
 		HttpSession session = this.params.getSession();
 		String searchPwdUserID = (String)session.getAttribute("userId");
-		String userEmail = this.service.searchEmail(searchPwdUserID);
+		String userEmail = this.dbService.searchEmail(searchPwdUserID);
 		HttpSession sessionRandNum = this.params.getSession();
 		sessionRandNum.setAttribute("randNum", randNum);
-		//new SendEmail(String.valueOf(randNum), userEmail); 
+		new SendEmail(String.valueOf(randNum), userEmail); 
 		return mav;
 	}
 	
-	/*******PWD찾기 SHIN*******/
+/*******PWD찾기 SHIN*******/
 	public ModelAndView checkConfirmNum() throws Exception {
 		ModelAndView mav = new ModelAndView("searchPwd/searchPwdConfirmResult");
 		String userConfirmNum = this.params.getSearchPwdConfirmNum();
@@ -198,16 +212,40 @@ public class MainService implements Action {
 		mav.addObject("ischeckConfirmNumID", "ischeck-confirmnum-id");
 		return mav;
 	}
-	
-	//TODO
+
+/*******PWD찾기 SHIN*******/
 	public ModelAndView updatePWD() throws Exception {
-		ModelAndView mav = new ModelAndView("searchPwd/searchPwdChangeCompleted");
 		HttpSession session = this.params.getSession();
 		String searchPwdUserID = (String)session.getAttribute("userId");
-		System.out.println("바꿀아이디" + searchPwdUserID);
-		//이게null나오는데 null이 나오면 안대는
 		String searchPwdNewPwd = this.params.getSearchPwdNewPwd();
-		this.service.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
+		this.dbService.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
+		this.params.setDirectory("searchPwd");
+		this.params.setPage("searchPwdChangeCompleted");
+		return this.getTemplate();
+	}
+
+/*****상영시간표List*****/
+	
+	public ModelAndView showtimes() throws Exception {
+		this.params.setContentCSS("reservation/timeTable");
+		this.params.setContentjs("reservation/timeTable");
+		List<MovieShowTimesMap> movieTimeTable = this.dbService.showtimes();
+		
+		for(int i = 0, size=movieTimeTable.size(); i < size; i++) {
+			MovieShowTimesMap showTime = movieTimeTable.get(i);
+			List<MovieShowTitleDTO> showTitle = showTime.getMovieShowTitleDTO();
+			
+			for(int j = 0, JSize = showTitle.size(); j <JSize; j++) {
+				MovieShowTitleDTO titleDTO = showTitle.get(j);
+
+				List<MovieshowTableDTO> showTable = titleDTO.getMovieshowTableDTO();
+				for(int k = 0, kSize = showTable.size(); k < kSize; k++) {
+
+				}
+			}
+		}
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("movieTimeTable", movieTimeTable);
 		return mav;
 	}
 }

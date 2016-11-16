@@ -1,6 +1,5 @@
 package com.allnightMovies.controller;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +41,7 @@ public class MainController {
 			@PathVariable("method") String method, 
 			Params params, 
 			HttpServletRequest request) throws Throwable {
+
 		HttpSession session = request.getSession();
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 		Action action = (Action) context.getBean(service);
@@ -49,6 +49,7 @@ public class MainController {
 		params.setRequest(request);
 		params.setSession(session);
 		ModelAndView mav = action.execute(params);
+		
 		return mav;
 	}
 	@RequestMapping(value="/movie/ajax/{service}/{method}", method = {RequestMethod.GET, RequestMethod.POST})

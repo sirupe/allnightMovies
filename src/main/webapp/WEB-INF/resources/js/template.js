@@ -23,8 +23,32 @@ function locationMain() {
 	);
 }
 
+/*shin searchPwd*/
+function locationSearchPwd() {
+	submit(
+		'POST',
+		'/movie/mainService/getTemplate',//main service 에서 기본 템플레이트 출력
+		'searchPwd',					 //디렉토리
+		'searchPwd',			 		 //페이지
+		'searchPwd/searchPwd',  		 //자바스크립트
+		'searchPwd/searchPwd'	 		 //CSS
+	);
+}
+
 function logout() {
 	location.href = '/movie/mainService/logout';
+}
+
+/*shin myInfo*/
+function locationMyInfo() {
+	submit(
+		'POST',
+		'/movie/mainService/getTemplate', //main service 에서 기본 템플레이트 출력
+		'myInfo',			 			
+		'myInfoForm',	
+		'myInfo/myInfo', 
+		'myInfo/myInfo'	 
+	);
 }
 
 function locationMenus(method, action, directory, page) {

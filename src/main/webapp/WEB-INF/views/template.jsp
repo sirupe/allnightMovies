@@ -38,7 +38,6 @@
 								<jsp:include page="./${directory }/${page }.jsp"/>
 							</article>
 						</c:otherwise>
-						
 					</c:choose> 
 				</section> 
 				<footer class="footer">

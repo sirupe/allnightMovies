@@ -8,9 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Getter
-@Setter
+@Setter 
 @ToString
 public class Params {
 	private HttpServletRequest request;
@@ -38,7 +37,12 @@ public class Params {
 	private String  userBirth	;
 	private Integer confirmNum	;
 // 유저회원가입------------------------------------------------------------------------------
-	
 	private String keepLogin;	// 로그인 유지 체크여부
+
+	
+// 패스워드 찾기---------------------------------------------------------------------------
+	private String searchPwdUserID;
+	private String searchPwdConfirmNum;
+	private String searchPwdNewPwd;
 	
 }

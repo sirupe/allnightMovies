@@ -16,7 +16,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-
 public class SendEmail {
 	public SendEmail(String certification, String userEmail) {
 		try {

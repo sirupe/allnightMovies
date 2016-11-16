@@ -29,6 +29,18 @@ public class DBService {
 		return dbMapper.login(params);
 	}
 	
+	public Integer searchPWD(String searchPwdUserID)  {
+		return dbMapper.searchPWD(searchPwdUserID);
+	}
+	
+	public String searchEmail(String searchPwdUserID) {
+		return dbMapper.searchEmail(searchPwdUserID);
+	}
+	
+	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd) {
+		return dbMapper.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
+	}
+
 /** Join **/
 	public Integer idCheck(String id) throws Exception {
 		return dbMapper.idCheck(id);
@@ -43,5 +55,4 @@ public class DBService {
 		System.out.println("DBService");
 		return dbMapper.showtimes();
 	}
-	
 }

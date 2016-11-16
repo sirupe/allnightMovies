@@ -41,20 +41,15 @@ public class AjaxService implements Action {
 			return "/movie/mainService/locationJoinSuccess";
 		}
 		return "false";
-		
 	}
-	
 	public String confirmNumInit() throws Exception {
 		HttpSession session = this.params.getSession();
 		session.setAttribute("isConfirm", false);
 		return "<label class=\"join__resultText\" style=\"color:red;\">인증을 받아주세요.</label>";
 	}
-	
 	@Override
 	public ModelAndView execute(Params params) throws Throwable {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
+	
 }

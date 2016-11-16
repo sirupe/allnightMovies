@@ -18,6 +18,11 @@ public interface DBMapper {
 
 /** Login **/
 	public String login(Params params);
+	
+/** Search PWD **/
+	public Integer searchPWD(String searchPwdUserID);
+	public String searchEmail(String searchPwdUserID);
+	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd);
 
 /** Join **/
 	public Integer idCheck(String id);

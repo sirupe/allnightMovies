@@ -3,8 +3,6 @@ package com.allnightMovies.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +29,16 @@ public class DBService {
 		return dbMapper.login(params);
 	}
 	
-	public Integer searchPWD(String searchUserID)  {
-		return dbMapper.searchPWD(searchUserID);
+	public Integer searchPWD(String searchPwdUserID)  {
+		return dbMapper.searchPWD(searchPwdUserID);
 	}
 	
-	public String searchEmail(String searchUserID) {
-		return dbMapper.searchEmail(searchUserID);
+	public String searchEmail(String searchPwdUserID) {
+		return dbMapper.searchEmail(searchPwdUserID);
+	}
+	
+	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd) {
+		return dbMapper.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
 	}
 
 }

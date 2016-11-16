@@ -25,50 +25,74 @@ function sendConfirmEmail() {
 }
 
 function checkConfirmNum() {
-	var userCertificationNum = $('#searchpwd-confirm-num').val();
-	submit(
-		'POST',
-		'/movie/mainService/checkConfirmNum'                         
-	);
-	return userCertificationNum;
+	
+	console.log($('#searchpwd-confirm-num').val());
+	var userConfirmNum = $('#searchpwd-confirm-num');
+	var checkConfirmNumText = $('#searchpwd-confirm-num-text');
+	var isSearchPwdChange = true;
+	
+	//ATTR = 태그안에 들어가는 속성들
+	if(userConfirmNum.attr('readonly') != 'readonly') {
+		isSearchPwdChange = false;
+		if(userConfirmNum.val().length == 6) {
+			$.post(
+				'/movie/mainService/checkConfirmNum',
+				{'searchPwdConfirmNum' : userConfirmNum.val()},//params변수명 : value	
+				
+				function(resultMsg) {
+					checkConfirmNumText.html(resultMsg);
+					if($('#ischeck-confirmnum-id').val() == 'true') {
+						isSearchPwdChange = true;
+						userConfirmNum.attr({'readonly' : 'readonly'});
+						userConfirmNum.css("background-color", "#dcdcdc");
+					}
+				}
+			)
+		} else {
+			isSearchPwdChange = false;
+			checkConfirmNumText.html('<label style="color:red;">인증번호는 숫자 6자리 입니다.</label>');
+		}
+	}
+	return isSearchPwdChange;
 }
 
-
-
-
-
+function changePWD() {
+	var checkConfirmNumText = $('#searchpwd-confirm-num-text');
+	
+	if(checkConfirmNum()) {
+		submit(
+			'POST',
+			'/movie/mainService/getTemplate', 
+			'searchPwd',				    //디렉토리                           
+			'searchPwdChangePwd',			//페이지                            
+			'searchPwd/searchPwd',   	    //자바스크립트                         
+			'searchPwd/searchPwd'	 	    //CSS                            
+		);	
+	} else {
+		console.log("changePWD(결과) : " + checkConfirmNum());
+		checkConfirmNumText.html('<label style="color:red;">인증번호가 일치하지 않습니다.</label>');
+	}
+}
 
 function checkRePWD() {
-	if($('#newPWD').val() != $('#newPWD-check').val()) {
-		alert('비밀번호가 일치하지 않습니다.');
-	} else if($('#newPWD').val() == '' || $('#newPWD-check').val() == '') {
-		alert('비밀번호를 입력해주세요');
-	} else {
-		submit(
-			'POST',
-			'/movie/mainService/updatePWD',
-			'searchPwd',
-			'searchPwdChangeCompleted',
-			'searchPwd/searchPwd',
-			'searchPwd/searchPwd'
-		);
-	}
-}
-
-function validationCheck() {
+	var isNewPwdResult = true;
 	var pwd = validationPWD();
 	var repwd = validationRePWD();
+	var newPwd = $('#newPWD').val();
+	var newPwdText = $('#newPWD-re-text');
 	
 	if(pwd && repwd) {
-		submit(
-			'POST',
+		isNewPwdResult = true;
+		$.post(//정보를 요청할 URL, 서버로보낼 data, 요청성공시 콜백함수/서버에서 반횐되는 데이터타입
 			'/movie/mainService/updatePWD',
-			'searchPwd',
-			'searchPwdChangeCompleted',
-			'searchPwd/searchPwd',
-			'searchPwd/searchPwd'	
+			{'searchPwdNewPwd' : newPwd ,} //params변수명 : value
+			
 		);
+	} else {
+		isNewPwdResult = false;
+		newPwdText.html('<label style="color: red;">입력하신 비밀번호와 일치하지 않습니다.</label>');
 	}
+//	return isNewPwdResult;
 }
 
 //정합성검사

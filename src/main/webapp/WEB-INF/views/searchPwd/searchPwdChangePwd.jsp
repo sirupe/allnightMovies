@@ -13,6 +13,6 @@
 		
 		<input id="newPWD-check" class="input__searchPwd-CheckConfirm" type="password" name="newPwdCheck" onkeyup="validationRePWD()" placeholder="비밀번호 재확인">
 		<div id="newPWD-re-text" class="div-newPWDCheck">필수 입력사항입니다.</div>
-		<button class="button__searchPwd__confirm" type="button" onclick="validationCheck()">확인</button>
+		<button class="button__searchPwd__confirm" type="button" onclick="checkRePWD()">확인</button>
 	</div>
 </div>

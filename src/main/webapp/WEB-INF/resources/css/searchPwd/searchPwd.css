@@ -231,7 +231,11 @@
 	color: #8BACD9;
 	margin-bottom: 10px;
 }
-.div-searchpwd-confirm-num {
+.div-searchpwd-confirm-true {
 	color: #8BACD9;
+	margin-bottom: 10px;
+}
+.div-searchpwd-confirm-false {
+	color: red;
 	margin-bottom: 10px;
 }

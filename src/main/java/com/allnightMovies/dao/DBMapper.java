@@ -3,8 +3,6 @@ package com.allnightMovies.dao;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.params.Params;
 
@@ -13,7 +11,7 @@ public interface DBMapper {
 	public List<MainMenu> getMenus() throws Exception;
 	public Integer idCheck(String id);
 	public String login(Params params);
-	public String Integer(Params params);
-	public Integer searchPWD(String searchUserID);
-	public String searchEmail(String searchUserID);
+	public Integer searchPWD(String searchPwdUserID);
+	public String searchEmail(String searchPwdUserID);
+	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd);
 }

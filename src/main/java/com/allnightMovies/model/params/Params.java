@@ -9,7 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
+@Setter 
 @ToString
 public class Params {
 	private HttpServletRequest request;
@@ -27,20 +27,21 @@ public class Params {
 	
 //메뉴경로가 아닌 페이지 호출시---------------------------------------------------------------	
 	
-	private String userName;
-	private String userID;
-	private String userIDCheck;
-	private String userPWD;
-	private String userRePWD;
-	private String userGender;
-	private String userEmail;
-	private String userBirth;
-	private Integer confirmNum;
+	private String  userName	;
+	private String  userID		;
+	private String  userIDCheck	;
+	private String  userPWD		;
+	private String  userRePWD	;
+	private String  userGender	;
+	private String  userEmail	;
+	private String  userBirth	;
+	private Integer confirmNum	;
 // 유저회원가입------------------------------------------------------------------------------
 	private String keepLogin;	// 로그인 유지 체크여부
 
 	
 // 패스워드 찾기---------------------------------------------------------------------------
-	private String searchUserID;
-	
+	private String searchPwdUserID;
+	private String searchPwdConfirmNum;
+	private String searchPwdNewPwd;
 }

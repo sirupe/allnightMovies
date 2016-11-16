@@ -59,12 +59,11 @@ function pwdRegexCheck(pwd) {
 }
 
 function idRegexCheck(id) {
-
-	var regex = /^[a-zA-Z0-9]*$/;
+	var regex = /^[A-Za-z0-9_-]{4,15}$/;
 	return regex.test(id);
 }
 
 function emailRegexCheck(email) {
-	var regex = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+	var regex = /^[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
 	return regex.test(email);
 }

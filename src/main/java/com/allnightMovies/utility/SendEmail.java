@@ -17,10 +17,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 
-
-// �̸����� ������ Ŭ����.
-// ���� : new SendEmail(String������ȣ, �����email); 
-// �߼۵Ǵ� �̸��� ������ �ٲٰ� �ʹٸ� UtilityEnums ���� SENDER_EMAIL_SUBJECT �����ϸ� ��.
 public class SendEmail {
 	public SendEmail(String certification, String userEmail) {
 		try {

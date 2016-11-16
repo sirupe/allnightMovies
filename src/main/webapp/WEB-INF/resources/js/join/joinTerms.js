@@ -6,7 +6,7 @@ function agree() {
 			'join',
 			'join',
 			'join/join',
-			'join'
+			'join/join'
 		);
 	} else {
 		alert('약관에 모두 동의하셔야 가입이 가능합니다.');

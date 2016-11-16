@@ -66,14 +66,4 @@ public class MainController {
 		String resultStr = action.executeString(params);
 		return resultStr;
 	}
-	
-//	@RequestMapping(value="/check/{dbService}/{method}", method = RequestMethod.POST)
-//	public ModelAndView postMethod(@PathVariable("dbService") String dbService, @PathVariable("method") String method, Params params, HttpSession session) throws Throwable {
-//
-//		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
-//		Action action = (Action) context.getBean(dbService);
-//		params.setMethod(method);
-//		ModelAndView mav = action.execute(params);
-//		return mav;
-//	}
 }

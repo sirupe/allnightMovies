@@ -1,8 +1,9 @@
 @CHARSET "UTF-8";
+/**************MYINFO***************/
 /*내정보 전체*/
 .div-myinfo {
 	width: 700px;
-    height: 100px;
+    height: 420px;
     display: flex;
     flex-direction: column;
     line-height: 40px;
@@ -20,68 +21,216 @@
     font-size: 20px;
 }
 
-/*내정보 내용*/
+/*내정보 내용부분*/
 .div-myinfo__content {
 	display: flex;
 	align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-	flex-basis: 270px;
     border: 1px solid gray;
     font-size: 12px;
     line-height: 1.5em;
     background-color: white;
 }
 
-.span-myinfo__content {
-	
-}
-
+/*내정보 글씨 */
 .label-myinfo__content__id {
+	margin-left: 130px;
 	margin-right: 35px;
-	font-size: 18px;
+	font-size: 17px;
+	font-weight: bold;
 }
-
 .label-myinfo__content__name {
+	margin-left: 130px;
 	margin-right: 50px;
-	font-size: 18px;
+	font-size: 17px;
+	font-weight: bold;
 }
-
 .label-myinfo__content__gender {
+	margin-left: 130px;
 	margin-right: 50px;
-	font-size: 18px;
+	font-size: 17px;
+	font-weight: bold;
 }
-
 .label-myinfo__content__email {
+	margin-left: 130px;
 	margin-right: 35px;
-	font-size: 18px;
+	font-size: 17px;
+	font-weight: bold;
 }
-
 .label-myinfo__content__birth {
+	margin-left: 130px;
 	margin-right: 50px;
-	font-size: 18px;
+	font-size: 17px;
+	font-weight: bold;
 }
-
 .text-myinfo__content{
     border: none;
+    margin-top: 30px;
+    margin-left: 10px;
+    font-size: 16px;
+    width: 260px;
+}
+
+/**************MYINFO ChangePwd***************/
+/*내정보-비밀번호변경-틀*/
+.div-myInfoChangePwd {
+	width: 700px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    line-height: 40px;
+    padding: 20px;
+    background-color: #F0F0F0;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.div-myInfoChangePwd__title {
+	background-color: #383838;
+    color: white;
+    padding-left: 20px;	
+    font-size: 20px;
+}
+
+.div-myInfoChangePwd__content {
+	display: flex;
+	align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid gray;
+    font-size: 12px;
+    line-height: 1.5em;
+    background-color: white;
+}
+
+/*내정보-비밀번호변경-내용*/
+.label-myInfoChangePwd__content {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	font-size: 17px;
+}
+
+/*내정보-비밀번호변경-입력란*/
+.input-myInfoChangePwd__presentPwd,
+.input-myInfoChangePwd__newPwd,
+.input-myInfoChangePwd__ChecknewPwd {
+    height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
     font: normal 14px/0 Tahoma, Geneva, sans-serif;
-	margin-top: 30px;
-	font-size: 20px;
-	width: 200px;
-	
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+    font-size: 13px;
 }
 
-/*내정보 버튼*/
-
-.span-myinfo__buttons__email {
-	margin-top: 30px;
-	display: inline;
-	float: left;
+/*내정보-비밀번호변경-실시간검사*/
+.label-validation__presentPwd,
+.label-validation__check__newpwd, 
+.label-validation__newpwd {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	color: #8BACD9;
+	font-size: 13px;
 }
-.span-myinfo__buttons__pwd {
-	display: inline;
+
+/**************MYINFO ChagePwdResult***************/
+.div-myInfoChangePwd {
+	width: 700px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    line-height: 40px;
+    padding: 20px;
+    background-color: #F0F0F0;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
+.div-myInfoChagePwdResult-title {
+	background-color: #383838;
+    color: white;
+    padding-left: 20px;	
+    font-size: 20px;
+}
+
+.div-myInfoChagePwdResult-content {
+	display: flex;
+	align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid gray;
+    font-size: 12px;
+    line-height: 1.5em;
+    background-color: white;
+}
+
+/**************MYINFO ChagePwdResult***************/
+.div-myInfoChangeEmail {
+	width: 700px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    line-height: 40px;
+    padding: 20px;
+    background-color: #F0F0F0;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.div-myInfoChangeEmail__title {
+	background-color: #383838;
+    color: white;
+    padding-left: 20px;	
+    font-size: 20px;
+}
+
+.div-myInfoChangeEmail__content {
+	display: flex;
+	align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid gray;
+    font-size: 12px;
+    line-height: 1.5em;
+    background-color: white;
+}
+.input-myInfoChangeEmail {
+	height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font: normal 14px/0 Tahoma, Geneva, sans-serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+    font-size: 13px;
+    width: 260px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+.input-myInfoChangeEmail__confirm {
+	height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font: normal 14px/0 Tahoma, Geneva, sans-serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+    font-size: 13px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+/**************MYINFO BUTTONS***************/
+.button-myInfoChangeEmail__submit,
+.button-myInfoChangeEmail__reset,
+.button-myInfoChagePwdResult__main,
+.button-myInfoChangePwd__confirm,
+.button-myInfoChangePwd__reset,
 .button-myinfo-change-pwd,
 .button-myinfo-change-email {
 	display: inline-block;
@@ -105,10 +254,35 @@
 	-moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
 	-o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
 	transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);	
+	margin-top: 20px;
+	margin-bottom: 30px;
 }
-
+.button-myInfoChangeEmail__submit:hover,
+.button-myInfoChangeEmail__reset:hover,
+.button-myInfoChagePwdResult__main:hover,
+.button-myInfoChangePwd__confirm:hover,
+.button-myInfoChangePwd__reset:hover,
 .button-myinfo-change-pwd:hover,
 .button-myinfo-change-email:hover {
+	border: 1px solid #007cad;
+	background: #12385b;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.button-myInfoChangeEmail__sendmail {
+	background-color: #8BACD9;
+	padding: 3px 10px;
+	border: 1px solid #018dc4;
+	font: 15px;
+	color: rgba(255,255,255,0.9);
+	cursor: pointer;
+}
+.button-myInfoChangeEmail__sendmail:hover {
 	border: 1px solid #007cad;
 	background: #12385b;
 	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;

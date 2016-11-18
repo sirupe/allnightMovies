@@ -47,6 +47,7 @@ public class AjaxService implements Action {
 		session.setAttribute("isConfirm", false);
 		return "<label class=\"join__resultText\" style=\"color:red;\">인증을 받아주세요.</label>";
 	}
+	
 	@Override
 	public ModelAndView execute(Params params) throws Throwable {
 		return null;

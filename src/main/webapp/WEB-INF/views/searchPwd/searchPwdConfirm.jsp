@@ -12,7 +12,7 @@
 		</label>
 		<input id="searchpwd-confirm-num" class="input__searchPwd-confirm__confirmNum" type="text" onkeyup="checkConfirmNum()" 
 			   name="searchPWDConfirmNum" autocomplete="off" placeholder="인증번호 입력">
-		<div id="searchpwd-confirm-num-text" class="div-searchpwd-confirm-true"></div>
+		<label id="searchpwd-confirm-num-text" class="div-searchpwd-confirm-true">03:00</label>
 		<button class="button__searchPwd__sendMail" type="button" onclick="changePWD()">확인</button>
 	</div>
 </div>

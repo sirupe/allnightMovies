@@ -40,9 +40,14 @@ public class Params {
 	private String keepLogin;	// 로그인 유지 체크여부
 
 	
-// 패스워드 찾기---------------------------------------------------------------------------
+// 패스워드 찾기------------------------------------------------------------------
 	private String searchPwdUserID;
 	private String searchPwdConfirmNum;
 	private String searchPwdNewPwd;
 	
+// 비밀번호 변경	------------------------------------------------------------------
+	private String myInfoPresentPwd;
+	private String myInfoNewPwd;
+	private String myInfoNewPwdCheck;
+
 }

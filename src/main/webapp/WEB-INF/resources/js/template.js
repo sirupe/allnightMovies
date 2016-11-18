@@ -43,9 +43,9 @@ function logout() {
 function locationMyInfo() {
 	submit(
 		'POST',
-		'/movie/mainService/getTemplate', //main service 에서 기본 템플레이트 출력
+		'/movie/mainService/viewMyInfo', //main service 에서 기본 템플레이트 출력
 		'myInfo',			 			
-		'myInfoForm',	
+		'myInfo',	
 		'myInfo/myInfo', 
 		'myInfo/myInfo'	 
 	);
@@ -64,7 +64,6 @@ function locationMenus(method, action, directory, page) {
 		$('#hidden-page').val(getPage);
 		$('form').submit();
 		
-		
 	});
 }
 
@@ -80,6 +79,9 @@ function submit(method, action, directory, page, js, css) {
 		$('form').submit();
 	});
 }
+
+/*shin movie*/
+
 
 function pwdRegexCheck(pwd) {
 	var regex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;

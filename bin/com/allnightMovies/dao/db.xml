@@ -77,6 +77,8 @@
 		)
 	</insert>
 
+
+<!-- 수진=================================================================================  -->
 <!-- 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>
@@ -102,5 +104,20 @@
 		    MOVIE_TITLE
 		FROM MOVIE_SCREENING_PRICE 
 		ORDER BY SCREENING_DATE ASC, MOVIE_TITLE ASC, SCREENING_DATE ASC
+	</select>
+	
+	<!--아이디 찾기-->
+	<select id = "searchId" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
+		SELECT 
+			USER_ID 
+			FROM USER_PERSONAL_INFO 
+		WHERE USER_NAME = #{param1} AND  USER_BIRTH = #{param2} AND USER_GENDER = #{param3}
+	</select>
+	
+	<!--아이디 -->
+	<select id= "searchIdCount" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
+		SELECT COUNT(USER_ID) 
+			FROM USER_PERSONAL_INFO 
+		WHERE USER_NAME = #{param1} AND  USER_BIRTH = #{param2} AND USER_GENDER = #{param3}	
 	</select>
 </mapper>

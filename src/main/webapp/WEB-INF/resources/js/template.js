@@ -39,6 +39,7 @@ function logout() {
 	location.href = '/movie/mainService/logout';
 }
 
+
 /*shin myInfo*/
 function locationMyInfo() {
 	submit(
@@ -51,6 +52,20 @@ function locationMyInfo() {
 	);
 }
 
+/*아이디 찾기 */
+function locationSearchID() {
+	submit(
+		'POST',
+		'/movie/mainService/getTemplate',
+		'searchId',
+		'searchId',
+		'searchId/searchId',
+		'searchId/searchId'
+	);
+	
+}
+
+/*상영 시간표*/
 function locationMenus(method, action, directory, page) {
 	var getMethod = method;
 	var getAction = action;
@@ -63,10 +78,10 @@ function locationMenus(method, action, directory, page) {
 		$('#hidden-dir').val(getDirectory);
 		$('#hidden-page').val(getPage);
 		$('form').submit();
-		
-		
 	});
 }
+
+
 
 function submit(method, action, directory, page, js, css) {
 	console.log('method');

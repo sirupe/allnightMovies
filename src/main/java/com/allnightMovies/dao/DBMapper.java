@@ -31,4 +31,9 @@ public interface DBMapper {
 /** 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	
+/** 아이디찾기 **/
+	public String searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
+	
+/** 아이디 갯수 **/
+	public Integer searchIdCount(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
 }

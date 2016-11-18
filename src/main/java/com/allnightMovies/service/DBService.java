@@ -52,7 +52,16 @@ public class DBService {
 
 /** 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception {
-		System.out.println("DBService");
 		return dbMapper.showtimes();
+	}
+/** 아이디 찾기**/
+	public String searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception {
+		System.out.println("searchIdUserGender" + searchIdUserGender);
+		return dbMapper.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
+	}
+
+/** 아이디유무 갯수**/
+	public Integer searchIdCount(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception {
+		return dbMapper.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 	}
 }

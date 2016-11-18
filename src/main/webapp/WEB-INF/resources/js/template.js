@@ -95,3 +95,7 @@ function emailRegexCheck(email) {
 	var regex = /^[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
 	return regex.test(email);
 }
+
+function test() {
+	$('.testdiv').text($('.area').val());
+}

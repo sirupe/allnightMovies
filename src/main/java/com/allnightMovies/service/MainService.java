@@ -112,6 +112,7 @@ public class MainService implements Action {
 		System.out.println(">>메인서비스 sendEmail() 인증번호 : " + randNum);
 		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
 		String result = "인증번호가 발송되었습니다.";
+		System.out.println("인증번호 : " + randNum);
 		boolean bool = true;
 		this.params.getSession().setAttribute("certificationNum", randNum);
 		System.out.println("세션에 저장 : " + this.params.getSession().getAttribute("certificationNum"));
@@ -251,4 +252,5 @@ public class MainService implements Action {
 		mav.addObject("movieTimeTable", movieTimeTable);
 		return mav;
 	}
+
 }

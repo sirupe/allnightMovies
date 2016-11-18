@@ -80,8 +80,6 @@ function submit(method, action, directory, page, js, css) {
 	});
 }
 
-/*shin movie*/
-
 
 function pwdRegexCheck(pwd) {
 	var regex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;

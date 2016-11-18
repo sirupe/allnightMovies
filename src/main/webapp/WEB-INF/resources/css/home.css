@@ -143,7 +143,6 @@ body {
     height: 70%;
     flex-direction: column;
     align-items: center;
-    background-color: #F1F0F2;
 }
 .content__sub-menus {
     display: flex;

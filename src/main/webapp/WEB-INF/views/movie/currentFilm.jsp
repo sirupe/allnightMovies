@@ -6,12 +6,12 @@
 		현재상영작
 	</div>
 	<div class="div-currentFilm__content">
-		<span class="div-currentFilm__mainFilm">
-			클릭하면 영화 예고편이뜨게 아님 이미지 사용
+		<span class="span-currentFilm__mainFilm">
+			<img src="/resources/img/test.PNG" class="video-currentFilm__mainFilm">
 		</span>
 		<span class="div-currentFilm__etc">
-			<label class="label-currentFilm-sort__reservation" onclick="">예매순/</label>
-			<label class="label-currentFilm-sort__score" onclick="">평점순</label>
+			<a href="#" class="a-currentFilm-sort__reservation" onclick="">예매순 </a>
+			<a href="#" class="a-currentFilm-sort__score" onclick="">평점순</a>
 		</span>
 		<button class="button-currentFilm-reservation">예매하기</button>
 	</div>

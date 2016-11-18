@@ -182,7 +182,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-/*******PWD찾기 SHIN*******/
+/*******PWD찾기 SHIN*******/	
 	public ModelAndView searchPwdsendEmail() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		Random rand = new Random();
@@ -272,4 +272,23 @@ public class MainService implements Action {
 		this.params.getSession().invalidate();
 		return mav;
 	}
+
+/*******MOVIE*******/	
+	public ModelAndView currentFilm() throws Exception{
+		this.params.setDirectory("movie");
+		this.params.setPage("currentFilm");
+		this.params.setContentCSS("movie/currentFilm");
+		this.params.setContentjs("movie/currentFilm");
+		return this.getTemplate();	
+	}
+	
+	public ModelAndView screeningsPlanned() throws Exception{
+		this.params.setDirectory("movie");
+		this.params.setPage("screeningsPlanned");
+		this.params.setContentCSS("movie/screeningsPlanned");
+		this.params.setContentjs("movie/screeningsPlanned");
+		return this.getTemplate();	
+	}
+	
+	
 }

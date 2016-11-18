@@ -1,15 +1,10 @@
 package com.allnightMovies.dao;
 
-
-
-
 import java.util.List;
 
-
 import com.allnightMovies.model.data.MainMenu;
-import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
-import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
+import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 
 

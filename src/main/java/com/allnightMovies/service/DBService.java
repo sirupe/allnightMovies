@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -59,9 +60,9 @@ public class DBService {
 		System.out.println("searchIdUserGender" + searchIdUserGender);
 		return dbMapper.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 	}
-
 /** 아이디유무 갯수**/
 	public Integer searchIdCount(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception {
 		return dbMapper.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 	}
+
 }

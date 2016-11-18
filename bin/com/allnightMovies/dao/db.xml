@@ -120,4 +120,5 @@
 			FROM USER_PERSONAL_INFO 
 		WHERE USER_NAME = #{param1} AND  USER_BIRTH = #{param2} AND USER_GENDER = #{param3}	
 	</select>
+
 </mapper>

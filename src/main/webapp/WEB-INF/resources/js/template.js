@@ -65,22 +65,6 @@ function locationSearchID() {
 	
 }
 
-/*상영 시간표*/
-function locationMenus(method, action, directory, page) {
-	var getMethod = method;
-	var getAction = action;
-	var getDirectory = directory;
-	var getPage = page;
-	console.log('Menus');
-	$(document).ready(function() {
-		$('form').attr({'method' : getMethod});
-		$('form').attr({'action' : getAction});
-		$('#hidden-dir').val(getDirectory);
-		$('#hidden-page').val(getPage);
-		$('form').submit();
-	});
-}
-
 function submit(method, action, directory, page, js, css) {
 	console.log('method');
 	$(document).ready(function() {
@@ -107,4 +91,8 @@ function idRegexCheck(id) {
 function emailRegexCheck(email) {
 	var regex = /^[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
 	return regex.test(email);
+}
+
+function test() {
+	$('.testdiv').text($('.area').val());
 }

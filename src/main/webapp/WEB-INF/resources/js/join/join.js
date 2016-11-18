@@ -11,7 +11,9 @@ function idCheck() {
 		$.post(
 			'/movie/mainService/idCheck',
 			{'userIDCheck' : userID},
+
 			function(result) {
+				console.log(result);
 				$('#idResult').html(result);
 			}
 		);
@@ -111,7 +113,7 @@ function userEmailCheck() {
 		$.post(
 			'/movie/ajax/ajaxService/confirmNumInit',
 			{},
-			function() {}
+			function(result) {}
 		);
 	}
 	$('#user-email-check').html(resultMsg);
@@ -179,11 +181,20 @@ function joinSuccessCheck() {
 				'userEmail': $('#user-email').val(),
 				'userBirth': $('#user-birth').val()
 			},
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			function(result) {
 				if(result == 'false') {
 					alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
 				} else {
-					location.href=result;
+					location.href='/movie/mainService/locationJoinSuccess';
 				}
 			}
 		);

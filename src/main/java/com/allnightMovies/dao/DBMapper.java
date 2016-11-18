@@ -1,14 +1,10 @@
 package com.allnightMovies.dao;
 
-
-
-
 import java.util.List;
 
-
 import com.allnightMovies.model.data.MainMenu;
-import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
+import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 
 
@@ -30,6 +26,7 @@ public interface DBMapper {
 
 /** 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
+
 	
 /** 아이디찾기 **/
 	public String searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;

@@ -1,5 +1,7 @@
 @CHARSET "UTF-8";
 
+
+/* 회원정보 아이디 찾기 */
 .div__searchId_form {
 	width: 700px;
     height: 250px;
@@ -117,6 +119,8 @@ line-height: 45px;
     background-color:#be92b1;
 }
 
+
+/* 아이디 찾기 폼 */
 .user-find-id-info__content {
 padding-left: 10px;
 padding-top: 10px;

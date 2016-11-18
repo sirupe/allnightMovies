@@ -38,7 +38,7 @@
 						<label>성별</label>
 					</div>
 					
-					<select class="user-find-id-info__content__gender" id="userFindgender" name="searchIdUserGender">
+					<select class="user-find-id-info__content__gender" id="userFindgender" name="searchIdUserGender" value="남자">
 						<option>남자</option>
 						<option>여자</option>
 					</select>
@@ -50,7 +50,7 @@
 					</div>
 				<div class= "emailConfirmNumber_check">
 					
-					<Button class="user-find-id-info_emailConfirmNumber_check_button" type="button" onclick="searchIdcheckConfirm()">확인</Button>
+					<Button class="user-find-id-info_emailConfirmNumber_check_button" type="button" onclick="confirmIdCheck()">확인</Button>
 				</div>
 				
 			</div>

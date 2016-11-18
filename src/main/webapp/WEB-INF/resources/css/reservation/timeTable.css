@@ -1,8 +1,21 @@
 @CHARSET "UTF-8";
 
+.container__showtimes {
+	background-color: white;
+    padding: 20px;
+    width: 950px;
+    margin: auto;
+}
+
 .container__movie__screening__date {
 	width: 100%;	
 	
+}
+	
+.container__showtimes__title {
+	border-bottom: solid black;
+    padding-bottom: 15px;
+    margin-top: 3px;
 }
 	
 button.movie_screening_date {
@@ -15,34 +28,39 @@ button.movie_screening_date {
     text-align: left;
     outline: none;
     font-size: 15px;
-    
 }
 
 button.movie_screening_date.active, button.movie_screening_date:hover {
-    background-color: darkkhaki;
+    background-color: rgb(213, 160, 161);
+    color: white;
+    font-size: 17px;
 }
 
 div.movie_screening_panel {
-  background-color: white;
+	background-color: white;
     max-height: 0;
     overflow: hidden;
     width:1100px;
     transition: 0.6s ease-in-out;
     opacity: 0;
+    width: 100%;
+    
 }
 
 div.movie_screening_panel.show {
     opacity: 1;
     max-height: 800px;
+
 }
 
 .movie__info {
 	display: flex;
-	background-color: antiquewhite;
+	background-color: white;
 	height: 60px;
 	line-height:70px;
 	text-align: center;
 	text-overflow:ellipsis;
+    border-bottom: 1px dashed;
 }
 	
 	

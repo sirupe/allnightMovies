@@ -1,7 +1,19 @@
 // 아이디 찾기 슬라이드
+$(function() {
+    $("[name=searchID]").click(function(){
+    	$('#user-SearchName').val('');
+    	$('#user-find-id_birthday').val('');
+    	//$('#userFindgender').val('');
+    	$('#userFindIdEmail').val('');
+    	$('#userFindIdConfirmNumber').val('');
+    	
+        $('.searchIdHide').hide();
+        $("#blk-"+$(this).val()).show('slow');
+    });
+ });
 
 
-//회원정보로 아이디찾기 확인 버튼
+//text공백 검사
 function searchIdcheckConfirm() {
 	var isResult = true;
 	var searchNameCheckText    = $('#user-SearchName'); //아이디
@@ -13,18 +25,9 @@ function searchIdcheckConfirm() {
 	
 	if(userIdCheck == '' || userBirthCheck == '' || userGenderCheck == '') {
 		isResult = false;
-		$('#insertConfirm').html('<label style="color:red;">모두 입력해주세요!<label>');
-	} else {
-		$('#insertConfirm').html('');
-		submit(
-			'POST',
-			'/movie/mainService/searchId',
-			'searchId',
-			'searchIdResult',
-			'searchId/searchId',
-			'searchId/searchId'
-		);
-	}
+		$('#insertConfirm').html('<label style="color:red;">모두 입력해주세요.<label>');
+	} 
+	return isResult;
 }
 
 //생일 검사
@@ -35,14 +38,14 @@ function userFindIdBirth() {
 		$('#insertConfirm').html('<label style="color: red;">입력하신 날짜가 정확하지 않습니다.</label>');
 		isBirthMsg = false;
 	}
-	return isBirthDay;
+	return isBirthMsg;
 }
+
 
 //이메일 인증번호 체크
 
 
 //이메일로 아이디 찾기
-
 function user_id_find_checkemail() {
 	submit(
 			'POST',
@@ -54,11 +57,31 @@ function user_id_find_checkemail() {
 			
 	);
 }
-
-
 //전체 다검사하기.
 
 function allCheck() {
-	
+	if(!searchIdcheckConfirm()) {
+		return false;
+	} 
+	if(!userFindIdBirth()) {
+		return false;
+	}
+	return true;
 }
 
+
+function confirmIdCheck() {
+	if(allCheck()) {
+		$('#insertConfirm').html('');
+		submit(
+			'POST',
+			'/movie/mainService/searchId',
+			'searchId',
+			'searchIdResult',
+			'searchId/searchId',
+			'searchId/searchId'
+		);
+	} else {
+		$('#insertConfirm').html('<label style="color:red;">정확히 입력 바랍니다.<label>');
+	}
+}

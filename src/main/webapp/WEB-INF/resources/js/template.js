@@ -81,8 +81,6 @@ function locationMenus(method, action, directory, page) {
 	});
 }
 
-
-
 function submit(method, action, directory, page, js, css) {
 	console.log('method');
 	$(document).ready(function() {

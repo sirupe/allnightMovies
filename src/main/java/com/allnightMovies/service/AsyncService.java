@@ -29,12 +29,14 @@ public class AsyncService implements AsyncAction {
 		return (AsyncResult) method.invoke(this);
 	}
 	
-	public String joinSuccessCheck() throws Exception {
+	public AsyncResult<String> joinSuccessCheck() throws Exception {
 		String userID = params.getUserIDCheck();
 		String userPWD = params.getUserPWD();
 		String userRePWD = params.getUserRePWD();
 		String userName = params.getUserName();
 		String userBirth = params.getUserBirth();
+		
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
 		
 		boolean checkBool = true;
 		
@@ -97,6 +99,8 @@ public class AsyncService implements AsyncAction {
 		// 인증을 받은 상태인지 체크
 		checkBool = (boolean) params.getSession().getAttribute("isConfirm");
 		
+		String resultStr = null;
+		
 		if(checkBool) {
 			UserPersonalInfoDTO personalDTO = new UserPersonalInfoDTO();
 			personalDTO.setUserName(userName);
@@ -107,15 +111,21 @@ public class AsyncService implements AsyncAction {
 			personalDTO.setUserBirth(userBirth);
 			this.dbService.insertJoinUserInfo(personalDTO);
 			this.params.getSession().setAttribute("userID", this.params.getUserIDCheck());
-			return "/movie/mainService/locationJoinSuccess";
+			resultStr = "/movie/mainService/locationJoinSuccess";
 		}
-		return "false";
+		resultStr = "false";
+		
+		asyncResult.setData(resultStr);
+		return asyncResult;
 	}
 	
-	public String confirmNumInit() throws Exception {
+	public AsyncResult confirmNumInit() throws Exception {
 		HttpSession session = this.params.getSession();
 		session.setAttribute("isConfirm", false);
-		return "<label class=\"join__resultText\" style=\"color:red;\">인증을 받아주세요.</label>";
+		System.out.println("");
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData("<label class=\"join__resultText\" style=\"color:red;\">인증번호를 받아주세요.</label>");
+		return async;
 	}
 
 }

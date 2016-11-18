@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
+	<wb-module deploy-name="allnightMovies">
+=======
 	<wb-module deploy-name="AllnightMovies">
+>>>>>>> a447fb39b790183fa436b1e3d7822ee17cdaf580
 		<property name="context-root" value="movie"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>

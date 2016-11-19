@@ -181,7 +181,7 @@ function joinSuccessCheck() {
 				'userBirth': $('#user-birth').val()
 			},
 			function(result) {
-				if(result == 'false') {
+				if(result.success == false) {
 					alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
 				} else {
 					location.href='/movie/mainService/locationJoinSuccess';

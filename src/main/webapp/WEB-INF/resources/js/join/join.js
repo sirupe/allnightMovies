@@ -111,7 +111,7 @@ function userEmailCheck() {
 	}
 	if(resultBool) {
 		$.post(
-			'/movie/ajax/ajaxService/confirmNumInit',
+			'/movie/async/asyncService/confirmNumInit',
 			{},
 			function(result) {}
 		);
@@ -171,7 +171,7 @@ function joinSuccessCheck() {
 	
 	if(joinSuccessCheckValidation()) {
 		$.post(
-			'/movie/ajax/ajaxService/joinSuccessCheck',
+			'/movie/async/asyncService/joinSuccessCheck',
 			{
 				'userIDCheck' : $('#user-id').val(),
 				'userPWD': $('#user-pwd').val(),
@@ -181,15 +181,6 @@ function joinSuccessCheck() {
 				'userEmail': $('#user-email').val(),
 				'userBirth': $('#user-birth').val()
 			},
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			function(result) {
 				if(result == 'false') {
 					alert('회원가입에 실패하였습니다. 다시 시도해주세요.');

@@ -36,9 +36,6 @@ public class MainService implements Action {
 //	MovieMapper movieMapper;
 	@Autowired
 	DBService dbService;
-
-	@Autowired
-	SubService subService;
 	
 	// 여기서 온갖것들을 실행시켜주면 된다.
 	// ModelAndView 객체에 view 단에서 찍어내야 하는 페이지들도 올려두고 ...

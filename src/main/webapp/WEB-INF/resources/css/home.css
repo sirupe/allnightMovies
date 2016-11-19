@@ -233,6 +233,7 @@ body {
 	margin-top: 40px;
     font: status-bar;
     margin-bottom: 20px;
+    color: #5e6472;
 }
 .header__logon__top__buttons {
 	display: flex;
@@ -255,7 +256,6 @@ body {
     text-align: center;
     width: 100%;
     display: flex;
-	cursor: pointer;
     height: 160px;
     background-image: url('../img/background.jpg');
     background-color: #38383a;
@@ -302,6 +302,7 @@ body {
 	display: block;
 }
 .header__logo {
+	cursor: pointer;
     flex-grow: 1;
 }
 .header__menu-and-title__title img {

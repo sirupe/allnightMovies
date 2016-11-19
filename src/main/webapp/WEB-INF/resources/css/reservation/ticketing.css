@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+
+.calendar {
+    text-align: center;
+    width: 300px;
+    height: 250px;
+}
+
+.calendar__dayTable {
+    width: 100%;
+}
+
+.calendar__month {
+    margin: 10px 0px;
+}

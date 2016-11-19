@@ -16,6 +16,7 @@ import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.service.DBService;
 
+
 @RestController
 public class AsyncController {
 	@Autowired

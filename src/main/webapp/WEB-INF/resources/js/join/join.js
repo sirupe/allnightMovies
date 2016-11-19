@@ -13,7 +13,6 @@ function idCheck() {
 			{'userIDCheck' : userID},
 
 			function(result) {
-				console.log(result);
 				$('#idResult').html(result);
 			}
 		);
@@ -112,14 +111,14 @@ function userEmailCheck() {
 	if(resultBool) {
 		$.post(
 			'/movie/async/asyncService/confirmNumInit',
-			{},
-			function(result) {}
+			function(result) {
+				$('#confirm-result').html(result.data);
+			}
 		);
 	}
 	$('#user-email-check').html(resultMsg);
 	$('#confirm-number').removeAttr('readonly');
 	$('#confirm-number').css('background-color', "#FCFCFC");
-	$('#confirm-result').html('<label style="color: red;">인증을 받아주세요.</label>');
 	return resultBool;
 }
 
@@ -161,7 +160,7 @@ function confirmNumCheck() {
 				}
 			)
 		} else {
-			confirmResult.html('<label style="color:red;">인증번호는 숫자 6자리 입니다.</label>');
+			confirmResult.html('<label style="color:red;">인증번호가 일치하지 않습니다.</label>');
 		}
 	}
 	return resultBool;

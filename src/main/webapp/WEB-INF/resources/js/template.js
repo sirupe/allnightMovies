@@ -44,14 +44,15 @@ function logout() {
 function locationMyInfo() {
 	submit(
 		'POST',
-		'/movie/mainService/getTemplate', //main service 에서 기본 템플레이트 출력
+		'/movie/mainService/viewMyInfo', //main service 에서 기본 템플레이트 출력
 		'myInfo',			 			
-		'myInfoForm',	
+		'myInfo',	
 		'myInfo/myInfo', 
 		'myInfo/myInfo'	 
 	);
 }
 
+<<<<<<< HEAD
 /*아이디 찾기 */
 function locationSearchID() {
 	submit(
@@ -63,6 +64,22 @@ function locationSearchID() {
 		'searchId/searchId'
 	);
 	
+=======
+function locationMenus(method, action, directory, page) {
+	var getMethod = method;
+	var getAction = action;
+	var getDirectory = directory;
+	var getPage = page;
+	console.log('Menus');
+	$(document).ready(function() {
+		$('form').attr({'method' : getMethod});
+		$('form').attr({'action' : getAction});
+		$('#hidden-dir').val(getDirectory);
+		$('#hidden-page').val(getPage);
+		$('form').submit();
+		
+	});
+>>>>>>> 2ae07e6acc3b5e71bf219c849683aff274a643b3
 }
 
 function submit(method, action, directory, page, js, css) {
@@ -77,6 +94,7 @@ function submit(method, action, directory, page, js, css) {
 		$('form').submit();
 	});
 }
+
 
 function pwdRegexCheck(pwd) {
 	var regex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;

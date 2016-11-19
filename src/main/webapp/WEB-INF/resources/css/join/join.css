@@ -103,14 +103,43 @@
 .join-button:active {
     background: #242424;
 }
+.join-form__info2__confirm-button, .join-form__info2__input-confirm-num {
+	box-sizing: content-box;
+	cursor: pointer;
+	padding: 6px 10px;
+	border: 1px solid #018dc4;
+	border-radius: 9px;
+	font: normal 13px "Trebuchet MS", Helvetica, sans-serif;
+	color: rgba(255,255,255,0.9);
+	background: #308FBF;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+	text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
+	margin-top: 20px;
+}
 .join-form__info2__confirm-button:hover {
     background-color: #36A3D9;
 }
 .join-form__info2__confirm-button:active {
     background-color: #297AA3;
 }
+button#confirm-number {
+    background: #777777;
+    border: #000000;
+    width: 40px;
+}
+button#confirm-number:hover {
+    background: #6f6f6f;
+    border: #000000;
+}
+button#confirm-number:active {
+    background: #525252;
+    border: #000000;
+}
+input#confirm-number {
+    width: 296px;
+}
 .join__resultText {
 	color: #f1859b;
-    font-size: smaller;
+    font-size: small;
     font-weight: bold;
 }

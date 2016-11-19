@@ -14,15 +14,9 @@
 			
 			<div class="container">
 				<header class="header">
+					<jsp:include page="./include/header/title.jsp"/>					
 					<jsp:include page="./include/header/titleMenu.jsp"/>
-					<c:choose>
-						<c:when test="${userID == null }">
-							<jsp:include page="./include/header/login.jsp"/>					
-						</c:when>
-						<c:otherwise>
-							<jsp:include page="./include/header/logon.jsp"/>
-						</c:otherwise>
-					</c:choose>
+						
 				</header>
 				
 				

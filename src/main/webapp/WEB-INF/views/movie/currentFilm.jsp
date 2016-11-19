@@ -10,9 +10,13 @@
 			<img src="/resources/img/test.PNG" class="video-currentFilm__mainFilm">
 		</span>
 		<span class="div-currentFilm__etc">
-			<a href="#" class="a-currentFilm-sort__reservation" onclick="">예매순 </a>
-			<a href="#" class="a-currentFilm-sort__score" onclick="">평점순</a>
+			<label class="label-currentFilm-sort__reservation" onclick="sortReservation()">예매순 </label>
+			<label class="label-currentFilm-sort__score" onclick="sortScore()">평점순</label>
 		</span>
-		<button class="button-currentFilm-reservation">예매하기</button>
+		<button class="button-currentFilm-reservation" onclick="locationReservation()">예매하기</button>
+	</div>
+	<div class="div-currentFilm-images">
+		<img alt="" src="/../resources/img/poster/Doctor_Strange.jpg" class="img-currentFilm">
+		<label class="label-currentFilm__movieTitle">닥터스트레인지</label>
 	</div>
 </div>

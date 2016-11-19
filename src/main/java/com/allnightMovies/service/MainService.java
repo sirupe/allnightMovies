@@ -114,6 +114,7 @@ public class MainService implements Action {
 		System.out.println(">>메인서비스 sendEmail() 인증번호 : " + randNum);
 		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
 		String result = "인증번호가 발송되었습니다.";
+		System.out.println("인증번호 : " + randNum);
 		boolean bool = true;
 		this.params.getSession().setAttribute("certificationNum", randNum);
 		System.out.println("세션에 저장 : " + this.params.getSession().getAttribute("certificationNum"));
@@ -279,6 +280,12 @@ public class MainService implements Action {
 		this.params.setPage("currentFilm");
 		this.params.setContentCSS("movie/currentFilm");
 		this.params.setContentjs("movie/currentFilm");
+		
+		//1. 디비로가서 현재 상영중인 영화 갯수를 구하공...
+		//2. 한줄에 영화 3개씩 뿌려줄것이다.
+		//3. 예매순으로 시작할것인지 평점순으로 시작할 것 인지..
+		
+		
 		return this.getTemplate();	
 	}
 	
@@ -289,6 +296,4 @@ public class MainService implements Action {
 		this.params.setContentjs("movie/screeningsPlanned");
 		return this.getTemplate();	
 	}
-	
-	
 }

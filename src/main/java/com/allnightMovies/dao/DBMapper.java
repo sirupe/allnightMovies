@@ -26,6 +26,7 @@ public interface DBMapper {
 
 /** 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
+
 	
 /** MY INFO **/	
 	public UserPersonalInfoDTO selectMyInfo(String myInfoID);

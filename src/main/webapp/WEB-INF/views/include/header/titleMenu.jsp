@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="header__menu-and-title">
-	<div class="header__menu-and-title__title">
-		<img src="/resources/img/allnight.png" width="440px" height="110px" alt="">
-	</div>
-	<ul class="header__menu-and-title__menu">
+<div class="header__menus">
+	
+	<ul class="header__menus__menu">
 		<c:forEach items="${list}" var="mainMenu">
 			<li class="dropdown__main-menu">
 				<a href="#" class="dropdown__main-menu__a">${mainMenu.mainMenuName }</a>
@@ -18,12 +16,12 @@
 					</c:forEach>
 				</div>
 			</li>
-		
-<%-- 			<a class="header__menu-and-title__menu__menuList" 
-			   href="/movie/mainService/getTemplate?main=${mainMenu.mainMenuPage }" 
-			   onclick="titleMenu()">
-				${mainMenu.mainMenuName }
-			</a> --%>
 		</c:forEach>
 	</ul>
+	<div class="header__menus__search">
+		<input type="text" class="header__menus__search__text"/>
+		<button type="button" class="header__menus__search__button">
+			검색
+		</button>
+	</div>
 </div>

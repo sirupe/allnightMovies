@@ -9,26 +9,26 @@ import com.allnightMovies.model.params.Params;
 
 
 public interface DBMapper {
-/** Menu Loading **/
+/** ji. Menu Loading **/
 	public List<MainMenu> getMenus() throws Exception;
 
-/** Login **/
+/** ji. Login **/
 	public String login(Params params);
 	
-/** Search PWD **/
+/** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);
 	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd);
 
-/** Join **/
+/** ji. Join **/
 	public Integer idCheck(String id);
 	public Integer insertJoinUserInfo(UserPersonalInfoDTO userDTO);
 
-/** 상영시간표 **/
+/** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 
 	
-/** MY INFO **/	
+/** shin. MY INFO **/	
 	public UserPersonalInfoDTO selectMyInfo(String myInfoID);
 	public String selectUserPWD(String myInfoID);
 }

@@ -48,7 +48,7 @@ public class MainService implements Action {
 		return (ModelAndView) method.invoke(this);
 	}
 
-/*****기본 template의 작동*****/
+/*****은정. 기본 template의 작동*****/
 	// 기본 템플레이트 출력
 	public ModelAndView getTemplate() throws Exception {
 		List<MainMenu> list = this.dbService.getMenus();
@@ -82,7 +82,7 @@ public class MainService implements Action {
 		return this.getTemplate();
 	}
 	
-/*****join 회원가입 시의 작동*****/	
+/*****은정. join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
 		ModelAndView mav = new ModelAndView("join/resultText");
 
@@ -196,7 +196,7 @@ public class MainService implements Action {
 		return null;
 	}
 	
-/*******PWD찾기 SHIN*******/
+/*******연종. PWD찾기 SHIN*******/
 	//고쳐야할것★★★ 사용자가 입력한 아이디 값을 session에 저장시키는것이 아니라
 	//DB에서 확인된 아이디를 가져와session에 저장 시켜야 함 정확하게 하기위해!!!!!!
 	public ModelAndView searchID() throws Exception {
@@ -209,7 +209,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-/*******PWD찾기 SHIN*******/	
+/*******연종. PWD찾기 SHIN*******/	
 	public ModelAndView searchPwdsendEmail() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		Random rand = new Random();
@@ -225,7 +225,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-/*******PWD찾기 SHIN*******/
+/*******연종. PWD찾기 SHIN*******/
 	public ModelAndView checkConfirmNum() throws Exception {
 		ModelAndView mav = new ModelAndView("searchPwd/searchPwdConfirmResult");
 		String userConfirmNum = this.params.getSearchPwdConfirmNum();
@@ -243,7 +243,7 @@ public class MainService implements Action {
 		return mav;
 	}
 
-/*******PWD찾기 SHIN*******/
+/*******연종. PWD찾기 SHIN*******/
 	public ModelAndView updatePWD() throws Exception {
 		HttpSession session = this.params.getSession();
 		String searchPwdUserID = (String)session.getAttribute("userId");
@@ -255,7 +255,7 @@ public class MainService implements Action {
 		return this.getTemplate();
 	}
 
-/*****상영시간표List*****/
+/*****수진. 상영시간표List*****/
 	
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
@@ -280,8 +280,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-<<<<<<< HEAD
-/*****ticketing *****/
+/*****은정. ticketing *****/
 	public ModelAndView ticketing() throws Exception {
 		this.params.setDirectory("reservation");
 		this.params.setPage("ticketing");
@@ -296,8 +295,9 @@ public class MainService implements Action {
 		this.params.setContentjs("calendar");
 		this.params.setContentCSS("calendar");
 		return this.getTemplate();
-=======
-/*******MyINFO SHIN*******/	
+	}
+	
+/*******연종. MyINFO SHIN*******/	
 	public ModelAndView viewMyInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		HttpSession session = this.params.getSession();
@@ -309,7 +309,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-/*******MyINFO SHIN*******/		
+/*******연종. MyINFO SHIN*******/		
 //TODO 비밀번호 일치한지 확인후 OK면 변경 
 	public ModelAndView myInfoChangePwd() throws Exception {
 		ModelAndView mav = new ModelAndView("myInfo/myInfoChagePwdResult");
@@ -317,7 +317,7 @@ public class MainService implements Action {
 		return mav;
 	}
 
-/*******MOVIE*******/	
+/*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
 	public ModelAndView currentFilm() throws Exception{
 		this.params.setDirectory("movie");
 		this.params.setPage("currentFilm");
@@ -338,6 +338,5 @@ public class MainService implements Action {
 		this.params.setContentCSS("movie/screeningsPlanned");
 		this.params.setContentjs("movie/screeningsPlanned");
 		return this.getTemplate();	
->>>>>>> 1f6a03082c6c3d3fb25019822254c0188975f220
 	}
 }

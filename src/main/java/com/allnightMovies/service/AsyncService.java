@@ -28,7 +28,7 @@ public class AsyncService implements AsyncAction {
 		this.params = params;
 		return (AsyncResult) method.invoke(this);
 	}
-	
+/*****은정. join success check*****/	
 	public AsyncResult<String> joinSuccessCheck() throws Exception {
 		String userID = params.getUserIDCheck();
 		String userPWD = params.getUserPWD();

@@ -13,7 +13,6 @@ function idCheck() {
 			{'userIDCheck' : userID},
 
 			function(result) {
-				console.log(result);
 				$('#idResult').html(result);
 			}
 		);
@@ -111,15 +110,15 @@ function userEmailCheck() {
 	}
 	if(resultBool) {
 		$.post(
-			'/movie/ajax/ajaxService/confirmNumInit',
-			{},
-			function(result) {}
+			'/movie/async/asyncService/confirmNumInit',
+			function(result) {
+				$('#confirm-result').html(result.data);
+			}
 		);
 	}
 	$('#user-email-check').html(resultMsg);
 	$('#confirm-number').removeAttr('readonly');
 	$('#confirm-number').css('background-color', "#FCFCFC");
-	$('#confirm-result').html('<label style="color: red;">인증을 받아주세요.</label>');
 	return resultBool;
 }
 
@@ -161,7 +160,7 @@ function confirmNumCheck() {
 				}
 			)
 		} else {
-			confirmResult.html('<label style="color:red;">인증번호는 숫자 6자리 입니다.</label>');
+			confirmResult.html('<label style="color:red;">인증번호가 일치하지 않습니다.</label>');
 		}
 	}
 	return resultBool;
@@ -171,7 +170,7 @@ function joinSuccessCheck() {
 	
 	if(joinSuccessCheckValidation()) {
 		$.post(
-			'/movie/ajax/ajaxService/joinSuccessCheck',
+			'/movie/async/asyncService/joinSuccessCheck',
 			{
 				'userIDCheck' : $('#user-id').val(),
 				'userPWD': $('#user-pwd').val(),
@@ -181,15 +180,6 @@ function joinSuccessCheck() {
 				'userEmail': $('#user-email').val(),
 				'userBirth': $('#user-birth').val()
 			},
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			function(result) {
 				if(result == 'false') {
 					alert('회원가입에 실패하였습니다. 다시 시도해주세요.');

@@ -38,7 +38,10 @@
 				</button>
 				<div id="user-email-check" class="join__resultText">필수 입력사항입니다.</div>
 			</div>
-			<input type="number" placeholder="인증번호 입력" id="confirm-number" onkeyup="confirmNumCheck()"/>
+			<div>
+				<input type="number" placeholder="인증번호 입력" id="confirm-number"/>
+				<button class="join-form__info2__input-confirm-num" id="confirm-number" onclick="confirmNumCheck()" type="button">확인</button>
+			</div>
 			<div id="confirm-result" class="join__resultText"></div>
 		</div>
 		<div class="join-form__join-btn">

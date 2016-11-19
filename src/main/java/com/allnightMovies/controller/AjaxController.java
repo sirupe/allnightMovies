@@ -36,7 +36,7 @@ public class AjaxController {
 		params.setRequest(request);
 		params.setSession(session);
 		
-		AsyncResult result = action.asyncExecute(params);
+		AsyncResult result = action.asyncExcute(params);
 		
 		return result;
 	}

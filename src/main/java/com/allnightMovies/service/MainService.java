@@ -22,6 +22,7 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
+import com.allnightMovies.utility.UtilityEnums;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -35,9 +36,6 @@ public class MainService implements Action {
 //	MovieMapper movieMapper;
 	@Autowired
 	DBService dbService;
-
-	@Autowired
-	SubService subService;
 	
 	// 여기서 온갖것들을 실행시켜주면 된다.
 	// ModelAndView 객체에 view 단에서 찍어내야 하는 페이지들도 올려두고 ...
@@ -109,14 +107,24 @@ public class MainService implements Action {
 
 	public ModelAndView sendEmail() throws Exception {
 		ModelAndView mav = new ModelAndView("join/resultText");
+		HttpSession session = this.params.getSession();
+		
+		// 인증번호 생성
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
 		System.out.println(">>메인서비스 sendEmail() 인증번호 : " + randNum);
+		
+		// 메일 발송
 		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
 		String result = "인증번호가 발송되었습니다.";
 		System.out.println("인증번호 : " + randNum);
+		
 		boolean bool = true;
-		this.params.getSession().setAttribute("certificationNum", randNum);
+		
+		// 세션에 인증번호와 인증을 보낸 시간 등록
+		session.setAttribute("certificationNum", randNum);
+		session.setAttribute("confirmTime", System.currentTimeMillis());
+		
 		System.out.println("세션에 저장 : " + this.params.getSession().getAttribute("certificationNum"));
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
@@ -129,15 +137,33 @@ public class MainService implements Action {
 		String result = "입력하신 인증번호와 일치합니다.";
 		int inputConfirmNum = this.params.getConfirmNum();
 		HttpSession session = this.params.getSession();
-		int saveConfirmNum = (int) session.getAttribute("certificationNum");
+		Integer saveConfirmNum = session.getAttribute("certificationNum") == null ? null : (int) session.getAttribute("certificationNum");
+		
+//		System.out.println("사용자가 인증을 받은 시간 : " + (long)session.getAttribute("confirmTime"));
+//		System.out.println("사용자가 인증번호를 입력한 시간 : " + System.currentTimeMillis());
+//		System.out.println("인증번호 시간차 : " + (System.currentTimeMillis() - (long)session.getAttribute("confirmTime")));
+//		System.out.println("인증번호 제한시간 : " + UtilityEnums.CONFIRM_TIME.getConfirmTime());
+		
 		boolean bool = true;
-		if(saveConfirmNum == 0) {
+		
+		// 인증을 보낸지 3분이 지났다면
+		if(System.currentTimeMillis() - (Long)session.getAttribute("confirmTime") > UtilityEnums.CONFIRM_TIME.getConfirmTime()) {
+			session.removeAttribute("certificationNum");
+			session.setAttribute("confirmTime", 0);
+			result = "입력 시간이 초과되었습니다. 인증번호를 다시 받아주세요.";
+			bool = false;
+		
+		// 인증번호를 보낸 적이 없다면	
+		} else if(saveConfirmNum == 0 || saveConfirmNum == null) {
 			result = "인증번호를 받아주세요.";
 			bool = false;
+			
+		// 인증번호가 불일치하다면
 		} else if(!(saveConfirmNum == inputConfirmNum)) {
-			result = "인증번호가 일치하지 않습니다. 다시 확인해주세요.";
+			result = "인증번호가 일치하지 않습니다.";
 			System.out.println(">>메인서비스 confirmCheck() : 저장된 번호-"+ this.params.getSession().getAttribute("certificationNum"));
 			bool = false;
+			
 		} else {
 			session.setAttribute("certificationNum", 0);
 			session.setAttribute("isConfirm", true);

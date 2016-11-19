@@ -16,7 +16,9 @@
 		<button class="button-currentFilm-reservation" onclick="locationReservation()">예매하기</button>
 	</div>
 	<div class="div-currentFilm-images">
-		<img alt="" src="/../resources/img/poster/Doctor_Strange.jpg" class="img-currentFilm">
-		<label class="label-currentFilm__movieTitle">닥터스트레인지</label>
+		<span class="span-currentFilm-images">
+			<img alt="" src="/../resources/img/poster/Doctor_Strange.jpg" class="img-currentFilm">
+			<label class="label-currentFilm__movieTitle">닥터스트레인지</label>
+		</span>
 	</div>
 </div>

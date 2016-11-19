@@ -3,7 +3,7 @@
 
 .div-currentFilm {
     width: 1050px;
-    height: 800px;
+    height: 1500px;
     border: solid;/*나중에 지울거야*/
 }
 /*현재상영작 제목*/
@@ -23,11 +23,13 @@
     margin: 30px 650px 30px 100px;
 }
 
-/*현재상영작 포스터*/
+/*현재상영작 포스터가 들어갈 구역*/
 .div-currentFilm-images {
-
+	
 }
-
+.span-currentFilm-images {
+	
+}
 /*비디오 여백*/
 .span-currentFilm__mainFilm {
 	background-color: #202020;
@@ -58,8 +60,8 @@
 }
 /*포스터크기*/
 .img-currentFilm {
-	width: 280px;
-	height: 380px;	
+	width: 260px;
+	height: 360px;	
 }
 /*영화제목*/
 .label-currentFilm__movieTitle {

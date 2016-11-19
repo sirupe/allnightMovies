@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -36,6 +37,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/movie/{service}/{method}", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
 	public ModelAndView menuCliecked(
 			@PathVariable("service") String service, 
 			@PathVariable("method") String method, 
@@ -52,19 +54,19 @@ public class MainController {
 		
 		return mav;
 	}
-	@RequestMapping(value="/movie/ajax/{service}/{method}", method = {RequestMethod.GET, RequestMethod.POST})
-	public String ajaxRequest(
-			@PathVariable("service") String service, 
-			@PathVariable("method") String method,
-			Params params,
-			HttpServletRequest request) throws Throwable {
-		HttpSession session = request.getSession();
-		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
-		Action action = (Action) context.getBean(service);
-		params.setMethod(method);
-		params.setRequest(request);
-		params.setSession(session);
-		String resultStr = action.executeString(params);
-		return resultStr;
-	}
+//	@RequestMapping(value="/movie/ajax/{service}/{method}", method = {RequestMethod.GET, RequestMethod.POST})
+//	public String ajaxRequest(
+//			@PathVariable("service") String service, 
+//			@PathVariable("method") String method,
+//			Params params,
+//			HttpServletRequest request) throws Throwable {
+//		HttpSession session = request.getSession();
+//		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
+//		Action action = (Action) context.getBean(service);
+//		params.setMethod(method);
+//		params.setRequest(request);
+//		params.setSession(session);
+//		String resultStr = action.executeString(params);
+//		return resultStr;
+//	}
 }

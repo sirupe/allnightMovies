@@ -52,8 +52,15 @@ public class DBService {
 
 /** 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception {
-		System.out.println("DBService");
 		return dbMapper.showtimes();
 	}
-
+	
+/** MY INFO **/	
+	public UserPersonalInfoDTO selectMyInfo(String myInfoID) {
+		return dbMapper.selectMyInfo(myInfoID);
+	}
+	public String selectUserPWD(String myInfoID) {
+		return dbMapper.selectUserPWD(myInfoID);
+	}
+	
 }

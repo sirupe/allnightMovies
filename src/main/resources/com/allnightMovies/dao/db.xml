@@ -38,26 +38,6 @@
 		SELECT COUNT(USER_ID) FROM USER_PERSONAL_INFO WHERE USER_ID=#{id}
 	</select>
 	
-<!-- /* SEARCH PWD */ -->	
-	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
-		SELECT COUNT(*) 
-		FROM USER_PERSONAL_INFO 
-		WHERE USER_ID = #{searchPwdUserID}
-	</select>	
-	
-	<select id="searchEmail" resultType="java.lang.String" parameterType="java.lang.String">
-		SELECT USER_EMAIL 
-		FROM USER_PERSONAL_INFO 
-		WHERE USER_ID = #{searchPwdUserID}
-	</select>
-	
-	
-	<select id="updateNewPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		UPDATE USER_PERSONAL_INFO 
-		SET USER_PWD = #{param2}
-		WHERE USER_ID = #{param1}
-	</select>	
-<!-- ============================================================================================= -->
 
 	<insert id="insertJoinUserInfo" parameterType="com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO">
 		INSERT INTO USER_PERSONAL_INFO(
@@ -76,6 +56,24 @@
 		    #{userGender}
 		)
 	</insert>
+
+<!-- /* SEARCH PWD */ -->	
+	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(*) 
+		FROM USER_PERSONAL_INFO 
+		WHERE USER_ID = #{searchPwdUserID}
+	</select>	
+	<select id="searchEmail" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT USER_EMAIL 
+		FROM USER_PERSONAL_INFO 
+		WHERE USER_ID = #{searchPwdUserID}
+	</select>
+	<select id="updateNewPwd" resultType="java.lang.String" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO 
+		SET USER_PWD = #{param2}
+		WHERE USER_ID = #{param1}
+	</select>	
+<!-- **************** -->	
 
 <!-- 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
@@ -104,4 +102,26 @@
 		ORDER BY SCREENING_DATE ASC, MOVIE_TITLE ASC, SCREENING_DATE ASC
 	</select>
 
+<!-- MY INFO -->
+	<select id="selectMyInfo" resultType="com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO" parameterType="java.lang.String">
+		SELECT 
+			USER_ID	as userID,
+			USER_PWD as userPWD,
+			USER_NAME as userName,
+			USER_GENDER	as userGender,
+			USER_BIRTH as userBirth,
+			USER_EMAIL as userEmail,
+			USER_REGDATE as userRegDate,
+			USER_STATES	as userStates
+		FROM USER_PERSONAL_INFO
+		WHERE USER_ID = #{myInfoID}	
+	</select> 
+	
+	<select id="selectUserPWD" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT USER_PWD
+		FROM USER_PERSONAL_INFO
+		WHERE USER_ID = #{myInfoID}
+	</select>
+	
+<!-- **************** -->		
 </mapper>

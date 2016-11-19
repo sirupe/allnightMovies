@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="header__menu-and-title__title">
 	<div class="header__logo" onclick="locationMain()">
-		<img src="/resources/img/allnight.png" width="440px" height="110px" alt="">
+		<img src="/resources/img/allnight.png" class="img-main" alt="">
 	</div>
 	<c:choose>
 		<c:when test="${userID == null }">

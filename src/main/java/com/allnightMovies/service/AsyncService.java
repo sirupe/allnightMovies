@@ -119,6 +119,7 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public AsyncResult confirmNumInit() throws Exception {
 		HttpSession session = this.params.getSession();
 		session.setAttribute("isConfirm", false);

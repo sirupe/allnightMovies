@@ -5,5 +5,6 @@ import com.allnightMovies.model.params.Params;
 
 @SuppressWarnings("rawtypes")
 public interface AsyncAction {
+
 	public AsyncResult asyncExcute(Params params) throws Throwable;
 }

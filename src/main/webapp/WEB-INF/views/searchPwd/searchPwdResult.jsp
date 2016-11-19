@@ -18,6 +18,7 @@
 			</div>
 			<div class="div__searchPwd__content">
 				<label class="label__searchPwd__id">아이디가 존재하지 않습니다.</label>
+				<button class="button__searchPwd__sendMail" type="button" onclick="locationMain()">메인으로</button>
 			</div>
 		</c:otherwise>
 	</c:choose>

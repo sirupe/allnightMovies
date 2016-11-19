@@ -1,7 +1,6 @@
-
 function searchPwdResult() {
-	var useridResult = validationID();
-	if(useridResult) {
+	var inputID = $('#search-userid').val();
+	if(inputID != '') {
 		submit(
 			'POST',
 			'/movie/mainService/searchID',//main service 에 searchID메소드
@@ -10,6 +9,8 @@ function searchPwdResult() {
 			'searchPwd/searchPwd',   	  //자바스크립트
 			'searchPwd/searchPwd'	 	  //CSS
 		);	
+	} else {
+		alert('아이디를 입력하세요.');
 	}
 }
 
@@ -41,6 +42,7 @@ function checkConfirmNum() {
 					checkConfirmNumText.html(resultMsg);
 					if($('#ischeck-confirmnum-id').val() == 'true') {
 						isSearchPwdChange = true;
+						//이거슨 스레드에 쓸거야
 						userConfirmNum.attr({'readonly' : 'readonly'});
 						userConfirmNum.css("background-color", "#dcdcdc");
 					}
@@ -48,7 +50,6 @@ function checkConfirmNum() {
 			)
 		} else {
 			isSearchPwdChange = false;
-			checkConfirmNumText.html('<label style="color:red;">인증번호는 숫자 6자리 입니다.</label>');
 		}
 	}
 	return isSearchPwdChange;
@@ -67,8 +68,7 @@ function changePWD() {
 			'searchPwd/searchPwd'	 	    //CSS                            
 		);	
 	} else {
-		console.log("changePWD(결과) : " + checkConfirmNum());
-		checkConfirmNumText.html('<label style="color:red;">인증번호가 일치하지 않습니다.</label>');
+		alert('인증번호가 일치하지 않습니다.');
 	}
 }
 
@@ -93,7 +93,6 @@ function checkRePWD() {
 }
 
 //이동
-
 function locationLogin() {
 	submit(
 		'POST',
@@ -104,18 +103,16 @@ function locationLogin() {
 		'home'	 	    //CSS                            
 	);	
 }
-
 function locationMain() {
 	submit(
 		'POST',
 		'/movie/mainService/getTemplate', 
-		'include',				    //디렉토리                           
-		'mainPage',		//페이지                            
-		'template',   	    //자바스크립트                         
-		'home'	 	    //CSS                            
+		'include',				                       
+		'mainPage',		            
+		'template',   	                   
+		'home'	 	                   
 	);	
 }
-
 //정합성검사
 function validationPWD() {
 	var isResult = true;
@@ -157,17 +154,13 @@ function validationRePWD() {
 function validationID() {
 	var isResult = true;
 	var searchUserID = $('#search-userid').val();
+	var searchUserIDText = $('#search-userid-result');
 	var resultMsg = '<label style="color:green;"> </label>';
 	
-	if(!idRegexCheck(searchUserID)) {
-		isResult = false;
-		resultMsg = '<label style="color:red;">아이디 형식 오류 입니다.</label>';
-	}
 	if(searchUserID == '') {
 		isResult = false;
 		resultMsg = '필수 입력사항입니다.';
 	}
-	$('#search-userid-result').html(resultMsg);
+	searchUserIDText.html(resultMsg);
 	return isResult;
 }
-

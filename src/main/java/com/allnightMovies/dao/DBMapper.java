@@ -28,4 +28,7 @@ public interface DBMapper {
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 
 	
+/** MY INFO **/	
+	public UserPersonalInfoDTO selectMyInfo(String myInfoID);
+	public String selectUserPWD(String myInfoID);
 }

@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
+import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
+import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
@@ -195,17 +197,19 @@ public class MainService implements Action {
 	}
 	
 /*******PWD찾기 SHIN*******/
+	//고쳐야할것★★★ 사용자가 입력한 아이디 값을 session에 저장시키는것이 아니라
+	//DB에서 확인된 아이디를 가져와session에 저장 시켜야 함 정확하게 하기위해!!!!!!
 	public ModelAndView searchID() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String searchPwdUserID = this.params.getSearchPwdUserID();
-		Integer result = this.dbService.searchPWD(searchPwdUserID);//사용자 아이디 있으면  1, 없으면  0
-		HttpSession session =  this.params.getSession();		 //브라우저당 1개
+		Integer result = this.dbService.searchPWD(searchPwdUserID);
+		HttpSession session =  this.params.getSession();	
 		session.setAttribute("userId", searchPwdUserID);
 		mav.addObject("result", result);
 		return mav;
 	}
 	
-/*******PWD찾기 SHIN*******/
+/*******PWD찾기 SHIN*******/	
 	public ModelAndView searchPwdsendEmail() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		Random rand = new Random();
@@ -217,7 +221,7 @@ public class MainService implements Action {
 		String userEmail = this.dbService.searchEmail(searchPwdUserID);
 		HttpSession sessionRandNum = this.params.getSession();
 		sessionRandNum.setAttribute("randNum", randNum);
-		new SendEmail(String.valueOf(randNum), userEmail); 
+//		new SendEmail(String.valueOf(randNum), userEmail); 
 		return mav;
 	}
 	
@@ -227,17 +231,13 @@ public class MainService implements Action {
 		String userConfirmNum = this.params.getSearchPwdConfirmNum();
 		HttpSession session = this.params.getSession();
 		String serverRandNum = String.valueOf(session.getAttribute("randNum"));
-		String resultMsg = "입력하신 인증번호가 일치합니다.";
 		boolean ischeckConfirmNum = true;
 		
 		if(serverRandNum.equals(userConfirmNum)) {
 			ischeckConfirmNum = true;
 		} else {
-			resultMsg = "인증번호가 일치하지 않습니다.";
 			ischeckConfirmNum = false;
 		}
-		
-		mav.addObject("resultMsg", resultMsg);
 		mav.addObject("ischeckConfirmNum", ischeckConfirmNum);
 		mav.addObject("ischeckConfirmNumID", "ischeck-confirmnum-id");
 		return mav;
@@ -251,6 +251,7 @@ public class MainService implements Action {
 		this.dbService.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
 		this.params.setDirectory("searchPwd");
 		this.params.setPage("searchPwdChangeCompleted");
+		session.removeAttribute("userId");
 		return this.getTemplate();
 	}
 
@@ -279,6 +280,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	
+<<<<<<< HEAD
 /*****ticketing *****/
 	public ModelAndView ticketing() throws Exception {
 		this.params.setDirectory("reservation");
@@ -294,5 +296,48 @@ public class MainService implements Action {
 		this.params.setContentjs("calendar");
 		this.params.setContentCSS("calendar");
 		return this.getTemplate();
+=======
+/*******MyINFO SHIN*******/	
+	public ModelAndView viewMyInfo() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		HttpSession session = this.params.getSession();
+		String myInfoID = (String)session.getAttribute("userID");
+		
+		UserPersonalInfoDTO myInfoDTO = this.dbService.selectMyInfo(myInfoID);
+		
+		mav.addObject("myInfoList", myInfoDTO);
+		return mav;
+	}
+	
+/*******MyINFO SHIN*******/		
+//TODO 비밀번호 일치한지 확인후 OK면 변경 
+	public ModelAndView myInfoChangePwd() throws Exception {
+		ModelAndView mav = new ModelAndView("myInfo/myInfoChagePwdResult");
+		this.params.getSession().invalidate();
+		return mav;
+	}
+
+/*******MOVIE*******/	
+	public ModelAndView currentFilm() throws Exception{
+		this.params.setDirectory("movie");
+		this.params.setPage("currentFilm");
+		this.params.setContentCSS("movie/currentFilm");
+		this.params.setContentjs("movie/currentFilm");
+		
+		//1. 디비로가서 현재 상영중인 영화 갯수를 구하공...
+		//2. 한줄에 영화 3개씩 뿌려줄것이다.
+		//3. 예매순으로 시작할것인지 평점순으로 시작할 것 인지..
+		
+		
+		return this.getTemplate();	
+	}
+	
+	public ModelAndView screeningsPlanned() throws Exception{
+		this.params.setDirectory("movie");
+		this.params.setPage("screeningsPlanned");
+		this.params.setContentCSS("movie/screeningsPlanned");
+		this.params.setContentjs("movie/screeningsPlanned");
+		return this.getTemplate();	
+>>>>>>> 1f6a03082c6c3d3fb25019822254c0188975f220
 	}
 }

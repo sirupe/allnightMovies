@@ -18,18 +18,17 @@ import com.allnightMovies.service.DBService;
 
 
 @RestController
-public class AsyncController {
+public class AjaxController {
 	@Autowired
-	DBService dbService;
+	DBService service;
 	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/movie/async/{service}/{method}", method = {RequestMethod.GET, RequestMethod.POST})
 	public AsyncResult ajaxRequest(
-			@PathVariable("service") String service,
+			@PathVariable("service") String service, 
 			@PathVariable("method") String method,
 			Params params,
-			HttpServletRequest request
-			) throws Throwable {
+			HttpServletRequest request) throws Throwable {
 		HttpSession session = request.getSession();
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
 		AsyncAction action = (AsyncAction) context.getBean(service);

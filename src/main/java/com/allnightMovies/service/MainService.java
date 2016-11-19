@@ -278,5 +278,21 @@ public class MainService implements Action {
 		mav.addObject("movieTimeTable", movieTimeTable);
 		return mav;
 	}
-
+	
+/*****ticketing *****/
+	public ModelAndView ticketing() throws Exception {
+		this.params.setDirectory("reservation");
+		this.params.setPage("ticketing");
+		this.params.setContentCSS("ticketing");
+		this.params.setContentjs("ticketing");
+		return this.getTemplate();
+	}
+	
+	public ModelAndView cal() throws Exception {
+		this.params.setDirectory("reservation");
+		this.params.setPage("calendar");
+		this.params.setContentjs("calendar");
+		this.params.setContentCSS("calendar");
+		return this.getTemplate();
+	}
 }

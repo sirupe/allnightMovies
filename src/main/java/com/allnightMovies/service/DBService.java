@@ -18,12 +18,12 @@ public class DBService {
 	
 	@Autowired
 	DBMapper dbMapper;
-/** Menu Loading **/
+/** ji. Menu Loading **/
 	public List<MainMenu> getMenus() throws Exception {
 		return dbMapper.getMenus();
 	}
 	
-/** Login **/
+/** ji. Login **/
 	
 	public String login(Params params) {
 		return dbMapper.login(params);
@@ -41,7 +41,7 @@ public class DBService {
 		return dbMapper.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
 	}
 
-/** Join **/
+/** ji. Join **/
 	public Integer idCheck(String id) throws Exception {
 		return dbMapper.idCheck(id);
 	}
@@ -50,12 +50,12 @@ public class DBService {
 		return dbMapper.insertJoinUserInfo(userDTO);
 	}
 
-/** 상영시간표 **/
+/** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
 	}
 	
-/** MY INFO **/	
+/** shin. MY INFO **/	
 	public UserPersonalInfoDTO selectMyInfo(String myInfoID) {
 		return dbMapper.selectMyInfo(myInfoID);
 	}

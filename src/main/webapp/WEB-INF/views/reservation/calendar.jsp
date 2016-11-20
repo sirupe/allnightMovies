@@ -20,9 +20,16 @@
 		<c:forEach items="${cal.days }" var="days">
 			<tr class="calendar__day__row">
 				<c:forEach items="${days }" var="day">
-					<td class="calendar__day__data">
-						${day }
-					</td>
+					<c:choose>
+						<c:when test="${day != 0 }">
+							<td class="calendar__day__data">
+								${day }
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td class="calendar__day__data"></td>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</tr>
 		</c:forEach>

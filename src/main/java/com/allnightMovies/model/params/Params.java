@@ -45,6 +45,10 @@ public class Params {
 	private String searchPwdConfirmNum;
 	private String searchPwdNewPwd;
 	
+// 아이디 찾기
+	private String searchIdUserName;
+	private String searchIdUserBirth;
+	private String searchIdUserGender;
 // 비밀번호 변경	------------------------------------------------------------------
 	private String myInfoPresentPwd;
 	private String myInfoNewPwd;

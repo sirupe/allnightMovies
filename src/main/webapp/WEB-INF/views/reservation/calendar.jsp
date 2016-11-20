@@ -4,10 +4,7 @@
 <link rel="stylesheet" href="/resources/css/reservation/ticketing.css">
 <div class="calendar">
 	<div class="calendar__year">
-		2016년
-	</div>
-	<div class="calendar__month">
-		11월
+		${cal.year }년 ${cal.month }월
 	</div>
 	<table class="calendar__dayTable">
 		<tr class="calendar__week__row">
@@ -20,11 +17,11 @@
 			<td class="calendar__week__data">토</td>
 		</tr>
 		
-		<c:forEach begin="1" end="6">
+		<c:forEach items="${cal.days }" var="days">
 			<tr class="calendar__day__row">
-				<c:forEach begin="1" end="7" varStatus="i">
+				<c:forEach items="${days }" var="day">
 					<td class="calendar__day__data">
-						${i.count * 3}
+						${day }
 					</td>
 				</c:forEach>
 			</tr>

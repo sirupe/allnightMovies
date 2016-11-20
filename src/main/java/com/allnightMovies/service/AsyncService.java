@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
@@ -116,8 +115,7 @@ public class AsyncService implements AsyncAction {
 			this.params.getSession().setAttribute("userID", this.params.getUserIDCheck());
 			resultStr = "/movie/mainService/locationJoinSuccess";
 		}
-		resultStr = "false";
-		
+		asyncResult.setSuccess(checkBool);
 		asyncResult.setData(resultStr);
 		return asyncResult;
 	}
@@ -212,7 +210,8 @@ public class AsyncService implements AsyncAction {
 		session.setAttribute("isConfirm", false);
 		System.out.println("");
 		AsyncResult<String> async = new AsyncResult<String>();
-		async.setData("<label class=\"join__resultText\" style=\"color:red;\">인증번호를 받아주세요.</label>");
+		async.setData("<label class=\"join__resultText\" style=\"color:red;\">인증번호를 받아주세요.</label>");		
+		
 		return async;
 	}
 

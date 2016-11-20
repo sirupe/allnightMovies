@@ -8,8 +8,8 @@
 	</div>
 	<div class="header__login__comp">
 		<div class="header__login__comp__inputtext">
-			<input type="text" placeholder="아이디 입력" name="userID"/>
-			<input type="password" placeholder="패스워드 입력" name="userPWD"/>
+			<input type="text" placeholder="아이디 입력" name="userID" id="user-id"/>
+			<input type="password" placeholder="패스워드 입력" name="userPWD" id="user-pwd"/>
 		</div>
 		<div class="header__login__comp__submit">
 			<button type="button" onclick="locationLogon()">

@@ -9,10 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
 
@@ -119,6 +121,27 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 	}
 	
+	// 로그인
+	public AsyncResult<String> login() throws Exception {
+		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
+		String result = null;
+		boolean resultBool = true;
+		System.out.println("여긴 안오는듯?");
+		if(userLoginInfo.getUserStates() == 1) {
+			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
+				HttpSession session = this.params.getSession();
+				session.setAttribute("userID", userLoginInfo.getUserID());
+			} else {
+				result = "비밀번호가 일치하지 않습니다.";
+			}
+		} else {
+			result = "탈퇴하였거나 존재하지 않는 아이디입니다.";
+		}
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData(result);
+		async.setSuccess(resultBool);
+		return async;
+	}
 /*****연종. chagePwd success check*****/	
 	public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
 		String newPWD = params.getMyInfoNewPwd();
@@ -184,6 +207,8 @@ public class AsyncService implements AsyncAction {
 /***********연종. 회원탈퇴***************/	
 	public AsyncResult<String> userWithdraw() throws Exception {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		
+		System.out.println("userWithdraw");
 		
 		String withdrawUserpwd = this.params.getWithdrawUserPwd();
 		String withdrawResult = "false";

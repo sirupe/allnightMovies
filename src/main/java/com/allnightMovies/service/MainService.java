@@ -18,6 +18,7 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.RegexCheck;
@@ -70,9 +71,11 @@ public class MainService implements Action {
 
 	// 로그인
 	public ModelAndView login() throws Exception {
-		String userID = this.dbService.login(this.params);
-		HttpSession session = this.params.getSession();
-		session.setAttribute("userID", userID);
+		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
+		if(userLoginInfo.getUserStates() == 1) {
+			HttpSession session = this.params.getSession();
+			session.setAttribute("userID", userLoginInfo.getUserID());
+		}
 		return this.getTemplate();
 	}
 	

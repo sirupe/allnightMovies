@@ -26,14 +26,14 @@
 			ON(SUB_MAIN_MENU = MAIN_MENU_PAGE)
 		]]>
 	</select>
-	
-<!-- /* JI. JOIN */ -->	
-	<select id="login" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
-		SELECT USER_ID
+<!-- /* JI. LOGIN */ -->		
+	<select id="login" resultType="com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO" parameterType="com.allnightMovies.model.params.Params">
+		SELECT USER_ID userID, USER_STATES userStates, USER_PWD userPwd
 		FROM USER_PERSONAL_INFO
-		WHERE USER_ID = #{userID} AND USER_PWD = #{userPWD}
+		WHERE USER_ID = #{userID}
 	</select>
 		
+<!-- /* JI. JOIN */ -->	
 	<select id="idCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(USER_ID) FROM USER_PERSONAL_INFO WHERE USER_ID=#{id}
 	</select>

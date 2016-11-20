@@ -19,7 +19,7 @@
 		</c:forEach>
 	</ul>
 	<div class="header__menus__search">
-		<input type="text" class="header__menus__search__text"/>
+		<input type="text" class="header__menus__search__text" placeholder="영화 정보 검색"/>
 		<button type="button" class="header__menus__search__button">
 			검색
 		</button>

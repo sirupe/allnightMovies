@@ -169,17 +169,15 @@ public class AsyncService implements AsyncAction {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
-		System.out.println("mainservice 인증번호> : " + randNum);
+		System.out.println("AsyncResult 인증번호> : " + randNum);
 		
 		HttpSession session = this.params.getSession();
 		String userID = (String)session.getAttribute("userID");
 		String userEmail = this.dbService.searchEmail(userID);
 		HttpSession sessionRandNum = this.params.getSession();
-		System.out.println("sendEmailConfirmNum  userID >> " + userID);
-		System.out.println("sendEmailConfirmNum  userEmail >> " + userEmail);
 		
 		sessionRandNum.setAttribute("randNum", randNum);
-		new SendEmail(String.valueOf(randNum), userEmail); 
+//		new SendEmail(String.valueOf(randNum), userEmail); 
 		
 		return asyncResult;
 		

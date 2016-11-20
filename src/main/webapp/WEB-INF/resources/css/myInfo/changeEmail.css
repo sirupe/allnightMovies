@@ -64,13 +64,22 @@
 
 .label-myInfoChangeEmail__content {
 	font-family: 'Jeju Gothic', serif;
-	font-size: 17px;
-	margin-top: 20px;
+	font-size: 16px;
+	margin-top: 18px;
 }
+
+.text-confirm-thread {
+	font-family: 'Jeju Gothic', serif;
+	font-size: 13px;
+	color: #8BACD9;
+	margin: 5px -5px;
+}
+
 .text-myInfoChangeEmail {
 	font-family: 'Jeju Gothic', serif;
 	margin-top: 5px;
 	font-size: 13px;
+	color: #8BACD9;
 }
 
 

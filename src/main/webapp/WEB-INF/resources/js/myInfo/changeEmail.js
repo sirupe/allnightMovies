@@ -27,4 +27,18 @@ function validationEmail() {
 	var chageEmailText = $('#text-myInfoChangeEmail');
 }
 
-//이메일 정보 변경 
+/*이메일 정합성 검사 */
+function validationEmail() {
+	var chageEmail = $('#myinfo-chageEmail').val();
+	var changEmailText = $('#myinfo-chageEmail-text');
+	var isCheck = true;
+	var resultMsg = '<label style="color:green;">사용 가능합니다.</label>';
+	
+	if(!emailRegexCheck(chageEmail)) {
+		isCheck = false;
+		resultMsg = '<label style="color:red;">이메일 주소를 정확히 입력해주세요.</label>';
+	}
+	
+	changEmailText.html(resultMsg);
+	return isCheck;
+}

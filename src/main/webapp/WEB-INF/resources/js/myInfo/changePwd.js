@@ -69,6 +69,7 @@ function validationPWD() {
 		isResult = false;
 		resultMsg = '<label style="color:red;">영문,숫자,특수문자 포함 8~15자 이내로 입력해주세요.</label>'
 	}
+	
 	newPWDText.html(resultMsg);
 	return isResult;
 }

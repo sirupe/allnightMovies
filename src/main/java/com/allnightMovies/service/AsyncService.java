@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
@@ -214,5 +215,39 @@ public class AsyncService implements AsyncAction {
 		
 		return async;
 	}
-
+	
+	/**수진 이메일 인증 **/
+	//이메일
+	@SuppressWarnings("rawtypes")
+	public AsyncResult ConfirmNumberCheck() throws Exception {
+		String userEmail = this.params.getUserEmail();
+		System.out.println("email : " + userEmail);
+		System.out.println("들어와");
+		HttpSession session = this.params.getSession();
+		session.setAttribute("isCheckNumber", false);
+		System.out.println(session + "session");
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData("<label class=\"insertConfirmEmail\" style=\"color:red;\">확인되었씁니다.인증번호받아주세요 :)</label>");
+		return async;
+	}
+	
+	/****수진. 아이디찾기<이메일 보내기>****/
+	public ModelAndView userSendEmail() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = this.params.getSession();
+			
+		//인증번호 생성
+		Random randomNum = new Random();
+		int comfirmNumrandom = randomNum.nextInt(900000) + 100000;
+		System.out.println(comfirmNumrandom + " : 인증번호");
+		
+		//인증번호 메일로 보내기
+		new SendEmail(String.valueOf(comfirmNumrandom), this.params.getUserEmail());
+		String emailResult = "인증번호가 전송되었습니다 :)";
+		//인증번호 보냈는지 확인해주기
+		return mav;	
+}
+	
+	
+	
 }

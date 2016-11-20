@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif; -> 이렇게 사용하심 되영*/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/*font-family: 'Nanum Gothic', serif; 비밀번호*/
 
 /* 회원정보 아이디 찾기 */
 .div__searchId_form {
@@ -18,6 +22,7 @@
     background-color: #383838;
     color: white;
     padding-left: 20px;
+    font-family: 'Jeju Gothic', serif;
 }
 
 .div__searchId__content {
@@ -31,21 +36,32 @@
     line-height: 1.5em;
     background-color: white;
 }
-.label__searchId__id__result {
-	margin-top: 30px;
-	margin-bottom: 30px;
-	font-size: 15px;
+.label__searchId__name__result {
+	
+    margin-top: 29px;
+    margin-bottom: 2px;
+    font-size: 15px;
+    font-family: 'Jeju Gothic', serif;
 }
 
+.label__searchId__id__result {
+    padding-bottom: 33px;
+    font-family: 'Jeju Gothic', serif;
+    padding-top: 50px;
+    font-size: 21px;
+    color: #1c4f50;
+    font-weight: bolder;
+}
 
 /*buttons*/
 
-
+.span_button_search-ConfirmId_Button {
+	font-family: 'Jeju Gothic', serif;
+}
 .button__searchId__next,
 .button__searchId-ComfirmId-main,
 .button__searchId-ComfirmId-searchPWd {
 	
-	display: inline-block;
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
@@ -74,7 +90,8 @@
 .user-find-id-info_emailConfirmNumber_check_button:hover,
 .button__searchId__next:hover,
 .button__searchId-ComfirmId-main:hover,
-.button__searchId-ComfirmId-searchPWd:hover {
+.button__searchId-ComfirmId-searchPWd:hover
+.emailConfirmNumber_SendCheck:hover {
 border: 1px solid #007cad;
 background: #12385b;
 -webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
@@ -105,12 +122,14 @@ background-color: black;
 height: 45px;
 font-size: 16px;	
 padding-right:50px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-id__title,
 .user-find-id__title_email {
 background-color: #ceb2c6;
 line-height: 45px;
+font-family: 'Jeju Gothic', serif;
 }
 
  
@@ -125,6 +144,7 @@ line-height: 45px;
 padding-left: 10px;
 padding-top: 10px;
 width: 400px;
+
 }
 
 .user-find-id-info__content__name {
@@ -132,16 +152,19 @@ display: flex;
 /* background-color: aliceblue; */
 padding-left: 10px;
 line-height: 40px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-info-content__name__label {
 display: flex;
 width: 75px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-info-content__name__input__box {
 padding: 6px 2px 2px;
 width: 130px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-id-info__content__birth {
@@ -149,25 +172,31 @@ display: flex;
 /* background-color: burlywood; */
 padding-left: 10px;
 line-height: 40px;
+padding-bottom: 12px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-id-info__content__birth__label {
 display: flex;
 width: 75px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-id-info__content__gender {
 display: flex;
 /* background-color: cadetblue; */
 padding-left: 10px;
-line-height: 40px;
+line-height: 30px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-id-info__gender__label {
 width: 75px;
+font-family: 'Jeju Gothic', serif;
 }
 
-.user-find-id-info_emailConfirmNumber_check_button {
+.user-find-id-info_emailConfirmNumber_check_button,
+.emailConfirmNumber_SendCheck {
 box-sizing: content-box;
 cursor: pointer;
 padding: 6px 13px;
@@ -190,17 +219,21 @@ padding-top: 15px;
 display: flex;
 /* background-color: cornsilk; */
 padding-left: 10px;
+padding-bottom: 11px;
 line-height: 40px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-info-content__email__label {
 display: flex;
 width: 75px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-info-content__email__input__box {
 padding: 6px 1px 2px;
-width: 130px;
+width: 188px;
+font-family: 'Nanum Gothic', serif;
 }
 
 .user-find-id-info__content__emailConfirmNumber {
@@ -208,11 +241,13 @@ display: flex;
 /* background-color: aliceblue; */
 padding-left: 10px;
 line-height: 40px;
+font-family: 'Nanum Gothic', serif;
 }
 
 .user-find-info-content__emailConfirmNumber__label {
 display: flex;
 width: 75px;
+font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-info-content__email__option {
@@ -223,7 +258,7 @@ padding-left: 2px;
 
 .user-find-info-content__email__input {
 padding-right: 2px;
-
+font-family: 'Nanum Gothic', serif;
 }
 
 .user-find-id-info_emailConfirmNumber_button {
@@ -253,14 +288,29 @@ height: 18px;
 width: 130px;
 padding-top: 4px;
 padding-right: 2px;
+font-family: 'Nanum Gothic', serif;
 }
 
-.join__resultText {
+.userConfirmNumberCheck_Email_resultText {
+    color: #f1859b;
+    font-size: smaller;
+    font-weight: bold;
+    font-family: 'Nanum Gothic', serif;
+    padding-left: 17px;
+	
+}
+.userIDCheck_All__resultText,
+.userIDCheck_All__Email_resultText {
 	text-align:center;
 	color: #f1859b;
     font-size: smaller;
     font-weight: bold;
+    padding-top: 22px;
+    padding-bottom: 9px;
+    font-family: 'Nanum Gothic', serif;
 }
+
+
 
 .user-find-id-info__content__gender {
 	

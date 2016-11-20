@@ -24,6 +24,8 @@ import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
 
+import oracle.net.aso.r;
+
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
 // 메인 컨트롤러에서는 별도의 생성 없이 사용 가능.
@@ -263,14 +265,17 @@ public class MainService implements Action {
 		String searchIdUserBirth = this.params.getSearchIdUserBirth();
 		String searchIdUserGender = this.params.getSearchIdUserGender();
 		
-		String userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
+		List<Params> userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		Integer result = this.dbService.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		
+		System.out.println(userSearchId + "나와라..");
+		System.out.println(result + "갯수");
 		mav.addObject("searchIdUserName", searchIdUserName);
 		mav.addObject("userSearchId", userSearchId);
 		mav.addObject("result", result);
 		return mav;
 	}
+
 
 /*****수진. 상영시간표List*****/
 	public ModelAndView showtimes() throws Exception {
@@ -305,6 +310,8 @@ public class MainService implements Action {
 		ModelAndView mav = this.getTemplate();
 		return mav;
 	}
+	
+
 	
 /*****은정. ticketing *****/
 	public ModelAndView ticketing() throws Exception {

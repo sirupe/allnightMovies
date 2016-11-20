@@ -46,7 +46,7 @@
 				</div>
 				
 					<div class="userIDCheck">
-						<div id="insertConfirm" class="join__resultText"></div>
+						<div id="insertConfirm" class="userIDCheck_All__resultText">필수입력사항입니다.</div>
 					</div>
 				<div class= "emailConfirmNumber_check">
 					
@@ -69,8 +69,11 @@
 									이메일
 							</div>
 							<div class="user-find-info-content__email__input">
-								<input type="text" id="userFindIdEmail" class="user-find-info-content__email__input__box">
+								<input type="text" id="userFindIdEmail" class="user-find-info-content__email__input__box" value="tnwls147258@naver.com">
+								<Button class="user-find-id-info_emailConfirmNumber_button" onclick="emailCheck_send()" type="button">인증번호보내기</Button>
+								<div id="insertConfirmNumber" class="userConfirmNumberCheck_Email_resultText">필수입력사항입니다.</div>
 							</div>
+
 
 						</div>
 						
@@ -79,19 +82,17 @@
 									인증번호
 							</div>
 							<div class="user-find-info-content__emailConfirmNumber__input">
-								<input type="text" id="userFindIdConfirmNumber" class="user-find-info-content__emailConfirmNumber__input__box">
-							</div>
-		
-							<div>
-								<Button class="user-find-id-info_emailConfirmNumber_button" onclick="">확인</Button>
+								<input type="text" id="userFindIdConfirmNumber" class="user-find-info-content__emailConfirmNumber__input__box" >
+								<Button class="user-find-id-info_emailConfirmNumber_button" onclick="confirmNumber_Check()" type="button">인증</Button>
+								<label>스레드</label>
 							</div>
 						
 						</div>
 						<div class="userIDCheck">
-							<div id="insertConfirm" class="join__resultText">??</div>
+							<div id="insertConfirmEmail" class="userIDCheck_All__Email_resultText">필수입력사항입니다.</div>
 						</div>
 						<div class = "emailConfirmNumber_check">
-							<Button class="user-find-id-info_emailConfirmNumber_check_button" type="button" onclick="user_id_find_checkemail()">확인</Button>
+							<Button class="user-find-id-info_emailConfirmNumber_check_button" type="button" onclick="email_resultCheck()">확인</Button>
 						</div>
 					</div>
 				</div>

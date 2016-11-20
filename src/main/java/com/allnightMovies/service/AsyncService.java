@@ -17,7 +17,6 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
-import com.allnightMovies.utility.SendEmail;
 
 @Service
 public class AsyncService implements AsyncAction {
@@ -123,12 +122,25 @@ public class AsyncService implements AsyncAction {
 	}
 	
 	// 로그인
-	public ModelAndView login() throws Exception {
+	public AsyncResult<String> login() throws Exception {
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
+		String result = null;
+		boolean resultBool = true;
+		System.out.println("여긴 안오는듯?");
 		if(userLoginInfo.getUserStates() == 1) {
-			HttpSession session = this.params.getSession();
-			session.setAttribute("userID", userLoginInfo.getUserID());
+			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
+				HttpSession session = this.params.getSession();
+				session.setAttribute("userID", userLoginInfo.getUserID());
+			} else {
+				result = "비밀번호가 일치하지 않습니다.";
+			}
+		} else {
+			result = "탈퇴하였거나 존재하지 않는 아이디입니다.";
 		}
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData(result);
+		async.setSuccess(resultBool);
+		return async;
 	}
 /*****연종. chagePwd success check*****/	
 	public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
@@ -179,17 +191,15 @@ public class AsyncService implements AsyncAction {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
-		System.out.println("mainservice 인증번호> : " + randNum);
+		System.out.println("AsyncResult 인증번호> : " + randNum);
 		
 		HttpSession session = this.params.getSession();
 		String userID = (String)session.getAttribute("userID");
 		String userEmail = this.dbService.searchEmail(userID);
 		HttpSession sessionRandNum = this.params.getSession();
-		System.out.println("sendEmailConfirmNum  userID >> " + userID);
-		System.out.println("sendEmailConfirmNum  userEmail >> " + userEmail);
 		
 		sessionRandNum.setAttribute("randNum", randNum);
-		new SendEmail(String.valueOf(randNum), userEmail); 
+//		new SendEmail(String.valueOf(randNum), userEmail); 
 		
 		return asyncResult;
 		
@@ -208,13 +218,20 @@ public class AsyncService implements AsyncAction {
 		String presentUserPWD = this.dbService.selectUserPWD(myInfoID);
 		
 		if(withdrawUserpwd.equals(presentUserPWD)) {
-			//TODO dbService에서 회원탈퇴시키는 과정 추가해야함
+			System.out.println("if 진입 AsyncResult 결과 >> " + withdrawUserpwd.equals(presentUserPWD));
+			System.out.println(this.dbService.updateWithdraw(myInfoID));
 			this.params.getSession().invalidate();
 			withdrawResult =  "/movie/mainService/getTemplate";
+			
 		}
 		asyncResult.setData(withdrawResult);
+		System.out.println("if 밖  AsyncResult >>" + asyncResult.getData());
 		return asyncResult;
 	}
+	
+	
+	
+	
 	
 	@SuppressWarnings("rawtypes")
 	public AsyncResult confirmNumInit() throws Exception {

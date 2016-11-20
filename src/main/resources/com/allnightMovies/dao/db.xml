@@ -28,7 +28,7 @@
 	</select>
 <!-- /* JI. LOGIN */ -->		
 	<select id="login" resultType="com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO" parameterType="com.allnightMovies.model.params.Params">
-		SELECT USER_ID, USER_STATES, USER_PWD
+		SELECT USER_ID userID, USER_STATES userStates, USER_PWD userPwd
 		FROM USER_PERSONAL_INFO
 		WHERE USER_ID = #{userID}
 	</select>
@@ -57,8 +57,6 @@
 		)
 	</insert>
 
-
-
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(*) 
@@ -77,7 +75,6 @@
 	</select>	
 	
 <!-- 수진=================================================================================  -->
-<!-- 상영시간 list -->
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>
@@ -121,23 +118,29 @@
 	</select>
 
 <!-- SHIN. MY INFO -->
-	<select id="selectMyInfo" resultType="com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO" parameterType="java.lang.String">
-		SELECT 
-			USER_ID	as userID,
-			USER_PWD as userPWD,
-			USER_NAME as userName,
-			USER_GENDER	as userGender,
-			USER_BIRTH as userBirth,
-			USER_EMAIL as userEmail,
-			USER_REGDATE as userRegDate,
-			USER_STATES	as userStates
-		FROM USER_PERSONAL_INFO
-		WHERE USER_ID = #{myInfoID}	
-	</select> 
-	
-	<select id="selectUserPWD" resultType="java.lang.String" parameterType="java.lang.String">
-		SELECT USER_PWD
-		FROM USER_PERSONAL_INFO
+   <select id="selectMyInfo" resultType="com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO" parameterType="java.lang.String">
+      SELECT 
+         USER_ID   as userID,
+         USER_PWD as userPWD,
+         USER_NAME as userName,
+         USER_GENDER   as userGender,
+         USER_BIRTH as userBirth,
+         USER_EMAIL as userEmail,
+         USER_REGDATE as userRegDate,
+         USER_STATES   as userStates
+      FROM USER_PERSONAL_INFO
+      WHERE USER_ID = #{myInfoID}   
+   </select> 
+   
+   <select id="selectUserPWD" resultType="java.lang.String" parameterType="java.lang.String">
+      SELECT USER_PWD
+      FROM USER_PERSONAL_INFO
+      WHERE USER_ID = #{myInfoID}
+   </select>
+
+	<select id="updateWithdraw" parameterType="java.lang.String" resultType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO 
+		SET USER_STATES = 0
 		WHERE USER_ID = #{myInfoID}
 	</select>
 	

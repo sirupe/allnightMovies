@@ -68,6 +68,16 @@ public class MainService implements Action {
 		mav.addObject("keepLogin", this.params.getKeepLogin());
 		return mav;
 	}
+
+	// 로그인
+	public ModelAndView login() throws Exception {
+		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
+		if(userLoginInfo.getUserStates() == 1) {
+			HttpSession session = this.params.getSession();
+			session.setAttribute("userID", userLoginInfo.getUserID());
+		}
+		return this.getTemplate();
+	}
 	
 	// 로그아웃
 	public ModelAndView logout() throws Exception {

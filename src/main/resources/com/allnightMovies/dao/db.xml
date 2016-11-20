@@ -122,4 +122,9 @@
       WHERE USER_ID = #{myInfoID}
    </select>
    
+	<update id="updateWithdraw" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO 
+		SET USER_STATUS = 0
+		WHERE USER_ID = #{myInfoID};
+	</update>   
 </mapper>

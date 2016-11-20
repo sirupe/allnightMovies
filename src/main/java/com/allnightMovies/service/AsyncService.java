@@ -194,7 +194,8 @@ public class AsyncService implements AsyncAction {
 		String presentUserPWD = this.dbService.selectUserPWD(myInfoID);
 		
 		if(withdrawUserpwd.equals(presentUserPWD)) {
-			//TODO dbService에서 회원탈퇴시키는 과정 추가해야함
+			//TODO dbService에서 회원탈퇴시키는 과정 추가해야함 updateWithdraw
+			
 			this.params.getSession().invalidate();
 			withdrawResult =  "/movie/mainService/getTemplate";
 		}

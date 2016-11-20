@@ -39,6 +39,7 @@ function logout() {
 	location.href = '/movie/mainService/logout';
 }
 
+
 /*shin myInfo*/
 function locationMyInfo() {
 	submit(
@@ -48,6 +49,18 @@ function locationMyInfo() {
 		'myInfo',	
 		'myInfo/myInfo', 
 		'myInfo/myInfo'	 
+	);
+}
+
+/*아이디 찾기 */
+function locationSearchID() {
+	submit(
+		'POST',
+		'/movie/mainService/getTemplate',
+		'searchId',
+		'searchId',
+		'searchId/searchId',
+		'searchId/searchId'
 	);
 }
 
@@ -66,7 +79,7 @@ function locationMenus(method, action, directory, page) {
 		
 	});
 }
-
+	
 function submit(method, action, directory, page, js, css) {
 	console.log('method');
 	$(document).ready(function() {

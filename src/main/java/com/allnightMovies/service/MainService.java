@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -257,6 +260,31 @@ public class MainService implements Action {
 
 /*****수진. 상영시간표List*****/
 	
+/*******ID찾기 수진********/	
+	public ModelAndView searchId() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		String searchIdUserName = this.params.getSearchIdUserName();
+		String searchIdUserBirth = this.params.getSearchIdUserBirth();
+		String searchIdUserGender = this.params.getSearchIdUserGender();
+		
+		String userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
+		Integer result = this.dbService.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
+		
+		mav.addObject("searchIdUserName", searchIdUserName);
+		mav.addObject("userSearchId", userSearchId);
+		mav.addObject("result", result);
+		return mav;
+	}
+	
+	
+/**이메일인증**/
+	public ModelAndView FindIdcheckEmail() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		
+		return mav;
+	}
+	
+/*****상영시간표List*****/
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
@@ -280,6 +308,16 @@ public class MainService implements Action {
 		return mav;
 	}
 	
+/*****고객센터******/
+	
+	public ModelAndView serviceCenter() throws Exception {
+		this.params.setContentCSS("service/serviceCenter");
+		this.params.setContentjs("service/serviceCenter");
+		
+		
+		ModelAndView mav = this.getTemplate();
+		return mav;
+	}
 /*****은정. ticketing *****/
 	public ModelAndView ticketing() throws Exception {
 		this.params.setDirectory("reservation");

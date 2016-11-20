@@ -7,7 +7,7 @@
 	
 	<c:forEach items = "${movieTimeTable }" var="movieTimeTable">
 			<div class = "container__movie__screening__date">
-				<button class="movie_screening_date" type="button" onclick="movie_date()" >${movieTimeTable.getScreening_Date() }</button>
+				<button class="movie_screening_date" type="button" onclick="movie_date()" >▼ ${movieTimeTable.getScreening_Date() }</button>
 				
 					<div class="movie_screening_panel">
 						<c:forEach items="${movieTimeTable.getMovieShowTitleDTO() }" var="movieTitleDTO">

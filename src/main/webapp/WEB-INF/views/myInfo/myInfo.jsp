@@ -30,6 +30,7 @@
 		<span>
 			<button class="button-myinfo-change-email" onclick="changeEmailInfoForm()">이메일 변경</button>
 			<button class="button-myinfo-change-pwd" onclick="changePwdInfoForm()">비밀번호 변경</button>
+			<button class="button-myinfo-change-withdraw" onclick="withdrawForm()">회원탈퇴</button>
 		</span>
 	</div>
 </div>

@@ -254,6 +254,7 @@ public class MainService implements Action {
 		session.removeAttribute("userId");
 		return this.getTemplate();
 	}
+
 	
 /*******ID찾기 수진********/	
 	public ModelAndView searchId() throws Exception {
@@ -364,5 +365,5 @@ public class MainService implements Action {
 		return this.getTemplate();	
 	}
 /*******연종. 이메일 변경 인증번호 보내기*******/
-	
+
 }

@@ -53,5 +53,7 @@ public class Params {
 	private String myInfoPresentPwd;
 	private String myInfoNewPwd;
 	private String myInfoNewPwdCheck;
-
+	
+// 회원탈퇴 	------------------------------------------------------------------
+	private String withdrawUserPwd;
 }

@@ -21,7 +21,7 @@
 		
 		<span class="span-myInfoChangePwd__buttons">
 			<button class="button-myInfoChangePwd__confirm" onclick="changePwdInfo()" type="button">확인</button>
-			<button class="button-myInfoChangePwd__reset" onclick="viewMyInfo()" type="button">취소</button>
+			<button class="button-myInfoChangePwd__reset" onclick="viewMyInfo()" type="button">내정보</button>
 		</span>
 		
 	</div>

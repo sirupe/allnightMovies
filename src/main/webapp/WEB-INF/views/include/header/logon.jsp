@@ -13,12 +13,4 @@
 			</button>
 		</div>
 	</div>
-	<div class="header__logon__bottom">
-		<div class="header__logon__bottom__reserve">
-			예매정보
-		</div>
-		<div class="header__logon__bottom__service">
-			고객센터
-		</div>
-	</div>
 </div>

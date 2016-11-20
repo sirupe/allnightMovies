@@ -4,11 +4,10 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 /*font-family: 'Nanum Gothic', serif; 비밀번호*/
 
-/**************MYINFO***************/
-/*내정보 전체*/
-.div-myinfo {
+/**************MYINFO ChangeEmail***************/
+.div-myInfoChangeEmail {
 	width: 700px;
-    height: 420px;
+	height: 350px;
     display: flex;
     flex-direction: column;
     line-height: 40px;
@@ -16,9 +15,7 @@
     margin-top: 20px;
     margin-bottom: 40px;
 }
-
-/*내정보 타이틀*/
-.div-myinfo__title {
+.div-myInfoChangeEmail__title {
 	font-family: 'Jeju Gothic', serif;
 	background-color: #383838;
     color: white;
@@ -26,9 +23,7 @@
     font-size: 20px;
 }
 
-/*내정보 내용부분*/
-.div-myinfo__content {
-	font-family: 'Jeju Gothic', serif;
+.div-myInfoChangeEmail__content {
 	display: flex;
 	align-items: center;
     justify-content: flex-start;
@@ -38,53 +33,51 @@
     line-height: 1.5em;
     background-color: white;
 }
-
-/*내정보 글씨 */
-.label-myinfo__content__id {
-	font-family: 'Jeju Gothic', serif;
-	margin-left: 130px;
-	margin-right: 35px;
-	font-size: 17px;
-	font-weight: bold;
-}
-.label-myinfo__content__name {
-	margin-left: 130px;
-	margin-right: 50px;
-	font-size: 17px;
-	font-weight: bold;
-}
-.label-myinfo__content__gender {
-	margin-left: 130px;
-	margin-right: 50px;
-	font-size: 17px;
-	font-weight: bold;
-}
-.label-myinfo__content__email {
-	margin-left: 130px;
-	margin-right: 35px;
-	font-size: 17px;
-	font-weight: bold;
-}
-.label-myinfo__content__birth {
-	margin-left: 130px;
-	margin-right: 50px;
-	font-size: 17px;
-	font-weight: bold;
-}
-.text-myinfo__content{
-	color: #414141;
-	font-family: 'Jeju Gothic', serif;
-    border: none;
-    margin-top: 30px;
-    margin-left: 10px;
-    font-size: 16px;
-    width: 260px;
+.input-myInfoChangeEmail {
+	height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font-family: 'Jeju Gothic', serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+    font-size: 13px;
+    width: 250px;
+    margin-bottom: 5px;
+    margin-top: 20px;
 }
 
-/**************MYINFO BUTTONS***************/
-.button-myinfo-change-withdraw,
-.button-myinfo-change-pwd,
-.button-myinfo-change-email {
+.input-myInfoChangeEmail__confirm {
+	height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font-family: 'Jeju Gothic', serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+    font-size: 13px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+.label-myInfoChangeEmail__content {
+	font-family: 'Jeju Gothic', serif;
+	font-size: 17px;
+	margin-top: 20px;
+}
+.text-myInfoChangeEmail {
+	font-family: 'Jeju Gothic', serif;
+	margin-top: 5px;
+	font-size: 13px;
+}
+
+
+
+/**************BUTTONS***************/
+.button-myInfoChangeEmail__submit,
+.button-myInfoChangeEmail__reset {
 	font-family: 'Jeju Gothic', serif;
 	font-size: 15px;
 	display: inline-block;
@@ -109,11 +102,33 @@
 	transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);	
 	margin: 20px 5px 30px 0px;
 }
-.button-myinfo-change-withdraw:hover,
-.button-myinfo-change-pwd:hover,
-.button-myinfo-change-email:hover {
+
+.button-myInfoChangeEmail__submit:hover,
+.button-myInfoChangeEmail__reset:hover {
 	border: 1px solid #007cad;
 	background: #12385b;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);	
+}
+
+.button-myInfoChangeEmail__sendmail {
+	font-family: 'Jeju Gothic', serif;
+	background-color: #8BACD9;
+	padding: 6px 10px;
+	border: 1px solid #018dc4;
+	border-radius: 3px;
+	font: 15px;
+	color: rgba(255,255,255,0.9);
+	cursor: pointer;
+}
+
+.button-myInfoChangeEmail__sendmail:hover {
+	border: 1px solid #007cad;
+    background: #41688c;
 	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
 	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);

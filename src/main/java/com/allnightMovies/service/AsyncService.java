@@ -3,17 +3,20 @@ package com.allnightMovies.service;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 @Service
 public class AsyncService implements AsyncAction {
@@ -116,6 +119,90 @@ public class AsyncService implements AsyncAction {
 		resultStr = "false";
 		
 		asyncResult.setData(resultStr);
+		return asyncResult;
+	}
+	
+/*****연종. chagePwd success check*****/	
+	public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
+		String newPWD = params.getMyInfoNewPwd();
+		String newPWDcheck = params.getMyInfoNewPwdCheck();
+		String presentPWD = params.getMyInfoPresentPwd();
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		
+		//사용자아이디 session  
+		HttpSession session = params.getSession();
+		String myInfoID = (String)session.getAttribute("userID");
+		String dbPresentPWD = this.dbService.selectUserPWD(myInfoID);
+		
+		boolean isCheck = true;
+		String resultStr = "false";
+		
+		//현재PWD 사용자입력PWD 동일한지 체크
+		if(!(presentPWD.equals(dbPresentPWD))) {
+			isCheck =  false;
+		}
+		//바꿀PWD 바꿀PWD확인 동일한지 체크
+		if(!(newPWD.equals(newPWDcheck))) {
+			isCheck =  false;
+		}
+		//현재비밀번호  형식체크
+		if(!RegexCheck.passwdRegexCheck(presentPWD) || !RegexCheck.passwdRegexCheck(newPWD)) {
+			isCheck =  false;
+		}
+		//현재비밀번호 8~15자 이내인지 체크
+		if(presentPWD.length() < 8 || presentPWD.length() > 15 || newPWD.length() < 8 || newPWD.length() > 15) {
+			isCheck =  false;
+		}
+		
+		if(isCheck) {
+			this.dbService.updateNewPwd(myInfoID, newPWD);
+			resultStr = "/movie/mainService/myInfoChagePwdResult";
+			this.params.getSession().invalidate();
+		}
+		
+		asyncResult.setData(resultStr);
+		System.out.println("asyncResult 비동기결과: " + resultStr);
+		return asyncResult;
+	}
+
+/*****연종. 이메일 변경 인증번호 발송 *****/
+//TODO 수정중 화면이안뜸
+	public AsyncResult<String> sendEmailConfirmNum() throws Exception {
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		Random rand = new Random();
+		int randNum = rand.nextInt(900000) + 100000;
+		System.out.println("mainservice 인증번호> : " + randNum);
+		
+		HttpSession session = this.params.getSession();
+		String userID = (String)session.getAttribute("userID");
+		String userEmail = this.dbService.searchEmail(userID);
+		HttpSession sessionRandNum = this.params.getSession();
+		System.out.println("sendEmailConfirmNum  userID >> " + userID);
+		System.out.println("sendEmailConfirmNum  userEmail >> " + userEmail);
+		
+		sessionRandNum.setAttribute("randNum", randNum);
+		new SendEmail(String.valueOf(randNum), userEmail); 
+		
+		return asyncResult;
+		
+	}	
+/***********연종. 회원탈퇴***************/	
+	public AsyncResult<String> userWithdraw() throws Exception {
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		
+		String withdrawUserpwd = this.params.getWithdrawUserPwd();
+		String withdrawResult = "false";
+		
+		HttpSession session = this.params.getSession();
+		String myInfoID = (String)session.getAttribute("userID");
+		String presentUserPWD = this.dbService.selectUserPWD(myInfoID);
+		
+		if(withdrawUserpwd.equals(presentUserPWD)) {
+			//TODO dbService에서 회원탈퇴시키는 과정 추가해야함
+			this.params.getSession().invalidate();
+			withdrawResult =  "/movie/mainService/getTemplate";
+		}
+		asyncResult.setData(withdrawResult);
 		return asyncResult;
 	}
 	

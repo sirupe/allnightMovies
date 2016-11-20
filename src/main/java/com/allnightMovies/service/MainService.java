@@ -256,7 +256,6 @@ public class MainService implements Action {
 	}
 
 /*****수진. 상영시간표List*****/
-	
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
@@ -302,19 +301,18 @@ public class MainService implements Action {
 		ModelAndView mav = this.getTemplate();
 		HttpSession session = this.params.getSession();
 		String myInfoID = (String)session.getAttribute("userID");
-		
 		UserPersonalInfoDTO myInfoDTO = this.dbService.selectMyInfo(myInfoID);
-		
 		mav.addObject("myInfoList", myInfoDTO);
 		return mav;
 	}
 	
 /*******연종. MyINFO SHIN*******/		
-//TODO 비밀번호 일치한지 확인후 OK면 변경 
-	public ModelAndView myInfoChangePwd() throws Exception {
-		ModelAndView mav = new ModelAndView("myInfo/myInfoChagePwdResult");
-		this.params.getSession().invalidate();
-		return mav;
+	public ModelAndView myInfoChagePwdResult() throws Exception {
+		this.params.setDirectory("myInfo");
+		this.params.setPage("myInfoChagePwdResult");
+		this.params.setContentCSS("myInfo/changePwd");
+		this.params.setContentjs("myInfo/changePwd");
+		return this.getTemplate();	
 	}
 
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
@@ -323,15 +321,12 @@ public class MainService implements Action {
 		this.params.setPage("currentFilm");
 		this.params.setContentCSS("movie/currentFilm");
 		this.params.setContentjs("movie/currentFilm");
-		
 		//1. 디비로가서 현재 상영중인 영화 갯수를 구하공...
 		//2. 한줄에 영화 3개씩 뿌려줄것이다.
 		//3. 예매순으로 시작할것인지 평점순으로 시작할 것 인지..
-		
-		
 		return this.getTemplate();	
 	}
-	
+/*******연종. MOVIE CURRENT FIRM 상영예정작*******/		
 	public ModelAndView screeningsPlanned() throws Exception{
 		this.params.setDirectory("movie");
 		this.params.setPage("screeningsPlanned");
@@ -339,4 +334,5 @@ public class MainService implements Action {
 		this.params.setContentjs("movie/screeningsPlanned");
 		return this.getTemplate();	
 	}
+
 }

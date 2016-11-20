@@ -39,7 +39,6 @@ function logout() {
 	location.href = '/movie/mainService/logout';
 }
 
-
 /*shin myInfo*/
 function locationMyInfo() {
 	submit(
@@ -52,7 +51,8 @@ function locationMyInfo() {
 	);
 }
 
-/*아이디 찾기 */
+/**아이디 찾기**/
+
 function locationSearchID() {
 	submit(
 		'POST',

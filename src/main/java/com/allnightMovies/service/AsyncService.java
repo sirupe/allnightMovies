@@ -9,10 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
@@ -120,6 +122,14 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 	}
 	
+	// 로그인
+	public ModelAndView login() throws Exception {
+		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
+		if(userLoginInfo.getUserStates() == 1) {
+			HttpSession session = this.params.getSession();
+			session.setAttribute("userID", userLoginInfo.getUserID());
+		}
+	}
 /*****연종. chagePwd success check*****/	
 	public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
 		String newPWD = params.getMyInfoNewPwd();
@@ -187,6 +197,8 @@ public class AsyncService implements AsyncAction {
 /***********연종. 회원탈퇴***************/	
 	public AsyncResult<String> userWithdraw() throws Exception {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		
+		System.out.println("userWithdraw");
 		
 		String withdrawUserpwd = this.params.getWithdrawUserPwd();
 		String withdrawResult = "false";

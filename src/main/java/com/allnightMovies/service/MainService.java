@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
-import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -20,6 +19,7 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
+import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
@@ -311,7 +311,10 @@ public class MainService implements Action {
 		this.params.setPage("ticketing");
 		this.params.setContentCSS("ticketing");
 		this.params.setContentjs("ticketing");
-		return this.getTemplate();
+		
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("cal", new MonthCalendar());
+		return mav;
 	}
 	
 	public ModelAndView cal() throws Exception {

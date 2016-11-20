@@ -52,6 +52,7 @@ function locationMyInfo() {
 }
 
 /**아이디 찾기**/
+
 function locationSearchID() {
 	submit(
 		'POST',
@@ -62,7 +63,6 @@ function locationSearchID() {
 		'searchId/searchId'
 	);
 }
-
 
 function locationMenus(method, action, directory, page) {
 	var getMethod = method;
@@ -79,7 +79,7 @@ function locationMenus(method, action, directory, page) {
 		
 	});
 }
-
+	
 function submit(method, action, directory, page, js, css) {
 	console.log('method');
 	$(document).ready(function() {

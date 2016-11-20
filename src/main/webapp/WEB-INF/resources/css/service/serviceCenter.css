@@ -1,0 +1,190 @@
+@CHARSET "UTF-8";
+
+.div__serviceCenter_form {
+width: 759px;
+    height: 790px;
+    display: flex;
+    flex-direction: column;
+    line-height: 40px;
+    padding: 20px;
+    background-color: #F0F0F0;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.div__serviceCenter_form_title {
+background-color: #383838;
+color: white;
+padding-left: 20px;
+}
+
+.div__serviceCenter__content {
+
+flex-basis: 739px;
+border: 1px solid gray;
+font-size: 12px;
+line-height: 1.5em;
+background-color: white;
+}
+
+.div__serviceCenter__content__header {
+display: flex;
+flex-direction: row;
+height: 105px;
+}
+
+.div__serviceCenter__logo {
+display: flex;
+/* background-color: aliceblue; */
+width: 215px;
+height: 107px;
+}
+
+.serviceCenter_logo_image {
+	 /* width: 211px; */
+	 width:100%;
+}
+
+.serviceCenter_question_image {
+	    width: 69px;
+    height: 45px;
+    padding-top: 10px;
+}
+
+.div__serviceCenter__intro {
+    display: flex;
+    flex-direction: column;
+    /* background-color: bisque; */
+    padding-left: 7px;
+    height: 107px;
+    width:397px;
+    flex: none;
+    overflow: hidden;
+
+}
+
+.serviceCenter_intro_message {
+        width: 367px;
+    font-size: 15.5px;
+    font-weight: 700;
+    line-height: initial;
+    padding-left: 6px;
+    /* text-align: center; */
+   /*  background-color: burlywood; */
+    color: #283cab;
+	
+}
+
+.div__serviceCenter__intro_bundle {
+	/* background-color: aquamarine; */
+    display: flex;
+    height: 65px;
+}
+
+.serviceCenter_intro_title {
+    /* background-color: beige; */
+    width: 140px;
+    height: 34px;
+    font-size: 25px;
+    font-weight: 900;
+    line-height: 30px;
+    padding-top: 19px;
+    padding-left: 10px;
+}
+
+.div__serviceCenter__Container {
+    padding-left: 20px;
+    padding-top: 27px;
+    padding-right: 15px;
+    
+ }
+
+
+ul.serviceCenter_Tab {
+	padding: 0px;
+	float: left;
+	list-style: none;
+	height: 48px;
+	border-bottom: 1px solid;
+	border-left: 1px solid;
+	width: 100%;
+	border-radius: 12px;
+	
+}
+
+ul.serviceCenter_Tab li {
+	 float: left;
+    margin: 0;
+    padding: 0;
+    padding-right: 50px;
+    height: 47px;
+    line-height: 47px;
+    border: 1px solid;
+    margin-bottom: -1px;
+    overflow: hidden;
+    position: relative;
+    border-left: none;
+    border-radius: 12px;
+}
+
+ul.serviceCenter_Tab li a {
+	text-decoration: none;
+    color: rgb(99, 40, 51);
+    font-weight: 900;
+    display: block;
+    font-size: 13px;
+    outline: none;
+    padding: 0 15px;
+	
+}
+
+ul.serviceCenter_Tab li a:hover {
+}
+
+ul.serviceCenter_Tab li.active,
+ul.serviceCenter_Tab li.actice a:hover {
+	background: #e6d4d9;
+}
+
+.div__serviceCenter_Container {
+	border-top: none;
+	overflow: hidden;
+	clear: both;
+	float: left;
+	background: bisque;
+	width: 100%;
+}
+
+.div__serviceCenter_Container_Tab {
+	BACKGROUND-COLOR: antiquewhite;
+    HEIGHT: 342PX;
+	padding: 78px;
+}
+
+.div__serviceCenter_info {
+display: flex;
+    /* background-color: burlywood; */
+    padding-top: 25px;
+    line-height: 36px;
+}
+
+.div__serviceCenter_Tel {
+   display: flex;
+    /* background-color: cadetblue; */
+    width: 249px;
+    padding-left: 110px;
+    font-size: 22px;
+    font-weight: bolder;
+    padding-bottom: 11px;
+    border-right: 2px solid;
+}
+
+.div_serviceCenter_Email {
+    display: flex;
+    /* background-color: cadetblue; */
+    width: 268px;
+    padding-left: 34px;
+    font-size: 21px;
+    font-weight: bolder;
+    padding-bottom: 13px;
+}

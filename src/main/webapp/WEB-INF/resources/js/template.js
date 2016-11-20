@@ -39,7 +39,6 @@ function logout() {
 	location.href = '/movie/mainService/logout';
 }
 
-
 /*shin myInfo*/
 function locationMyInfo() {
 	submit(
@@ -52,8 +51,7 @@ function locationMyInfo() {
 	);
 }
 
-<<<<<<< HEAD
-/*아이디 찾기 */
+/**아이디 찾기**/
 function locationSearchID() {
 	submit(
 		'POST',
@@ -63,8 +61,9 @@ function locationSearchID() {
 		'searchId/searchId',
 		'searchId/searchId'
 	);
-	
-=======
+}
+
+
 function locationMenus(method, action, directory, page) {
 	var getMethod = method;
 	var getAction = action;
@@ -79,7 +78,6 @@ function locationMenus(method, action, directory, page) {
 		$('form').submit();
 		
 	});
->>>>>>> 2ae07e6acc3b5e71bf219c849683aff274a643b3
 }
 
 function submit(method, action, directory, page, js, css) {

@@ -29,17 +29,9 @@ function changeEmailInfoForm() {
 		'/movie/mainService/getTemplate',
 		'myInfo',
 		'myInfoChangeEmail',
-		'myInfo/myInfo',
-		'myInfo/myInfo'
+		'myInfo/chageEmail',
+		'myInfo/changeEmail'
 	);	
-}
-
-//이메일 정보 변경 
-	
-
-//이메일 정합성검사
-function validationEmail() {
-	
 }
 
 //비밀번호 변경 창
@@ -50,7 +42,7 @@ function changePwdInfoForm() {
 		'myInfo',
 		'myInfoChangePwd',
 		'myInfo/myInfo',
-		'myInfo/myInfo'
+		'myInfo/changePwd'
 	);	
 }
 
@@ -62,8 +54,25 @@ function changePwdInfo() {
 	
 	if(validationPWD() && validationRePWD() && validationPresentPWD()) {
 		$.post(
-				
+			'/movie/async/asyncService/chagePwdSuccessCheck',
+			{
+				'myInfoPresentPwd' : presentPWD,
+				'myInfoNewPwd' : changeNewPWD,
+				'myInfoNewPwdCheck' : changeNewPWDcheck
+			},
+			 function(result) {
+				console.log(result);
+				if(result == 'false') {
+					alert('비밀번호 변경에 실패하였습니다. 다시시도해주세요.');
+				} else {
+					location.href='/movie/mainService/myInfoChagePwdResult';
+				}
+			 }
 		)
+	} else if(presentPWD == '' || changeNewPWD == '' || changeNewPWDcheck == '') {
+		alert('필수 입력사항을 정확히 입력해주세요');
+	} else {
+		alert('필수 입력사항을 정확히 입력해주세요');
 	}
 }
 

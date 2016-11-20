@@ -250,8 +250,9 @@ justify-content: center;
 
 .user-find-info-content__emailConfirmNumber__input__box {
 height: 18px;
-width: 120px;
+width: 130px;
 padding-top: 4px;
+padding-right: 2px;
 }
 
 .join__resultText {

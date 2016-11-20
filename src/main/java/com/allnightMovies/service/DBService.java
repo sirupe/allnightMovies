@@ -73,4 +73,8 @@ public class DBService {
 		return dbMapper.selectUserPWD(myInfoID);
 	}
 	
+	public Params updateWithdraw(String myInfoID) {
+		return dbMapper.updateWithdraw(myInfoID);
+	}
+	
 }

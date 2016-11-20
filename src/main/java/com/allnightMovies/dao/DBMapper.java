@@ -36,4 +36,6 @@ public interface DBMapper {
 /** shin. MY INFO **/	
 	public UserPersonalInfoDTO selectMyInfo(String myInfoID);
 	public String selectUserPWD(String myInfoID);
+	
+	public Params updateWithdraw(String myInfoID);
 }

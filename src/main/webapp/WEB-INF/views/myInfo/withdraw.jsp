@@ -18,8 +18,8 @@
 			<input id="withdraw-password" class="input-withdraw__password" name="withdrawUserPwd" type="password" placeholder="비밀번호 입력" />
 		</span>
 		<span class="span-withdraw__buttons">
-			<button class="button-withdraw__withdraw" onclick="withdraw()">탈퇴하기</button>
-			<button class="button-withdraw__reset" onclick="viewMyInfo()">내정보</button>
+			<button class="button-withdraw__withdraw" type="button" onclick="withdraw()">탈퇴하기</button>
+			<button class="button-withdraw__reset" type="button" onclick="viewMyInfo()">내정보</button>
 		</span>
 	</div>
 </div>

@@ -15,7 +15,6 @@ import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
-import com.allnightMovies.utility.SendEmail;
 
 @Service
 public class AsyncService implements AsyncAction {
@@ -194,14 +193,20 @@ public class AsyncService implements AsyncAction {
 		String presentUserPWD = this.dbService.selectUserPWD(myInfoID);
 		
 		if(withdrawUserpwd.equals(presentUserPWD)) {
-			//TODO dbService에서 회원탈퇴시키는 과정 추가해야함 updateWithdraw
-			
+			System.out.println("if 진입 AsyncResult 결과 >> " + withdrawUserpwd.equals(presentUserPWD));
+			System.out.println(this.dbService.updateWithdraw(myInfoID));
 			this.params.getSession().invalidate();
 			withdrawResult =  "/movie/mainService/getTemplate";
+			
 		}
 		asyncResult.setData(withdrawResult);
+		System.out.println("if 밖  AsyncResult >>" + asyncResult.getData());
 		return asyncResult;
 	}
+	
+	
+	
+	
 	
 	@SuppressWarnings("rawtypes")
 	public AsyncResult confirmNumInit() throws Exception {

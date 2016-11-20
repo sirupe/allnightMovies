@@ -5,13 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -258,8 +255,6 @@ public class MainService implements Action {
 		return this.getTemplate();
 	}
 
-/*****수진. 상영시간표List*****/
-
 	
 /*******ID찾기 수진********/	
 	public ModelAndView searchId() throws Exception {
@@ -276,16 +271,8 @@ public class MainService implements Action {
 		mav.addObject("result", result);
 		return mav;
 	}
-	
-	
-/**이메일인증**/
-	public ModelAndView FindIdcheckEmail() throws Exception {
-		ModelAndView mav = this.getTemplate();
-		
-		return mav;
-	}
-	
-/*****상영시간표List*****/
+
+/*****수진. 상영시간표List*****/
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
@@ -309,8 +296,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-/*****고객센터******/
-	
+/****수진 .고객센터*****/
 	public ModelAndView serviceCenter() throws Exception {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
@@ -319,6 +305,7 @@ public class MainService implements Action {
 		ModelAndView mav = this.getTemplate();
 		return mav;
 	}
+	
 /*****은정. ticketing *****/
 	public ModelAndView ticketing() throws Exception {
 		this.params.setDirectory("reservation");
@@ -377,5 +364,6 @@ public class MainService implements Action {
 		this.params.setContentjs("movie/screeningsPlanned");
 		return this.getTemplate();	
 	}
+/*******연종. 이메일 변경 인증번호 보내기*******/
 
 }

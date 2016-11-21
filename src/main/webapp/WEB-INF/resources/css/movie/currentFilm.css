@@ -12,11 +12,6 @@
 }
 
 /*예매순/평점순/예매하기 버튼*/
-.div-myinfo__content {
-	
-}
-
-/*예매순/평점순/예매하기 버튼*/
 .div-currentFilm__etc {
 	display: inline-block;
     margin: 30px 580px 30px 70px;
@@ -35,29 +30,45 @@
 }
 /*비디오 여백*/
 .span-currentFilm__mainFilm {
-	background-color: #202020;
-	display: block;
+	display: flex;
 	align-items: center;
     justify-content: center;
-	border: solid;
-}
-/*비디오크기*/
-.video-currentFilm__mainFilm {
-	width: 800px;
+    opacity: 0.9;
+	background-repeat:no-repeat;
+	width: 980px;
 	height: 380px;
-	padding-left: 70px;	
+	background-image: url("/../resources/img/poster/fantasticBeasts.jpg");
+}
+.span-currentFilm__mainFilm:hover {
+	box-shadow: inset rgba(25, 66, 104, 0.27) 0 0 0 0;
+	opacity: 1;
+}
+
+/*비디오 실행버튼*/
+.video-currentFilm__start {
+	padding: 5px 15px 5px 15px;
+    box-sizing: content-box;
+    cursor: pointer;
+    width: 60px;
+    height: 80px;
+    font-size: 50px;
+    color: white;
+    border-radius: 46px;
+    border: 3px solid white;
+    background: rgba(156, 158, 162, 0);
+}
+.video-currentFilm__start:hover {
+    background: rgba(156, 158, 162, 0.4);
 }
 
 /*예매순 / 평점순*/
-.label-currentFilm-sort__score,
-.label-currentFilm-sort__reservation {
+.label-currentFilm-sort {
 	font-family: 'Jeju Gothic', serif;
     font-size: 20px;
     color: black;
 }
 
-.label-currentFilm-sort__score:hover,
-.label-currentFilm-sort__reservation:hover {
+.label-currentFilm-sort:hover {
 	color: #b79fa1;
 	font-weight: bold;
 }
@@ -67,7 +78,7 @@
     height: 340px;
 }
 .img-currentFilm:hover {
-	opacity: 0.7;
+	opacity: 0.8;
 	cursor: pointer;
 }
 
@@ -84,7 +95,7 @@
     font-family: 'Jeju Gothic', serif;
     font-size: 18px;
     background-color: #c9cde7;
-    border: 2px solid #e6eae9;
+	border: 3px solid rgba(156, 156, 156, 0.25);
     padding: 6px 10px;
     color: #000000;
     font-weight: 100;

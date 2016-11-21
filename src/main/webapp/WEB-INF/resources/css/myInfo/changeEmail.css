@@ -5,9 +5,8 @@
 /*font-family: 'Nanum Gothic', serif; 비밀번호*/
 
 /**************MYINFO ChangeEmail***************/
-.div-myInfoChangeEmail {
+.div-myInfoChangeEmail__Form {
 	width: 700px;
-	height: 350px;
     display: flex;
     flex-direction: column;
     line-height: 40px;
@@ -44,8 +43,7 @@
     height: 20px;
     font-size: 13px;
     width: 250px;
-    margin-bottom: 5px;
-    margin-top: 20px;
+    margin: 5px 0px 5px 0px;
 }
 
 .input-myInfoChangeEmail__confirm {
@@ -60,6 +58,7 @@
     font-size: 13px;
     margin-bottom: 5px;
     margin-top: 20px;
+    background-color: #dcdcdc;
 }
 
 .label-myInfoChangeEmail__content {
@@ -82,9 +81,36 @@
 	color: #8BACD9;
 }
 
+/**************MYINFO ChangeEmailResult***************/
+.div-myInfoChageEmailResult-title {
+	font-family: 'Jeju Gothic', serif;
+	background-color: #383838;
+    color: white;
+    padding-left: 20px;	
+    font-size: 20px;	
+}
 
+.div-myInfoChageEmailResult-content {
+	display: flex;
+	align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid gray;
+    font-size: 12px;
+    line-height: 1.5em;
+    background-color: white;	
+}
+
+.label-myInfoChageEmailResult {
+	font-family: 'Jeju Gothic', serif;
+	font-size: 16px;
+	margin-top: 18px;	
+}
 
 /**************BUTTONS***************/
+
+
+.button-myInfoChageEmailResult__main,
 .button-myInfoChangeEmail__submit,
 .button-myInfoChangeEmail__reset {
 	font-family: 'Jeju Gothic', serif;
@@ -112,6 +138,7 @@
 	margin: 20px 5px 30px 0px;
 }
 
+.button-myInfoChageEmailResult__main:hover,
 .button-myInfoChangeEmail__submit:hover,
 .button-myInfoChangeEmail__reset:hover {
 	border: 1px solid #007cad;
@@ -128,7 +155,7 @@
 	font-family: 'Jeju Gothic', serif;
 	background-color: #8BACD9;
 	padding: 6px 10px;
-	border: 1px solid #018dc4;
+	border: 1px solid #c0c0c0;
 	border-radius: 3px;
 	font: 15px;
 	color: rgba(255,255,255,0.9);
@@ -136,12 +163,7 @@
 }
 
 .button-myInfoChangeEmail__sendmail:hover {
-	border: 1px solid #007cad;
+	border: 1px solid #c0c0c0;
     background: #41688c;
-	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
-	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
-	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
-	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
-	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
 	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
 }

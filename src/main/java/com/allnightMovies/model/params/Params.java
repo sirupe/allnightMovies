@@ -48,11 +48,15 @@ public class Params {
 	private String searchIdUserName;
 	private String searchIdUserBirth;
 	private String searchIdUserGender;
+	
 // 비밀번호 변경	------------------------------------------------------------------
 	private String myInfoPresentPwd;
 	private String myInfoNewPwd;
 	private String myInfoNewPwdCheck;
-	
+// 이메일 변경 ------------------------------------------------------------------
+	private String myInfoChageEmail;
+	private String myInfoEmailConfirmNum;
+
 // 회원탈퇴 	------------------------------------------------------------------
 	private String withdrawUserPwd;
 }

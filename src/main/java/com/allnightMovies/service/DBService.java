@@ -73,9 +73,11 @@ public class DBService {
 	public String selectUserPWD(String myInfoID) {
 		return dbMapper.selectUserPWD(myInfoID);
 	}
-	
 	public Params updateWithdraw(String myInfoID) {
 		return dbMapper.updateWithdraw(myInfoID);
+	}
+	public String updateEmailAddr(String emailAddr, String userID) {
+		return dbMapper.updateEmailAddr(emailAddr, userID);
 	}
 	
 }

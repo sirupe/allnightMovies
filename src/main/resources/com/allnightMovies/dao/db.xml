@@ -138,10 +138,15 @@
       WHERE USER_ID = #{myInfoID}
    </select>
 
-	<select id="updateWithdraw" parameterType="java.lang.String" resultType="java.lang.String">
+	<select id="updateWithdraw" resultType="java.lang.String" parameterType="java.lang.String">
 		UPDATE USER_PERSONAL_INFO 
 		SET USER_STATES = 0
 		WHERE USER_ID = #{myInfoID}
 	</select>
 	
+	<select id="updateEmailAddr" resultType="java.lang.String" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO 
+		SET USER_EMAIL = #{param1}
+		WHERE USER_ID = #{param2}
+	</select>
 </mapper>

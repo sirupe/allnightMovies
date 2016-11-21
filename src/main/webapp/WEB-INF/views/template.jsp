@@ -19,7 +19,6 @@
 						
 				</header>
 				
-				
 				<section class="content">
 					<c:choose>
 						<c:when test="${directory == '' || directory == null}">

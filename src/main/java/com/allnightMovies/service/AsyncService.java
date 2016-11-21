@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
@@ -17,6 +16,7 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 @Service
 public class AsyncService implements AsyncAction {
@@ -142,6 +142,7 @@ public class AsyncService implements AsyncAction {
 		async.setSuccess(resultBool);
 		return async;
 	}
+	
 /*****연종. chagePwd success check*****/	
 	public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
 		String newPWD = params.getMyInfoNewPwd();
@@ -176,7 +177,7 @@ public class AsyncService implements AsyncAction {
 		
 		if(isCheck) {
 			this.dbService.updateNewPwd(myInfoID, newPWD);
-			resultStr = "/movie/mainService/myInfoChagePwdResult";
+			resultStr = "/movie/mainService/myInfoChangePwdResult";
 			this.params.getSession().invalidate();
 		}
 		
@@ -186,29 +187,48 @@ public class AsyncService implements AsyncAction {
 	}
 
 /*****연종. 이메일 변경 인증번호 발송 *****/
-//TODO 수정중 화면이안뜸
 	public AsyncResult<String> sendEmailConfirmNum() throws Exception {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
-		System.out.println("AsyncResult 인증번호> : " + randNum);
+		System.out.println("AsyncResult sendEmailConfirmNum 인증번호발송  >> : " + randNum);
 		
 		HttpSession session = this.params.getSession();
 		String userID = (String)session.getAttribute("userID");
 		String userEmail = this.dbService.searchEmail(userID);
+		
 		HttpSession sessionRandNum = this.params.getSession();
-		
 		sessionRandNum.setAttribute("randNum", randNum);
-//		new SendEmail(String.valueOf(randNum), userEmail); 
+		//new SendEmail(String.valueOf(randNum), userEmail); 
 		
+		asyncResult.setData("true");
 		return asyncResult;
-		
 	}	
+
+/*****연종. 이메일 변경 및 확인  updateEmailAddr *****/	
+	public AsyncResult<String> updateEmailAddr() throws Exception {
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		
+		HttpSession session = this.params.getSession();
+		String userID = (String)session.getAttribute("userID"); 
+		String randNum = String.valueOf(session.getAttribute("randNum"));
+		
+		String chageEmailResult = "false";
+		String userRandNum = this.params.getMyInfoEmailConfirmNum();
+		String chageEmailAddr = this.params.getMyInfoChageEmail();
+		
+		if(randNum.equals(userRandNum)) {
+			this.dbService.updateEmailAddr(chageEmailAddr, userID);
+			this.params.getSession().invalidate();
+			chageEmailResult = "/movie/mainService/myInfoChageEmailResult";
+		}
+		System.out.println("AsyncResult  결과 " + chageEmailResult);
+		asyncResult.setData(chageEmailResult);
+		return asyncResult;
+	}
 /***********연종. 회원탈퇴***************/	
 	public AsyncResult<String> userWithdraw() throws Exception {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
-		
-		System.out.println("userWithdraw");
 		
 		String withdrawUserpwd = this.params.getWithdrawUserPwd();
 		String withdrawResult = "false";
@@ -218,20 +238,31 @@ public class AsyncService implements AsyncAction {
 		String presentUserPWD = this.dbService.selectUserPWD(myInfoID);
 		
 		if(withdrawUserpwd.equals(presentUserPWD)) {
-			System.out.println("if 진입 AsyncResult 결과 >> " + withdrawUserpwd.equals(presentUserPWD));
 			System.out.println(this.dbService.updateWithdraw(myInfoID));
 			this.params.getSession().invalidate();
 			withdrawResult =  "/movie/mainService/getTemplate";
-			
 		}
 		asyncResult.setData(withdrawResult);
-		System.out.println("if 밖  AsyncResult >>" + asyncResult.getData());
 		return asyncResult;
 	}
 	
-	
-	
-	
+/***********연종. 비밀번호찾기 인증번호***************/	
+	public  AsyncResult<String> checkPwdConfirmNum() throws Exception {
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		String userConfirmNum = this.params.getSearchPwdConfirmNum();
+		HttpSession session = this.params.getSession();
+		String serverRandNum = String.valueOf(session.getAttribute("randNum"));
+		
+		String searchPwdResult = "false";
+		
+		if(serverRandNum.equals(userConfirmNum)) {
+			searchPwdResult = "/movie/mainService/checkPwdConfirmNum";
+		} 
+		
+		asyncResult.setData(searchPwdResult);
+		return asyncResult;
+	}
+
 	
 	@SuppressWarnings("rawtypes")
 	public AsyncResult confirmNumInit() throws Exception {
@@ -243,5 +274,14 @@ public class AsyncService implements AsyncAction {
 		
 		return async;
 	}
+
+//
+//	@SuppressWarnings("rawtypes")
+//	public AsyncResult test() throws Exception {
+//		HttpSession session = this.params.getSession();
+//		AsyncResult<String> async = new AsyncResult<String>();
+//		System.out.println("칠 수가 없지 씨방새야 -ㅅ - ");
+//		return async;
+//	}
 
 }

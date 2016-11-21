@@ -229,21 +229,12 @@ public class MainService implements Action {
 	}
 	
 /*******연종. PWD찾기 SHIN*******/
-	public ModelAndView checkConfirmNum() throws Exception {
-		ModelAndView mav = new ModelAndView("searchPwd/searchPwdConfirmResult");
-		String userConfirmNum = this.params.getSearchPwdConfirmNum();
-		HttpSession session = this.params.getSession();
-		String serverRandNum = String.valueOf(session.getAttribute("randNum"));
-		boolean ischeckConfirmNum = true;
-		
-		if(serverRandNum.equals(userConfirmNum)) {
-			ischeckConfirmNum = true;
-		} else {
-			ischeckConfirmNum = false;
-		}
-		mav.addObject("ischeckConfirmNum", ischeckConfirmNum);
-		mav.addObject("ischeckConfirmNumID", "ischeck-confirmnum-id");
-		return mav;
+	public ModelAndView checkPwdConfirmNum() throws Exception {
+		this.params.setDirectory("searchPwd");
+		this.params.setPage("searchPwdChangePwd");
+		this.params.setContentCSS("searchPwd/searchPwd");
+		this.params.setContentjs("searchPwd/searchPwd");
+		return this.getTemplate();	
 	}
 
 /*******연종. PWD찾기 SHIN*******/
@@ -304,7 +295,6 @@ public class MainService implements Action {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
 		
-		
 		ModelAndView mav = this.getTemplate();
 		return mav;
 	}
@@ -347,7 +337,16 @@ public class MainService implements Action {
 		this.params.setContentjs("myInfo/changePwd");
 		return this.getTemplate();	
 	}
-
+	
+/*******연종. MyINFO chage EmailAdde SHIN*******/		
+	public ModelAndView myInfoChageEmailResult() throws Exception {
+		this.params.setDirectory("myInfo");
+		this.params.setPage("myInfoChangeEmailResult");
+		this.params.setContentCSS("myInfo/changeEmail");
+		this.params.setContentjs("myInfo/changeEmail");
+		return this.getTemplate();
+	}
+	
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
 	public ModelAndView currentFilm() throws Exception{
 		this.params.setDirectory("movie");
@@ -367,6 +366,12 @@ public class MainService implements Action {
 		this.params.setContentjs("movie/screeningsPlanned");
 		return this.getTemplate();	
 	}
-/*******연종. 이메일 변경 인증번호 보내기*******/
-
+/*******연종. MYINFO 비밀번호 수정 결과창*******/		
+	public ModelAndView myInfoChangePwdResult()throws Exception{
+		this.params.setDirectory("myInfo");
+		this.params.setPage("myInfoChangePwdResult");
+		this.params.setContentCSS("myInfo/changePwd");
+		this.params.setContentjs("myInfo/changePwd");
+		return this.getTemplate();	
+	}
 }

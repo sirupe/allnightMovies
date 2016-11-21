@@ -59,4 +59,7 @@ public class Params {
 
 // 회원탈퇴 	------------------------------------------------------------------
 	private String withdrawUserPwd;
+// 예매하기(ticketing)
+	private int calendarMonth;
+	private int CalendarYear;
 }

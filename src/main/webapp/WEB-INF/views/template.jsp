@@ -6,7 +6,7 @@
 	<jsp:include page="./include/head.jsp"/>
   
 	<body>
-		<form>
+		<form class="js_form">
 			<input type="hidden" name="contentCSS" id="hidden-css"/>
 			<input type="hidden" name="contentjs" id="hidden-js"/>
 			<input type="hidden" name="directory" id="hidden-dir"/>

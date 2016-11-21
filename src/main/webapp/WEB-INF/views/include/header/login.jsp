@@ -12,13 +12,13 @@
 			<input type="password" placeholder="패스워드 입력" name="userPWD" id="user-pwd"/>
 		</div>
 		<div class="header__login__comp__submit">
-			<button type="button" onclick="locationLogon()">
+			<button type="button" class="js_lobin-btn">
 				Login
 			</button>
 		</div>
 	</div>
 	<div class="header__login__text">
-	    <a href="#" id="a_join" onclick="locationJoinTerms()">회원가입</a> | 
-	    <a href="#" onclick="locationSearchID()">아이디</a> / <a href="#" onclick="locationSearchPwd()">패스워드 찾기</a>
+	    <a href="#" class="js_join">회원가입</a> | 
+	    <a href="#" class="js_searchID">아이디</a> / <a href="#" class="js_searchPWD">패스워드 찾기</a>
 	</div>
 </div>

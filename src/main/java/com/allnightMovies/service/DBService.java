@@ -51,16 +51,21 @@ public class DBService {
 		return dbMapper.insertJoinUserInfo(userDTO);
 	}
 
+/** ji. ticketing : calendar**/
+	public String getMaxScreeningDate() {
+		return dbMapper.getMaxScreeningDate();
+	}
+	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
 	}
-/** 아이디 찾기**/
+/** jung. 아이디 찾기**/
 	public String searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception {
 		System.out.println("searchIdUserGender" + searchIdUserGender);
 		return dbMapper.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 	}
-/** 아이디유무 갯수**/
+/** jung. 아이디유무 갯수**/
 	public Integer searchIdCount(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception {
 		return dbMapper.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 	}

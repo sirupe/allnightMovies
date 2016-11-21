@@ -221,7 +221,7 @@ public class AsyncService implements AsyncAction {
 		
 		if(randNum.equals(userRandNum)) {
 			this.dbService.updateEmailAddr(chageEmailAddr, userID);
-			this.params.getSession().invalidate();
+			this.params.getSession().removeAttribute("userID");
 			chageEmailResult = "/movie/mainService/myInfoChageEmailResult";
 		}
 		System.out.println("AsyncResult  결과 " + chageEmailResult);
@@ -241,7 +241,7 @@ public class AsyncService implements AsyncAction {
 		
 		if(withdrawUserpwd.equals(presentUserPWD)) {
 			System.out.println(this.dbService.updateWithdraw(myInfoID));
-			this.params.getSession().invalidate();
+			this.params.getSession().removeAttribute("userID");
 			withdrawResult =  "/movie/mainService/getTemplate";
 		}
 		asyncResult.setData(withdrawResult);

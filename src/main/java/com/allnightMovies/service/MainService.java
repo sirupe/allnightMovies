@@ -1,5 +1,7 @@
  package com.allnightMovies.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.RegexCheck;
@@ -72,9 +75,11 @@ public class MainService implements Action {
 
 	// 로그인
 	public ModelAndView login() throws Exception {
-		String userID = this.dbService.login(this.params);
-		HttpSession session = this.params.getSession();
-		session.setAttribute("userID", userID);
+		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
+		if(userLoginInfo.getUserStates() == 1) {
+			HttpSession session = this.params.getSession();
+			session.setAttribute("userID", userLoginInfo.getUserID());
+		}
 		return this.getTemplate();
 	}
 	
@@ -258,13 +263,14 @@ public class MainService implements Action {
 	}
 
 	
-/*******ID찾기 수진********/	
+/*******ID찾기(회원정보) 수진*******/	
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String searchIdUserName = this.params.getSearchIdUserName();
 		String searchIdUserBirth = this.params.getSearchIdUserBirth();
 		String searchIdUserGender = this.params.getSearchIdUserGender();
 		
+		//세션저장//
 		List<Params> userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		Integer result = this.dbService.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		
@@ -275,8 +281,23 @@ public class MainService implements Action {
 		mav.addObject("result", result);
 		return mav;
 	}
-
-
+	
+/*****수진. 아이디찾기(email)*****/
+	public ModelAndView searchIDEmailResult() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		
+		HttpSession session = this.params.getSession();
+		System.out.println(this.params.getSession().getAttribute("searchIdUserEmail") + " : 저장된 이메일 결과");	
+		
+		//db보내기
+		
+		
+		
+		
+		
+		return mav;
+		
+	}
 /*****수진. 상영시간표List*****/
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
@@ -306,12 +327,9 @@ public class MainService implements Action {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
 		
-		
 		ModelAndView mav = this.getTemplate();
 		return mav;
 	}
-	
-
 	
 /*****은정. ticketing *****/
 	public ModelAndView ticketing() throws Exception {

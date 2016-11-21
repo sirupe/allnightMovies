@@ -10,6 +10,7 @@ import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 
 
@@ -25,7 +26,7 @@ public class DBService {
 	
 /** ji. Login **/
 	
-	public String login(Params params) {
+	public UserPersonalLoginInfoDTO login(Params params) {
 		return dbMapper.login(params);
 	}
 	
@@ -71,6 +72,10 @@ public class DBService {
 	}
 	public String selectUserPWD(String myInfoID) {
 		return dbMapper.selectUserPWD(myInfoID);
+	}
+	
+	public Params updateWithdraw(String myInfoID) {
+		return dbMapper.updateWithdraw(myInfoID);
 	}
 	
 }

@@ -123,9 +123,11 @@ function userEmailCheck() {
 }
 
 function sendEmail() {
+	
 	var email = $('#user-email').val();
 	
 	if(userEmailCheck()) {
+		$('#user-email-check').html('<label style="color:green;">인증번호 발송중입니다.</label>');
 		$.post(
 			'/movie/mainService/sendEmail',
 			{'userEmail' : email},

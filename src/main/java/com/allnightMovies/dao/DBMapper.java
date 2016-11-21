@@ -5,6 +5,7 @@ import java.util.List;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 
 
@@ -13,7 +14,7 @@ public interface DBMapper {
 	public List<MainMenu> getMenus() throws Exception;
 
 /** ji. Login **/
-	public String login(Params params);
+	public UserPersonalLoginInfoDTO login(Params params);
 	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
@@ -36,4 +37,6 @@ public interface DBMapper {
 /** shin. MY INFO **/	
 	public UserPersonalInfoDTO selectMyInfo(String myInfoID);
 	public String selectUserPWD(String myInfoID);
+	
+	public Params updateWithdraw(String myInfoID);
 }

@@ -6,11 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter 
-@ToString
 public class Params {
 	private HttpServletRequest request;
 	private HttpSession session;
@@ -27,16 +25,17 @@ public class Params {
 	
 //메뉴경로가 아닌 페이지 호출시---------------------------------------------------------------	
 	
-	private String  userName	;
-	private String  userID		;
-	private String  userIDCheck	;
-	private String  userPWD		;
-	private String  userRePWD	;
-	private String  userGender	;
-	private String  userEmail	;
-	private String  userBirth	;
-	private Integer confirmNum	;
+	private String  userName;
+	private String  userID;
+	private String  userIDCheck;
+	private String  userPWD;
+	private String  userRePWD;
+	private String  userGender;
+	private String  userEmail;
+	private String  userBirth;
+	private Integer confirmNum;
 // 유저회원가입------------------------------------------------------------------------------
+	private int    userStates;
 	private String keepLogin;	// 로그인 유지 체크여부
 
 	
@@ -50,6 +49,7 @@ public class Params {
 	private String searchIdUserBirth;
 	private String searchIdUserGender;
 	private String searchIdUserEmail;
+	private Integer searchIdUserConfirmNum;
 // 비밀번호 변경	------------------------------------------------------------------
 	private String myInfoPresentPwd;
 	private String myInfoNewPwd;

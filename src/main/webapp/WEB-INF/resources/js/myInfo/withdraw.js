@@ -21,8 +21,9 @@ function withdraw() {
 				if(withdrawResult.data == 'false') {
 					alert('비밀번호 오류입니다.');
 				} else {
-					location.href=withdrawResult.data;
+					console.log('알');
 					alert('그동안 AllnightMovies를 이용해주셔서 감사합니다.');
+					location.href=withdrawResult.data;
 				}
 			}
 		);

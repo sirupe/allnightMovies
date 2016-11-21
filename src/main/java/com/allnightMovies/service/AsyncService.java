@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,9 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
+import com.allnightMovies.utility.UtilityEnums;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 @Service
 public class AsyncService implements AsyncAction {
@@ -121,6 +125,27 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 	}
 	
+	// 로그인
+	public AsyncResult<String> login() throws Exception {
+		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
+		String result = null;
+		boolean resultBool = true;
+		System.out.println("여긴 안오는듯?");
+		if(userLoginInfo.getUserStates() == 1) {
+			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
+				HttpSession session = this.params.getSession();
+				session.setAttribute("userID", userLoginInfo.getUserID());
+			} else {
+				result = "비밀번호가 일치하지 않습니다.";
+			}
+		} else {
+			result = "탈퇴하였거나 존재하지 않는 아이디입니다.";
+		}
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData(result);
+		async.setSuccess(resultBool);
+		return async;
+	}
 /*****연종. chagePwd success check*****/	
 	public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
 		String newPWD = params.getMyInfoNewPwd();
@@ -170,17 +195,15 @@ public class AsyncService implements AsyncAction {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
 		Random rand = new Random();
 		int randNum = rand.nextInt(900000) + 100000;
-		System.out.println("mainservice 인증번호> : " + randNum);
+		System.out.println("AsyncResult 인증번호> : " + randNum);
 		
 		HttpSession session = this.params.getSession();
 		String userID = (String)session.getAttribute("userID");
 		String userEmail = this.dbService.searchEmail(userID);
 		HttpSession sessionRandNum = this.params.getSession();
-		System.out.println("sendEmailConfirmNum  userID >> " + userID);
-		System.out.println("sendEmailConfirmNum  userEmail >> " + userEmail);
 		
 		sessionRandNum.setAttribute("randNum", randNum);
-		new SendEmail(String.valueOf(randNum), userEmail); 
+//		new SendEmail(String.valueOf(randNum), userEmail); 
 		
 		return asyncResult;
 		
@@ -188,6 +211,8 @@ public class AsyncService implements AsyncAction {
 /***********연종. 회원탈퇴***************/	
 	public AsyncResult<String> userWithdraw() throws Exception {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		
+		System.out.println("userWithdraw");
 		
 		String withdrawUserpwd = this.params.getWithdrawUserPwd();
 		String withdrawResult = "false";
@@ -197,14 +222,19 @@ public class AsyncService implements AsyncAction {
 		String presentUserPWD = this.dbService.selectUserPWD(myInfoID);
 		
 		if(withdrawUserpwd.equals(presentUserPWD)) {
-			//TODO dbService에서 회원탈퇴시키는 과정 추가해야함
+			System.out.println("if 진입 AsyncResult 결과 >> " + withdrawUserpwd.equals(presentUserPWD));
+			System.out.println(this.dbService.updateWithdraw(myInfoID));
 			this.params.getSession().invalidate();
 			withdrawResult =  "/movie/mainService/getTemplate";
+			
 		}
 		asyncResult.setData(withdrawResult);
+		System.out.println("if 밖  AsyncResult >>" + asyncResult.getData());
 		return asyncResult;
 	}
 	
+	
+	//인증번호 받았는지 2번체크
 	@SuppressWarnings("rawtypes")
 	public AsyncResult confirmNumInit() throws Exception {
 		HttpSession session = this.params.getSession();
@@ -216,38 +246,93 @@ public class AsyncService implements AsyncAction {
 		return async;
 	}
 	
-	/**수진 이메일 인증 **/
+	/**수진 이메일 인증번호 **/
 	//이메일
 	@SuppressWarnings("rawtypes")
-	public AsyncResult ConfirmNumberCheck() throws Exception {
-		String userEmail = this.params.getUserEmail();
-		System.out.println("email : " + userEmail);
-		System.out.println("들어와");
+	public AsyncResult ConfirmNumberSend() throws Exception {
+		System.out.println("온거냐");
+		String result = null;
+		Boolean isCheckResult = true;
+		
+		String searchIdUserEmail = this.params.getSearchIdUserEmail();
+		System.out.println("searchIdUserEmail : " + searchIdUserEmail);
+		
+		//이메일 세션 저장
 		HttpSession session = this.params.getSession();
-		session.setAttribute("isCheckNumber", false);
-		System.out.println(session + "session");
+		session.setAttribute("searchIdUserEmail", searchIdUserEmail);
+		
+		if(searchIdUserEmail == "") {
+			result = "정확히 입력해주세요.";
+			isCheckResult = false;
+		}
+		if(!RegexCheck.emailRegexCheck(params.getSearchIdUserEmail())) {
+			result = "이메일 형식이 맞지 않습니다.";
+			isCheckResult = false;
+		}
+		
+		if(isCheckResult) {
+			//인증번호생성
+			Random randomNum = new Random();
+			int confirmNumRandom = randomNum.nextInt(900000) + 100000;
+			System.out.println(confirmNumRandom + " : 인증번호");
+			new SendEmail(String.valueOf(confirmNumRandom), searchIdUserEmail);
+			
+			//인증번호 세션에 저장
+			//인증번호 저장
+			session.setAttribute("confirmNumRandom", confirmNumRandom);
+			session.setAttribute("currentConfirmTime", System.currentTimeMillis());
+			session.setAttribute("isCheckNumber", false);
+			System.out.println(session + "session");
+			
+			System.out.println("인증번호 세션에 저장확인 :" + this.params.getSession().getAttribute("confirmNumRandom"));
+			result = "인증번호가 전송되었습니다 :) 확인 부탁드립니다.";
+			System.out.println(result + " : 결과");
+		
+		} else {
+			result = "인증번호전송이 실패되었습니다. 다시 확인해주세요 :(";
+		}
+		
 		AsyncResult<String> async = new AsyncResult<String>();
-		async.setData("<label class=\"insertConfirmEmail\" style=\"color:red;\">확인되었씁니다.인증번호받아주세요 :)</label>");
+		async.setData(result);
 		return async;
 	}
 	
-	/****수진. 아이디찾기<이메일 보내기>****/
-	public ModelAndView userSendEmail() throws Exception {
-		ModelAndView mav = new ModelAndView();
+	/*******수진 인증번호체크 수진*********/
+	public AsyncResult<String> confirmNumberCheck() throws Exception {
+		String result = "입력하신 인증번호와 일치합니다.";
+		int searchIdUserConfirmNum = this.params.getSearchIdUserConfirmNum();
+		System.out.println(searchIdUserConfirmNum + " : 사용자가 입력한 인증번혼"); // 인증번호 보낼때 그 인증번호 불러와서 비교하기..!
+		//세션에 집어넣기
 		HttpSession session = this.params.getSession();
-			
-		//인증번호 생성
-		Random randomNum = new Random();
-		int comfirmNumrandom = randomNum.nextInt(900000) + 100000;
-		System.out.println(comfirmNumrandom + " : 인증번호");
+		Integer sessionSaveNum = (Integer) session.getAttribute("confirmNumRandom");
 		
-		//인증번호 메일로 보내기
-		new SendEmail(String.valueOf(comfirmNumrandom), this.params.getUserEmail());
-		String emailResult = "인증번호가 전송되었습니다 :)";
-		//인증번호 보냈는지 확인해주기
-		return mav;	
-}
-	
+		System.out.println(sessionSaveNum + "저장된 인증번호");
+		boolean bool = true;
+		
+		//인증번호가 비었을 경우
+		if(searchIdUserConfirmNum == 0 || sessionSaveNum == null) {
+			bool = false;
+			result = "정확히 입력 바랍니다.";
+			System.out.println(result + " : 결과");
+		} else if(sessionSaveNum != searchIdUserConfirmNum) {
+			bool = false;
+			result = "인증번호가 일치 하지않습니다.";
+			System.out.println(result + " : 결과");
+		} else {
+			bool = true;
+			result = "인증번호 일치합니다.";
+			System.out.println(result + " : 결과");
+			session.setAttribute("confirmNumRandom", 0);
+			//session.setAttribute(name, value);
+		}
+		
+		AsyncResult<String> async = new AsyncResult<String>();
+		System.out.println(result + " : 결과");
+		async.setData(result);
+		return async;
+		
+	}
+	//마지막 버튼 눌렀을때
 	
 	
 }

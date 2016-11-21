@@ -34,7 +34,7 @@ public class MonthCalendar {
 		this.month = calendar.get(Calendar.MONTH) + 1;          
 		this.toDay = calendar.get(Calendar.DAY_OF_MONTH);   
 		this.lastDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-		calendar.set(calendar.DATE, 1);
+		calendar.set(Calendar.DATE, 1);
 		this.startDay = calendar.get(Calendar.DAY_OF_WEEK); 
 		this.days = new ArrayList<ArrayList<Integer>>();
 		

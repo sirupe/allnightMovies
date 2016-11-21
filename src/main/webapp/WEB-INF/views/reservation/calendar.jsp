@@ -34,7 +34,7 @@
 							
 							
 							<c:choose>
-								<c:when test="">
+								<c:when test="${cal.year != cal.maxScreeningYear && cal.month != cal.maxScreeningMonth && (cal.toDay < cal.maxScreeningDate || cal.toDay > cal.maxScreeningDate) }">
 								</c:when>
 								
 								<c:otherwise>

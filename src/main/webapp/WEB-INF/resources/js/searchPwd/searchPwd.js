@@ -1,76 +1,84 @@
+function init() {
+	setEvent();
+}
+init();
+
+function setEvent() {
+	var $container = $('.js_searchPwdContainer');
+	
+	$container
+		.on('click', '.js_searchPwdNextBtn', searchPwdResult)		  //searchPwd
+		.on('click', '.js_searchPwdMainBtn', locationMain)			  //searchPwdResult
+		.on('click', '.js_searchPwdSendConfirmNum', sendConfirmEmail) //searchPwdResult
+		.on('click', '.js_searchPwdCheckConfirmNum', checkConfirmNum) //searchPwdConfirm
+
+}
+
 function searchPwdResult() {
-	var inputID = $('#search-userid').val();
+	var $inputID = $('.js_searchPwd_idInput');
+		inputID  = $inputID.val();
+		
+		method   = 'POST'; 
+		url 	 = '/movie/mainService/searchID'; //main service 에 searchID메소드  
+		dir  	 = 'searchPwd';				 	  //디렉토리                        
+		page 	 = 'searchPwdResult';			  //페이지                         
+		js   	 = 'searchPwd/searchPwd';   	  //자바스크립트                      
+		css  	 = 'searchPwd/searchPwd';	 	  //CSS     
+		
 	if(inputID != '') {
-		submit(
-			'POST',
-			'/movie/mainService/searchID',//main service 에 searchID메소드
-			'searchPwd',				  //디렉토리
-			'searchPwdResult',			  //페이지
-			'searchPwd/searchPwd',   	  //자바스크립트
-			'searchPwd/searchPwd'	 	  //CSS
-		);	
+		submit(method ,url, dir, page, js, css);
 	} else {
 		alert('아이디를 입력하세요.');
 	}
 }
 
 function sendConfirmEmail() {
-	submit(
-		'POST',
-		'/movie/mainService/searchPwdsendEmail', 
-		'searchPwd',				    //디렉토리                           
-		'searchPwdConfirm',			    //페이지                            
-		'searchPwd/searchPwd',   	    //자바스크립트                         
-		'searchPwd/searchPwd'	 	    //CSS                            
-	);
+	var method = 'POST'; 
+		url    = '/movie/mainService/searchPwdsendEmail'; 
+		dir    = 'searchPwd';				 	  
+		page   = 'searchPwdConfirm';			  
+		js     = 'searchPwd/searchPwd';   	  
+		css    = 'searchPwd/searchPwd';	 	
+		
+	submit(method, url, dir, page, js, css);
 }
 
 function checkConfirmNum() {
-	var userConfirmNum = $('#searchpwd-confirm-num');
-	var checkConfirmNumText = $('#searchpwd-confirm-num-text');
-	var isSearchPwdChange = true;
-	
-	//ATTR = 태그안에 들어가는 속성들
-	if(userConfirmNum.attr('readonly') != 'readonly') {
+	var $userConfirmNum = $('.js_searchPwdConfirmInput');
+		userConfirmNum = $userConfirmNum.val();
 		isSearchPwdChange = false;
-		if(userConfirmNum.val().length == 6) {
-			$.post(
-				'/movie/mainService/checkConfirmNum',
-				{'searchPwdConfirmNum' : userConfirmNum.val()},//params변수명 : value	
-				
-				function(resultMsg) {
-					checkConfirmNumText.html(resultMsg);
-					if($('#ischeck-confirmnum-id').val() == 'true') {
-						isSearchPwdChange = true;
-						//이거슨 스레드에 쓸거야
-						userConfirmNum.attr({'readonly' : 'readonly'});
-						userConfirmNum.css("background-color", "#dcdcdc");
-					}
-				}
-			)
-		} else {
-			isSearchPwdChange = false;
-		}
+		
+		url    = '/movie/async/asyncService/checkPwdConfirmNum';
+		params = {'searchPwdConfirmNum' : userConfirmNum};
+		cbf    = function(searchPwdResult) {
+					 if(searchPwdResult.data == 'false') {
+					 	alert('인증번호를 다시 확인해주세요');
+					 } else {
+					 	location.href=searchPwdResult.data;
+					 }
+				 }
+	if(userConfirmNum != '') {
+		$.post(url, params, cbf);
+	} else {
+		alert('인증번호를 입력하세요');
 	}
-	return isSearchPwdChange;
 }
 
-function changePWD() {
-	var checkConfirmNumText = $('#searchpwd-confirm-num-text');
-	
-	if(checkConfirmNum()) {
-		submit(
-			'POST',
-			'/movie/mainService/getTemplate', 
-			'searchPwd',				    //디렉토리                           
-			'searchPwdChangePwd',			//페이지                            
-			'searchPwd/searchPwd',   	    //자바스크립트                         
-			'searchPwd/searchPwd'	 	    //CSS                            
-		);	
-	} else {
-		alert('인증번호가 일치하지 않습니다.');
-	}
-}
+//function changePWD() {
+//	console.log(checkConfirmNum());
+//	if(checkConfirmNum()) {
+//		submit(
+//			'POST',
+//			'/movie/mainService/getTemplate', 
+//			'searchPwd',				    //디렉토리                           
+//			'searchPwdChangePwd',			//페이지                            
+//			'searchPwd/searchPwd',   	    //자바스크립트                         
+//			'searchPwd/searchPwd'	 	    //CSS                            
+//		);	
+//	} else {
+//		alert('인증번호가 일치하지 않습니다.');
+//	}
+//}
 
 function checkRePWD() {
 	var pwd = validationPWD();
@@ -103,17 +111,8 @@ function locationLogin() {
 		'home'	 	    //CSS                            
 	);	
 }
-function locationMain() {
-	submit(
-		'POST',
-		'/movie/mainService/getTemplate', 
-		'include',				                       
-		'mainPage',		            
-		'template',   	                   
-		'home'	 	                   
-	);	
-}
-//정합성검사
+
+//정합성검사 CSS 
 function validationPWD() {
 	var isResult = true;
 	var rePwd = $('#newPWD').val();
@@ -148,19 +147,5 @@ function validationRePWD() {
 	}
 	
 	$('#newPWD-re-text').html(resultMsg);
-	return isResult;
-}
-
-function validationID() {
-	var isResult = true;
-	var searchUserID = $('#search-userid').val();
-	var searchUserIDText = $('#search-userid-result');
-	var resultMsg = '<label style="color:green;"> </label>';
-	
-	if(searchUserID == '') {
-		isResult = false;
-		resultMsg = '필수 입력사항입니다.';
-	}
-	searchUserIDText.html(resultMsg);
 	return isResult;
 }

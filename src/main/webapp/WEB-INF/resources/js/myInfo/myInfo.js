@@ -1,44 +1,59 @@
-//내정보보기페이지
-function viewMyInfo() {
-   submit(
-      'POST',
-      '/movie/mainService/viewMyInfo',
-      'myInfo',
-      'myInfo',
-      'myInfo/myInfo',
-      'myInfo/myInfo'
-   );
+function init() {
+	setEvent();
 }
-//이메일 정보 창
+
+init();
+
+function setEvent() {
+	var $container = $('.js_myInfoContainer');
+	
+	$container
+		.on('click', '.js_myInfo_changeEmailBtn', changeEmailInfoForm)
+		.on('click', '.js_myInfo_changePwdBtn', changePwdInfoForm)
+		.on('click', '.js_myInfo_withdrawBtn', withdrawForm)
+}
+
+//function viewMyInfo() {
+//	var method   = 'POST'; 
+//		url    = '/movie/mainService/viewMyInfo';
+//		dir    = 'myInfo';				 	  
+//		page   = 'myInfo';			  
+//		js     = 'myInfo/myInfo';   	  
+//		css    = 'myInfo/myInfo';	 	
+//	
+//	submit(method, url, dir, page, js, css);
+//
+//}
+
 function changeEmailInfoForm() {
-   submit(
-      'POST',
-      '/movie/mainService/getTemplate',
-      'myInfo',
-      'myInfoChangeEmail',
-      'myInfo/changeEmail',
-      'myInfo/changeEmail'
-   );   
+	var method   = 'POST'; 
+		url    = '/movie/mainService/getTemplate';
+		dir    = 'myInfo';				 	  
+		page   = 'myInfoChangeEmail';			  
+		js     = 'myInfo/changeEmail';   	  
+		css    = 'myInfo/changeEmail';	
+		
+	submit(method, url, dir, page, js, css);   
 }
-//비밀번호 변경 창
+
 function changePwdInfoForm() {
-   submit(
-      'POST',
-      '/movie/mainService/getTemplate',
-      'myInfo',
-      'myInfoChangePwd',
-      'myInfo/changePwd',
-      'myInfo/changePwd'
-   );   
+	var method   = 'POST'; 
+		url    = '/movie/mainService/getTemplate';
+		dir    = 'myInfo';				 	  
+		page   = 'myInfoChangePwd';			  
+		js     = 'myInfo/changePwd';   	  
+		css    = 'myInfo/changePwd';	
+	
+		submit(method, url, dir, page, js, css);  
 }
-//회원탈퇴 
+
 function withdrawForm() {
-   submit(
-      'POST',
-      '/movie/mainService/getTemplate',
-      'myInfo',
-      'withdraw',
-      'myInfo/withdraw',
-      'myInfo/withdraw'
-   );      
+	var method   = 'POST'; 
+		url    = '/movie/mainService/getTemplate';
+		dir    = 'myInfo';				 	  
+		page   = 'withdraw';			  
+		js     = 'myInfo/withdraw';   	  
+		css    = 'myInfo/withdraw';	
+
+	submit(method, url, dir, page, js, css);  	
 }

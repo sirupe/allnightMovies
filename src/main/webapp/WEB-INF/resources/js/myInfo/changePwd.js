@@ -1,36 +1,56 @@
-function viewMyInfo() {
-	submit(
-		'POST',
-		'/movie/mainService/viewMyInfo',
-		'myInfo',
-		'myInfo',
-		'myInfo/myInfo',
-		'myInfo/myInfo'
-	);
+function init() {
+	setEvent();
+}
+init();
+
+function setEvent() {
+	var $container = $('.js_pwdChangeContainer');
+	
+	$container
+		.on('click', '.js_pwdChangeMyinfoBtn', locationMyinfo)
+		.on('click', '.js_pwdChangeChangePwdBtn', changePwdInfo)
+		.on('keyup', '.js_pwdChangePresentPwdText', validationPresentPWD)
+		.on('keyup', '.js_pwdChangeNewPwdText', validationPWD)
+		.on('keyup', '.js_pwdChangeRePwdText', validationRePWD)
+		.on('click', '.js_pwdChangeMainBton', locationMain)		//myInfoChangePwdResult
+}
+
+function locationMyinfo() {
+	var method = 'POST';
+		url    = '/movie/mainService/viewMyInfo';
+		dir    = 'myInfo';                                
+		page   = 'myInfo';                                
+		js     = 'myInfo/myInfo';                         
+		css    = 'myInfo/myInfo';  
+	
+	submit(method, url, dir, page, js, css);
 }
 
 /*비밀번호 변경 완료*/
 function changePwdInfo() {
-	var presentPWD = $('#present-pwd').val();
-	var changeNewPWD = $('#myinfo-newpwd').val();
-	var changeNewPWDcheck=$('#myinfo-check-newpwd').val();
+	var $presentPWD 	   = $('.js_pwdChangePresentPwdText');
+	 	$changeNewPWD 	   = $('.js_pwdChangeNewPwdText');
+	 	$changeNewPWDcheck = $('.js_pwdChangeRePwdText');
+	 	presentPWD		   = $presentPWD.val();
+	 	changeNewPWD	   = $changeNewPWD.val();
+	 	changeNewPWDcheck  = $changeNewPWDcheck.val();
+	 	
+	 	url	   = '/movie/async/asyncService/chagePwdSuccessCheck';
+	 	params = {
+					'myInfoPresentPwd' : presentPWD,
+					'myInfoNewPwd' : changeNewPWD,
+					'myInfoNewPwdCheck' : changeNewPWDcheck
+				 };
+	 	cbf	   = function(changeResult) {
+	 				if(changeResult.data == 'false') {
+						alert('비밀번호 변경에 실패하였습니다. 다시시도해주세요.');
+					} else {
+						location.href=changeResult.data;
+					}
+				 };
 	
 	if(validationPWD() && validationRePWD() && validationPresentPWD()) {
-		$.post(
-			'/movie/async/asyncService/chagePwdSuccessCheck',
-			{
-				'myInfoPresentPwd' : presentPWD,
-				'myInfoNewPwd' : changeNewPWD,
-				'myInfoNewPwdCheck' : changeNewPWDcheck
-			},
-			 function(changeResult) {
-				if(changeResult.data == 'false') {
-					alert('비밀번호 변경에 실패하였습니다. 다시시도해주세요.');
-				} else {
-					location.href=changeResult.data;
-				}
-			 }
-		)
+		$.post(url, params, cbf);
 	} else if(presentPWD == '' || changeNewPWD == '' || changeNewPWDcheck == '') {
 		alert('필수 입력사항을 정확히 입력해주세요');
 	} else {
@@ -40,26 +60,27 @@ function changePwdInfo() {
 
 //현재비밀번호 정합성검사
 function validationPresentPWD() {
-	var isResult = true;
-	var presentPWD = $('#present-pwd').val();
-	var presentPWDText = $('#validation-present-pwd');
-	var resultMsg = '';
+	var $presentPWD 	 = $('.js_pwdChangePresentPwdText');
+		$presentPWDLebel = $('.js_pwdChangePresentPwdLabel');
+		presentPWD 		 = $presentPWD.val();
+		resultMsg 		 = '';
+		isResult 		 = true;
 		
 	if(presentPWD == '') {
 		isResult = false;
 		resultMsg = '필수 입력사항입니다.';
 	}
-	
-	presentPWDText.html(resultMsg);
+	$presentPWDLebel.html(resultMsg);
 	return isResult = true;
 }
 
 //비밀번호정합성검사
 function validationPWD() {
-	var isResult = true;
-	var newPWD = $('#myinfo-newpwd').val();
-	var newPWDText = $('#validation-newpwd');
-	var resultMsg = '<label style="color:green;">사용 가능합니다.</label>';
+	var $newPWD 	 = $('.js_pwdChangeNewPwdText');
+		$newPWDLabel = $('.js_pwdChangeNewPwdLabel');
+		newPWD 		 = $newPWD.val();
+		resultMsg 	 = '<label style="color:green;">사용 가능합니다.</label>';
+		isResult 	 = true;
 	
 	if(newPWD == '') {
 		isResult = false;
@@ -69,17 +90,19 @@ function validationPWD() {
 		isResult = false;
 		resultMsg = '<label style="color:red;">영문,숫자,특수문자 포함 8~15자 이내로 입력해주세요.</label>'
 	}
-	newPWDText.html(resultMsg);
+	$newPWDLabel.html(resultMsg);
 	return isResult;
 }
 
 //비밀번호 정합성 재검사
 function validationRePWD() {
-	var isResult = true;
-	var newPWD = $('#myinfo-newpwd').val();
-	var checkNewPWD = $('#myinfo-check-newpwd').val();
-	var checkNewPWDText = $('#validation-check-newpwd');
-	var resultMsg = '<label style="color:green;">비밀번호가 일치합니다.</label>'
+	var $newPWD 		  = $('.js_pwdChangeNewPwdText');
+		$checkNewPWD	  = $('.js_pwdChangeRePwdText');
+		$checkNewPWDLabel = $('.js_pwdChangeRePwdLabel');
+		newPWD			  = $newPWD.val();	
+		checkNewPWD		  = $checkNewPWD.val();
+		resultMsg = '<label style="color:green;">비밀번호가 일치합니다.</label>'
+		isResult = true;
 	
 	if(newPWD != checkNewPWD) {
 		isResult = false;
@@ -89,6 +112,6 @@ function validationRePWD() {
 		isResult = false;
 		resultMsg = '필수 입력사항입니다.';
 	}
-	checkNewPWDText.html(resultMsg);
+	$checkNewPWDLabel.html(resultMsg);
 	return isResult;
 }

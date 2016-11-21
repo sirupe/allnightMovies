@@ -30,6 +30,20 @@
 							<td class="calendar__day__data">
 								${day }
 							</td>
+							
+							
+							
+							<c:choose>
+								<c:when test="">
+								</c:when>
+								
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+							
+							
+							
+							
 						</c:when>
 						<c:otherwise>
 							<td class="calendar__day__data"></td>

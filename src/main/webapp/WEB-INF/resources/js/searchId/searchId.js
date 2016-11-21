@@ -153,7 +153,6 @@ function confirmIdCheck() {
 	if(allCheck()) {
 		$('#insertConfirm').html('');
 		submit(
-			'POST',
 			'/movie/mainService/searchId',
 			'searchId',
 			'searchIdResult',

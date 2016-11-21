@@ -3,8 +3,6 @@ package com.allnightMovies.utility;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import lombok.Data;
 
 @Data
@@ -16,6 +14,10 @@ public class MonthCalendar {
 	private int startDay;
 	private ArrayList<ArrayList<Integer>> days;
 	
+	private String maxScreeningYear;
+	private String maxScreeningMonth;
+	private String maxScreeningDate;
+	
 	public MonthCalendar() {
 		Calendar calendar = Calendar.getInstance();
 		this.getInfo(calendar); 
@@ -23,7 +25,7 @@ public class MonthCalendar {
 	
 	public MonthCalendar(int year, int month) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(year, month, 1);
+		calendar.set(year, month - 1, 1);
 		this.getInfo(calendar);
 	}
 	

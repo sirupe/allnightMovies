@@ -253,7 +253,6 @@ public class AsyncService implements AsyncAction {
 		System.out.println("온거냐");
 		String result = null;
 		Boolean isCheckResult = true;
-		
 		String searchIdUserEmail = this.params.getSearchIdUserEmail();
 		System.out.println("searchIdUserEmail : " + searchIdUserEmail);
 		

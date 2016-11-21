@@ -1,38 +1,62 @@
-function locationJoinTerms() {
-	submit(
-		'POST',
-		'/movie/mainService/getTemplate',
-		'join/joinTerms',	// 디렉토리
-		'joinTerms',		// 페이지
-		'join/joinTerms',	// 자바스크립트
-		'join/joinTerms'	// CSS
-	);
+function locationJoinTerms(e) {
+	var url = '/movie/mainService/getTemplate';
+		dir = 'join/joinTerms';
+		page = 'joinTerms';
+		js	= 'join/joinTerms';
+		css = 'join/joinTerms';
+	e.preventDefault();
+	e.stopPropagation();
+	
+	
+	submit(url, dir, page, js, css);
 }
-
+// 달넘기기 자바스크립트에서 에러나는거..
 function locationLogon() {
-	submit(
-		'POST',
-		'/movie/mainService/login'
-	);
+	var $userID  = $('#user-id');
+		$userPWD = $('#user-pwd');
+		url		 = '/movie/async/asyncService/login';
+		params	 = 
+			{
+				'userID' : $userID.val(),
+				'userPWD' : $userPWD.val()
+			};
+		cbf		 = 
+			function(result) {
+				console.log(result.success);
+				if(result.success) {
+					location.href='/movie/mainService/getTemplate';
+				} else {
+					alert(result.data);
+				}
+			};
+		
+	if($userID.val() != '' && $userPWD.val() != '') {
+		$.post(url, params, cbf);
+	} else {
+		alert('아이디와 패스워드 모두 입력해주세요.');
+	}
 }
 
-function locationMain() {
-	submit(
-		'POST',
-		'/'
-	);
+function locationMain(e) {
+	var method 	= 'POST';
+	var url 	= '/';
+	
+	e.preventDefault();
+	e.stopPropagation();
+	
+	submit(method, url);
 }
 
 /*shin searchPwd*/
-function locationSearchPwd() {
-	submit(
-		'POST',
-		'/movie/mainService/getTemplate',//main service 에서 기본 템플레이트 출력
-		'searchPwd',					 //디렉토리
-		'searchPwd',			 		 //페이지
-		'searchPwd/searchPwd',  		 //자바스크립트
-		'searchPwd/searchPwd'	 		 //CSS
-	);
+function locationSearchPwd(e) {
+	var url = '/movie/mainService/getTemplate';
+		dir = 'searchPwd';
+		page = 'searchPwd';
+		js	 = 'searchPwd/searchPwd';
+		css = 'searchPwd/searchPwd';
+	e.preventDefault();
+	e.stopPropagation();
+	submit(url, dir, page, js, css);
 }
 
 function logout() {
@@ -41,35 +65,32 @@ function logout() {
 
 /*shin myInfo*/
 function locationMyInfo() {
-	submit(
-		'POST',
-		'/movie/mainService/viewMyInfo', //main service 에서 기본 템플레이트 출력
-		'myInfo',			 			
-		'myInfo',	
-		'myInfo/myInfo', 
-		'myInfo/myInfo'	 
-	);
+	var url  = '/movie/mainService/viewMyInfo';
+		dir  = 'myInfo';
+		page = 'myInfo';
+		js   = 'myInfo/myInfo';
+		css  = 'myInfo/myInfo';
+	submit(url, dir, page, js, css);
 }
 
 /**아이디 찾기**/
 
-function locationSearchID() {
-	submit(
-		'POST',
-		'/movie/mainService/getTemplate',
-		'searchId',
-		'searchId',
-		'searchId/searchId',
-		'searchId/searchId'
-	);
+function locationSearchID(e) {
+	var url  = '/movie/mainService/getTemplate';
+		dir  = 'searchId';
+		page = 'searchId';
+		js   = 'searchId/searchId';
+		css  = 'searchId/searchId';
+	e.preventDefault();
+	e.stopPropagation();
+	submit(url, dir, page, js, css);
 }
 
 function locationMenus(method, action, directory, page) {
-	var getMethod = method;
-	var getAction = action;
+	var getMethod 	 = method;
+	var getAction 	 = action;
 	var getDirectory = directory;
-	var getPage = page;
-	console.log('Menus');
+	var getPage 	 = page;
 	$(document).ready(function() {
 		$('form').attr({'method' : getMethod});
 		$('form').attr({'action' : getAction});
@@ -80,10 +101,9 @@ function locationMenus(method, action, directory, page) {
 	});
 }
 	
-function submit(method, action, directory, page, js, css) {
-	console.log('method');
+function submit(action, directory, page, js, css) {
 	$(document).ready(function() {
-		$('form').attr({'method' : method});
+		$('form').attr({'method' : 'POST'});
 		$('form').attr({'action' : action});
 		$('#hidden-dir').val(directory);
 		$('#hidden-page').val(page);
@@ -109,6 +129,20 @@ function emailRegexCheck(email) {
 	return regex.test(email);
 }
 
-function test() {
-	$('.testdiv').text($('.area').val());
+function setEventTemplate() {
+	var $form = $('.js_form');
+	
+	$form.on('click', '.js_logo', locationMain)
+		 .on('click', '.js_lobin-btn', locationLogon)
+		 .on('click', '.js_join', locationJoinTerms)
+		 .on('click', '.js_searchPWD', locationSearchPwd)
+		 .on('click', '.js_searchID', locationSearchID)
+		 .on('click', '.js_myInfo', locationMyInfo)
+		 .on('click', '.js_logout', logout)
 }
+
+function initTemplate() {
+	setEventTemplate();
+}
+
+initTemplate();

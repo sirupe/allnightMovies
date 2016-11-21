@@ -39,7 +39,7 @@
 
 .calendar__day__data {
     background-color: lavenderblush;
-    color: rosybrown;
+    color: #d1c9c9;
 }
 .calendar__day__data:hover {
     background-color: #dac7cd;
@@ -59,4 +59,12 @@ table tr:last-child td:last-child {
 
 table tr:last-child td:first-child {
     border-bottom-left-radius: 10px;
+}
+
+span.icono-caretRightCircle, span.icono-caretLeftCircle {
+	color: lightpink;
+}
+
+span.icono-caretRightCircle:hover, span.icono-caretLeftCircle:hover {
+	color: lightcoral;
 }

@@ -145,12 +145,7 @@ public class MainService implements Action {
 		int inputConfirmNum = this.params.getConfirmNum();
 		HttpSession session = this.params.getSession();
 		Integer saveConfirmNum = session.getAttribute("certificationNum") == null ? null : (int) session.getAttribute("certificationNum");
-		
-//		System.out.println("사용자가 인증을 받은 시간 : " + (long)session.getAttribute("confirmTime"));
-//		System.out.println("사용자가 인증번호를 입력한 시간 : " + System.currentTimeMillis());
-//		System.out.println("인증번호 시간차 : " + (System.currentTimeMillis() - (long)session.getAttribute("confirmTime")));
-//		System.out.println("인증번호 제한시간 : " + UtilityEnums.CONFIRM_TIME.getConfirmTime());
-		
+
 		boolean bool = true;
 		
 		// 인증을 보낸지 3분이 지났다면
@@ -203,6 +198,32 @@ public class MainService implements Action {
 		return null;
 	}
 	
+/*****은정. ticketing *****/
+	public ModelAndView ticketing() throws Exception {
+		this.params.setDirectory("reservation");
+		this.params.setPage("ticketing");
+		this.params.setContentCSS("reservation/ticketing");
+		this.params.setContentjs("reservation/ticketing");
+		
+		String maxScreeningDate = this.dbService.getMaxScreeningDate().split(" ")[0];
+		String[] maxScreeningYearMonthDay = maxScreeningDate.split(".");
+		MonthCalendar calendar = new MonthCalendar();
+		calendar.setMaxScreeningYear(maxScreeningYearMonthDay[0]);
+		calendar.setMaxScreeningMonth(maxScreeningYearMonthDay[1]);
+		calendar.setMaxScreeningDate(maxScreeningYearMonthDay[2]);
+		
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("cal", calendar);
+
+		return mav;
+	}
+		
+	public ModelAndView calendar() {
+		ModelAndView mav = new ModelAndView("reservation/calendar");
+		mav.addObject("cal", new MonthCalendar(this.params.getCalendarYear(), this.params.getCalendarMonth()));
+		return mav;
+	}
+	
 /*******연종. PWD찾기 SHIN*******/
 	//고쳐야할것★★★ 사용자가 입력한 아이디 값을 session에 저장시키는것이 아니라
 	//DB에서 확인된 아이디를 가져와session에 저장 시켜야 함 정확하게 하기위해!!!!!!
@@ -228,7 +249,7 @@ public class MainService implements Action {
 		String userEmail = this.dbService.searchEmail(searchPwdUserID);
 		HttpSession sessionRandNum = this.params.getSession();
 		sessionRandNum.setAttribute("randNum", randNum);
-//		new SendEmail(String.valueOf(randNum), userEmail); 
+		new SendEmail(String.valueOf(randNum), userEmail); 
 		return mav;
 	}
 	
@@ -329,26 +350,6 @@ public class MainService implements Action {
 		
 		ModelAndView mav = this.getTemplate();
 		return mav;
-	}
-	
-/*****은정. ticketing *****/
-	public ModelAndView ticketing() throws Exception {
-		this.params.setDirectory("reservation");
-		this.params.setPage("ticketing");
-		this.params.setContentCSS("ticketing");
-		this.params.setContentjs("ticketing");
-		
-		ModelAndView mav = this.getTemplate();
-		mav.addObject("cal", new MonthCalendar());
-		return mav;
-	}
-	
-	public ModelAndView cal() throws Exception {
-		this.params.setDirectory("reservation");
-		this.params.setPage("calendar");
-		this.params.setContentjs("calendar");
-		this.params.setContentCSS("calendar");
-		return this.getTemplate();
 	}
 	
 /*******연종. MyINFO SHIN*******/	

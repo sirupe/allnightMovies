@@ -16,7 +16,9 @@ import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
+import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.SendEmail;
 
 @Service
 public class AsyncService implements AsyncAction {
@@ -126,16 +128,17 @@ public class AsyncService implements AsyncAction {
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		String result = null;
 		boolean resultBool = true;
-		System.out.println("여긴 안오는듯?");
 		if(userLoginInfo.getUserStates() == 1) {
 			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
 				HttpSession session = this.params.getSession();
 				session.setAttribute("userID", userLoginInfo.getUserID());
 			} else {
 				result = "비밀번호가 일치하지 않습니다.";
+				resultBool = false;
 			}
 		} else {
 			result = "탈퇴하였거나 존재하지 않는 아이디입니다.";
+			resultBool = false;
 		}
 		AsyncResult<String> async = new AsyncResult<String>();
 		async.setData(result);
@@ -199,7 +202,7 @@ public class AsyncService implements AsyncAction {
 		HttpSession sessionRandNum = this.params.getSession();
 		
 		sessionRandNum.setAttribute("randNum", randNum);
-//		new SendEmail(String.valueOf(randNum), userEmail); 
+		new SendEmail(String.valueOf(randNum), userEmail); 
 		
 		return asyncResult;
 		
@@ -230,9 +233,6 @@ public class AsyncService implements AsyncAction {
 	}
 	
 	
-	
-	
-	
 	@SuppressWarnings("rawtypes")
 	public AsyncResult confirmNumInit() throws Exception {
 		HttpSession session = this.params.getSession();
@@ -244,4 +244,18 @@ public class AsyncService implements AsyncAction {
 		return async;
 	}
 
+
+	
+	
+	
+	
+	public AsyncResult<ModelAndView> calendar() {
+		System.out.println("넘어온 년 : " + this.params.getCalendarYear());
+		System.out.println("넘어온 달 : " + this.params.getCalendarMonth());
+		ModelAndView mav = new ModelAndView("reservation/calendar");
+		mav.addObject("cal", new MonthCalendar(this.params.getCalendarYear(), this.params.getCalendarMonth()));
+		AsyncResult<ModelAndView> async = new AsyncResult<ModelAndView>();
+		async.setData(mav);
+		return async;
+	}
 }

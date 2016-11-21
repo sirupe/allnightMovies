@@ -5,10 +5,10 @@
 	<div class="header__logon__top">
 		<div class="header__logon__top__buttons">
 			<label class="header__logon__top__welcome-text">${userID }님</label>
-			<button class="header__logon__top__buttons__myinfo" type="button" onclick="locationMyInfo()">
+			<button class="header__logon__top__buttons__myinfo js_myInfo" type="button">
 				내정보
 			</button>
-			<button class="header__logon__top__buttons__logout" type="button" onclick="logout()">
+			<button class="header__logon__top__buttons__logout js_logout" type="button">
 				로그아웃
 			</button>
 		</div>

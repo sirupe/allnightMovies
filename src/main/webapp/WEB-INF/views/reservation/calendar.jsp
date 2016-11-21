@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet" href="/resources/css/reservation/ticketing.css">
-<div class="calendar">
+<link rel="stylesheet" href="http://icono-49d6.kxcdn.com/icono.min.css">
 	<div class="calendar__year">
-		${cal.year }년 ${cal.month }월
+		<span class="icono-caretLeftCircle js_calendarPrev">
+		</span>
+		<span>
+			<label class="js_calendarYear">${cal.year }</label>년 <label class="js_calendarMonth">${cal.month }</label>월
+		</span>
+		<span class="icono-caretRightCircle js_calendarNext">
+		</span>
 	</div>
 	<table class="calendar__dayTable">
 		<tr class="calendar__week__row">
@@ -34,4 +39,3 @@
 			</tr>
 		</c:forEach>
 	</table>
-</div>

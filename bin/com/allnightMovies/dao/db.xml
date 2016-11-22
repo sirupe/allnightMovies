@@ -37,7 +37,6 @@
 	<select id="idCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(USER_ID) FROM USER_PERSONAL_INFO WHERE USER_ID=#{id}
 	</select>
-	
 
 	<insert id="insertJoinUserInfo" parameterType="com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO">
 		INSERT INTO USER_PERSONAL_INFO(
@@ -56,12 +55,34 @@
 		    #{userGender}
 		)
 	</insert>
-<!-- /* JI. TICKETING : CALENDAR */ -->
-	<select id="getMaxScreeningDate" resultType="java.lang.String">
-		SELECT MAX(MOVIE_SCREENING_DATE) SCREENINGMAXDATE
+
+<!-- /* JI. TICKETING */ -->
+	<select id="getMaxScreeningDate" resultType="com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo">
+		SELECT MIN(MOVIE_SCREENING_DATE) SCREENINGMINDATE, MAX(MOVIE_SCREENING_DATE) SCREENINGMAXDATE
 		FROM MOVIE_SCREENING_PRICE
 	</select>	
-<!-- 수진=================================================================================  -->
+	
+	<select id="getMovieTitle" resultType="com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo">
+		SELECT 
+			DECODE(MOVIE_AGE_LIMIT, 0, 'All', MOVIE_AGE_LIMIT) MOVIEAGELIMIT,
+		    MOVIE_TITLE MOVIETITLE
+		FROM MOVIE_BASIC_INFO
+	</select>
+	
+	<resultMap type="java.lang.String" id="movieTime">
+		<result column="movieTime" property="movieTime"/>
+	</resultMap>
+	
+	<resultMap type="com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo" id="movieTimeInfo">
+		<result column="movieTheather" property="movieTheather"/>
+		<collection property="movieTime" resultMap="movieTime"/>
+	</resultMap>
+	
+	<select id="getMovieTime" resultMap="movieTimeInfo">
+		SELECT MOVIE_THEATHER MOVIETHEATHER, SUBSTR(MOVIE_SCREENING_DATE, 12, 5) MOVIETIME 
+		FROM MOVIE_SCREENING_PRICE
+		WHERE MOVIE_TITLE=#{param1} AND MOVIE_SCREENING_DATE LIKE #{param2}||'%'
+	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>

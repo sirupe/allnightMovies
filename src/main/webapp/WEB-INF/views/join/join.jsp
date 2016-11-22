@@ -8,10 +8,10 @@
 		</div>
 		<div class="join-form__info1">
 			
-			<input id="user-id" type="text" placeholder="아이디 입력" onkeyup="idCheck()" autocomplete="off" name="userIDCheck" value="sirupe"/>
+			<input class="js_userID" type="text" placeholder="아이디 입력" onkeyup="idCheck()" autocomplete="off" name="userIDCheck" value="sirupe"/>
 			<div id="idResult" class="join__resultText">필수 입력사항입니다.</div>
 			
-			<input id="user-pwd" type="password" placeholder="비밀번호 입력" name="userPWD" onkeyup="pwdCheck()" value="P@ssw0rd"/>
+			<input class="js_userPWD" type="password" placeholder="비밀번호 입력" name="userPWD" onkeyup="pwdCheck()" value="P@ssw0rd"/>
 			<div id="pwdResult" class="join__resultText">필수 입력사항입니다.</div>
 			
 			<input id="user-re-pwd" name="userRePWD" type="password" placeholder="비밀번호 재입력" onkeyup="rePwdCheck()" value="P@ssw0rd"/>

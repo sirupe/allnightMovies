@@ -21,32 +21,43 @@
 			<td class="calendar__week__data">금</td>
 			<td class="calendar__week__data">토</td>
 		</tr>
-		
 		<c:forEach items="${cal.days }" var="days">
 			<tr class="calendar__day__row">
 				<c:forEach items="${days }" var="day">
 					<c:choose>
 						<c:when test="${day != 0 }">
-							<td class="calendar__day__data">
-								${day }
-							</td>
-							
-							
-							
 							<c:choose>
-								<c:when test="">
+								<c:when test="${(cal.year >= screening.minScreening[0] && cal.year <= screening.maxScreening[0]) 
+											&&  (cal.month >= screening.minScreening[1] && cal.month <= screening.maxScreening[1])
+											&&  (day >= screening.minScreening[2] && day <= screening.maxScreening[2])}">
+									<td class="
+										js_ticketingDateClick 
+										calendar__day-background 
+										cursor 
+										calendar__day-color-possible
+										calendar__day-hover-background">
+										
+										${day }
+									
+									</td>
 								</c:when>
 								
 								<c:otherwise>
+									<td class="
+										js_nonTicketingDateClick 
+										calendar__day-background 
+										cursor 
+										calendar__day-color-impossible 
+										calendar__day-hover-background">
+										
+										${day }
+									
+									</td>
 								</c:otherwise>
 							</c:choose>
-							
-							
-							
-							
 						</c:when>
 						<c:otherwise>
-							<td class="calendar__day__data"></td>
+							<td class="calendar__day-background"></td>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>

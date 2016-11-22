@@ -10,7 +10,6 @@ function locationJoinTerms(e) {
 	
 	submit(url, dir, page, js, css);
 }
-// 달넘기기 자바스크립트에서 에러나는거..
 function locationLogon() {
 	var $userID  = $('#user-id');
 		$userPWD = $('#user-pwd');

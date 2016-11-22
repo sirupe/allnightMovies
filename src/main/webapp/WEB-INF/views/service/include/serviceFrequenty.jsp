@@ -2,7 +2,6 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container__serviceCenterFrequenty">
-	<div class="container__serviceCenterFrequenty__title"></div>
 	
 		<div class = "container__serviceCenterFrequenty_content">
 			<button class="serviceCenterFrequenty_title" type="button" onclick="serviceCenter_Frequenty()" >

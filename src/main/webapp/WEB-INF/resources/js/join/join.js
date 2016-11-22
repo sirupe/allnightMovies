@@ -1,6 +1,6 @@
 function idCheck() {
 	var re	 = true;
-	var idTextField = $('#user-id');
+	var idTextField = $('.js_userID');
 	var userID = idTextField.val();
 	var idLeng = userID.length;
 	var resultMsg;
@@ -27,7 +27,7 @@ function idCheck() {
 
 function pwdCheck() {
 	var resultBool = true;
-	var pwd = $('#user-pwd').val();
+	var pwd = $('.js_userPWD').val();
 	var resultMsg = '<label style="color:green;">사용 가능합니다.</label>';
 	
 	if(!pwdRegexCheck(pwd)) {
@@ -46,14 +46,14 @@ function pwdCheck() {
 
 function rePwdCheck() {
 	var resultBool = true;
-	var pwd = $('#user-pwd').val();
+	var pwd = $('.js_userPWD').val();
 	var rePWD = $('#user-re-pwd').val();
 	var resultMsg = '<label style="color:green;">비밀번호가 일치합니다.</label>';
 	if(rePWD == "") {
 		resultBool = false;
 		resultMsg = '필수 입력사항입니다.';
 	}
-	if($('#user-pwd').val() != rePWD) {
+	if($('.js_userPWD').val() != rePWD) {
 		resultBool = false;
 		resultMsg = '<label style="color: red;">입력하신 비밀번호와 일치하지 않습니다.</label>';
 	}
@@ -174,8 +174,8 @@ function joinSuccessCheck() {
 		$.post(
 			'/movie/async/asyncService/joinSuccessCheck',
 			{
-				'userIDCheck' : $('#user-id').val(),
-				'userPWD': $('#user-pwd').val(),
+				'userIDCheck' : $('.js_userID').val(),
+				'userPWD': $('.js_userPWD').val(),
 				'userRePWD': $('#user-re-pwd').val(),
 				'userName': $('#user-name').val(),
 				'userGender': $('#user-gender').val(),

@@ -10,7 +10,6 @@ function locationJoinTerms(e) {
 	
 	submit(url, dir, page, js, css);
 }
-// 달넘기기 자바스크립트에서 에러나는거..
 function locationLogon() {
 	var $userID  = $('#user-id');
 		$userPWD = $('#user-pwd');
@@ -38,13 +37,12 @@ function locationLogon() {
 }
 
 function locationMain(e) {
-	var method 	= 'POST';
 	var url 	= '/';
 	
 	e.preventDefault();
 	e.stopPropagation();
 	
-	submit(method, url);
+	submit(url);
 }
 
 /*shin searchPwd*/

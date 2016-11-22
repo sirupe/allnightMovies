@@ -1,97 +1,94 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-  <div class="user-find-id-user-info-container">
-		<div class="user-find-id__name_bar"> 
+  <div class="searchID-form js_userFindIdcontainer">
+		<div class="searchID-form_name_bar"> 
 					아이디 찾기
 		</div>
-		<div class="user-find-id_container">
-			<div class="user-find-id__title">
+		<div class="searchID-form_container">
+			<div class="searchID-form_title">
 				<label><input id="rdb1" type="radio" name="searchID" value="1" class="user-find-info"/>입력한 회원정보로 찾기</label>
 				<!-- <input type="radio" class="user-find-info">회원정보로 찾기 -->
 			</div>
 
 		<div id="blk-1" class="searchIdHide" style="display:none">
-			<div class="user-find-id-info__content">
+			<div class="searchID-form_content">
 				
-				<div class="user-find-id-info__content__name">
-					<div class="user-find-info-content__name__label">
+				<div class="searchID-form_content__name">
+					<div class="searchID-form_content__name_label">
 							이름
 					</div>
-					<div class="user-find-info-content__name__input">
-						<input type="text" id="user-SearchName" name="searchIdUserName" class="user-find-info-content__name__input__box">
+					<div class="searchID-form_content__name_input">
+						<input type="text" id="user-SearchName" name="searchIdUserName" class="searchID-form_content__name_input">
 					</div>
 				</div>
 				
-				<div class="user-find-id-info__content__birth">
-					<div class="user-find-id-info__content__birth__label">
+				<div class="searchID-form_content__birth">
+					<div class="searchID-form_content__birth_label">
 						<label>생년월일</label>
 					</div>
 
-					<div class="user-find-id-info__content__birth__input">
-						<input type="date" id="user-find-id_birthday" name="searchIdUserBirth" value="1994-05-08" onkeyup="userFindIdBirth()" />
+					<div class="searchID-form_content__birth__input js_userFindIdBirth">
+						<input type="date" id="user-find-id_birthday" name="searchIdUserBirth" value="1994-05-08" />
 					</div>
 				</div>
 				
-				<div  class="user-find-id-info__content__gender">
-					<div class="user-find-id-info__gender__label">
+				<div  class="searchID-form_content__gender">
+					<div class="searchID-form_content__gender_label">
 						<label>성별</label>
 					</div>
-					
-					<select class="user-find-id-info__content__gender" id="userFindgender" name="searchIdUserGender" value="남자">
+					<select class="searchID-form_content__gender_option" id="userFindgender" name="searchIdUserGender" value="남자">
 						<option>남자</option>
 						<option>여자</option>
 					</select>
-
 				</div>
-				
 					<div class="userIDCheck">
-						<div id="insertConfirm" class="join__resultText"></div>
+						<div id="insertConfirm" class="userIDCheck_All__resultText">필수입력사항입니다.</div>
 					</div>
-				<div class= "emailConfirmNumber_check">
-					
-					<Button class="user-find-id-info_emailConfirmNumber_check_button" type="button" onclick="confirmIdCheck()">확인</Button>
+				<div class= "userSearchId_check ">
+					<Button class="button__userSearchId_check js_confirmIdCheck" type="button">확인</Button>
 				</div>
-				
 			</div>
 		</div>
 	</div>
 
-    		 <div class="user-find-id_email_container">
-				<div class="user-find-id__title_email">
+    		 <div class="searchID-form_content__email">
+				<div class="searchID-form_content__title_email">
 					<label><input type="radio" id="rdb2" name="searchID" value="2" class="user-find-info_email">회원가입시 입력한 이메일로 찾기</label>
-						
 					</div>
-						<div id="blk-2" class="searchIdHide" style="display:none">
-					<div class="user-find-id-info__content">
-						<div class="user-find-id-info__content__email">
-							<div class="user-find-info-content__email__label">
+					
+					
+				<div id="blk-2" class="searchIdHide" style="display:none">
+					<div class="searchID-form_content_email">
+						<div class="searchID-form_content__title__email">
+							<div class="searchID-form_content__email_label">
 									이메일
 							</div>
-							<div class="user-find-info-content__email__input">
-								<input type="text" id="userFindIdEmail" class="user-find-info-content__email__input__box">
+							<div class="searchID-form_content__email_input">
+								<input type="text" id="userFindIdEmail" class="searchID-form_content__email_inputbox" name="searchIdUserEmail" value="tnwls147258@naver.com">
+								<Button class="button__emailConfirmNumber_send js_emailCheck_send" type="button">인증번호보내기</Button>
+								<div id="insertConfirmNumber" class="userConfirmNumberCheck_Email_resultText">필수입력사항입니다.</div>
 							</div>
+
 
 						</div>
 						
-						<div class="user-find-id-info__content__emailConfirmNumber">
-							<div class="user-find-info-content__emailConfirmNumber__label">
+						<div class="searchID-form_content__emailConfirmNumber">
+							<div class="searchID-form_content__emailConfirmNumber__label">
 									인증번호
 							</div>
-							<div class="user-find-info-content__emailConfirmNumber__input">
-								<input type="text" id="userFindIdConfirmNumber" class="user-find-info-content__emailConfirmNumber__input__box">
-							</div>
-		
-							<div>
-								<Button class="user-find-id-info_emailConfirmNumber_button" onclick="">확인</Button>
+							<div class="searchID-form_content__emailConfirmNumber__input">
+								<input type="text" id="userFindIdConfirmNumber" class="searchID-form_content__emailConfirmNumber__input_box" readonly>
+								<Button class="button__emailConfirmNumber_check js_confirmNumber_Check"  id="emailConfirmNumberCheck" type="button" disabled>인증확인</Button>
+								
 							</div>
 						
 						</div>
 						<div class="userIDCheck">
-							<div id="insertConfirm" class="join__resultText">??</div>
+							<div id="insertConfirmEmail" class="userIDCheck_All__Email_resultText">필수입력사항입니다.</div>
 						</div>
-						<div class = "emailConfirmNumber_check">
-							<Button class="user-find-id-info_emailConfirmNumber_check_button" type="button" onclick="user_id_find_checkemail()">확인</Button>
+						<div class = "emailConfirmNumber_check ">
+							<Button class="button__emailConfirmNumber_check js_email_resultCheck" type="button">확인</Button>
 						</div>
 					</div>
 				</div>

@@ -14,9 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
+import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -87,6 +89,7 @@ public class MainService implements Action {
 	
 /*****은정. join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
+		System.out.println("idCheck");
 		ModelAndView mav = new ModelAndView("join/resultText");
 
 		String resultMessage = "사용이 가능한 아이디입니다.";
@@ -196,27 +199,34 @@ public class MainService implements Action {
 	
 /*****은정. ticketing *****/
 	public ModelAndView ticketing() throws Exception {
-		this.params.setDirectory("reservation");
+		this.params.setDirectory("reservation/ticketing");
 		this.params.setPage("ticketing");
 		this.params.setContentCSS("reservation/ticketing");
 		this.params.setContentjs("reservation/ticketing");
 		
-		String maxScreeningDate = this.dbService.getMaxScreeningDate().split(" ")[0];
-		String[] maxScreeningYearMonthDay = maxScreeningDate.split(".");
-		MonthCalendar calendar = new MonthCalendar();
-		calendar.setMaxScreeningYear(maxScreeningYearMonthDay[0]);
-		calendar.setMaxScreeningMonth(maxScreeningYearMonthDay[1]);
-		calendar.setMaxScreeningDate(maxScreeningYearMonthDay[2]);
+		MovieScreeningDateInfo screeningDate = this.dbService.getMaxScreeningDate();
+		screeningDate.setScreeningDate();
 		
 		ModelAndView mav = this.getTemplate();
-		mav.addObject("cal", calendar);
-
+		mav.addObject("cal", new MonthCalendar());
+		mav.addObject("screening", screeningDate);
+		mav.addObject("movieTitle", this.dbService.getMovieTitle());
 		return mav;
 	}
 		
 	public ModelAndView calendar() {
+		MovieScreeningDateInfo screeningDate = this.dbService.getMaxScreeningDate();
+		screeningDate.setScreeningDate();
 		ModelAndView mav = new ModelAndView("reservation/calendar");
 		mav.addObject("cal", new MonthCalendar(this.params.getCalendarYear(), this.params.getCalendarMonth()));
+		mav.addObject("screening", screeningDate);
+		return mav;
+	}
+	
+	public ModelAndView screeningPlanned() {
+		ModelAndView mav = new ModelAndView("reservation/ticketing/screeningPlanned");
+		List<TicketingMovieTimeInfo> list = this.dbService.getMovieTime(this.params.getMovieTitle(), this.params.getScreeningDate());
+		mav.addObject("movieTimeList", list);
 		return mav;
 	}
 	
@@ -271,22 +281,41 @@ public class MainService implements Action {
 	}
 
 	
-/*******ID찾기 수진********/	
+/*******ID찾기(회원정보) 수진*******/	
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String searchIdUserName = this.params.getSearchIdUserName();
 		String searchIdUserBirth = this.params.getSearchIdUserBirth();
 		String searchIdUserGender = this.params.getSearchIdUserGender();
 		
-		String userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
+		//세션저장//
+		List<Params> userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		Integer result = this.dbService.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		
+		System.out.println(userSearchId + "나와라..");
+		System.out.println(result + "갯수");
 		mav.addObject("searchIdUserName", searchIdUserName);
 		mav.addObject("userSearchId", userSearchId);
 		mav.addObject("result", result);
 		return mav;
 	}
-
+	
+/*****수진. 아이디찾기(email)*****/
+	public ModelAndView searchIDEmailResult() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		
+		HttpSession session = this.params.getSession();
+		System.out.println(this.params.getSession().getAttribute("searchIdUserEmail") + " : 저장된 이메일 결과");	
+		
+		//db보내기
+		
+		
+		
+		
+		
+		return mav;
+		
+	}
 /*****수진. 상영시간표List*****/
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");

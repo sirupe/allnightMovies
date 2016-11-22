@@ -16,14 +16,13 @@ function setEvent() {
 
 /*내정보보기*/
 function locationMyinfo() {
-	var method = 'POST';
-		url    = '/movie/mainService/viewMyInfo';
+	var url    = '/movie/mainService/viewMyInfo';
 		dir    = 'myInfo';                                
 		page   = 'myInfo';                                
 		js     = 'myInfo/myInfo';                         
 		css    = 'myInfo/myInfo';  
 	
-	submit(method, url, dir, page, js, css);
+	submit(url, dir, page, js, css);
 }
 
 /*이메일인증번호 발송 Button */

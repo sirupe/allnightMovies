@@ -1,18 +1,14 @@
 package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
@@ -21,8 +17,6 @@ import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
-import com.allnightMovies.utility.UtilityEnums;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 
 @Service
@@ -133,7 +127,6 @@ public class AsyncService implements AsyncAction {
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		String result = null;
 		boolean resultBool = true;
-		System.out.println("여긴 안오는듯?");
 		if(userLoginInfo.getUserStates() == 1) {
 			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
 				HttpSession session = this.params.getSession();
@@ -185,9 +178,8 @@ public class AsyncService implements AsyncAction {
 		if(isCheck) {
 			this.dbService.updateNewPwd(myInfoID, newPWD);
 			resultStr = "/movie/mainService/myInfoChangePwdResult";
-			this.params.getSession().invalidate();
+			//this.params.getSession().invalidate();
 		}
-		
 		asyncResult.setData(resultStr);
 		System.out.println("asyncResult 비동기결과: " + resultStr);
 		return asyncResult;
@@ -206,7 +198,7 @@ public class AsyncService implements AsyncAction {
 		
 		HttpSession sessionRandNum = this.params.getSession();
 		sessionRandNum.setAttribute("randNum", randNum);
-		
+		new SendEmail(String.valueOf(randNum), userEmail); 
 		asyncResult.setData("true");
 		return asyncResult;
 	}	
@@ -223,12 +215,21 @@ public class AsyncService implements AsyncAction {
 		String userRandNum = this.params.getMyInfoEmailConfirmNum();
 		String chageEmailAddr = this.params.getMyInfoChageEmail();
 		
-		if(randNum.equals(userRandNum)) {
-			this.dbService.updateEmailAddr(chageEmailAddr, userID);
-			this.params.getSession().invalidate();
-			chageEmailResult = "/movie/mainService/myInfoChageEmailResult";
+		boolean isCheck = true;
+		//이메일 유효성 체크
+		if(!RegexCheck.emailRegexCheck(chageEmailAddr)){
+			isCheck = false;
 		}
-		System.out.println("AsyncResult  결과 " + chageEmailResult);
+		//인증번호 체크
+		if(!(randNum.equals(userRandNum))) {
+			isCheck = false;
+		}
+		
+		if(isCheck) {
+			session.setAttribute("randNum", 0);
+			this.dbService.updateEmailAddr(chageEmailAddr, userID);
+			chageEmailResult = "/movie/mainService/myInfoChangeEmailResult";
+		}
 		asyncResult.setData(chageEmailResult);
 		return asyncResult;
 	}
@@ -243,11 +244,16 @@ public class AsyncService implements AsyncAction {
 		String myInfoID = (String)session.getAttribute("userID");
 		String presentUserPWD = this.dbService.selectUserPWD(myInfoID);
 		
-		if(withdrawUserpwd.equals(presentUserPWD)) {
-			System.out.println(this.dbService.updateWithdraw(myInfoID));
-			this.params.getSession().invalidate();
-			withdrawResult =  "/movie/mainService/getTemplate";
+		boolean isCheck = true;
+		//사용자 PWD확인
+		if(!(withdrawUserpwd.equals(presentUserPWD))) {
+			isCheck = false;
 		}
+		if(isCheck) {
+			this.dbService.updateWithdraw(myInfoID);
+			withdrawResult =  "/movie/mainService/logout";
+		}
+		
 		asyncResult.setData(withdrawResult);
 		return asyncResult;
 	}
@@ -259,10 +265,14 @@ public class AsyncService implements AsyncAction {
 		String userConfirmNum = this.params.getSearchPwdConfirmNum();
 		HttpSession session = this.params.getSession();
 		String serverRandNum = String.valueOf(session.getAttribute("randNum"));
-		
 		String searchPwdResult = "false";
 		
-		if(serverRandNum.equals(userConfirmNum)) {
+		boolean isCheck = true;
+		//인증번호확인
+		if(!(serverRandNum.equals(userConfirmNum))) {
+			isCheck = false;
+		}
+		if(isCheck) {
 			searchPwdResult = "/movie/mainService/checkPwdConfirmNum";
 		} 
 		

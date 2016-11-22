@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
@@ -100,6 +101,14 @@ public class DBService {
 	}
 	public String updateEmailAddr(String emailAddr, String userID) {
 		return dbMapper.updateEmailAddr(emailAddr, userID);
+	}
+	
+/** shin. MOVIE	currentFilm **/
+	public Integer getFilmNum(){
+		return dbMapper.getFilmNum();
+	}
+	public List<MovieCurrentFilmDTO> getCurrentFilmDTO() {
+		return dbMapper.getCurrentFilmDTO();
 	}
 	
 }

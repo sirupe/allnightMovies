@@ -3,6 +3,7 @@ package com.allnightMovies.dao;
 import java.util.List;
 
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
@@ -50,4 +51,10 @@ public interface DBMapper {
 	public String selectUserPWD(String myInfoID);
 	public Params updateWithdraw(String myInfoID);
 	public String updateEmailAddr(String emailAddr, String userID);
+	
+/** shin. MOVIE currentFilm **/	
+	public Integer getFilmNum();
+	public List<MovieCurrentFilmDTO> getCurrentFilmDTO();
+	
+	
 }

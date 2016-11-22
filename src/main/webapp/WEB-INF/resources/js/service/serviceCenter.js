@@ -2,7 +2,7 @@
 $(document).ready(function() {
 			$('.div__serviceCenter_Content').hide();//모든 내용 숨겨라..
 			$('ul.serviceCenter_Tab li:first').addClass('active').show(); // 첫번째탭 누르면 보여라
-			$('.div__serviceCenter_Content:first').show(); // 첫번째 내용 보여라. 시바
+			$('.div__serviceCenter_Content:first').show(); // 첫번째 내용 보여라
 			
 			//클릭@ ..
 			$("ul.serviceCenter_Tab li").click(function() {

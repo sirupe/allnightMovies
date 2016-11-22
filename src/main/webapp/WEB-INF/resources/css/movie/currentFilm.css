@@ -10,25 +10,47 @@
 	margin: 10px 0px 10px 10px;
 	font-size: 22px;
 }
-
-/*예매순/평점순/예매하기 버튼*/
-.div-currentFilm__etc {
-	display: inline-block;
-    margin: 30px 580px 30px 70px;
-}
-
 /*현재상영작 포스터가 들어갈 구역*/
 .div-currentFilm-images {
-	display: flex;
-    margin-left: 20px;
-	height: 900px;
-	
+	margin-left: 30px;
 }
 /*현재상영작 포스터 하나*/
 .span-currentFilm-images {
-    margin: 0px 30px 10px 30px;
+	display: inline-block;
+    margin: 0px 35px 10px 30px;
+} 
+
+/*포스터크기*/
+.img-currentFilm {
+	width: 240px;
+    height: 340px;
 }
-/*비디오 여백*/
+/* .img-currentFilm:hover {
+	opacity: 0.8;
+	cursor: pointer;
+} */
+.span-hiddenText {
+	position: relative;
+}
+
+.hiddenText {
+	width: 340px;
+    height: 100px;
+    opacity: 0.8;
+	cursor: pointer;
+	visibility: hidden;
+	position: absolute;
+	margin: 150px 50px;
+    color: white;
+    font-size: 30px;
+    width: 120px;
+    font-weight: bold;
+    border: 4px solid white;
+    padding: 5px 15px 5px 15px;
+	
+}
+
+/*비디오 */
 .span-currentFilm__mainFilm {
 	display: flex;
 	align-items: center;
@@ -40,8 +62,8 @@
 	background-image: url("/../resources/img/poster/fantasticBeasts.jpg");
 }
 .span-currentFilm__mainFilm:hover {
-	box-shadow: inset rgba(25, 66, 104, 0.27) 0 0 0 0;
 	opacity: 1;
+	box-shadow: inset rgba(25, 66, 104, 0.27) 0 0 0 0;
 }
 
 /*비디오 실행버튼*/
@@ -57,8 +79,15 @@
     border: 3px solid white;
     background: rgba(156, 158, 162, 0);
 }
+
 .video-currentFilm__start:hover {
     background: rgba(156, 158, 162, 0.4);
+}
+
+/*예매순/평점순/예매하기 버튼*/
+.div-currentFilm__etc {
+	display: inline-block;
+    margin: 30px 580px 30px 70px;
 }
 
 /*예매순 / 평점순*/
@@ -66,31 +95,60 @@
 	font-family: 'Jeju Gothic', serif;
     font-size: 20px;
     color: black;
+    cursor: pointer;
 }
-
 .label-currentFilm-sort:hover {
 	color: #b79fa1;
 	font-weight: bold;
 }
-/*포스터크기*/
-.img-currentFilm {
-	width: 240px;
-    height: 340px;
-}
-.img-currentFilm:hover {
-	opacity: 0.8;
-	cursor: pointer;
-}
 
 /*영화제목*/
-.label-currentFilm__movieTitle {
+.span-currentFilm-text {
 	text-align: -webkit-center;
     display: -webkit-box;
+}
+
+.label-currentFilm__movieTitle {
+	padding-left: 7px;
 	font-family: 'Jeju Gothic', serif;
-    font-size: 20px;
+    font-size: 17px;
     margin-top: 15px;
 }
 
+/*관람등급*/
+.ageLimit15 {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #fd9800;
+    padding: 3px 4px 2px 2px;
+}
+.ageLimit12 {
+	font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #037eb7;
+    padding: 3px 4px 2px 2px;
+}
+.ageLimitAll {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 13px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #7fc41b;
+    padding: 4px 3px 3px 3px;
+}
+.ageLimit19 {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #ff0000;
+    padding: 3px 4px 2px 2px;
+}
+/*예약하기 버튼*/
 .button-currentFilm-reservation {
     font-family: 'Jeju Gothic', serif;
     font-size: 18px;

@@ -178,20 +178,18 @@ body {
 	padding: 10px;
 }
 .header__login__text a:visited {
-    color: #e5e5e5;
+    color: #e8d5d7;
     font-weight: bold;
 }
 
 .header__login__text a:hover {
-    color: #967878;
-    font-weight: 100;
-    text-shadow: 0px 2px 1px white
+	text-shadow: 2px 1px 2px white;
 }
 
 .header__login__text a:link {
     text-decoration: none;
     font-weight: bold;
-    color: #bed3ed;
+    color: #e8d5d7;
 }
 
 .footer {
@@ -347,6 +345,7 @@ body {
 }
 
 .header__menus__search__text {
+	padding-left: 5px;
 	height: 25px;
 	width: 170px;
     box-sizing: content-box;

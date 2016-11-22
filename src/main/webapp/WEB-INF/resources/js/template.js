@@ -60,7 +60,6 @@ function locationSearchPwd(e) {
 function logout() {
 	location.href = '/movie/mainService/logout';
 }
-
 /*shin myInfo*/
 function locationMyInfo() {
 	var url  = '/movie/mainService/viewMyInfo';
@@ -70,6 +69,7 @@ function locationMyInfo() {
 		css  = 'myInfo/myInfo';
 	submit(url, dir, page, js, css);
 }
+/*shin myInfo*/
 
 /**아이디 찾기**/
 function locationSearchID(e) {

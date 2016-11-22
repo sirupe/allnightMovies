@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
@@ -239,8 +240,10 @@ public class MainService implements Action {
 		ModelAndView mav = this.getTemplate();
 		String searchPwdUserID = this.params.getSearchPwdUserID();
 		Integer result = this.dbService.searchPWD(searchPwdUserID);
+		
 		HttpSession session =  this.params.getSession();	
 		session.setAttribute("userId", searchPwdUserID);
+		
 		mav.addObject("result", result);
 		return mav;
 	}
@@ -278,8 +281,7 @@ public class MainService implements Action {
 		this.dbService.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
 		this.params.setDirectory("searchPwd");
 		this.params.setPage("searchPwdChangeCompleted");
-		session.removeAttribute("userId");
-		return this.getTemplate();
+		return this.logout();
 	}
 
 	
@@ -388,24 +390,31 @@ public class MainService implements Action {
 	}
 	
 /*******연종. MyINFO chage EmailAdde SHIN*******/		
-	public ModelAndView myInfoChageEmailResult() throws Exception {
+	public ModelAndView myInfoChangeEmailResult() throws Exception {
 		this.params.setDirectory("myInfo");
 		this.params.setPage("myInfoChangeEmailResult");
 		this.params.setContentCSS("myInfo/changeEmail");
 		this.params.setContentjs("myInfo/changeEmail");
-		return this.getTemplate();
+		return this.logout();
 	}
 	
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
 	public ModelAndView currentFilm() throws Exception{
-		this.params.setDirectory("movie");
-		this.params.setPage("currentFilm");
-		this.params.setContentCSS("movie/currentFilm");
-		this.params.setContentjs("movie/currentFilm");
-		//1. 디비로가서 현재 상영중인 영화 갯수를 구하공...
-		//2. 한줄에 영화 3개씩 뿌려줄것이다.
-		//3. 예매순으로 시작할것인지 평점순으로 시작할 것 인지..
-		return this.getTemplate();	
+		ModelAndView mav = this.getTemplate();
+		
+		Integer filmNum = this.dbService.getFilmNum();		////리스트 사이즈로  filmNum 구할수 있음.s
+		System.out.println("Mainservice currentFilm 갯수  >> " + filmNum);
+		
+		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.getCurrentFilmDTO();
+		
+		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "currentFilm");
+		mav.addObject("contentCSS", "movie/currentFilm");
+		mav.addObject("contentjs", "movie/currentFilm");
+		mav.addObject("CurrentFilmDTO", currentFilmDTO);
+		mav.addObject("filmNum", filmNum);
+		return mav;
 	}
 /*******연종. MOVIE CURRENT FIRM 상영예정작*******/		
 	public ModelAndView screeningsPlanned() throws Exception{
@@ -421,6 +430,6 @@ public class MainService implements Action {
 		this.params.setPage("myInfoChangePwdResult");
 		this.params.setContentCSS("myInfo/changePwd");
 		this.params.setContentjs("myInfo/changePwd");
-		return this.getTemplate();	
+		return this.logout();	
 	}
 }

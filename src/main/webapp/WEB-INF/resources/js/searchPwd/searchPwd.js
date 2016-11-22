@@ -14,6 +14,8 @@ function setEvent() {
 
 }
 
+
+
 function searchPwdResult() {
 	var $inputID = $('.js_searchPwd_idInput');
 		inputID  = $inputID.val();

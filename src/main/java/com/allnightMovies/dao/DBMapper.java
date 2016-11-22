@@ -28,12 +28,13 @@ public interface DBMapper {
 	
 /** 아이디찾기 **/
 	public List<Params> searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
-/** jung. 아이디찾기 **/
-//	public String searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
-//	
 /** jung. 아이디 갯수 **/
 	public Integer searchIdCount(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
+/** juung 이메일 **/
+	public Integer searchEmailCount(String searchIdUserEmail) throws Exception;
+	public List<Params> searchIDEmail(String searchIdUserEmail) throws Exception;
 
+	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);

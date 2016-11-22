@@ -1,7 +1,12 @@
 @CHARSET "UTF-8";
 
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif; -> 이렇게 사용하심 되영*/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/*font-family: 'Nanum Gothic', serif; 비밀번호*/
+
 .div__serviceCenter_form {
-width: 759px;
+	width: 759px;
     height: 790px;
     display: flex;
     flex-direction: column;
@@ -13,31 +18,32 @@ width: 759px;
 }
 
 .div__serviceCenter_form_title {
-background-color: #383838;
-color: white;
-padding-left: 20px;
+	background-color: #383838;
+	color: white;
+	padding-left: 20px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .div__serviceCenter__content {
-
-flex-basis: 739px;
-border: 1px solid gray;
-font-size: 12px;
-line-height: 1.5em;
-background-color: white;
+	flex-basis: 739px;
+	border: 1px solid gray;
+	font-size: 12px;
+	line-height: 1.5em;
+	background-color: white;
 }
 
 .div__serviceCenter__content__header {
-display: flex;
-flex-direction: row;
-height: 105px;
+	display: flex;
+	flex-direction: row;
+	height: 105px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .div__serviceCenter__logo {
-display: flex;
-/* background-color: aliceblue; */
-width: 215px;
-height: 107px;
+	display: flex;
+	/* background-color: aliceblue; */
+	width: 215px;
+	height: 107px;
 }
 
 .serviceCenter_logo_image {
@@ -46,7 +52,7 @@ height: 107px;
 }
 
 .serviceCenter_question_image {
-	    width: 69px;
+    width: 69px;
     height: 45px;
     padding-top: 10px;
 }
@@ -60,11 +66,10 @@ height: 107px;
     width:397px;
     flex: none;
     overflow: hidden;
-
 }
 
 .serviceCenter_intro_message {
-        width: 367px;
+    width: 336px;
     font-size: 15.5px;
     font-weight: 700;
     line-height: initial;
@@ -72,7 +77,6 @@ height: 107px;
     /* text-align: center; */
    /*  background-color: burlywood; */
     color: #283cab;
-	
 }
 
 .div__serviceCenter__intro_bundle {
@@ -96,7 +100,6 @@ height: 107px;
     padding-left: 20px;
     padding-top: 27px;
     padding-right: 15px;
-    
  }
 
 
@@ -109,11 +112,10 @@ ul.serviceCenter_Tab {
 	border-left: 1px solid;
 	width: 100%;
 	border-radius: 12px;
-	
 }
 
 ul.serviceCenter_Tab li {
-	 float: left;
+ 	float: left;
     margin: 0;
     padding: 0;
     padding-right: 50px;
@@ -135,7 +137,6 @@ ul.serviceCenter_Tab li a {
     font-size: 13px;
     outline: none;
     padding: 0 15px;
-	
 }
 
 ul.serviceCenter_Tab li a:hover {
@@ -158,18 +159,19 @@ ul.serviceCenter_Tab li.actice a:hover {
 .div__serviceCenter_Container_Tab {
 	BACKGROUND-COLOR: antiquewhite;
     HEIGHT: 342PX;
-	padding: 78px;
+	padding-left: 19px;
+    padding-bottom: 176px
 }
 
 .div__serviceCenter_info {
-display: flex;
+	display: flex;
     /* background-color: burlywood; */
     padding-top: 25px;
     line-height: 36px;
 }
 
 .div__serviceCenter_Tel {
-   display: flex;
+   	display: flex;
     /* background-color: cadetblue; */
     width: 249px;
     padding-left: 110px;
@@ -177,6 +179,7 @@ display: flex;
     font-weight: bolder;
     padding-bottom: 11px;
     border-right: 2px solid;
+    font-family: 'Jeju Gothic', serif;
 }
 
 .div_serviceCenter_Email {
@@ -187,4 +190,116 @@ display: flex;
     font-size: 21px;
     font-weight: bolder;
     padding-bottom: 13px;
+    font-family: 'Jeju Gothic', serif;
 }
+
+/*************************************자주묻는질문 ****************************************************/
+
+.container__serviceCenterFrequenty {
+/* 	background-color: white;
+    padding: 20px;
+    width: 950px;
+    margin: auto; */
+}
+
+.container__serviceCenterFrequenty_content {
+	width: 100%;	
+}
+	
+.container__serviceCenterFrequenty__title {
+/* 	border-bottom: solid black;
+    padding-bottom: 12px;
+    margin-top: -1px; */
+}
+	
+button.serviceCenterFrequenty_title {
+background-color: #fff;
+    color: #444;
+    cursor: pointer;
+    PADDING-BOTTOM: 0PX;
+    width: 100%;
+    line-height: 50px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 19px;
+    border-bottom: 1px solid;
+    font-family: 'Jeju Gothic', serif;
+}
+
+button.serviceCenterFrequenty_title.active, button.serviceCenterFrequenty_title:hover {
+	background-color: rgb(255, 255, 255);
+    color: #191717;
+    font-size: 17px;
+}
+
+div.serviceCenterFrequenty_panel {
+	background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    width:1100px;
+    transition: 0.6s ease-in-out;
+    opacity: 0;
+    width: 100%;
+}
+
+div.serviceCenterFrequenty_panel.show {
+    opacity: 1;
+    max-height: 800px;
+}
+
+.serviceCenterFrequenty__subjects {
+    display: flex;
+    background-color: #e0c198;
+    height: 60px;
+    line-height: 30px;
+    width: 100%;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    border-bottom: 1px dashed;
+    font-family: 'Nanum Gothic', serif;
+}
+	
+	
+.movie__title {
+	display: inline-block;
+	width: 35%;
+	background-color: 
+	opacity: 1.0;
+    filter: alpha(opacity=100);
+    
+}
+
+.serviceCenterFrequenty__contents {
+display: inline-block;
+    width: 94%;
+    /* background-color: white; */
+    opacity: 1.0;
+    filter: alpha(opacity=50);
+    font-family: 'Jeju Gothic', serif;
+}
+	
+.serviceCenterFrequenty__contents:hover {
+	opacity: 0.5;
+	filter: alpha(opacity=100);
+}
+
+.movie__room2 {
+	display: inline-block;
+	width:15%;
+}
+	
+.movie__room2:hover {
+	opacity: 0.5;
+	filter: alpha(opacity=100);
+}
+	
+.movie__room3 {
+	display: inline-block;
+	width:15%;
+}
+	
+.movie__room3:hover {
+	opacity: 0.5;
+	filter: alpha(opacity=100);
+}	

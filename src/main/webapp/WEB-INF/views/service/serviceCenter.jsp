@@ -30,10 +30,10 @@
 						
 						<div class="div__serviceCenter_Container_Tab" >
 							<div class="div__serviceCenter_Content" id="tab_content_frequenty">
-								자주묻는게시판 내용
+								<jsp:include page="../service/include/serviceFrequenty.jsp" />
 							</div>
 							<div class="div__serviceCenter_Content" id="tab_content_question">
-								문의게시판 내용..
+								<jsp:include page="../service/include/serviceQuestion.jsp" />
 							</div>
 						</div>
 				</div>

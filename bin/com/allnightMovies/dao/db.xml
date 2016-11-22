@@ -98,8 +98,8 @@
 		WHERE USER_NAME = #{param1} AND  USER_BIRTH = #{param2} AND USER_GENDER = #{param3}
 	</select>
 	
-	<!--아이디유무-->
-<!--JUNG. 아이디 -->
+	
+<!--JUNG. 아이디 (유무)-->
 	<select id= "searchIdCount" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
 		SELECT COUNT(USER_ID) 
 			FROM USER_PERSONAL_INFO 
@@ -107,11 +107,17 @@
 	</select>
 
 	<!-- 아이디(이메일) -->
-<!-- 	<select id="" resultType="" parameterType="">
+ 	<select id="searchEmailCount" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
 		SELECT COUNT(USER_ID)
 			FROM USER_PERSONAL_INFO
 		WHERE USER_EMAIL = #{param1}
-	</select> -->
+	</select> 
+	
+	<select id ="searchIDEmail" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
+		SELECT USER_ID
+			FROM USER_PERSONAL_INFO
+		WHERE USER_EMAIL = #{param1}
+	</select>
 
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">

@@ -74,7 +74,6 @@ function locationMyInfo() {
 }
 
 /**아이디 찾기**/
-
 function locationSearchID(e) {
 	var url  = '/movie/mainService/getTemplate';
 		dir  = 'searchId';

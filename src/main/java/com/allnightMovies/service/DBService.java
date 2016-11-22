@@ -56,6 +56,8 @@ public class DBService {
 		return dbMapper.getMaxScreeningDate();
 	}
 	
+	
+	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
@@ -65,9 +67,14 @@ public class DBService {
 		System.out.println("searchIdUserGender" + searchIdUserGender);
 		return dbMapper.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 	}
-/** jung. 아이디유무 갯수**/
 	public Integer searchIdCount(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception {
 		return dbMapper.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
+	}
+	public Integer searchEmailCount(String searchIdUserEmail) throws Exception {
+		return dbMapper.searchEmailCount(searchIdUserEmail);
+	}
+	public List<Params> searchIDEmail(String searchIdUserEmail) throws Exception {
+		return dbMapper.searchIDEmail(searchIdUserEmail);
 	}
 
 	

@@ -1,8 +1,10 @@
 package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,7 @@ import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+
 
 @Service
 public class AsyncService implements AsyncAction {
@@ -278,7 +281,7 @@ public class AsyncService implements AsyncAction {
 		return async;
 	}
 	
-	/**수진 이메일 인증번호 **/
+	/**수진 이메일 인증번호 생성하여 보내기**/
 	//이메일
 	@SuppressWarnings("rawtypes")
 	public AsyncResult ConfirmNumberSend() throws Exception {
@@ -306,7 +309,9 @@ public class AsyncService implements AsyncAction {
 			Random randomNum = new Random();
 			int confirmNumRandom = randomNum.nextInt(900000) + 100000;
 			System.out.println(confirmNumRandom + " : 인증번호");
-			new SendEmail(String.valueOf(confirmNumRandom), searchIdUserEmail);
+			
+			//TODO
+			//new SendEmail(String.valueOf(confirmNumRandom), searchIdUserEmail);
 			
 			//인증번호 세션에 저장
 			//인증번호 저장
@@ -320,16 +325,19 @@ public class AsyncService implements AsyncAction {
 			System.out.println(result + " : 결과");
 		
 		} else {
+			isCheckResult = false;
 			result = "인증번호전송이 실패되었습니다. 다시 확인해주세요 :(";
 		}
 		
 		AsyncResult<String> async = new AsyncResult<String>();
+		isCheckResult = true;
 		async.setData(result);
 		return async;
 	}
 	
-	/*******수진 인증번호체크 수진*********/
-	public AsyncResult<String> confirmNumberCheck() throws Exception {
+	/*******수진 인증번호일치여부 수진*********/
+	@SuppressWarnings("rawtypes")
+	public AsyncResult confirmNumberCheck() throws Exception {
 		String result = "입력하신 인증번호와 일치합니다.";
 		int searchIdUserConfirmNum = this.params.getSearchIdUserConfirmNum();
 		System.out.println(searchIdUserConfirmNum + " : 사용자가 입력한 인증번혼"); // 인증번호 보낼때 그 인증번호 불러와서 비교하기..!
@@ -354,16 +362,41 @@ public class AsyncService implements AsyncAction {
 			result = "인증번호 일치합니다.";
 			System.out.println(result + " : 결과");
 			session.setAttribute("confirmNumRandom", 0);
-			//session.setAttribute(name, value);
 		}
 		
 		AsyncResult<String> async = new AsyncResult<String>();
+		System.out.println(bool + " : bool");
 		System.out.println(result + " : 결과");
-		async.setData(result);
+		async.setSuccess(bool);
 		return async;
 		
 	}
 	//마지막 버튼 눌렀을때
+	public AsyncResult<String> emailSendMessage() throws Exception {
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		
+		String searchIdUserEmail = this.params.getSearchIdUserEmail();
+		Integer userConfirmNum = this.params.getSearchIdUserConfirmNum();
+		
+		System.out.println(searchIdUserEmail + "메일");
+		System.out.println(userConfirmNum + "인증");
+		HttpSession session = this.params.getSession();
+		Integer sessionSaveNum = (Integer) session.getAttribute("confirmNumRandom");
+		System.out.println(sessionSaveNum + "맞나.");
+		
+		 
+		boolean emailAllCheck = false;
+		
+		
+		if(searchIdUserEmail == "" && userConfirmNum == null) {
+			emailAllCheck = false;
+		} else {
+			emailAllCheck = true;
+		}
+		asyncResult.setSuccess(emailAllCheck);
+		return asyncResult;
+		
+	}
 	
 	
 }

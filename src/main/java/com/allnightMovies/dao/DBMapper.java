@@ -3,6 +3,7 @@ package com.allnightMovies.dao;
 import java.util.List;
 
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
@@ -26,9 +27,11 @@ public interface DBMapper {
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	
+/** 아이디찾기 **/
+	public List<Params> searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
 /** jung. 아이디찾기 **/
-	public String searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
-	
+//	public String searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
+//	
 /** jung. 아이디 갯수 **/
 	public Integer searchIdCount(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
 
@@ -42,4 +45,10 @@ public interface DBMapper {
 	public String selectUserPWD(String myInfoID);
 	public Params updateWithdraw(String myInfoID);
 	public String updateEmailAddr(String emailAddr, String userID);
+	
+/** shin. MOVIE currentFilm **/	
+	public Integer getFilmNum();
+	public List<MovieCurrentFilmDTO> getCurrentFilmDTO();
+	
+	
 }

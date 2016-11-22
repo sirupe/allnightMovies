@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
@@ -61,7 +62,7 @@ public class DBService {
 		return dbMapper.showtimes();
 	}
 /** jung. 아이디 찾기**/
-	public String searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception {
+	public List<Params> searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception {
 		System.out.println("searchIdUserGender" + searchIdUserGender);
 		return dbMapper.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 	}
@@ -83,6 +84,14 @@ public class DBService {
 	}
 	public String updateEmailAddr(String emailAddr, String userID) {
 		return dbMapper.updateEmailAddr(emailAddr, userID);
+	}
+	
+/** shin. MOVIE	currentFilm **/
+	public Integer getFilmNum(){
+		return dbMapper.getFilmNum();
+	}
+	public List<MovieCurrentFilmDTO> getCurrentFilmDTO() {
+		return dbMapper.getCurrentFilmDTO();
 	}
 	
 }

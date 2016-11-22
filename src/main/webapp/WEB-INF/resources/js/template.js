@@ -38,13 +38,12 @@ function locationLogon() {
 }
 
 function locationMain(e) {
-	var method 	= 'POST';
 	var url 	= '/';
 	
 	e.preventDefault();
 	e.stopPropagation();
 	
-	submit(method, url);
+	submit(url);
 }
 
 /*shin searchPwd*/
@@ -62,7 +61,6 @@ function locationSearchPwd(e) {
 function logout() {
 	location.href = '/movie/mainService/logout';
 }
-
 /*shin myInfo*/
 function locationMyInfo() {
 	var url  = '/movie/mainService/viewMyInfo';
@@ -72,9 +70,9 @@ function locationMyInfo() {
 		css  = 'myInfo/myInfo';
 	submit(url, dir, page, js, css);
 }
+/*shin myInfo*/
 
 /**아이디 찾기**/
-
 function locationSearchID(e) {
 	var url  = '/movie/mainService/getTemplate';
 		dir  = 'searchId';

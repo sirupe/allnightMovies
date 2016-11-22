@@ -16,14 +16,13 @@ function setEvent() {
 }
 
 function locationMyinfo() {
-	var method = 'POST';
-		url    = '/movie/mainService/viewMyInfo';
+	var url    = '/movie/mainService/viewMyInfo';
 		dir    = 'myInfo';                                
 		page   = 'myInfo';                                
 		js     = 'myInfo/myInfo';                         
 		css    = 'myInfo/myInfo';  
 	
-	submit(method, url, dir, page, js, css);
+	submit(url, dir, page, js, css);
 }
 
 /*비밀번호 변경 완료*/

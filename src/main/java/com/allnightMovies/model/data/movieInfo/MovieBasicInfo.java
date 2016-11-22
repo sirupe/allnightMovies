@@ -17,4 +17,5 @@ public class MovieBasicInfo {
 	private int reviewEvaluate;
 	private int movieAgeLimit;
 	private int movieRuntime;
+	
 }

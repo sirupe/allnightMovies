@@ -7,8 +7,7 @@
 /**************MYINFO***************/
 /*내정보 전체*/
 .div-myinfo {
-	width: 700px;
-    height: 420px;
+	width: 800px;
     display: flex;
     flex-direction: column;
     line-height: 40px;
@@ -18,9 +17,21 @@
 }
 
 /*내정보 타이틀*/
-.div-myinfo__title {
-	font-family: 'Jeju Gothic', serif;
+
+.tab-myinfo__title {
+	display: inline-block;
 	background-color: #383838;
+	width: 180px;
+	font-family: 'Jeju Gothic', serif;
+    color: white;
+    padding-left: 20px;	
+    font-size: 20px;
+}
+.tab-reservationInfo__title {
+	display: inline-block;
+	background-color: #383838;
+	width: 180px;
+	font-family: 'Jeju Gothic', serif;
     color: white;
     padding-left: 20px;	
     font-size: 20px;

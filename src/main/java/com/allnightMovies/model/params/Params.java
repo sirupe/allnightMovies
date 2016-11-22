@@ -48,6 +48,8 @@ public class Params {
 	private String searchIdUserName;
 	private String searchIdUserBirth;
 	private String searchIdUserGender;
+	private String searchIdUserEmail;
+	private Integer searchIdUserConfirmNum;
 	
 // 비밀번호 변경	------------------------------------------------------------------
 	private String myInfoPresentPwd;

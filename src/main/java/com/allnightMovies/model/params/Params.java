@@ -22,7 +22,6 @@ public class Params {
 	private String page;
 	private String contentCSS;
 	private String contentjs;
-	
 //메뉴경로가 아닌 페이지 호출시---------------------------------------------------------------	
 	
 	private String  userName;

@@ -1,6 +1,8 @@
  package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -286,16 +288,30 @@ public class MainService implements Action {
 /*******ID찾기(회원정보) 수진*******/	
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();
+		String resultMsg = null;
+		boolean userInfoResult = true;
 		String searchIdUserName = this.params.getSearchIdUserName();
 		String searchIdUserBirth = this.params.getSearchIdUserBirth();
 		String searchIdUserGender = this.params.getSearchIdUserGender();
 		
+		if(searchIdUserName == "" 
+				&& searchIdUserBirth == "" 
+				&& searchIdUserGender == "") {
+			userInfoResult = false;
+		}
+		//생일 정보 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = new Date();
+		Date todayDate = dateFormat.parse(this.params.getSearchIdUserBirth());
+		
+		double rightDays = (today.getTime() - todayDate.getTime()) / (24 * 60 * 60 * 1000);
+		if(rightDays < 1) {
+			userInfoResult = false;
+		}
 		//세션저장//
 		List<Params> userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		Integer result = this.dbService.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		
-		System.out.println(userSearchId + "나와라..");
-		System.out.println(result + "갯수");
 		mav.addObject("searchIdUserName", searchIdUserName);
 		mav.addObject("userSearchId", userSearchId);
 		mav.addObject("result", result);
@@ -304,12 +320,20 @@ public class MainService implements Action {
 	
 /*****수진. 아이디찾기(email)*****/
 	public ModelAndView searchIDEmailResult() throws Exception {
-		ModelAndView mav = this.getTemplate();
+		this.params.setDirectory("searchId");
+		this.params.setPage("searchIdEmailResult");
+		this.params.setContentCSS("searchId/searchId");
+		this.params.setContentjs("searchId/searchId");
 		
 		HttpSession session = this.params.getSession();
-		System.out.println(this.params.getSession().getAttribute("searchIdUserEmail") + " : 저장된 이메일 결과");	
-		
+		String searchIdUserEmail = (String) this.params.getSession().getAttribute("searchIdUserEmail");
 		//db보내기
+		List<Params> userEmail = this.dbService.searchIDEmail(searchIdUserEmail);
+		Integer userEmailIDCount = this.dbService.searchEmailCount(searchIdUserEmail);
+		
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("userEmail", userEmail);
+		mav.addObject("userEmailIDCount", userEmailIDCount);
 		return mav;
 		
 	}

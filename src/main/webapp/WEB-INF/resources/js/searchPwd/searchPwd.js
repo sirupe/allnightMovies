@@ -16,6 +16,8 @@ function setEvent() {
 		.on('click', '.js_searchPwdCheckPwdBtn', checkRePWD)	  //searchPwdChangePwd
 }
 
+
+
 function searchPwdResult() {
 	var $inputID = $('.js_searchPwdidInput');
 		inputID  = $inputID.val();

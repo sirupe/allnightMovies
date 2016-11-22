@@ -16,20 +16,20 @@
 				
 				<div class="searchID-form_content__name">
 					<div class="searchID-form_content__name_label">
-							이름
+							<label class="js_searchID_name">이름</label>
 					</div>
 					<div class="searchID-form_content__name_input">
-						<input type="text" id="user-SearchName" name="searchIdUserName" class="searchID-form_content__name_input">
+						<input type="text" name="searchIdUserName" class="searchID-form_content__name_input js_userSearchName">
 					</div>
 				</div>
 				
 				<div class="searchID-form_content__birth">
 					<div class="searchID-form_content__birth_label">
-						<label>생년월일</label>
+						<label class="js_searchID_birth">생년월일</label>
 					</div>
 
 					<div class="searchID-form_content__birth__input js_userFindIdBirth">
-						<input type="date" id="user-find-id_birthday" name="searchIdUserBirth" value="1994-05-08" />
+						<input type="date" name="searchIdUserBirth" class="js_userSearchIDBirth" value="1994-05-08" />
 					</div>
 				</div>
 				
@@ -37,13 +37,13 @@
 					<div class="searchID-form_content__gender_label">
 						<label>성별</label>
 					</div>
-					<select class="searchID-form_content__gender_option" id="userFindgender" name="searchIdUserGender" value="남자">
+					<select class="searchID-form_content__gender_option js_userFindgender"  name="searchIdUserGender" value="남자">
 						<option>남자</option>
 						<option>여자</option>
 					</select>
 				</div>
 					<div class="userIDCheck">
-						<div id="insertConfirm" class="userIDCheck_All__resultText">필수입력사항입니다.</div>
+						<div class="userIDCheck_All__resultText js_insertConfirm">필수입력사항입니다.</div>
 					</div>
 				<div class= "userSearchId_check ">
 					<Button class="button__userSearchId_check js_confirmIdCheck" type="button">확인</Button>
@@ -59,15 +59,16 @@
 					
 					
 				<div id="blk-2" class="searchIdHide" style="display:none">
+				
 					<div class="searchID-form_content_email">
 						<div class="searchID-form_content__title__email">
 							<div class="searchID-form_content__email_label">
 									이메일
 							</div>
 							<div class="searchID-form_content__email_input">
-								<input type="text" id="userFindIdEmail" class="searchID-form_content__email_inputbox" name="searchIdUserEmail" value="tnwls147258@naver.com">
+								<input type="text" class="searchID-form_content__email_inputbox js_userFindIdEmail" name="searchIdUserEmail" value="tnwls147258@naver.com">
 								<Button class="button__emailConfirmNumber_send js_emailCheck_send" type="button">인증번호보내기</Button>
-								<div id="insertConfirmNumber" class="userConfirmNumberCheck_Email_resultText">필수입력사항입니다.</div>
+								<div class="userConfirmNumberCheck_Email_resultText js_insertConfirmNumber">필수입력사항입니다.</div>
 							</div>
 
 
@@ -78,14 +79,14 @@
 									인증번호
 							</div>
 							<div class="searchID-form_content__emailConfirmNumber__input">
-								<input type="text" id="userFindIdConfirmNumber" class="searchID-form_content__emailConfirmNumber__input_box" readonly>
-								<Button class="button__emailConfirmNumber_check js_confirmNumber_Check"  id="emailConfirmNumberCheck" type="button" disabled>인증확인</Button>
+								<input type="text"  class="searchID-form_content__emailConfirmNumber__input_box js_userFindIdConfirmNumber" readonly>
+								<Button class="button__emailConfirmNumber_check js_confirmNumber_Check js_emailConfirmNumberCheck" type="button" readonly>인증확인</Button>
 								
 							</div>
 						
 						</div>
 						<div class="userIDCheck">
-							<div id="insertConfirmEmail" class="userIDCheck_All__Email_resultText">필수입력사항입니다.</div>
+							<div  class="userIDCheck_All__Email_resultText js_insertConfirmEmail">필수입력사항입니다.</div>
 						</div>
 						<div class = "emailConfirmNumber_check ">
 							<Button class="button__emailConfirmNumber_check js_email_resultCheck" type="button">확인</Button>

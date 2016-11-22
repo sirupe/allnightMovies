@@ -1,3 +1,8 @@
+var screeningDate;
+var movieTitle;
+var $screeningDate;
+var $movieTitle;
+
 function calendarPrevBtnClick() {
 	var thisMonth 	= $('.js_calendarMonth').text() - 1;
 		thisYear 	= $('.js_calendarYear').text();
@@ -35,15 +40,64 @@ function calendarNextBtnClick() {
 	$.post(url, params, cbf);
 }
 
+function movieTitleClick() {
+	$movieTitle = $(this);
+	var title = $movieTitle.text().trim();
+		movieTitle = title.substr(3, title.length).trim();
+	if(screeningDate == undefined) {
+		$('.js_screeningViewer').text('예매일자를 선택해주세요.');
+	} else {
+		getMovieTicketingInfo();
+	}
+}
+
+function ticketingDateClick() {
+	if($screeningDate != undefined) {
+		$screeningDat.css({'background-color' : 'lavenderblush'});
+	}
+	
+	$screeningDate = $(this);
+	var year = $('.js_calendarYear').text();
+		month = $('.js_calendarMonth').text();
+		date = $screeningDate.text().trim();
+	screeningDate = year + '.' + month + '.' + date;
+//	#ffd5e3
+	if(movieTitle == undefined) {
+		$('.js_screeningViewer').text('영화를 선택해주세요.');
+	} else {
+		getMovieTicketingInfo();
+	}
+	
+	$screeningDat.css({'background-color' : '#ffd5e3'});
+}
+function nonTicketingDateClick() {
+	$('.js_screeningViewer').text('상영중인 영화 정보가 없습니다.');
+}
+
+function getMovieTicketingInfo() {
+	var url = '/movie/mainService/screeningPlanned';
+		params = {
+				'screeningDate' : screeningDate,
+				'movieTitle' : movieTitle
+		};
+		cbf = function(result) {
+			$('.js_movieTime').html(result);
+		};
+	
+	$.post(url, params, cbf);
+}
+
 function setEvent() {
 	var $container = $('.js_ticketing');
 	$container.on('click', '.js_calendarPrev', calendarPrevBtnClick)
 			  .on('click', '.js_calendarNext', calendarNextBtnClick)
+			  .on('click', '.js_movieTitleClick', movieTitleClick)
+			  .on('click', '.js_ticketingDateClick', ticketingDateClick)
+			  .on('click', '.js_nonTicketingDateClick', nonTicketingDateClick)
 }
 
 function init() {
 	setEvent();
 }
-
 
 init();

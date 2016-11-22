@@ -14,10 +14,6 @@ public class MonthCalendar {
 	private int startDay;
 	private ArrayList<ArrayList<Integer>> days;
 	
-	private String maxScreeningYear;
-	private String maxScreeningMonth;
-	private String maxScreeningDate;
-	
 	public MonthCalendar() {
 		Calendar calendar = Calendar.getInstance();
 		this.getInfo(calendar); 
@@ -34,7 +30,7 @@ public class MonthCalendar {
 		this.month = calendar.get(Calendar.MONTH) + 1;          
 		this.toDay = calendar.get(Calendar.DAY_OF_MONTH);   
 		this.lastDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-		calendar.set(calendar.DATE, 1);
+		calendar.set(Calendar.DATE, 1);
 		this.startDay = calendar.get(Calendar.DAY_OF_WEEK); 
 		this.days = new ArrayList<ArrayList<Integer>>();
 		
@@ -55,7 +51,5 @@ public class MonthCalendar {
 			}
 			this.days.add(day);
 		}
-		System.out.println(" weekLoop : " + weekLoop);
-		System.out.println(this.toString());
 	}
 }

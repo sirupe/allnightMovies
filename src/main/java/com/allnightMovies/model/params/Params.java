@@ -63,4 +63,6 @@ public class Params {
 // 예매하기(ticketing)
 	private int calendarMonth;
 	private int CalendarYear;
+	private String screeningDate;
+	private String movieTitle;
 }

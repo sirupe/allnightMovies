@@ -16,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
+import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -89,6 +91,7 @@ public class MainService implements Action {
 	
 /*****은정. join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
+		System.out.println("idCheck");
 		ModelAndView mav = new ModelAndView("join/resultText");
 
 		String resultMessage = "사용이 가능한 아이디입니다.";
@@ -198,27 +201,34 @@ public class MainService implements Action {
 	
 /*****은정. ticketing *****/
 	public ModelAndView ticketing() throws Exception {
-		this.params.setDirectory("reservation");
+		this.params.setDirectory("reservation/ticketing");
 		this.params.setPage("ticketing");
 		this.params.setContentCSS("reservation/ticketing");
 		this.params.setContentjs("reservation/ticketing");
 		
-		String maxScreeningDate = this.dbService.getMaxScreeningDate().split(" ")[0];
-		String[] maxScreeningYearMonthDay = maxScreeningDate.split(".");
-		MonthCalendar calendar = new MonthCalendar();
-		calendar.setMaxScreeningYear(maxScreeningYearMonthDay[0]);
-		calendar.setMaxScreeningMonth(maxScreeningYearMonthDay[1]);
-		calendar.setMaxScreeningDate(maxScreeningYearMonthDay[2]);
+		MovieScreeningDateInfo screeningDate = this.dbService.getMaxScreeningDate();
+		screeningDate.setScreeningDate();
 		
 		ModelAndView mav = this.getTemplate();
-		mav.addObject("cal", calendar);
-
+		mav.addObject("cal", new MonthCalendar());
+		mav.addObject("screening", screeningDate);
+		mav.addObject("movieTitle", this.dbService.getMovieTitle());
 		return mav;
 	}
 		
 	public ModelAndView calendar() {
+		MovieScreeningDateInfo screeningDate = this.dbService.getMaxScreeningDate();
+		screeningDate.setScreeningDate();
 		ModelAndView mav = new ModelAndView("reservation/calendar");
 		mav.addObject("cal", new MonthCalendar(this.params.getCalendarYear(), this.params.getCalendarMonth()));
+		mav.addObject("screening", screeningDate);
+		return mav;
+	}
+	
+	public ModelAndView screeningPlanned() {
+		ModelAndView mav = new ModelAndView("reservation/ticketing/screeningPlanned");
+		List<TicketingMovieTimeInfo> list = this.dbService.getMovieTime(this.params.getMovieTitle(), this.params.getScreeningDate());
+		mav.addObject("movieTimeList", list);
 		return mav;
 	}
 	

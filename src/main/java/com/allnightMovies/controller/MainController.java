@@ -1,14 +1,19 @@
 package com.allnightMovies.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
@@ -17,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.service.DBService;
 
@@ -54,19 +60,19 @@ public class MainController {
 		
 		return mav;
 	}
-//	@RequestMapping(value="/movie/ajax/{service}/{method}", method = {RequestMethod.GET, RequestMethod.POST})
-//	public String ajaxRequest(
-//			@PathVariable("service") String service, 
-//			@PathVariable("method") String method,
-//			Params params,
-//			HttpServletRequest request) throws Throwable {
-//		HttpSession session = request.getSession();
-//		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
-//		Action action = (Action) context.getBean(service);
-//		params.setMethod(method);
-//		params.setRequest(request);
-//		params.setSession(session);
-//		String resultStr = action.executeString(params);
-//		return resultStr;
+	
+// 이러한 방식의 controller 사용도 가능.
+//	@RequestMapping(value="/")
+//	public String controller(@RequestParam Map<String, String> map, ModelMap modelMap) {
+//		modelMap.put("x", map.get("x"));
+//		modelMap.put("y", map.get("y"));
+//		return "/sum/result";
+//	}
+//	
+//	@RequestMapping(value="/")
+//	public String controller(@ModelAttribute UserPersonalInfoDTO userDTO, Model model) {
+//		model.addAttribute("x", userDTO.getUserID());
+//		model.addAttribute("y", userDTO.getUserPWD());
+//		return "/sum/result";
 //	}
 }

@@ -33,7 +33,7 @@ public interface DBMapper {
 	public List<TicketingMovieTitleInfo> getMovieTitle();
 	public List<TicketingMovieTimeInfo> getMovieTime(String movieTitle, String date);
 	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater);
-	public int getTicketPriceInfo(String dateTime);
+	public Integer getTicketPriceInfo(String screeningDate, String theater);
 	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;

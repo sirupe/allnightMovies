@@ -111,6 +111,7 @@ function movieTimeClick() {
 		        'theater' : theater     
 		};
 		cbf = function(result) {
+			console.log(result);
 			$('.js_seatInfo').html(result);
 		};
 		

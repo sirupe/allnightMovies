@@ -1,22 +1,17 @@
  package com.allnightMovies.service;
 
-import static org.mockito.Matchers.booleanThat;
-
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -35,9 +30,9 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
+import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
-import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.UtilityEnums;
 
 // @Service 어노테이션
@@ -244,7 +239,8 @@ public class MainService implements Action {
 		
 		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
 		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
-		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime);
+		
+		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, String.valueOf(this.params.getTheater()));
 		System.out.println("금액 : " + moviePrice);
 		
 		

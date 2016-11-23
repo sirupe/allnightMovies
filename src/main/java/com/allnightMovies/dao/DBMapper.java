@@ -1,9 +1,11 @@
 package com.allnightMovies.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
@@ -39,8 +41,11 @@ public interface DBMapper {
 /** juung 이메일 **/
 	public Integer searchEmailCount(String searchIdUserEmail) throws Exception;
 	public List<Params> searchIDEmail(String searchIdUserEmail) throws Exception;
-
 	
+/**고객센터--자주묻는질문**/
+	public List<MovieFrequentlyBoardDTO> serviceCenter() throws Exception;
+	public ArrayList<MovieFrequentlyBoardDTO> serviceCentergetBoard(int startPageNum, int endPageNum) throws Exception;
+	public Integer serviceCentergetBoardCount() throws Exception;
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);
@@ -55,6 +60,8 @@ public interface DBMapper {
 /** shin. MOVIE currentFilm **/	
 	public Integer getFilmNum();
 	public List<MovieCurrentFilmDTO> getCurrentFilmDTO();
+
+	
 	
 	
 }

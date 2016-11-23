@@ -139,7 +139,34 @@
 			FROM USER_PERSONAL_INFO
 		WHERE USER_EMAIL = #{param1}
 	</select>
+	
+<!-- 자주묻는질문 -->
+	<select id="serviceCenter" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO">
+		SELECT 
+			QUESTION,
+			ASKED
+		FROM CINEMA_FREQUENTLY_BOARD
+	</select>	
 
+ 	<select id="serviceCentergetBoard" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO">
+		SELECT * FROM (
+              SELECT NO, QUESTION, ASKED, ROWNUM RNUM 
+         FROM (
+                SELECT NO, QUESTION, ASKED
+                  FROM CINEMA_FREQUENTLY_BOARD
+                  ORDER BY NO
+                )
+             )
+                 WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="serviceCentergetBoardCount" resultType ="java.lang.Integer">
+		 SELECT COUNT(*) 
+		 	FROM CINEMA_FREQUENTLY_BOARD
+	</select>
+	
+	
+	
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(*) 

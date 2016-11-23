@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script> -->
-	<div class="div__serviceCenter_form">
+	<div class="div__serviceCenter_form js_serviceCenter">
 		<div class="div__serviceCenter_form_title">
 				고객센터
 		</div>
@@ -24,8 +24,8 @@
 				
 				<div class="div__serviceCenter__Container">
 					<ul class="serviceCenter_Tab">
-						<li><a href="#tab_content_frequenty">자주묻는질문</a></li>
-						<li><a href="#tab_content_question">문의게시판</a></li>
+						<li><a href="#tab_content_frequenty" class="js_frequently">자주묻는질문</a></li>
+						<li><a href="#tab_content_question" class="js_frequently">문의게시판</a></li>
 					</ul>
 						
 						<div class="div__serviceCenter_Container_Tab" >

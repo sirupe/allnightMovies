@@ -3,6 +3,7 @@ package com.allnightMovies.service;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -12,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
+import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
+import com.allnightMovies.utility.ServiceCenterBoardPaging;
 
 
 @Service
@@ -405,6 +408,31 @@ public class AsyncService implements AsyncAction {
 		}
 		asyncResult.setSuccess(emailAllCheck);
 		return asyncResult;
+		
+	}
+	
+	//자주묻는게시판 전환
+	public AsyncResult pagingBoard() throws Exception {
+		
+		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
+		
+	int totBoardList = this.dbService.serviceCentergetBoardCount();
+	System.out.println("service글목록 갯수 : " + totBoardList);
+	
+	int page = this.params.getPageboard();
+	System.out.println(page + "page");
+	
+	List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+	ServiceCenterBoardPaging boardPaging = new ServiceCenterBoardPaging(totBoardList, 7,page, 5);
+	boardPaging.setBoardPaging();
+	System.out.println(boardPaging + "페이지 그룹");
+	System.out.println(boardPaging.getStartPageNum() + "시작");
+	System.out.println(boardPaging.getEndPageNum() + "마지막");
+	System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
+	String boardpagingResult = "/movie/mainService/serviceCenter";
+	AsyncResult<String> asyncResult = new AsyncResult<String>();
+	asyncResult.setData(boardpagingResult);
+	return asyncResult;
 		
 	}
 	

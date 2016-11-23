@@ -1,7 +1,9 @@
 package com.allnightMovies.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
@@ -16,6 +19,9 @@ import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
+
+import oracle.net.aso.d;
+
 
 
 @Service
@@ -88,6 +94,17 @@ public class DBService {
 		return dbMapper.searchIDEmail(searchIdUserEmail);
 	}
 
+
+/**jung. 고객센터(자주묻는질문) **/
+	public List<MovieFrequentlyBoardDTO> serviceCenter() throws Exception {
+		return dbMapper.serviceCenter();
+	}
+	public ArrayList<MovieFrequentlyBoardDTO> serviceCentergetBoard(int startPageNum, int endPageNum) throws Exception {
+		return dbMapper.serviceCentergetBoard(startPageNum, endPageNum);
+	}
+	public Integer serviceCentergetBoardCount() throws Exception {
+		return dbMapper.serviceCentergetBoardCount();
+	}
 	
 /** shin. MY INFO **/	
 	public UserPersonalInfoDTO selectMyInfo(String myInfoID) {

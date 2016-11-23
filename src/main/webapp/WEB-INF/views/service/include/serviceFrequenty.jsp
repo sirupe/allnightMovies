@@ -2,22 +2,36 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container__serviceCenterFrequenty">
+	<ul class="container__serviceCenterFrequenty_content js_service_List">
+	<c:forEach items="${boardPage }" var="boardPage">
+			<li>
+				<div class="serviceCenterFrequenty__subject js_sub" onclick="frequentlyBoard()">Q.${boardPage.getQUESTION() }</div>	
+				<div class="serviceCenterFrequenty__contents js_con">${boardPage.getASKED() }</div>
+			</li>
+	</c:forEach>
+	</ul>
 	
-		<div class = "container__serviceCenterFrequenty_content">
-			<button class="serviceCenterFrequenty_title" type="button" onclick="serviceCenter_Frequenty()" >
-				Q. 회원탈퇴는어떻게 하나요?
-			</button>
-			
-				<div class="serviceCenterFrequenty_panel">
-						<div class="serviceCenterFrequenty__subjects">
-							<span class="serviceCenterFrequenty__contents">
-								온라인(홈페이지) 회원 탈퇴를 원하실 경우, allnightMoives 홈페이지 마이시네마 > 부가정보 수정에서 회원 탈퇴 버튼을 클릭하여 회원 탈퇴가 가능합니다.
-							</span>
+	<div class="serviceCenterFrequenty__pageButton js_servicePageButton">
+		<c:if test="${pageGroup.isPreButton()}"><a href="/serviceCenter?page=${pageGroup.viewStartPageNum -1 }">◀</a></c:if>
+			<c:forEach begin="${pageGroup.viewStartPageNum }" end="${pageGroup.viewEndPageNum }" var="page">
+					<span>
+						<c:choose>
+							<c:when test="${checkPage == page }">
+								${page }
+							</c:when>
 							
-						</div>
-				</div>
-		</div>
-
+							<c:otherwise>
+								<div class="js_button1">${page}</div>
+							</c:otherwise>
+						</c:choose>
+					</span>
+			</c:forEach>
+		<c:if test="${pageGroup.isNextButton() }"><a href="/?page=${pagegroup.viewEndPageNum+1 }">▶</a></c:if>
+	</div>
+	
+	<div class = "serviceCenterFrequenty__searchButton js_serviceSearchButton">
+		<input type="text" name="seviceCenterSearch">검색
+	</div>
 </div>
    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

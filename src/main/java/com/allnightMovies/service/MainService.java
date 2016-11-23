@@ -1,22 +1,29 @@
  package com.allnightMovies.service;
 
+import static org.mockito.Matchers.booleanThat;
+
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
@@ -28,6 +35,7 @@ import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
+import com.allnightMovies.utility.ServiceCenterBoardPaging;
 import com.allnightMovies.utility.UtilityEnums;
 
 // @Service 어노테이션
@@ -319,6 +327,7 @@ public class MainService implements Action {
 	}
 	
 /*****수진. 아이디찾기(email)*****/
+	
 	public ModelAndView searchIDEmailResult() throws Exception {
 		this.params.setDirectory("searchId");
 		this.params.setPage("searchIdEmailResult");
@@ -342,6 +351,7 @@ public class MainService implements Action {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
 		List<MovieShowTimesMap> movieTimeTable = this.dbService.showtimes();
+	
 		
 		for(int i = 0, size=movieTimeTable.size(); i < size; i++) {
 			MovieShowTimesMap showTime = movieTimeTable.get(i);
@@ -362,12 +372,47 @@ public class MainService implements Action {
 	}
 	
 /****수진 .고객센터*****/
+	@RequestMapping(value="/serviceCenter")
 	public ModelAndView serviceCenter() throws Exception {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
+		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
+		
+		int totBoardList = this.dbService.serviceCentergetBoardCount();
+		System.out.println("service글목록 갯수 : " + totBoardList);
+		
+		int page = this.params.getPageboard();
+		System.out.println(page + "page");
+		
+		List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+		ServiceCenterBoardPaging boardPaging = new ServiceCenterBoardPaging(totBoardList, 7,page, 5);
+		boardPaging.setBoardPaging();
+		System.out.println(boardPaging + "페이지 그룹");
+		System.out.println(boardPaging.getStartPageNum() + "시작");
+		System.out.println(boardPaging.getEndPageNum() + "마지막");
+		System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
+
 		
 		ModelAndView mav = this.getTemplate();
+		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
+		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
+		mav.addObject("pageCount",boardPaging.getTotalPageCount());
+		mav.addObject("pageGroup",boardPaging);
+		mav.addObject("checkPage", page);
 		return mav;
+	}
+	
+	
+	public ModelAndView serviceCentergetBoardCount() throws Exception {
+		
+		this.params.setDirectory("service");
+		this.params.setPage("serviceCenter");
+		this.params.setContentCSS("service/serviceCenter");
+		this.params.setContentjs("service/serviceCenter");
+		
+		int totBoardList = this.dbService.serviceCentergetBoardCount();
+		System.out.println("글목록 갯수 : " + totBoardList);
+		return this.getTemplate();
 	}
 	
 /*******연종. MyINFO SHIN*******/	

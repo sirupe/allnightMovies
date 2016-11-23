@@ -404,10 +404,6 @@ public class MainService implements Action {
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.getCurrentFilmDTO();
 		Integer filmNum = currentFilmDTO.size();
 		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		//TEST
-		for(MovieCurrentFilmDTO list : currentFilmDTO) {
-			System.out.println(list.getMovieTitle());
-		}
 		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "currentFilm");
@@ -424,10 +420,6 @@ public class MainService implements Action {
 		List<MovieScreeningsPlannedDTO> screeningsPlannedDTO = this.dbService.getPlannedFilmDTO();
 		Integer filmNum = screeningsPlannedDTO.size();
 		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		//TEST
-		for(MovieScreeningsPlannedDTO list : screeningsPlannedDTO) {
-			System.out.println(list.getMovieTitle());
-		}
 		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "screeningsPlanned");
@@ -460,6 +452,10 @@ public class MainService implements Action {
 /*******연종. SERVICE notice.jsp 공지사항*******/	
 	public ModelAndView notice() throws Exception{
 		ModelAndView mav = this.getTemplate();
+		
+		//1.size()로 리스트 총 갯수 구하기
+		//2. pagig class 부름
+		
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice");
 		mav.addObject("contentCSS", "service/notice");

@@ -32,7 +32,7 @@
 							<div class="div__serviceCenter_Content js_service_content_tab" id="tab_content_frequenty">
 								<jsp:include page="../service/include/serviceFrequenty.jsp" />
 							</div>
-							<div class="div__serviceCenter_Content" id="tab_content_question">
+							<div class="div__serviceCenter_Content js_servcie_content_tab" id="tab_content_question">
 								<jsp:include page="../service/include/serviceQuestion.jsp" />
 							</div>
 						</div>

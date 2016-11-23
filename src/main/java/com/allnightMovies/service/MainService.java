@@ -1,22 +1,17 @@
  package com.allnightMovies.service;
 
-import static org.mockito.Matchers.booleanThat;
-
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -35,9 +30,9 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
+import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
-import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.UtilityEnums;
 import com.sun.xml.internal.ws.resources.ModelerMessages;
 
@@ -245,7 +240,8 @@ public class MainService implements Action {
 		
 		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
 		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
-		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime);
+		
+		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, String.valueOf(this.params.getTheater()));
 		System.out.println("금액 : " + moviePrice);
 		
 		
@@ -379,7 +375,6 @@ public class MainService implements Action {
 	}
 	
 /****수진 .고객센터*****/
-	@RequestMapping(value="/serviceCenter")
 	public ModelAndView serviceCenter() throws Exception {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
@@ -388,12 +383,13 @@ public class MainService implements Action {
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
 		System.out.println("service글목록 갯수 : " + totBoardList);
 		
-		int page = this.params.getPageboard();
-		System.out.println(page + "page");
 		
 		List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 3,page, 2);
+		Paging boardPaging = new Paging(totBoardList, 5, 1, 2);
+		
+		
 		boardPaging.setBoardPaging();
+		int endpage = boardPaging.getViewEndPageNum();
 		System.out.println(boardPaging + "페이지 그룹");
 		
 		System.out.println(boardPaging.getStartPageNum() + "시작");
@@ -406,7 +402,6 @@ public class MainService implements Action {
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
 		mav.addObject("pageGroup",boardPaging);
-		mav.addObject("checkPage", page);
 		return mav;
 	}
 	
@@ -419,24 +414,34 @@ public class MainService implements Action {
 		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
 		
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
-		System.out.println("service글목록 갯수 : " + totBoardList);
+		System.out.println("serviceCentergetBoardCount service글목록 갯수 : " + totBoardList);
 		
 		int page = this.params.getPageboard();
 		
 		List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 3,page, 2);
+		Paging boardPaging = new Paging(totBoardList, 5,page, 2);
 		boardPaging.setBoardPaging();
-		System.out.println(boardPaging + "페이지 그룹");
-		System.out.println(boardPaging.getStartPageNum() + "시작");
-		System.out.println(boardPaging.getEndPageNum() + "마지막");
-		System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
+//		System.out.println(boardPaging.getViewEndPageNum() + "end page");
+//		System.out.println(boardPaging.getViewStartPageNum() + "시작..");
+//		
+//		
+//		System.out.println("serviceCentergetBoardCount : " + boardPaging + "페이지 그룹");
+//		System.out.println("serviceCentergetBoardCount : " + boardPaging.getStartPageNum() + "시작");
+//		System.out.println("serviceCentergetBoardCount : " + boardPaging.getEndPageNum() + "마지막");
+//		System.out.println("serviceCentergetBoardCount : " + boardPaging.getViewStartPageNum() + "시작 페이지");
+//		System.out.println("serviceCentergetBoardCount : " + boardPaging.getViewEndPageNum() + " : 마지막 페이지");
+//		System.out.println("serviceCentergetBoardCount : " + this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
 
+		
+		System.out.println(boardPaging);
 		
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
 		mav.addObject("pageGroup",boardPaging);
 		mav.addObject("checkPage", page);
+//		mav.addObject("", boardPaging.getViewStartPageNum());
+//		mav.addObject("", boardPaging.getViewStartPageNum());
 
 		return mav;
 		

@@ -28,7 +28,7 @@ function frequentlyBoard() {
 }
 
 function serviceCenterButton() {
-	var pageboard = $('.js_pagingNumber').text();
+	var pageboard = $(this).text();
 	console.log(pageboard);
 	url    = '/movie/mainService/serviceCentergetBoardCount';
 	params = {
@@ -36,19 +36,20 @@ function serviceCenterButton() {
 		};
 	cbf    = function(result) {
 			console.log(result);
-			
 			$('.js_service_content_tab').html(result);
 			$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
 	};
 		$.post(url, params, cbf);
 }
 
+
 function pagingNextButton() {
-	var nextButton = Number($('.js_pagingNumber').text()) + 1;
-	console.log(nextButton);
+	var $userClickPageNum      = $('.js_nextButton');
+		userClickPageNum       = $userClickPageNum.attr('data-nextpage');
+		
 	url    = '/movie/mainService/serviceCentergetBoardCount';
 	params = {
-			'pageboard' : nextButton
+			'pageboard' : userClickPageNum
 		};
 	cbf    = function(result) {
 			console.log(result);
@@ -59,8 +60,19 @@ function pagingNextButton() {
 		$.post(url, params, cbf);
 }
 
-
-
+function pagingPreButton() {
+	var $userClickPageNum = $('.js_preButton');
+		userClickPageNum  = $userClickPageNum.attr('data-prepage');
+	url    = '/movie/mainService/serviceCentergetBoardCount';
+	params = {
+			'pageboard' : userClickPageNum
+		};
+	cbf = function(result) {
+		console.log(result);
+	};
+	
+	$.post(url, params, cbf);
+}
 
 /************************시작***************************/
 function setServiceCenter() {
@@ -70,10 +82,12 @@ function setServiceCenter() {
 		$container.on('click', '.js_sub', frequentlyBoard); // 자주묻는질문들
 		$container.on('click', '.js_pagingNumber' , serviceCenterButton);
 		$container.on('click', '.js_nextButton',pagingNextButton);
+		$container.on('click', '.js_preButton', pagingPreButton);
 }
 
 function initServiceCenter() {
 	$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
+	$('.div__serviceCenter_Container_Tab .js_servcie_content_tab').css('display', 'none');
 	setServiceCenter();
 }
 	

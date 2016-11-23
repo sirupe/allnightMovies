@@ -57,7 +57,7 @@ public class Params {
 	private String myInfoChageEmail;
 	private String myInfoEmailConfirmNum;
 
-	private Integer pageboard = 1;
+	private Integer pageboard;
 // 회원탈퇴 	------------------------------------------------------------------
 	private String withdrawUserPwd;
 // 예매하기(ticketing)

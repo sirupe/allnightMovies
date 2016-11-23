@@ -83,6 +83,12 @@ function locationSearchID(e) {
 	submit(url, dir, page, js, css);
 }
 
+
+		
+
+
+
+
 function locationMenus(method, action, directory, page) {
 	var getMethod 	 = method;
 	var getAction 	 = action;

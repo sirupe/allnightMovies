@@ -37,7 +37,6 @@ public class Params {
 	private int    userStates;
 	private String keepLogin;	// 로그인 유지 체크여부
 
-	
 // 패스워드 찾기------------------------------------------------------------------
 	private String searchPwdUserID;
 	private String searchPwdConfirmNum;
@@ -58,6 +57,7 @@ public class Params {
 	private String myInfoChageEmail;
 	private String myInfoEmailConfirmNum;
 
+	private Integer pageboard = 1;
 // 회원탈퇴 	------------------------------------------------------------------
 	private String withdrawUserPwd;
 // 예매하기(ticketing)

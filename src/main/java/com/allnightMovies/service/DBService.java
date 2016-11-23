@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -55,7 +56,7 @@ public class DBService {
 		return dbMapper.insertJoinUserInfo(userDTO);
 	}
 
-/** ji. ticketing : calendar**/
+/** ji. ticketing **/
 	public MovieScreeningDateInfo getMaxScreeningDate() {
 		return dbMapper.getMaxScreeningDate();
 	}
@@ -67,6 +68,14 @@ public class DBService {
 	
 	public List<TicketingMovieTimeInfo> getMovieTime(String movieTitle, String date) {
 		return dbMapper.getMovieTime(movieTitle, date);
+	}
+	
+	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater) {
+		return dbMapper.getTheaterSeatInfo(theater);
+	}
+
+	public int getTicketPriceInfo(String dateTime) {
+		return dbMapper.getTicketPriceInfo(dateTime);
 	}
 	
 /** jung. 상영시간표 **/

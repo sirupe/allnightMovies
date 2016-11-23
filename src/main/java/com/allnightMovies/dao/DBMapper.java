@@ -3,6 +3,7 @@ package com.allnightMovies.dao;
 import java.util.List;
 
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -28,6 +29,8 @@ public interface DBMapper {
 	public MovieScreeningDateInfo getMaxScreeningDate();
 	public List<TicketingMovieTitleInfo> getMovieTitle();
 	public List<TicketingMovieTimeInfo> getMovieTime(String movieTitle, String date);
+	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater);
+	public int getTicketPriceInfo(String dateTime);
 	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;

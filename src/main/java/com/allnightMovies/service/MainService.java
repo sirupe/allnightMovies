@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -43,7 +44,7 @@ public class MainService implements Action {
 	@Autowired
 	DBService dbService;
 	
-	// 여기서 온갖것들을 실행시켜주면 된다.
+	// 여기서 온갖것들을 실행시켜주면 된다.movieTime
 	// ModelAndView 객체에 view 단에서 찍어내야 하는 페이지들도 올려두고 ...
 	@Override
 	public ModelAndView execute(Params params) throws Throwable {
@@ -92,7 +93,6 @@ public class MainService implements Action {
 	
 /*****은정. join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
-		System.out.println("idCheck");
 		ModelAndView mav = new ModelAndView("join/resultText");
 
 		String resultMessage = "사용이 가능한 아이디입니다.";
@@ -126,7 +126,6 @@ public class MainService implements Action {
 		// 메일 발송
 		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
 		String result = "인증번호가 발송되었습니다.";
-		System.out.println("인증번호 : " + randNum);
 		
 		boolean bool = true;
 		
@@ -134,7 +133,6 @@ public class MainService implements Action {
 		session.setAttribute("certificationNum", randNum);
 		session.setAttribute("confirmTime", System.currentTimeMillis());
 		
-		System.out.println("세션에 저장 : " + this.params.getSession().getAttribute("certificationNum"));
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
 		mav.addObject("resultBoolID", "email-bool");
@@ -191,7 +189,6 @@ public class MainService implements Action {
 		this.params.setPage("joinResult");
 		this.params.setContentCSS("join/joinSuccess");
 		this.params.setContentjs("join/joinSuccess");
-		System.out.println(this.params.getSession().getAttribute("userID"));
 		return this.getTemplate();	
 	}
 
@@ -230,6 +227,20 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("reservation/ticketing/screeningPlanned");
 		List<TicketingMovieTimeInfo> list = this.dbService.getMovieTime(this.params.getMovieTitle(), this.params.getScreeningDate());
 		mav.addObject("movieTimeList", list);
+		return mav;
+	}
+	
+	public ModelAndView seatInfo() {
+		ModelAndView mav = new ModelAndView("reservation/ticketing/seatInfo");
+		
+		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
+		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
+		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime);
+		System.out.println("금액 : " + moviePrice);
+		
+		
+		mav.addObject("seatList", seatInfoList);
+		mav.addObject("moviePrice", moviePrice);
 		return mav;
 	}
 	

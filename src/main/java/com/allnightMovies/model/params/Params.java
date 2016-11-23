@@ -65,4 +65,6 @@ public class Params {
 	private int CalendarYear;
 	private String screeningDate;
 	private String movieTitle;
+	private int theater;
+	private String movieTime;
 }

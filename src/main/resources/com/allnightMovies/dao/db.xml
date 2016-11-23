@@ -57,18 +57,28 @@
 	</insert>
 
 <!-- /* JI. TICKETING */ -->
+	<!-- TICKETING : 예매 가능일자 가져오기 -->
 	<select id="getMaxScreeningDate" resultType="com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo">
-		SELECT MIN(MOVIE_SCREENING_DATE) SCREENINGMINDATE, MAX(MOVIE_SCREENING_DATE) SCREENINGMAXDATE
+		SELECT TO_CHAR(SYSDATE, 'YYYY.MM.DD HH:MI') SCREENINGMINDATE, MAX(MOVIE_SCREENING_DATE) SCREENINGMAXDATE
 		FROM MOVIE_SCREENING_PRICE
-	</select>	
-	
-	<select id="getMovieTitle" resultType="com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo">
-		SELECT 
-			DECODE(MOVIE_AGE_LIMIT, 0, 'All', MOVIE_AGE_LIMIT) MOVIEAGELIMIT,
-		    MOVIE_TITLE MOVIETITLE
-		FROM MOVIE_BASIC_INFO
 	</select>
 	
+	<!-- TICKETING : 상영일자에 맞추어 영화제목들 가져오기 -->
+	<select id="getMovieTitle" resultType="com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo">
+		<![CDATA[
+		SELECT 
+        	DISTINCT MOVIE_TITLE MOVIETITLE,
+			DECODE(MOVIE_AGE_LIMIT, 0, 'All', MOVIE_AGE_LIMIT) MOVIEAGELIMIT
+		FROM MOVIE_BASIC_INFO MBI 
+        JOIN (
+        	SELECT * 
+            FROM MOVIE_SCREENING_PRICE
+            WHERE MOVIE_SCREENING_DATE >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')) USING(MOVIE_TITLE)
+        WHERE MOVIE_RELEASE_DATE < TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+        ]]>
+	</select>
+	
+	<!-- TICKETING : 영화관, 영화 상영시간 정보 가져오기 -->
 	<resultMap type="java.lang.String" id="movieTime">
 		<result column="movieTime" property="movieTime"/>
 	</resultMap>
@@ -82,6 +92,25 @@
 		SELECT MOVIE_THEATHER MOVIETHEATHER, SUBSTR(MOVIE_SCREENING_DATE, 12, 5) MOVIETIME 
 		FROM MOVIE_SCREENING_PRICE
 		WHERE MOVIE_TITLE=#{param1} AND MOVIE_SCREENING_DATE LIKE #{param2}||'%'
+	</select>
+	
+	<!-- TICKETING : 영화관 좌석정보 가져오기 -->
+	<select id="getTheaterSeatInfo" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO" parameterType="int">
+		SELECT 
+			THEATER,
+		    THEATER_SEAT_ROW THEATERSEATROW,
+		    THEATER_SEAT_COL_START THEATERSEATCOLSTART,
+		    THEATER_SEAT_COL_END THEATERSEATCOLEND,
+		    THEATER_WAY_INFO THEATERWAYINFO
+		FROM CINEMA_THEATER_SEAT_INFO
+		WHERE THEATER=#{theater}
+	</select>
+	
+	<!-- TICKETING : 영화 금액정보 가져오기 -->
+	<select id="getTicketPriceInfo" resultType="int" parameterType="java.lang.String">
+		SELECT MOVIE_PRICE MOVIEPRICE 
+		FROM MOVIE_SCREENING_PRICE
+		WHERE MOVIE_SCREENING_DATE=#{dateTime}
 	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">

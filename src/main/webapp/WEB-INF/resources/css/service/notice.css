@@ -1,0 +1,98 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif;*/
+.notice {
+	width: 850px;
+	margin-top: 25px;
+}
+.notice_title {
+	font-size: 25px;
+}
+.notice-search {
+	padding: 10px;
+	display: flex;
+    align-items: center;
+    justify-content: left;
+}
+/*상단 검색*/
+.search-icon {
+	width: 25px;
+	height: 23px;
+	margin-right: 3px;
+	background-image: url('/resources/img/notice/search.png');
+	background-repeat: no-repeat;
+	background-size: 25px 23px;
+}
+.search-input {
+    height: 18px;
+    width: 200px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+}
+/*게시판*/
+.notice-list__title {
+	height: 38px;
+	display: flex;
+    text-align: center;
+    background-color: #d2e6cd;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #fdecd2;
+    color: #2a3034;
+    font-size: 17px;
+}
+.notice-list__content {
+	height: 36px;
+    font-size: 14px;
+    color: #2a3034;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-bottom: 2px solid #fdecd2;
+}
+.notice-list__buttom {
+	display: flex;
+    text-align: center;
+	justify-content: center;
+	padding: 35px;
+}
+.searchbutton {
+    background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;	
+    margin-left: 10px;
+    padding: 6px 15px;
+    font-size: 15px;
+}
+
+.searchbutton:hover {
+	background-color: #ead2b3;
+}
+/*공통*/
+.font{
+	font-family: 'Jeju Gothic', serif;
+}
+.no {
+	flex-grow:2;
+	text-align: center;
+	border-right: 1px solid #fdecd2;
+}
+.title {
+	flex-grow:14;
+	border-right: 1px solid #fdecd2;
+}
+.writer {
+	flex-grow:3;
+	text-align: center;
+	border-right: 1px solid #fdecd2;
+}
+.date {
+	text-align: center;
+	flex-grow:3;
+}

@@ -447,5 +447,23 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "theater/wayToCome");
 		return mav;
 	}
-	
+/*******연종. THEATER introduce.jsp 극장소개*******/	
+	public ModelAndView introduce() throws Exception{
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("directory", "theater");
+		mav.addObject("page", "introduce");
+		mav.addObject("contentCSS", "theater/introduce");
+		mav.addObject("contentjs", "theater/introduce");
+		return mav;
+	}
+//------------------------------------------------------------------------
+/*******연종. SERVICE notice.jsp 공지사항*******/	
+	public ModelAndView notice() throws Exception{
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("directory", "service");
+		mav.addObject("page", "notice");
+		mav.addObject("contentCSS", "service/notice");
+		mav.addObject("contentjs", "service/notice");
+		return mav;
+	}
 }

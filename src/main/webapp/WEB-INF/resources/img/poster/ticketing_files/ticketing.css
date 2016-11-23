@@ -177,43 +177,6 @@
 
 /* theater seat info */
 
-.theater-seat {
-	margin: 30px 0 0 30px;
-}
-
-.theater-seat__count__text {
-    font-size: 20px;
-    margin-right: 15px;
-}
-
-.theater-seat__count__num {
-    padding: 7px 10px 3px;
-    margin: 2px;
-    background-color: gainsboro;
-    border-radius: 4px;
-}
-.theater-seat__count__num:hover {
-    background-color: rosybrown;
-    color: white;
-}
-
-/* seat info table */
-.theater-seat__seat-info {
-    border-spacing: 5px;
-}
-
-
-.theater-seat__seat-info__td {
-    width: 15px;
-    text-align: center;
-    padding: 3px;
-    font-size: smaller;
-}
-
-.theater-set__border {
-    border: 1px solid black;
-}
-
-tr.theater-seat__seat-info__tr {
-    height: 22px;
+.theater-seat__count {
+	margin: 10px 10px 0 0;
 }

@@ -3,7 +3,6 @@ package com.allnightMovies.di;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.params.Params;
 
 

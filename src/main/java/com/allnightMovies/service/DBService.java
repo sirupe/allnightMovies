@@ -1,14 +1,19 @@
 package com.allnightMovies.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -17,6 +22,9 @@ import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
+
+import oracle.net.aso.d;
+
 
 
 @Service
@@ -34,18 +42,6 @@ public class DBService {
 	public UserPersonalLoginInfoDTO login(Params params) {
 		return dbMapper.login(params);
 	}
-	
-	public Integer searchPWD(String searchPwdUserID)  {
-		return dbMapper.searchPWD(searchPwdUserID);
-	}
-	
-	public String searchEmail(String searchPwdUserID) {
-		return dbMapper.searchEmail(searchPwdUserID);
-	}
-	
-	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd) {
-		return dbMapper.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
-	}
 
 /** ji. Join **/
 	public Integer idCheck(String id) throws Exception {
@@ -56,7 +52,7 @@ public class DBService {
 		return dbMapper.insertJoinUserInfo(userDTO);
 	}
 
-/** ji. ticketing : calendar**/
+/** ji. ticketing **/
 	public MovieScreeningDateInfo getMaxScreeningDate() {
 		return dbMapper.getMaxScreeningDate();
 	}
@@ -68,6 +64,14 @@ public class DBService {
 	
 	public List<TicketingMovieTimeInfo> getMovieTime(String movieTitle, String date) {
 		return dbMapper.getMovieTime(movieTitle, date);
+	}
+	
+	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater) {
+		return dbMapper.getTheaterSeatInfo(theater);
+	}
+
+	public int getTicketPriceInfo(String dateTime) {
+		return dbMapper.getTicketPriceInfo(dateTime);
 	}
 	
 /** jung. 상영시간표 **/
@@ -88,7 +92,31 @@ public class DBService {
 	public List<Params> searchIDEmail(String searchIdUserEmail) throws Exception {
 		return dbMapper.searchIDEmail(searchIdUserEmail);
 	}
+	
+/** shin. SEARCH PWD **/	
+	public Integer searchPWD(String searchPwdUserID)  {
+		return dbMapper.searchPWD(searchPwdUserID);
+	}
+	
+	public String searchEmail(String searchPwdUserID) {
+		return dbMapper.searchEmail(searchPwdUserID);
+	}
+	
+	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd) {
+		return dbMapper.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
+	}
 
+
+/**jung. 고객센터(자주묻는질문) **/
+	public List<MovieFrequentlyBoardDTO> serviceCenter() throws Exception {
+		return dbMapper.serviceCenter();
+	}
+	public ArrayList<MovieFrequentlyBoardDTO> serviceCentergetBoard(int startPageNum, int endPageNum) throws Exception {
+		return dbMapper.serviceCentergetBoard(startPageNum, endPageNum);
+	}
+	public Integer serviceCentergetBoardCount() throws Exception {
+		return dbMapper.serviceCentergetBoardCount();
+	}
 	
 /** shin. MY INFO **/	
 	public UserPersonalInfoDTO selectMyInfo(String myInfoID) {
@@ -111,4 +139,13 @@ public class DBService {
 	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO() {
 		return dbMapper.getPlannedFilmDTO();
 	}
+/** shin. SERVICE noticeBoard **/
+	public int getNoticeBoardCount() {
+		return dbMapper.getNoticeBoardCount();
+	}
+	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum) {
+		return dbMapper.getCinemaNoticeBoardDTO(blockEndNum, blockEndNum);
+	}
+	
+	
 }

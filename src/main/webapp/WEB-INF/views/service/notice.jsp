@@ -29,6 +29,19 @@
 	
 	<!-- 게시글 하단 -->
 	<div class="notice-list__buttom font">
-	        - paging -
+		<c:if test="${paging.startPageBlock != 1}">
+			<a href="/notice?page=${paging.startPageNum}">◀</a>
+			<a href="/notice?page=${paging.startPageBlock -1 }">◁</a>
+        </c:if>
+        
+        <c:forEach begin="${paging.startPageBlock }" end="${paging.endPageBlock }" var="page">
+           	<a href="/notice?page=${page}">${page }</a>
+        </c:forEach>
+        
+        <c:if test="${paging.endPageBlock != paging.endPageNum}">
+			<a href="/notice?page=${paging.endPageBlock + 1 }" >▷</a>
+			<a href="/notice?page=${paging.endPageNum}" >▶</a>
+        </c:if>
+        
 	</div>
 </div>

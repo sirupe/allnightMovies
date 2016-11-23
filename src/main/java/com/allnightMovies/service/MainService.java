@@ -1,23 +1,31 @@
  package com.allnightMovies.service;
 
+import static org.mockito.Matchers.booleanThat;
+
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -30,6 +38,7 @@ import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
+import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.UtilityEnums;
 
 // @Service 어노테이션
@@ -45,7 +54,7 @@ public class MainService implements Action {
 	@Autowired
 	DBService dbService;
 	
-	// 여기서 온갖것들을 실행시켜주면 된다.
+	// 여기서 온갖것들을 실행시켜주면 된다.movieTime
 	// ModelAndView 객체에 view 단에서 찍어내야 하는 페이지들도 올려두고 ...
 	@Override
 	public ModelAndView execute(Params params) throws Throwable {
@@ -94,7 +103,6 @@ public class MainService implements Action {
 	
 /*****은정. join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
-		System.out.println("idCheck");
 		ModelAndView mav = new ModelAndView("join/resultText");
 
 		String resultMessage = "사용이 가능한 아이디입니다.";
@@ -128,7 +136,6 @@ public class MainService implements Action {
 		// 메일 발송
 		new SendEmail(String.valueOf(randNum), this.params.getUserEmail());
 		String result = "인증번호가 발송되었습니다.";
-		System.out.println("인증번호 : " + randNum);
 		
 		boolean bool = true;
 		
@@ -136,7 +143,6 @@ public class MainService implements Action {
 		session.setAttribute("certificationNum", randNum);
 		session.setAttribute("confirmTime", System.currentTimeMillis());
 		
-		System.out.println("세션에 저장 : " + this.params.getSession().getAttribute("certificationNum"));
 		mav.addObject("result", result);
 		mav.addObject("resultBool", bool);
 		mav.addObject("resultBoolID", "email-bool");
@@ -193,7 +199,6 @@ public class MainService implements Action {
 		this.params.setPage("joinResult");
 		this.params.setContentCSS("join/joinSuccess");
 		this.params.setContentjs("join/joinSuccess");
-		System.out.println(this.params.getSession().getAttribute("userID"));
 		return this.getTemplate();	
 	}
 
@@ -232,6 +237,20 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("reservation/ticketing/screeningPlanned");
 		List<TicketingMovieTimeInfo> list = this.dbService.getMovieTime(this.params.getMovieTitle(), this.params.getScreeningDate());
 		mav.addObject("movieTimeList", list);
+		return mav;
+	}
+	
+	public ModelAndView seatInfo() {
+		ModelAndView mav = new ModelAndView("reservation/ticketing/seatInfo");
+		
+		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
+		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
+		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime);
+		System.out.println("금액 : " + moviePrice);
+		
+		
+		mav.addObject("seatList", seatInfoList);
+		mav.addObject("moviePrice", moviePrice);
 		return mav;
 	}
 	
@@ -315,6 +334,7 @@ public class MainService implements Action {
 	}
 	
 /*****수진. 아이디찾기(email)*****/
+	
 	public ModelAndView searchIDEmailResult() throws Exception {
 		this.params.setDirectory("searchId");
 		this.params.setPage("searchIdEmailResult");
@@ -338,6 +358,7 @@ public class MainService implements Action {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
 		List<MovieShowTimesMap> movieTimeTable = this.dbService.showtimes();
+	
 		
 		for(int i = 0, size=movieTimeTable.size(); i < size; i++) {
 			MovieShowTimesMap showTime = movieTimeTable.get(i);
@@ -358,12 +379,47 @@ public class MainService implements Action {
 	}
 	
 /****수진 .고객센터*****/
+	@RequestMapping(value="/serviceCenter")
 	public ModelAndView serviceCenter() throws Exception {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
+		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
+		
+		int totBoardList = this.dbService.serviceCentergetBoardCount();
+		System.out.println("service글목록 갯수 : " + totBoardList);
+		
+		int page = this.params.getPageboard();
+		System.out.println(page + "page");
+		
+		List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+		Paging boardPaging = new Paging(totBoardList, 7,page, 5);
+		boardPaging.setBoardPaging();
+		System.out.println(boardPaging + "페이지 그룹");
+		System.out.println(boardPaging.getStartPageNum() + "시작");
+		System.out.println(boardPaging.getEndPageNum() + "마지막");
+		System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
+
 		
 		ModelAndView mav = this.getTemplate();
+		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
+		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
+		mav.addObject("pageCount",boardPaging.getTotalPageCount());
+		mav.addObject("pageGroup",boardPaging);
+		mav.addObject("checkPage", page);
 		return mav;
+	}
+	
+	
+	public ModelAndView serviceCentergetBoardCount() throws Exception {
+		
+		this.params.setDirectory("service");
+		this.params.setPage("serviceCenter");
+		this.params.setContentCSS("service/serviceCenter");
+		this.params.setContentjs("service/serviceCenter");
+		
+		int totBoardList = this.dbService.serviceCentergetBoardCount();
+		System.out.println("글목록 갯수 : " + totBoardList);
+		return this.getTemplate();
 	}
 	
 /*******연종. MyINFO SHIN*******/	
@@ -450,11 +506,22 @@ public class MainService implements Action {
 	}
 //------------------------------------------------------------------------
 /*******연종. SERVICE notice.jsp 공지사항*******/	
-	public ModelAndView notice() throws Exception{
+	public ModelAndView noticeBoard() throws Exception{
 		ModelAndView mav = this.getTemplate();
+		int totalListCount = this.dbService.getNoticeBoardCount();
+		System.out.println("MAIN noticeBoard list 수 >> " + totalListCount);
 		
-		//1.size()로 리스트 총 갯수 구하기
-		//2. pagig class 부름
+		int ClickPageNum = this.params.getNoticeUserClickPage();
+		int userClickPageNum = (ClickPageNum == 0) ? 1 : this.params.getNoticeUserClickPage();
+		System.out.println("MAIN userClickPageNum  >> " + userClickPageNum);
+		
+		//리스트 총 갯수   //목록에 보여줄 게시판 갯수  //사용자가 누른 페이지    //한블럭당 몇개 
+		Paging paging = new Paging(totalListCount, 10, userClickPageNum, 5);
+		int blockStartNum = paging.getViewStartPageNum();
+		int blockEndNum = paging.getViewEndPageNum();
+		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(blockStartNum, blockEndNum);
+		
+		
 		
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice");

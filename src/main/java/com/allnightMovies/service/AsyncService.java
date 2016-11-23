@@ -429,7 +429,7 @@ public class AsyncService implements AsyncAction {
 	System.out.println(boardPaging.getStartPageNum() + "시작");
 	System.out.println(boardPaging.getEndPageNum() + "마지막");
 	System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
-	String boardpagingResult = "/movie/mainService/serviceCenter";
+	String boardpagingResult ="/movie/mainService/serviceCenter/page="+ page;
 	AsyncResult<String> asyncResult = new AsyncResult<String>();
 	asyncResult.setData(boardpagingResult);
 	return asyncResult;

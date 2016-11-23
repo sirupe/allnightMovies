@@ -38,7 +38,9 @@ function serviceCenterButton1() {
 		};
 	cbf    = function(boardpagingResult) {
 			console.log(boardpagingResult);
+			
 			$('.js_con').html(boardpagingResult);
+			$('.js_sub').html(boardpagingResult);
 	};
 		$.post(url, params, cbf);
 }

@@ -3,8 +3,6 @@ var movieTitle;
 var $screeningDate;
 var $movieTitle;
 var $movieTime;
-var $personCnt;
-var theater;
 
 function calendarPrevBtnClick() {
 	var thisMonth 	= $('.js_calendarMonth').text() - 1;
@@ -99,31 +97,8 @@ function movieTimeClick() {
 		$movieTime.css({'color' : ''});
 	}
 	$movieTime = $(this);
-	theater = $movieTime.attr('data-theater');
+	
 	$movieTime.css({'color' : 'lightcoral'});
-	
-	
-	var url = '/movie/mainService/seatInfo';
-		params = {
-				'screeningDate' : screeningDate,
-		        'movieTitle' : movieTitle,
-		        'movieTime' : $movieTime.text(),
-		        'theater' : theater     
-		};
-		cbf = function(result) {
-			$('.js_seatInfo').html(result);
-		};
-		
-	$.post(url, params, cbf);
-}
-
-function ticketingPersonCntClick() {
-	if($personCnt != undefined) {
-		$personCnt.css({'background-color' : '', 'color' : ''});
-	}
-	
-	$personCnt = $(this);
-	$personCnt.css({'background-color' : 'rosybrown', 'color' : 'white'});
 }
 
 function setEvent() {
@@ -134,7 +109,6 @@ function setEvent() {
 			  .on('click', '.js_ticketingDateClick', ticketingDateClick)
 			  .on('click', '.js_nonTicketingDateClick', nonTicketingDateClick)
 			  .on('click', '.js_movieTimeClick', movieTimeClick)
-			  .on('click', '.js_ticketingPersonCnt', ticketingPersonCntClick)
 }
 
 function init() {

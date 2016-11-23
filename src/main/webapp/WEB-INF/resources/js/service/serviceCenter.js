@@ -19,7 +19,6 @@ function serviceCenter() {
 
 
 //자주묻는게시판--슬라이드
-
 //제목을 누르면 실행
 function frequentlyBoard() {
 			$(this).parent().siblings('.on').toggleClass('on'); //재목(부모함수)를 누르면 그 class에 감싸있는 것을 on한다.
@@ -28,37 +27,40 @@ function frequentlyBoard() {
 			$(this).siblings('.serviceCenterFrequenty__contents').stop('true','true').slideToggle('fast');
 }
 
-
-function serviceCenterButton1() {
-	var pageboard = $('.js_button1').text();
+function serviceCenterButton() {
+	var pageboard = $('.js_pagingNumber').text();
 	console.log(pageboard);
-	url    = '/movie/async/asyncService/pagingBoard';
+	url    = '/movie/mainService/serviceCentergetBoardCount';
 	params = {
 			'pageboard' : pageboard
 		};
-	cbf    = function(boardpagingResult) {
-			console.log(boardpagingResult);
+	cbf    = function(result) {
+			console.log(result);
 			
-			$('.js_con').html(boardpagingResult);
-			$('.js_sub').html(boardpagingResult);
+			$('.js_service_content_tab').html(result);
+			$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
+	};
+		$.post(url, params, cbf);
+}
+
+function pagingNextButton() {
+	var nextButton = Number($('.js_pagingNumber').text()) + 1;
+	console.log(nextButton);
+	url    = '/movie/mainService/serviceCentergetBoardCount';
+	params = {
+			'pageboard' : nextButton
+		};
+	cbf    = function(result) {
+			console.log(result);
+			
+			$('.js_service_content_tab').html(result);
+			$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
 	};
 		$.post(url, params, cbf);
 }
 
 
-//function serviceCenterButton2() {
-//	var freQuentlypage = $('.js_button2').text();
-//	console.log(freQuentlypage);
-//	url    = '/movie/mainService/serviceCenter';
-//	params = {
-//			'page' : freQuentlypage
-//		};
-//	cbf    = function(result) {
-//		url='/movie/mainService/serviceCenter';
-//	};
-//		$.post(url, params, cbf);
-//
-//}
+
 
 /************************시작***************************/
 function setServiceCenter() {
@@ -66,14 +68,13 @@ function setServiceCenter() {
 	
 		$container.on('click', '.js_frequently',serviceCenter);//고객센터안에있는 탭
 		$container.on('click', '.js_sub', frequentlyBoard); // 자주묻는질문들
-		$container.on('click', '.js_button1' , serviceCenterButton1);
+		$container.on('click', '.js_pagingNumber' , serviceCenterButton);
+		$container.on('click', '.js_nextButton',pagingNextButton);
 }
-
 
 function initServiceCenter() {
 	$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
 	setServiceCenter();
 }
-	
 	
 initServiceCenter();

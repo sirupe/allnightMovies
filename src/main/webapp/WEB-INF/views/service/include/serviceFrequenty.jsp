@@ -12,7 +12,7 @@
 	</ul>
 	
 	<div class="serviceCenterFrequenty__pageButton js_servicePageButton">
-		<c:if test="${pageGroup.isPreButton()}"><a href="/serviceCenter?page=${pageGroup.viewStartPageNum -1 }">◀</a></c:if>
+		<c:if test="${pageGroup.isPreButton()}"><div class="js_preButton">이전</div></c:if>
 			<c:forEach begin="${pageGroup.viewStartPageNum }" end="${pageGroup.viewEndPageNum }" var="page">
 					<span>
 						<c:choose>
@@ -21,12 +21,12 @@
 							</c:when>
 							
 							<c:otherwise>
-								<div class="js_button1">${page}</div>
+								<div class="js_pagingNumber">${page}</div>
 							</c:otherwise>
 						</c:choose>
 					</span>
 			</c:forEach>
-		<c:if test="${pageGroup.isNextButton() }"><a href="/?page=${pagegroup.viewEndPageNum+1 }">▶</a></c:if>
+		<c:if test="${pageGroup.isNextButton() }"><div class="js_nextButton">다음</div></c:if>
 	</div>
 	
 	<div class = "serviceCenterFrequenty__searchButton js_serviceSearchButton">

@@ -1,15 +1,10 @@
 package com.allnightMovies.utility;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import com.allnightMovies.service.DBService;
-
 import lombok.Getter;
 
 @Getter
-public class ServiceCenterBoardPaging {
-	
-	@Autowired
-	DBService dbService;
+public class Paging {
+
 	
 	private int startPageNum; //처음페이지
 	private int endPageNum; //마지막 페이지
@@ -25,14 +20,14 @@ public class ServiceCenterBoardPaging {
 	private boolean isPreButton =  false; //이전버튼
 	private boolean isNextButton = true; //다음 버튼
 	
-	public ServiceCenterBoardPaging(int totalListCount, int boardListCount, int userClickPageNum, int viewPageNum) {
+	public Paging(int totalListCount, int boardListCount, int userClickPageNum, int viewPageNum) {
 		this.totalListCount   = totalListCount; //총글의 갯수
 		this.boardListCount   = boardListCount; // 페이지당 보여질 게시글 갯수
 		this.userClickPageNum = userClickPageNum; // 사용자가 누른 글
 		this.viewPageNum      = viewPageNum; // 몇개 번호를 나열?할 것인가. 
 	}
 	
-//	public ServiceCenterBoardPaging(int totalListCount, int boardListCount, int viewPageNum) {
+//	public Paging(int totalListCount, int boardListCount, int viewPageNum) {
 //	this.totalListCount   = totalListCount; //총글의 갯수
 //	this.boardListCount   = boardListCount; // 페이지당 보여질 게시글 갯수
 //	this.userClickPageNum = userClickPageNum; // 사용자가 누른 글
@@ -68,10 +63,4 @@ public class ServiceCenterBoardPaging {
 			this.isNextButton = false;
 		}
 	}
-	
-	
-	
-	
-	
-
 }

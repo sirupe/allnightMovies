@@ -11,6 +11,7 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
+import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
@@ -33,18 +34,6 @@ public class DBService {
 	
 	public UserPersonalLoginInfoDTO login(Params params) {
 		return dbMapper.login(params);
-	}
-	
-	public Integer searchPWD(String searchPwdUserID)  {
-		return dbMapper.searchPWD(searchPwdUserID);
-	}
-	
-	public String searchEmail(String searchPwdUserID) {
-		return dbMapper.searchEmail(searchPwdUserID);
-	}
-	
-	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd) {
-		return dbMapper.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
 	}
 
 /** ji. Join **/
@@ -96,6 +85,19 @@ public class DBService {
 	public List<Params> searchIDEmail(String searchIdUserEmail) throws Exception {
 		return dbMapper.searchIDEmail(searchIdUserEmail);
 	}
+	
+/** shin. SEARCH PWD **/	
+	public Integer searchPWD(String searchPwdUserID)  {
+		return dbMapper.searchPWD(searchPwdUserID);
+	}
+	
+	public String searchEmail(String searchPwdUserID) {
+		return dbMapper.searchEmail(searchPwdUserID);
+	}
+	
+	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd) {
+		return dbMapper.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
+	}
 
 	
 /** shin. MY INFO **/	
@@ -113,11 +115,10 @@ public class DBService {
 	}
 	
 /** shin. MOVIE	currentFilm **/
-	public Integer getFilmNum(){
-		return dbMapper.getFilmNum();
-	}
 	public List<MovieCurrentFilmDTO> getCurrentFilmDTO() {
 		return dbMapper.getCurrentFilmDTO();
 	}
-	
+	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO() {
+		return dbMapper.getPlannedFilmDTO();
+	}
 }

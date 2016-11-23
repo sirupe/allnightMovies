@@ -218,11 +218,6 @@
 	</select>
 
 <!-- SHIN. MOVIE  CURRENTFILM -->	
-	<select id="getFilmNum" resultType="java.lang.Integer">
-		SELECT COUNT(*)
-		FROM MOVIE_BASIC_INFO
-	</select>
-	
 	<select id="getCurrentFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
 		SELECT * FROM (
 			SELECT MOVIE_TITLE  movieTitle,
@@ -232,9 +227,32 @@
 			FROM (
 				SELECT *
 				FROM MOVIE_BASIC_INFO 
+				WHERE MOVIE_RELEASE_DATE
+				<![CDATA[ 
+				 < 
+				]]>
+				SYSDATE 
 				ORDER BY MOVIE_TITLE ASC
 			    )
 			)    
 	</select>
-	
+<!-- SHIN. MOVIE  PLANNEDFILM -->		
+	<select id="getPlannedFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO">
+		SELECT * FROM (
+			SELECT MOVIE_TITLE  movieTitle,
+                   MOVIE_POSTER moviePoster,
+                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   ROWNUM RNUM
+			FROM (
+				SELECT *
+				FROM MOVIE_BASIC_INFO 
+				WHERE MOVIE_RELEASE_DATE
+				<![CDATA[ 
+				 > 
+				]]>
+				SYSDATE 
+				ORDER BY MOVIE_TITLE ASC
+			    )
+			)   
+	</select>
 </mapper>

@@ -13,6 +13,7 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
+import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
@@ -121,11 +122,10 @@ public class DBService {
 	}
 	
 /** shin. MOVIE	currentFilm **/
-	public Integer getFilmNum(){
-		return dbMapper.getFilmNum();
-	}
 	public List<MovieCurrentFilmDTO> getCurrentFilmDTO() {
 		return dbMapper.getCurrentFilmDTO();
 	}
-	
+	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO() {
+		return dbMapper.getPlannedFilmDTO();
+	}
 }

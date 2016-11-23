@@ -4,50 +4,49 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 /*font-family: 'Nanum Gothic', serif; 비밀번호*/
 
+.div-currentFilm {
+	display: block;
+}
 /*현재상영작 제목*/
 .div-currentFilm__title {
 	font-family: 'Jeju Gothic', serif;
-	margin: 10px 0px 10px 10px;
-	font-size: 22px;
+    margin: 33px 0px 20px 10px;
+	font-size: 25px;
 }
 /*현재상영작 포스터가 들어갈 구역*/
 .div-currentFilm-images {
 	margin-left: 30px;
 }
-/*현재상영작 포스터 하나*/
 .span-currentFilm-images {
+    display: inline-block;
+}
+/*현재상영작 포스터 하나*/
+.span-filmImgs {
+	width: 240px;
+    height: 340px;
+    background-repeat: no-repeat;
+	background-size: 240px 340px;
 	display: inline-block;
     margin: 0px 35px 10px 30px;
 } 
-
-/*포스터크기*/
-.img-currentFilm {
-	width: 240px;
-    height: 340px;
+.span-filmImgs:hover {
+    box-shadow: 1px 1px 1px 120px rgba(50, 50, 50, 0.77) inset;
 }
-/* .img-currentFilm:hover {
-	opacity: 0.8;
-	cursor: pointer;
-} */
-.span-hiddenText {
-	position: relative;
+.span-filmImgs:hover .hiddenText{
+    opacity: 0.9;
 }
-
 .hiddenText {
-	width: 340px;
-    height: 100px;
-    opacity: 0.8;
-	cursor: pointer;
-	visibility: hidden;
-	position: absolute;
-	margin: 150px 50px;
-    color: white;
-    font-size: 30px;
-    width: 120px;
-    font-weight: bold;
-    border: 4px solid white;
-    padding: 5px 15px 5px 15px;
-	
+    font-family: 'Jeju Gothic', serif;
+    cursor: pointer;
+    position: absolute;
+    margin: 150px 46px;
+    color: #d7cdac;
+    font-size: 24px;
+    width: 110px;
+    border-radius: 7px;
+    border: 1px solid #d7cdac;
+    padding: 15px 10px 10px 30px;
+    opacity: 0;
 }
 
 /*비디오 */
@@ -59,11 +58,11 @@
 	background-repeat:no-repeat;
 	width: 980px;
 	height: 380px;
-	background-image: url("/../resources/img/poster/fantasticBeasts.jpg");
+	background-image: url("/../resources/img/poster/fantasticBeastsVideo.jpg");
 }
 .span-currentFilm__mainFilm:hover {
 	opacity: 1;
-	box-shadow: inset rgba(25, 66, 104, 0.27) 0 0 0 0;
+    box-shadow: inset rgba(13, 32, 50, 0.27) 0 0 0 0;
 }
 
 /*비디오 실행버튼*/
@@ -107,7 +106,6 @@
 	text-align: -webkit-center;
     display: -webkit-box;
 }
-
 .label-currentFilm__movieTitle {
 	padding-left: 7px;
 	font-family: 'Jeju Gothic', serif;
@@ -122,7 +120,7 @@
     border-radius: 100px;
     border: 2px solid;
     background-color: #fd9800;
-    padding: 3px 4px 2px 2px;
+	padding: 4px 2px 1px 3px;
 }
 .ageLimit12 {
 	font-family: 'Jeju Gothic', serif;
@@ -130,7 +128,7 @@
     border-radius: 100px;
     border: 2px solid;
     background-color: #037eb7;
-    padding: 3px 4px 2px 2px;
+	padding: 4px 2px 1px 3px;
 }
 .ageLimitAll {
     font-family: 'Jeju Gothic', serif;
@@ -138,7 +136,7 @@
     border-radius: 100px;
     border: 2px solid;
     background-color: #7fc41b;
-    padding: 4px 3px 3px 3px;
+	padding: 4px 2px 2px 2px;
 }
 .ageLimit19 {
     font-family: 'Jeju Gothic', serif;
@@ -146,24 +144,24 @@
     border-radius: 100px;
     border: 2px solid;
     background-color: #ff0000;
-    padding: 3px 4px 2px 2px;
+	padding: 4px 2px 1px 3px;
 }
 /*예약하기 버튼*/
 .button-currentFilm-reservation {
     font-family: 'Jeju Gothic', serif;
     font-size: 18px;
-    background-color: #c9cde7;
+    background-color: #d7cdac;
 	border: 3px solid rgba(156, 156, 156, 0.25);
-    padding: 6px 10px;
+    padding: 3px 13px;
     color: #000000;
     font-weight: 100;
     cursor: pointer;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 .button-currentFilm-reservation:hover {
 	color: #4f4f4f;
-	background: #c5c7d1;
-    border: 2px solid #e6eae9;
+	background: #d0c8b3;
+    border: 2px solid #d7cdac;
 	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
 	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -18,6 +19,7 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
+import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
@@ -247,8 +249,6 @@ public class MainService implements Action {
 		mav.addObject("result", result);
 		return mav;
 	}
-	
-/*******연종. PWD찾기 SHIN*******/	
 	public ModelAndView searchPwdsendEmail() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		Random rand = new Random();
@@ -263,8 +263,6 @@ public class MainService implements Action {
 		new SendEmail(String.valueOf(randNum), userEmail); 
 		return mav;
 	}
-	
-/*******연종. PWD찾기 SHIN*******/
 	public ModelAndView checkPwdConfirmNum() throws Exception {
 		this.params.setDirectory("searchPwd");
 		this.params.setPage("searchPwdChangePwd");
@@ -272,8 +270,6 @@ public class MainService implements Action {
 		this.params.setContentjs("searchPwd/searchPwd");
 		return this.getTemplate();	
 	}
-
-/*******연종. PWD찾기 SHIN*******/
 	public ModelAndView updatePWD() throws Exception {
 		HttpSession session = this.params.getSession();
 		String searchPwdUserID = (String)session.getAttribute("userId");
@@ -283,7 +279,7 @@ public class MainService implements Action {
 		this.params.setPage("searchPwdChangeCompleted");
 		return this.logout();
 	}
-
+//------------------------------------------------------------------------
 	
 /*******ID찾기(회원정보) 수진*******/	
 	public ModelAndView searchId() throws Exception {
@@ -379,8 +375,6 @@ public class MainService implements Action {
 		mav.addObject("myInfoList", myInfoDTO);
 		return mav;
 	}
-	
-/*******연종. MyINFO SHIN*******/		
 	public ModelAndView myInfoChagePwdResult() throws Exception {
 		this.params.setDirectory("myInfo");
 		this.params.setPage("myInfoChagePwdResult");
@@ -388,8 +382,6 @@ public class MainService implements Action {
 		this.params.setContentjs("myInfo/changePwd");
 		return this.getTemplate();	
 	}
-	
-/*******연종. MyINFO chage EmailAdde SHIN*******/		
 	public ModelAndView myInfoChangeEmailResult() throws Exception {
 		this.params.setDirectory("myInfo");
 		this.params.setPage("myInfoChangeEmailResult");
@@ -397,16 +389,25 @@ public class MainService implements Action {
 		this.params.setContentjs("myInfo/changeEmail");
 		return this.logout();
 	}
-	
+	public ModelAndView myInfoChangePwdResult()throws Exception{
+		this.params.setDirectory("myInfo");
+		this.params.setPage("myInfoChangePwdResult");
+		this.params.setContentCSS("myInfo/changePwd");
+		this.params.setContentjs("myInfo/changePwd");
+		return this.logout();	
+	}	
+//------------------------------------------------------------------------
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
 	public ModelAndView currentFilm() throws Exception{
 		ModelAndView mav = this.getTemplate();
 		
-		Integer filmNum = this.dbService.getFilmNum();		////리스트 사이즈로  filmNum 구할수 있음.s
-		System.out.println("Mainservice currentFilm 갯수  >> " + filmNum);
-		
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.getCurrentFilmDTO();
-		
+		Integer filmNum = currentFilmDTO.size();
+		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
+		//TEST
+		for(MovieCurrentFilmDTO list : currentFilmDTO) {
+			System.out.println(list.getMovieTitle());
+		}
 		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "currentFilm");
@@ -416,20 +417,35 @@ public class MainService implements Action {
 		mav.addObject("filmNum", filmNum);
 		return mav;
 	}
-/*******연종. MOVIE CURRENT FIRM 상영예정작*******/		
+/*******연종. MOVIE CURRENT FIRM 현재상영작*******/		
 	public ModelAndView screeningsPlanned() throws Exception{
-		this.params.setDirectory("movie");
-		this.params.setPage("screeningsPlanned");
-		this.params.setContentCSS("movie/screeningsPlanned");
-		this.params.setContentjs("movie/screeningsPlanned");
-		return this.getTemplate();	
+		ModelAndView mav = this.getTemplate();
+		
+		List<MovieScreeningsPlannedDTO> screeningsPlannedDTO = this.dbService.getPlannedFilmDTO();
+		Integer filmNum = screeningsPlannedDTO.size();
+		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
+		//TEST
+		for(MovieScreeningsPlannedDTO list : screeningsPlannedDTO) {
+			System.out.println(list.getMovieTitle());
+		}
+		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "screeningsPlanned");
+		mav.addObject("contentCSS", "movie/screeningsPlanned");
+		mav.addObject("contentjs", "movie/screeningsPlanned");
+		mav.addObject("ScreeningsPlannedDTO", screeningsPlannedDTO);
+		mav.addObject("filmNum", filmNum);
+		return mav;
 	}
-/*******연종. MYINFO 비밀번호 수정 결과창*******/		
-	public ModelAndView myInfoChangePwdResult()throws Exception{
-		this.params.setDirectory("myInfo");
-		this.params.setPage("myInfoChangePwdResult");
-		this.params.setContentCSS("myInfo/changePwd");
-		this.params.setContentjs("myInfo/changePwd");
-		return this.logout();	
+//------------------------------------------------------------------------
+/*******연종. THEATER wayToCome.jsp 오시는길*******/	
+	public ModelAndView wayToCome() throws Exception{
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("directory", "theater");
+		mav.addObject("page", "wayToCome");
+		mav.addObject("contentCSS", "theater/wayToCome");
+		mav.addObject("contentjs", "theater/wayToCome");
+		return mav;
 	}
+	
 }

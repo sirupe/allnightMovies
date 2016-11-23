@@ -5,6 +5,7 @@ import java.util.List;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
+import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
@@ -53,8 +54,7 @@ public interface DBMapper {
 	public String updateEmailAddr(String emailAddr, String userID);
 	
 /** shin. MOVIE currentFilm **/	
-	public Integer getFilmNum();
 	public List<MovieCurrentFilmDTO> getCurrentFilmDTO();
-	
+	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO();
 	
 }

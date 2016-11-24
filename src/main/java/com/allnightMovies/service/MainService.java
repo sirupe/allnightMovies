@@ -1,7 +1,9 @@
  package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +13,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
-import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -34,7 +36,6 @@ import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
-import com.sun.xml.internal.ws.resources.ModelerMessages;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -296,11 +297,11 @@ public class MainService implements Action {
 	}
 //------------------------------------------------------------------------
 	
-/*******ID찾기(회원정보) 수진*******/	
+	/*******ID찾기(회원정보) 수진*******/	
+	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		String resultMsg = null;
-		boolean userInfoResult = true;
+		boolean userInfoResult = false;
 		String searchIdUserName = this.params.getSearchIdUserName();
 		String searchIdUserBirth = this.params.getSearchIdUserBirth();
 		String searchIdUserGender = this.params.getSearchIdUserGender();
@@ -333,11 +334,9 @@ public class MainService implements Action {
 	
 	public ModelAndView searchIDEmailResult() throws Exception {
 		this.params.setDirectory("searchId");
-		this.params.setPage("searchIdEmailResult");
 		this.params.setContentCSS("searchId/searchId");
 		this.params.setContentjs("searchId/searchId");
 		
-		HttpSession session = this.params.getSession();
 		String searchIdUserEmail = (String) this.params.getSession().getAttribute("searchIdUserEmail");
 		//db보내기
 		List<Params> userEmail = this.dbService.searchIDEmail(searchIdUserEmail);
@@ -349,12 +348,13 @@ public class MainService implements Action {
 		return mav;
 		
 	}
+	
+	
 /*****수진. 상영시간표List*****/
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
 		List<MovieShowTimesMap> movieTimeTable = this.dbService.showtimes();
-	
 		
 		for(int i = 0, size=movieTimeTable.size(); i < size; i++) {
 			MovieShowTimesMap showTime = movieTimeTable.get(i);
@@ -380,73 +380,60 @@ public class MainService implements Action {
 		this.params.setContentjs("service/serviceCenter");
 		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
 		
+		
+		/*자주묻는게시판*/
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
-		System.out.println("service글목록 갯수 : " + totBoardList);
-		
-		
-		List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 5, 1, 2);
-		
-		
+		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+		Paging boardPaging = new Paging(totBoardList, 5, 1, 4); //들어왔을때 page값 기본적으로 1 주기
 		boardPaging.setBoardPaging();
-		int endpage = boardPaging.getViewEndPageNum();
-		System.out.println(boardPaging + "페이지 그룹");
 		
-		System.out.println(boardPaging.getStartPageNum() + "시작");
-		System.out.println(boardPaging.getEndPageNum() + "마지막");
-		System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
-
+		/*문의사항*/
+		int totQuestionBoardCount = this.dbService.questionBoardCount();
+		Paging questionBoardPaging = new Paging(totQuestionBoardCount, 10, 1, 5);
+		questionBoardPaging.setBoardPaging();
+		
 		
 		ModelAndView mav = this.getTemplate();
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
 		mav.addObject("pageGroup",boardPaging);
+		
+		
+		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
+		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
+		mav.addObject("questionBoardGroup", questionBoardPaging);
 		return mav;
 	}
 	
-	//자주묻는페이지 페이지 전환
+//자주묻는페이지 페이지 전환
 	public ModelAndView serviceCentergetBoardCount() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
-		
-		this.params.setContentCSS("service/serviceCenter");
-		this.params.setContentjs("service/serviceCenter");
-		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
-		
+
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
-		System.out.println("serviceCentergetBoardCount service글목록 갯수 : " + totBoardList);
 		
 		int page = this.params.getPageboard();
 		
-		List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 5,page, 2);
+		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+		Paging boardPaging = new Paging(totBoardList, 5,page, 4);
 		boardPaging.setBoardPaging();
-//		System.out.println(boardPaging.getViewEndPageNum() + "end page");
-//		System.out.println(boardPaging.getViewStartPageNum() + "시작..");
-//		
-//		
-//		System.out.println("serviceCentergetBoardCount : " + boardPaging + "페이지 그룹");
-//		System.out.println("serviceCentergetBoardCount : " + boardPaging.getStartPageNum() + "시작");
-//		System.out.println("serviceCentergetBoardCount : " + boardPaging.getEndPageNum() + "마지막");
-//		System.out.println("serviceCentergetBoardCount : " + boardPaging.getViewStartPageNum() + "시작 페이지");
-//		System.out.println("serviceCentergetBoardCount : " + boardPaging.getViewEndPageNum() + " : 마지막 페이지");
-//		System.out.println("serviceCentergetBoardCount : " + this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
-
-		
-		System.out.println(boardPaging);
 		
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
 		mav.addObject("pageGroup",boardPaging);
 		mav.addObject("checkPage", page);
-//		mav.addObject("", boardPaging.getViewStartPageNum());
-//		mav.addObject("", boardPaging.getViewStartPageNum());
-
 		return mav;
-		
 	}
-
+	
+//문의 사항 게시판 전환
+	public ModelAndView serviceCenterQuestionBoardChange() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
+		
+		
+		return mav;
+	}
+	
 	
 /*******연종. MyINFO SHIN*******/	
 	public ModelAndView viewMyInfo() throws Exception {

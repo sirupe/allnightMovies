@@ -25,7 +25,7 @@
 				<div class="div__serviceCenter__Container">
 					<ul class="serviceCenter_Tab">
 						<li><a href="#tab_content_frequenty" class="js_frequently">자주묻는질문</a></li>
-						<li><a href="#tab_content_question" class="js_frequently">문의게시판</a></li>
+						<li><a href="#tab_content_question" class="js_frequently js_QuestionBoard">문의게시판</a></li>
 					</ul>
 						
 						<div class="div__serviceCenter_Container_Tab" >

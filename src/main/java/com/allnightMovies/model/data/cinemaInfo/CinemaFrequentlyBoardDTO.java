@@ -1,9 +1,9 @@
-package com.allnightMovies.model.data.movieInfo;
+package com.allnightMovies.model.data.cinemaInfo;
 
 import lombok.Data;
 
 @Data
-public class MovieFrequentlyBoardDTO {
+public class CinemaFrequentlyBoardDTO {
 	private String QUESTION;
 	private String ASKED;
 	

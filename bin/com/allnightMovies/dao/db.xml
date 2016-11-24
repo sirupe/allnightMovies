@@ -170,14 +170,14 @@
 	</select>
 	
 <!-- 자주묻는질문 -->
-	<select id="serviceCenter" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO">
+	<select id="serviceCenter" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
 		SELECT 
 			QUESTION,
 			ASKED
 		FROM CINEMA_FREQUENTLY_BOARD
 	</select>	
 
- 	<select id="serviceCentergetBoard" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO">
+ 	<select id="serviceCentergetBoard" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
 		SELECT * FROM (
               SELECT NO, QUESTION, ASKED, ROWNUM RNUM 
          FROM (
@@ -193,6 +193,24 @@
 		 SELECT COUNT(*) 
 		 	FROM CINEMA_FREQUENTLY_BOARD
 	</select>
+	
+<!-- 문의사항게시판 -->
+	<select id="questionBoardCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM CINEMA_ASKED_BOARD
+	</select>
+
+	 <select id="questionBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
+			SELECT * FROM (
+      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, ROWNUM RNUM 
+      				FROM (
+              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT
+              			 FROM CINEMA_ASKED_BOARD 
+               			 ORDER BY NO DESC
+           			 )		
+     			 )    
+      			WHERE RNUM BETWEEN #{param1} and #{param2}
+	</select> 
 	
 	
 	

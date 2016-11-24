@@ -15,21 +15,6 @@ public class Paging {
 	private int totalListCount; //총 게시글 갯수
 	private int viewStartPageNum; //사용자에게 보여질 페이지 중 첫번째 번호
 	private int viewEndPageNum; //사용자에게 보여질 페이지중 마지막 번호
-//	
-//	Paging(
-//			startPageNum=1, 
-//			endPageNum=3, 
-//			userClickPageNum=1,	<< 설정 사용자
-//			viewPageNum=3, 		<< 설정 보일페이지
-//			boardListCount=3,	<< 설정 리스트갯수
-//			totalPageCount=5, 
-//			totalListCount=14,	<< 설정 DB
-//			viewStartPageNum=1,
-//			viewEndPageNum=3, 
-//			isPreButton=false, 
-//			isNextButton=true)
-
-	
 	
 	//이전, 다음 버튼
 	private boolean isPreButton =  false; //이전버튼
@@ -41,13 +26,6 @@ public class Paging {
 		this.userClickPageNum = userClickPageNum; // 사용자가 누른 글
 		this.viewPageNum      = viewPageNum; // 몇개 번호를 나열?할 것인가. 
 	}
-	
-//	public Paging(int totalListCount, int boardListCount, int viewPageNum) {
-//	this.totalListCount   = totalListCount; //총글의 갯수
-//	this.boardListCount   = boardListCount; // 페이지당 보여질 게시글 갯수
-//	this.userClickPageNum = userClickPageNum; // 사용자가 누른 글
-//	this.viewPageNum      = viewPageNum; // 몇개 번호를 나열?할 것인가. 
-//}
 	
 	
 	public void setBoardPaging() {

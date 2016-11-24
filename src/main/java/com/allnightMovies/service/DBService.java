@@ -2,6 +2,7 @@ package com.allnightMovies.service;
 
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -152,4 +154,13 @@ public class DBService {
 	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO() {
 		return dbMapper.getPlannedFilmDTO();
 	}
+/** shin. SERVICE noticeBoard **/
+	public int getNoticeBoardCount() {
+		return dbMapper.getNoticeBoardCount();
+	}
+	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum) {
+		return dbMapper.getCinemaNoticeBoardDTO(blockStartNum, blockEndNum);
+	}
+	
+	
 }

@@ -1,11 +1,13 @@
 package com.allnightMovies.dao;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -70,5 +72,8 @@ public interface DBMapper {
 /** shin. MOVIE currentFilm **/	
 	public List<MovieCurrentFilmDTO> getCurrentFilmDTO();
 	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO();
+/** shin. SERVICE noticeBoard **/
+	public int getNoticeBoardCount();
+	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum);
 	
 }

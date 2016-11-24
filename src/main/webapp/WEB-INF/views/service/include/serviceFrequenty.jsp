@@ -34,5 +34,6 @@
 		<button class="serviceCenter_Searchbutton js_serviceCenter_button">검색</button>
 	</div>
 </div>
+
    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

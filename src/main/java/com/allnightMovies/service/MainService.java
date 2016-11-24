@@ -13,13 +13,16 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -33,6 +36,7 @@ import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.Paging;
+import com.allnightMovies.utility.Paging2;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
@@ -223,7 +227,7 @@ public class MainService implements Action {
 	public ModelAndView calendar() {
 		MovieScreeningDateInfo screeningDate = this.dbService.getMaxScreeningDate();
 		screeningDate.setScreeningDate();
-		ModelAndView mav = new ModelAndView("reservation/calendar");
+		ModelAndView mav = new ModelAndView("reservation/ticketing/calendar");
 		mav.addObject("cal", new MonthCalendar(this.params.getCalendarYear(), this.params.getCalendarMonth()));
 		mav.addObject("screening", screeningDate);
 		return mav;
@@ -430,10 +434,8 @@ public class MainService implements Action {
 	public ModelAndView serviceCenterQuestionBoardChange() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
 		
-		
 		return mav;
 	}
-	
 	
 /*******연종. MyINFO SHIN*******/	
 	public ModelAndView viewMyInfo() throws Exception {
@@ -473,10 +475,6 @@ public class MainService implements Action {
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.getCurrentFilmDTO();
 		Integer filmNum = currentFilmDTO.size();
 		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		//TEST
-		for(MovieCurrentFilmDTO list : currentFilmDTO) {
-			System.out.println(list.getMovieTitle());
-		}
 		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "currentFilm");
@@ -493,10 +491,6 @@ public class MainService implements Action {
 		List<MovieScreeningsPlannedDTO> screeningsPlannedDTO = this.dbService.getPlannedFilmDTO();
 		Integer filmNum = screeningsPlannedDTO.size();
 		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		//TEST
-		for(MovieScreeningsPlannedDTO list : screeningsPlannedDTO) {
-			System.out.println(list.getMovieTitle());
-		}
 		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "screeningsPlanned");
@@ -525,14 +519,53 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "theater/introduce");
 		return mav;
 	}
-//------------------------------------------------------------------------
+//-----------------------------------------------------------------------
 /*******연종. SERVICE notice.jsp 공지사항*******/	
-	public ModelAndView notice() throws Exception{
+	public ModelAndView notice() throws Exception {
 		ModelAndView mav = this.getTemplate();
+		int totalList = this.dbService.getNoticeBoardCount();
+		this.params.setNoticeUserClickPage(1);
+		int clickedPageNum = this.params.getNoticeUserClickPage();
+		
+		Paging2 paging = new Paging2();
+		paging.makePaging(totalList, clickedPageNum);
+
+		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
+		mav.addObject("noticeDTO", noticeDTO);
+		mav.addObject("paging", paging);
+		mav.addObject("no", clickedPageNum);
 		mav.addObject("directory", "service");
-		mav.addObject("page", "notice");
-		mav.addObject("contentCSS", "service/notice");
-		mav.addObject("contentjs", "service/notice");
+		mav.addObject("page", "notice/notice");
+		mav.addObject("contentCSS", "service/notice/notice");
+		mav.addObject("contentjs", "service/notice/notice");
 		return mav;
 	}
+	
+	public ModelAndView noticeBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
+		int totalList = this.dbService.getNoticeBoardCount();
+		int clickedPageNum = this.params.getNoticeUserClickPage();
+		Paging2 paging = new Paging2();
+		paging.makePaging(totalList, clickedPageNum);
+		System.out.println( "사용자클릭 >> "  + clickedPageNum); 
+		
+		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
+		
+		mav.addObject("noticeDTO", noticeDTO);
+		mav.addObject("paging", paging);
+		mav.addObject("no", clickedPageNum);
+		mav.addObject("directory", "service");
+		mav.addObject("page", "notice/notice");
+		mav.addObject("contentCSS", "service/notice/notice");
+		mav.addObject("contentjs", "service/notice/notice");
+		return mav;
+	}
+	
+	public ModelAndView noticeBoardView() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		
+		return mav;
+	}
+	
+	
 }

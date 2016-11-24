@@ -1,6 +1,7 @@
 package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -14,12 +15,13 @@ import org.springframework.stereotype.Service;
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
+import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
-import com.allnightMovies.utility.Paging;
 
 
 @Service
@@ -263,7 +265,7 @@ public class AsyncService implements AsyncAction {
 	
 
 /***********연종. 비밀번호찾기 인증번호***************/	
-	public  AsyncResult<String> checkPwdConfirmNum() throws Exception {
+	public AsyncResult<String> checkPwdConfirmNum() throws Exception {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
 		String userConfirmNum = this.params.getSearchPwdConfirmNum();
 		HttpSession session = this.params.getSession();
@@ -283,16 +285,8 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public AsyncResult confirmNumInit() throws Exception {
-		HttpSession session = this.params.getSession();
-		session.setAttribute("isConfirm", false);
-		System.out.println("");
-		AsyncResult<String> async = new AsyncResult<String>();
-		async.setData("<label class=\"join__resultText\" style=\"color:red;\">인증번호를 받아주세요.</label>");		
-		
-		return async;
-	}
+	
+	/***********연종. SERVIEC notice***************/	
 	
 	/**수진 이메일 인증번호 생성하여 보내기**/
 	//이메일
@@ -384,6 +378,17 @@ public class AsyncService implements AsyncAction {
 		return async;
 		
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public AsyncResult confirmNumInit() throws Exception {
+		HttpSession session = this.params.getSession();
+		session.setAttribute("isConfirm", false);
+		System.out.println("");
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData("<label class=\"join__resultText\" style=\"color:red;\">인증번호를 받아주세요.</label>");		
+		
+		return async;
+	}
 	//마지막 버튼 눌렀을때
 	public AsyncResult<String> emailSendMessage() throws Exception {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
@@ -407,4 +412,6 @@ public class AsyncService implements AsyncAction {
 		asyncResult.setSuccess(emailAllCheck);
 		return asyncResult;
 	}
+	
+	
 }

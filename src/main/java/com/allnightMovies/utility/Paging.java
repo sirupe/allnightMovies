@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class Paging {
-
 	
 	private int startPageNum; //처음페이지
 	private int endPageNum; //마지막 페이지

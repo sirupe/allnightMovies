@@ -4,7 +4,6 @@ package com.allnightMovies.service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +21,6 @@ import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
-
-import oracle.net.aso.d;
 
 
 
@@ -70,8 +67,8 @@ public class DBService {
 		return dbMapper.getTheaterSeatInfo(theater);
 	}
 
-	public int getTicketPriceInfo(String dateTime) {
-		return dbMapper.getTicketPriceInfo(dateTime);
+	public Integer getTicketPriceInfo(String screeningDate, String theater) {
+		return dbMapper.getTicketPriceInfo(screeningDate, theater);
 	}
 	
 /** jung. 상영시간표 **/
@@ -144,7 +141,7 @@ public class DBService {
 		return dbMapper.getNoticeBoardCount();
 	}
 	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum) {
-		return dbMapper.getCinemaNoticeBoardDTO(blockEndNum, blockEndNum);
+		return dbMapper.getCinemaNoticeBoardDTO(blockStartNum, blockEndNum);
 	}
 	
 	

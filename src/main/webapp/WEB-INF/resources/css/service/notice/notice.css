@@ -2,8 +2,7 @@
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 /*font-family: 'Jeju Gothic', serif;*/
 .notice {
-	width: 850px;
-	margin-top: 25px;
+	margin: 25px 0px 0px 40px;
 }
 .notice_title {
 	font-size: 25px;
@@ -36,7 +35,7 @@
 /*게시판*/
 .notice-list__title {
 	height: 38px;
-	display: flex;
+	display: inline-flex;
     text-align: center;
     background-color: #d2e6cd;
     align-items: center;
@@ -45,13 +44,15 @@
     color: #2a3034;
     font-size: 17px;
 }
+.noticeBoard-content {
+	height: 370px;
+}
 .notice-list__content {
 	height: 36px;
     font-size: 14px;
     color: #2a3034;
-    display: flex;
+   	display: inline-flex;
     align-items: center;
-    flex-direction: row;
     border-bottom: 2px solid #fdecd2;
 }
 .notice-list__buttom {
@@ -74,25 +75,44 @@
 .searchbutton:hover {
 	background-color: #ead2b3;
 }
+
 /*공통*/
+a{
+	text-decoration: none;
+}
 .font{
 	font-family: 'Jeju Gothic', serif;
 }
 .no {
-	flex-grow:2;
+	width:90px;
 	text-align: center;
 	border-right: 1px solid #fdecd2;
 }
 .title {
-	flex-grow:14;
+	cursor: pointer;
+	width: 510px;
 	border-right: 1px solid #fdecd2;
+	padding-left: 20px;
+	color: black;
+}
+.import {
+	color: #ff4d2d;
 }
 .writer {
-	flex-grow:3;
+	width: 160px;
 	text-align: center;
 	border-right: 1px solid #fdecd2;
 }
 .date {
 	text-align: center;
-	flex-grow:3;
+	width: 145px;
+}
+.paging {
+	cursor: pointer;
+	color: #313131;
+}
+
+.bold:hover {
+	color: #a8a8a8;
+	font-weight: bold;
 }

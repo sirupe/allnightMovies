@@ -107,10 +107,10 @@
 	</select>
 	
 	<!-- TICKETING : 영화 금액정보 가져오기 -->
-	<select id="getTicketPriceInfo" resultType="int" parameterType="java.lang.String">
+	<select id="getTicketPriceInfo" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT MOVIE_PRICE MOVIEPRICE 
 		FROM MOVIE_SCREENING_PRICE
-		WHERE MOVIE_SCREENING_DATE=#{dateTime}
+		WHERE MOVIE_SCREENING_DATE=#{param1} AND MOVIE_THEATHER=#{param2}
 	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
@@ -285,6 +285,7 @@
 			)   
 	</select>
 <!-- SHIN. SERVICE noticeBoard -->
+
 	<select id="getNoticeBoardCount" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM CINEMA_NOTICE_BOARD
@@ -292,11 +293,11 @@
 
 	<select id="getCinemaNoticeBoardDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.Integer">
 		SELECT * FROM (
-		SELECT NO, 
-		       TITLE,
+		SELECT NO		  no, 
+		       TITLE	  title,
 		       writeDate, 
-		       CONTENT,
-		       IMPORTANT,
+		       CONTENT	  content,
+		       IMPORTANT  important,
 		       ROWNUM RNUM 
 		FROM (
 		         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT

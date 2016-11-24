@@ -1,23 +1,20 @@
  package com.allnightMovies.service;
 
-import static org.mockito.Matchers.booleanThat;
-
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
@@ -36,9 +33,10 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
+import com.allnightMovies.utility.Paging;
+import com.allnightMovies.utility.Paging2;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
-import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.UtilityEnums;
 
 // @Service 어노테이션
@@ -245,7 +243,8 @@ public class MainService implements Action {
 		
 		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
 		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
-		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime);
+		
+		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, String.valueOf(this.params.getTheater()));
 		System.out.println("금액 : " + moviePrice);
 		
 		
@@ -408,8 +407,6 @@ public class MainService implements Action {
 		mav.addObject("checkPage", page);
 		return mav;
 	}
-	
-	
 	public ModelAndView serviceCentergetBoardCount() throws Exception {
 		
 		this.params.setDirectory("service");
@@ -504,29 +501,53 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "theater/introduce");
 		return mav;
 	}
-//------------------------------------------------------------------------
+//-----------------------------------------------------------------------
 /*******연종. SERVICE notice.jsp 공지사항*******/	
-	public ModelAndView noticeBoard() throws Exception{
+	public ModelAndView notice() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		int totalListCount = this.dbService.getNoticeBoardCount();
-		System.out.println("MAIN noticeBoard list 수 >> " + totalListCount);
+		int totalList = this.dbService.getNoticeBoardCount();
+		this.params.setNoticeUserClickPage(1);
+		int clickedPageNum = this.params.getNoticeUserClickPage();
 		
-		int ClickPageNum = this.params.getNoticeUserClickPage();
-		int userClickPageNum = (ClickPageNum == 0) ? 1 : this.params.getNoticeUserClickPage();
-		System.out.println("MAIN userClickPageNum  >> " + userClickPageNum);
-		
-		//리스트 총 갯수   //목록에 보여줄 게시판 갯수  //사용자가 누른 페이지    //한블럭당 몇개 
-		Paging paging = new Paging(totalListCount, 10, userClickPageNum, 5);
-		int blockStartNum = paging.getViewStartPageNum();
-		int blockEndNum = paging.getViewEndPageNum();
-		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(blockStartNum, blockEndNum);
-		
-		
-		
+		Paging2 paging = new Paging2();
+		paging.makePaging(totalList, clickedPageNum);
+
+		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
+		mav.addObject("noticeDTO", noticeDTO);
+		mav.addObject("paging", paging);
+		mav.addObject("no", clickedPageNum);
 		mav.addObject("directory", "service");
-		mav.addObject("page", "notice");
-		mav.addObject("contentCSS", "service/notice");
-		mav.addObject("contentjs", "service/notice");
+		mav.addObject("page", "notice/notice");
+		mav.addObject("contentCSS", "service/notice/notice");
+		mav.addObject("contentjs", "service/notice/notice");
 		return mav;
 	}
+	
+	public ModelAndView noticeBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
+		int totalList = this.dbService.getNoticeBoardCount();
+		int clickedPageNum = this.params.getNoticeUserClickPage();
+		Paging2 paging = new Paging2();
+		paging.makePaging(totalList, clickedPageNum);
+		System.out.println( "사용자클릭 >> "  + clickedPageNum); 
+		
+		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
+		
+		mav.addObject("noticeDTO", noticeDTO);
+		mav.addObject("paging", paging);
+		mav.addObject("no", clickedPageNum);
+		mav.addObject("directory", "service");
+		mav.addObject("page", "notice/notice");
+		mav.addObject("contentCSS", "service/notice/notice");
+		mav.addObject("contentjs", "service/notice/notice");
+		return mav;
+	}
+	
+	public ModelAndView noticeBoardView() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		
+		return mav;
+	}
+	
+	
 }

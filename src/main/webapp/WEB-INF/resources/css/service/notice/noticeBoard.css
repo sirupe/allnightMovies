@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif;*/
+
+.noticeBoardView {
+    display: inline-block;
+    margin: 25px 0px 0px 360px;
+}
+.noticeBoardView_title {
+	font-size: 25px;
+}
+.noticeBoard-title {
+	display: inline-flex;
+	align-items: center;
+   	height: 38px;
+    background-color: #d2e6cd;
+    color: #2a3034;
+    margin: 25px 0px 20px 30px;
+}
+
+.title {
+	display: table;
+	width: 600px;
+    font-size: 20px;
+    margin-left: 20px
+}
+.writeDate {
+	width: 210px;
+    font-size: 14px;
+}
+.content {
+	border: none;
+    resize: none;
+    width: 600px;
+}
+/*공통*/
+.font {
+	font-family: 'Jeju Gothic', serif;
+}

@@ -31,7 +31,7 @@
 		<div class="screening  border-dashed">
 			<h4 class="subject">상영시간</h4>
 			<div class="js_movieTime">
-				<div class="js_screeningViewer  screening__default-text">영화 및 날짜를 선택해주세요.</div>
+				<div class="js_screeningTimeViewer  screening__default-text">영화 및 날짜를 선택해주세요.</div>
 			</div>
 		</div>
 		

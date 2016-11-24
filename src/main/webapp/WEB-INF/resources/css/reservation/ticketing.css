@@ -152,13 +152,18 @@
     margin-left: 10px;
     width: 500px;
 }
+
 .screening__default-text {
-    margin: 60px 0 50px 30px;
+    margin: 30px 0 20px 30px;
 }
 
 /* movie screening time */
 .movie-time-list {
     padding: 10px;
+}
+
+.movie-time-list__label {
+    line-height: 2em;
 }
 
 .movie-time-theater {
@@ -178,7 +183,14 @@
 /* theater seat info */
 
 .theater-seat {
-	margin: 30px 0 0 30px;
+	margin: 10px;
+	text-align: right;
+	margin-top: 30px;
+}
+
+.theater-seat__count {
+	display: flex;
+    margin: auto;
 }
 
 .theater-seat__count__text {
@@ -197,6 +209,10 @@
     color: white;
 }
 
+.theater-seat__count__person {
+	flex-grow: 1;
+}
+
 /* seat info table */
 .theater-seat__seat-info {
     border-spacing: 5px;
@@ -206,14 +222,90 @@
 .theater-seat__seat-info__td {
     width: 15px;
     text-align: center;
-    padding: 3px;
+    padding: 4px;
     font-size: smaller;
 }
 
-.theater-set__border {
-    border: 1px solid black;
+.theater-seat__seat-info__td__color {
+    background-color: #fdbcbc;
+    color: brown;	
 }
 
-tr.theater-seat__seat-info__tr {
+.theater-seat__seat-info__tr {
     height: 22px;
+}
+
+.theater-seat__count__price {
+    padding-left: 40px;
+    flex-Grow: 1;
+}
+
+.theater-seat__price__won {
+    padding: 5px 3px 3px 5px;
+    border-radius: 6px;
+    border-style: inset;
+}
+
+.theater-seat__seat-info__th {
+    padding-right: 10px;
+    color: #c0716b;
+	text-align: center;
+}
+
+.theater-seat__seat-info__td__color:hover {
+    background-color: #c74848;
+    color: #ffd6d6;
+    cursor: pointer;
+}
+
+.theater-seat__ticketing-btn {
+    margin: 40px 20px 0px 0px;
+    padding: 13px 20px 8px;
+    font-size: 22px;
+    background-color: rosybrown;
+    color: white;
+    border-radius: 10px;
+    buffered-rendering: inherit;
+    text-shadow: 1px 1px 0px #8c7a7a;
+    font-family: 'Jeju Gothic', serif;
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #bc8f8f;
+    text-overflow: clip;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    visibility: hidden;
+}
+
+.theater-seat__ticketing-btn:hover {
+    background-color: #dfb3b3;
+    border: 2px solid #d4acac;
+}
+.theater-seat__ticketing-btn:active {
+	background-color: #af8383;
+    border: 2px solid #bc8f8f;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    margin: 42px 18px 0px 0px;
+}
+
+.margin-auto {
+	margin: auto;
+}
+
+.theater-seat__container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.theater-seat__screen {
+    text-align: center;
+    width: 70%;
+    background-color: #f6e9e7;
+    padding: 6px;
+    font-size: 15px;
+    color: #87706c;
+    margin-left: 20px;
+    border-radius: 5px;
 }

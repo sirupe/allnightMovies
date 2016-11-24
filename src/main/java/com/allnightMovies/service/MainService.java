@@ -225,7 +225,7 @@ public class MainService implements Action {
 	public ModelAndView calendar() {
 		MovieScreeningDateInfo screeningDate = this.dbService.getMaxScreeningDate();
 		screeningDate.setScreeningDate();
-		ModelAndView mav = new ModelAndView("reservation/calendar");
+		ModelAndView mav = new ModelAndView("reservation/ticketing/calendar");
 		mav.addObject("cal", new MonthCalendar(this.params.getCalendarYear(), this.params.getCalendarMonth()));
 		mav.addObject("screening", screeningDate);
 		return mav;

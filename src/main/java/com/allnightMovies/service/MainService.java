@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -251,7 +253,6 @@ public class MainService implements Action {
 	}
 	
 /*******연종. PWD찾기 SHIN*******/
-	//TODO 클래스명 수정할것
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String searchPwdUserID = this.params.getSearchPwdUserID();
@@ -469,7 +470,7 @@ public class MainService implements Action {
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.getCurrentFilmDTO();
 		Integer filmNum = currentFilmDTO.size();
 		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
+		// 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "currentFilm");
 		mav.addObject("contentCSS", "movie/currentFilm");
@@ -485,7 +486,7 @@ public class MainService implements Action {
 		List<MovieScreeningsPlannedDTO> screeningsPlannedDTO = this.dbService.getPlannedFilmDTO();
 		Integer filmNum = screeningsPlannedDTO.size();
 		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
+		// 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "screeningsPlanned");
 		mav.addObject("contentCSS", "movie/screeningsPlanned");
@@ -517,62 +518,62 @@ public class MainService implements Action {
 		return mav;
 	}
 //-----------------------------------------------------------------------
-/*******연종. SERVICE notice.jsp 공지사항*******/	
+/*******연종. SERVICE notice.jsp 공지사항*******/ //TODO
+	//1. 처음 공지사항 을눌렀을때  리스트를 뿌려줌 
 	public ModelAndView notice() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		int totalList = this.dbService.getNoticeBoardCount();
-		this.params.setNoticeUserClickPage(1);
-		int clickedPageNum = this.params.getNoticeUserClickPage();
+		this.params.setNoticePage(1);
+		int noticePage = this.params.getNoticePage();
 		
 		Paging2 paging = new Paging2();
-		paging.makePaging(totalList, clickedPageNum);
-
+		paging.makePaging(totalList, noticePage, 10, 10);
+		
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
-		mav.addObject("no", clickedPageNum);
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/notice");
 		return mav;
 	}
-	
+	//2. 비동기로 사용자가 클릭한 page 를 가지고 계산한 paging 처리
 	public ModelAndView noticeBoard() throws Exception {
 		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
 		int totalList = this.dbService.getNoticeBoardCount();
-		int clickedPageNum = this.params.getNoticeUserClickPage();
+		int noticePage = this.params.getNoticePage();
 		Paging2 paging = new Paging2();
-		paging.makePaging(totalList, clickedPageNum);
-		System.out.println("noticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
-		
+		paging.makePaging(totalList, noticePage, 10, 10);
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
 		
-		System.out.println("noticeBoard  --  보여질 리스트 범위 입니다. >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
+//		System.out.println("1.noticeBoard  --  사용자가 클릭한 page  >>  "  +  noticePage);
+//		System.out.println("1.noticeBoard  --  보여질 리스트 범위 입니다. >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
+//		
+		mav.addObject("noticePage", noticePage);
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
-		mav.addObject("no", clickedPageNum);
-		
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/notice");
-		return mav;
+		return mav;         
 	}
-	
+	//3. noticeBoard에서 글제목을 클릭하면 실행
 	public ModelAndView noticeBoardView() throws Exception {
 		ModelAndView mav = this.getTemplate();
+		Integer noticePage = this.params.getNoticePage();
 		Integer noticeNo = this.params.getNoticeNo();
 		
-		//getNoticeBoardContent
+//		System.out.println("noticeBoard에서 글제목을 클릭함");
+//		System.out.println("3. noticeBoardView   page  >>" + noticePage);
+//		System.out.println("3. noticeBoardView   no  >>" + noticeNo);
+		
 		CinemaNoticeBoardDTO noticeDTO = this.dbService.getNoticeBoardContent(noticeNo);
 		String content = noticeDTO.getContent();
 		String title = noticeDTO.getTitle();
 		String writeDate = noticeDTO.getWriteDate();
 		
-		System.out.println("noticeBoardView 게시글 현재PAGE  >>  " + params.getNoticePage()
-		                               + "   현재 NO  >> " +  params.getNoticeNo());
-	
 		mav.addObject("title", title);
 		mav.addObject("content", content);
 		mav.addObject("writeDate", writeDate);
@@ -580,28 +581,27 @@ public class MainService implements Action {
 		mav.addObject("page", "notice/noticeBoardView");
 		mav.addObject("contentCSS", "service/notice/noticeBoard");
 		mav.addObject("contentjs", "service/notice/notice");
-		mav.addObject("noticePage", params.getNoticePage());
-		mav.addObject("noticeNo", params.getNoticeNo());
-		
+		//mav.addObject("noticePage", params.getNoticePage() == 0 ? 1 : params.getNoticePage());
+		mav.addObject("noticePage", noticePage);
+		mav.addObject("noticeNo", noticeNo);
 		return mav;
 	}
-	
+	//4. 목록보기를 누르면 사용자가 마지막으로 본 page 리스트가 불림
 	public ModelAndView locationNoticeBoard() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		int totalList = this.dbService.getNoticeBoardCount();
-		int clickedPageNum = this.params.getNoticePage();
-		
-		System.out.println("locationNoticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
+		int noticePage = this.params.getNoticePage();
 		
 		Paging2 paging = new Paging2();
-		paging.makePaging(totalList, clickedPageNum);
+		paging.makePaging(totalList, noticePage, 10, 10);
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
 		
-		System.out.println("locationNoticeBoard  -- 보여질 리스트 범위입니다.  >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
+//		System.out.println("2. locationNoticeBoard 목록보기버튼의 사용자가 클릭한 page  >>  "  +  clickedPageNum);
+//		System.out.println("2. locationNoticeBoard  -- 보여질 리스트 범위입니다.  >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
 		
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
-		mav.addObject("no", clickedPageNum);
+//		mav.addObject("no", clickedPageNum);
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
@@ -609,34 +609,66 @@ public class MainService implements Action {
 		return mav;
 	}
 	
+	//5. 검색후 리스트 뿌려짐 항상1page
 	public ModelAndView searchNoticeBoard() throws Exception {
-		ModelAndView mav = this.getTemplate();
+		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
+		CinemaNoticeSearchBoardDTO searchBoardDTO = new CinemaNoticeSearchBoardDTO();
 		//사용자가 검색한 단어 저장 
 		String searchWord = this.params.getNoticeSearachWord();
 		//페이징처리를 위한 과정 
-		this.params.setNoticeUserClickPage(1);
-		int clickedPageNum = this.params.getNoticeUserClickPage();
+		this.params.setNoticePage(1);
+		int noticePage = this.params.getNoticePage();
 		int totalList = this.dbService.searchBoardCount("%"+searchWord+"%");
+		System.out.println("1. 검색결과  list count >>" + totalList);
 		
-		System.out.println("MAIN   searchWord  >>   " + searchWord);
-		System.out.println("MAIN   totalList  >>   " + totalList);
 		
 		Paging2 paging = new Paging2();
-		paging.makePaging(totalList, clickedPageNum);
-		List<CinemaNoticeBoardDTO> noticeBoardDTO = this.dbService.searchBoard(paging.getStartPageList(), paging.getEndPageList(),"%"+searchWord+"%");
-		//TEST
-		System.out.println("noticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
-		System.out.println("noticeBoard  --  보여질 리스트 범위 입니다. >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
+		paging.makePaging(totalList, noticePage, 10, 10);
+		searchBoardDTO.setBlockStartNum(paging.getStartPageList());
+		searchBoardDTO.setBlockEndNum(paging.getEndPageList());
+		searchBoardDTO.setSearchWord("%"+searchWord+"%");
 		
+		List<CinemaNoticeBoardDTO> noticeBoardDTO = this.dbService.searchBoard(searchBoardDTO.getBlockStartNum(), searchBoardDTO.getBlockEndNum(),searchBoardDTO.getSearchWord());
+		
+		mav.addObject("totalList", totalList);
 		mav.addObject("noticeDTO", noticeBoardDTO);
 		mav.addObject("paging", paging);
-		mav.addObject("no", clickedPageNum);
+		mav.addObject("search", "Search");
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/notice");
+		
 		return mav;
 	}
 	
+	public ModelAndView searchNoticeBoardPage() throws Exception {
+		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
+		//사용자가 검색한 단어 저장 
+		String searchWord = this.params.getNoticeSearachWord();
+		System.out.println("2. searchWord 저장 " + searchWord);
+		//페이징처리를 위한 과정 
+		int noticePage = this.params.getNoticePage();
+		int totalList = this.dbService.searchBoardCount("%"+searchWord+"%");
+		
+		Paging2 paging = new Paging2();
+		paging.makePaging(totalList, noticePage, 10, 10);
+		
+		System.out.println("2. 사용자 클릭  PAGE    >>  "  +  noticePage);
+		
+		List<CinemaNoticeBoardDTO> noticeBoardDTO = this.dbService.searchBoard(paging.getStartPageList(), paging.getEndPageList(), "%"+searchWord+"%");
+		
+		
+		mav.addObject("totalList", totalList);
+		mav.addObject("noticeDTO", noticeBoardDTO);
+		mav.addObject("paging", paging);
+		mav.addObject("search", "Search");
+		mav.addObject("directory", "service");
+		mav.addObject("page", "notice/notice");
+		mav.addObject("contentCSS", "service/notice/notice");
+		mav.addObject("contentjs", "service/notice/searchNotice");
+		
+		return mav;
+	}
 //-----------------------------------------------------------------------
 }

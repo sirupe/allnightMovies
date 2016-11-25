@@ -400,7 +400,6 @@ public class AsyncService implements AsyncAction {
 		System.out.println(userConfirmNum + "인증");
 		HttpSession session = this.params.getSession();
 		Integer sessionSaveNum = (Integer) session.getAttribute("confirmNumRandom");
-		System.out.println(sessionSaveNum + "맞나.");
 		 
 		boolean emailAllCheck = false;
 		

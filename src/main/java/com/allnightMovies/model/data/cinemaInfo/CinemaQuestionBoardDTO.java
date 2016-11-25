@@ -10,6 +10,8 @@ public class CinemaQuestionBoardDTO {
 	private String user_Id;
 	private String write_date;
 	private String rnum;
+	
+	
 
 
 }

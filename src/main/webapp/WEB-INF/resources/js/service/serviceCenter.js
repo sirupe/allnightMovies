@@ -1,22 +1,30 @@
 /***자주묻는게시판, 문의 사항 탭 ***/
-function serviceCenter() {
-			$('.div__serviceCenter_Content').hide();//모든 내용 숨겨라..
-			$('ul.serviceCenter_Tab li:first').addClass('active').show(); // 첫번째탭 누르면 보여라
-			$('.div__serviceCenter_Content:first').show(); // 첫번째 내용 보여라
+function frequentlyBoardTab() {
+	var url = '/movie/mainService/serviceCenterFreQuentlyBoard';
+		cbf = function(result) {
+			console.log(result);
+			var $frequently   = $('.js_frequentlyBoardContainer');
+				
+				$frequently
+					.html(result);
+				$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
 			
-			//클릭@ ..
-			$("ul.serviceCenter_Tab li").click(function() {
-				
-				$('ul.serviceCenter_Tab li').removeClass('active');
-				$(this).addClass('active');
-				$(".div__serviceCenter_Content").hide();
-				
-				var activeTab = $(this).find('a').attr('href');
-				$(activeTab).fadeIn();
-				return false;
-			});
-	}
+		};
+	$.post(url, cbf);
+}
 
+function questionBoardTab() {
+	var url = '/movie/mainService/questionBoard';
+		cbf = function(result) {
+			var $questionTab = $('.js_frequentlyBoardContainer');
+				
+			
+			$questionTab
+				.html(result);
+
+		};
+	$.post(url, cbf);
+}
 /*************************************자주묻는게시판*********************************************/
 
 /***자주묻는게시판 슬라이드(제목누르면 실행)***/
@@ -30,15 +38,15 @@ function frequentlyBoard() {
 /***페이징 번호를 눌렀을때 다음으로 전환하는 메소드***/
 function serviceCenterButton() {
 	var pageboard = $(this).text();
-	
-	console.log(pageboard);
 	url    = '/movie/mainService/serviceCentergetBoardCount';
 	params = {
 			'pageboard' : pageboard
 		};
 	cbf    = function(result) {
-			console.log(result);
-			$('.js_service_content_tab').html(result);
+			var $frequently = $('.js_serviceContentTab');
+			
+			$frequently
+				.html(result);
 			$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
 	};
 		$.post(url, params, cbf);
@@ -50,12 +58,11 @@ function pagingNextButton() {
 		userClickPageNum       = $userClickPageNum.attr('data-nextpage');
 		
 	url    = '/movie/mainService/serviceCentergetBoardCount';
-	params = {
-			'pageboard' : userClickPageNum
-		};
+	params = {'pageboard' : userClickPageNum};
 	cbf    = function(result) {
-			console.log(result);
-			$('.js_service_content_tab').html(result);
+			var $frequently = $('.js_serviceContentTab');
+			$frequently
+				.html(result);
 			$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
 	};
 		$.post(url, params, cbf);
@@ -68,43 +75,157 @@ function pagingPreButton() {
 		userClickPageNum  = $userClickPageNum.attr('data-prepage');
 		
 	url    = '/movie/mainService/serviceCentergetBoardCount';
-	params = {
-				'pageboard' : userClickPageNum
-		};
+	params = {'pageboard' : userClickPageNum};
 	cbf    = function(result) {
-			console.log(result);
-		$('.js_service_content_tab').html(result);
+			var $frequently = $('.js_serviceContentTab');
+			$frequently
+				.html(result);
 		$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
 	};
 	$.post(url, params, cbf);
 }
 
 
+/*********************************문의사항게시판*********************************************/
 
-//문의사항 게시판
-function pagingPreButton() {
+
+//현재 
+function questionBoardPageNumber() {
+	var questionBoard = $(this).text();
+	
+	url    = '/movie/mainService/serviceCenterQuestionBoardChange';
+	params = {'questionBoard' : questionBoard};
+	cbf    = function(result) {
+				var $question = $('.js_questionBoardContainer');
+				
+				$question
+				.html(result);
+	};
+		$.post(url, params, cbf);
+}
+	
+//이전페이지
+function questionBoardPagePreNumber() {
+	var $userClickPageNum = $('.js_questionPreButton');
+	userClickPageNum  = $userClickPageNum.attr('data-QuestionprePage');
+	
+		url    = '/movie/mainService/serviceCenterQuestionBoardChange';
+		params = {'questionBoard' : userClickPageNum};
+		cbf    = function(result) {
+				console.log(result);
+				var $question = $('.js_questionBoardContainer');
+				$question
+					.html(result);
+		};
+		$.post(url, params, cbf);
+}
+//다음페이지
+function questionBoardpageNextNumber() {
+	var $userClickPageNum = $('.js_questionNextButton');
+	userClickPageNum  = $userClickPageNum.attr('data-QuestionnextPage');
+	
+	url    = '/movie/mainService/serviceCenterQuestionBoardChange';
+	params = {'questionBoard' : userClickPageNum};
+	cbf    = function(result) {
+			console.log(result);
+			var $question = $('.js_questionBoardContainer');
+			$question
+				.html(result)
+				.show();
+	};
+		$.post(url, params, cbf);
+	}
+
+//이건뭐지.
+//function questionWriteForm() {
+//	var url  = '/movie/mainService/questionBoardWriteForm'
+//		dir  = 'service'
+//		page = 'include/AskWriteBoard'
+//		js   = 'service/service/questionBoard'
+//		css  = 'service/service/questionBoard'
+//	
+//	submit(url, dir, page, js, css);
+//}
+
+/******글보기*******/
+function questionViewBoard() {
+	var $userClickPageNum = $('.js_questionBoard_title');
+		userClickPageNum  = $userClickPageNum.attr('data-questionBoardPageNum');
+	
+	
+	var url    = '/movie/mainService/questionViewBoard';
+		params = {'questionBoardNum' : userClickPageNum};
+		cbf    = function(mav) {
+			var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
+				$questionBoardViewchange.html(mav);
+			
+	};
+		$.post(url, params, cbf);
+}
+
+
+//글등록페이지이동
+function questionWriteForm() {
+	var url    = '/movie/mainService/questionBoardWriteForm';
+		cbf    = function(mav) {
+			var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
+				$questionBoardViewchange.html(mav);
+			
+	};
+		$.post(url, cbf);
+}
+
+//글등록하기
+function insertQuestionBoard() {
+	var $insertContent  = $('.js_boardContent');
+	    $insertTextArea = $('.js_boardTextArea');
+	    $insertboardPwd = $('.js_boardWriteBoardPwd');
+
+	    insertPwdcheck  = $(".js_boardCheck").is(":checked");
+	    insertContent   = $('.js_boardContent').val();
+	    insertTextArea  = $('.js_boardTextArea').val();
+	    insertboardPWd  = $('.js_boardWriteBoardPwd').val();
+	    insertCheck     = $('.js_boardCheck').val(); //비밀글체크여부	
+	    
+	    console.log(insertContent);
+	    console.log(insertTextArea);
+	    console.log(insertboardPWd);
+	    console.log(insertPwdcheck);
 	
 }
 
 /************************시작***************************/
 function setServiceCenter() {
-	var $container = $('.js_serviceCenter');
+	var $container     = $('.js_serviceCenter');
+		$questionBoard = $('.js_js_questionBoardWriteContainer');
 	
-		$container.on('click', '.js_frequently',serviceCenter);//고객센터안에있는 탭
+		//$container.on('click', '.js_content',serviceCenter);//고객센터안에있는 탭
+		$container.on('click', '.js_frequentlyBoard', frequentlyBoardTab); //자주묻는게시판 탭이동
+		$container.on('click', '.js_QuestionBoard', questionBoardTab); // 문의사항게시판으로 탭이동
 		$container.on('click', '.js_sub', frequentlyBoard); // 자주묻는질문들
 		$container.on('click', '.js_pagingNumber' , serviceCenterButton); //페이징번호
 		$container.on('click', '.js_currentNumber', serviceCenterButton);
 		$container.on('click', '.js_nextButton',pagingNextButton); // 다음버튼
 		$container.on('click', '.js_preButton', pagingPreButton); //이전버튼
 	
+		
 		/**문의사항게시판**/
-		$container.on('click', '.js_QuestionBoard',questionBoard); //문의사항
-		//$container.on('click', '.js_questionBoard_title',)
+		
+		$container.on('click', '.js_currentQuestionPage', questionBoardPageNumber);  //현재번호
+		$container.on('click', '.js_QuestionPagingNumber', questionBoardPageNumber); //페이지이동
+		$container.on('click', '.js_questionPreButton', questionBoardPagePreNumber); //이전페이지이동
+		$container.on('click', '.js_questionNextButton', questionBoardpageNextNumber); //다음페이지이동
+		
+		$container.on('click', '.js_QuestionWriteForm', questionWriteForm); // 글쓰기폼이동
+		$container.on('click', '.js_questionBoard_title', questionViewBoard); //문의사항
+		$container.on('click', '.js_QuestionList',questionBoardTab);
+		
+		$container.on('click' ,'.js_questionButtonConfirm',insertQuestionBoard); //글 등록하기
 }
 
 function initServiceCenter() {
-	$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
-	$('.div__serviceCenter_Container_Tab .js_servcie_content_tab').css('display', 'none');
+	frequentlyBoardTab();
+	//$('.js_serviceContentTab2').hide();//문의사항내용 숨기기
 	setServiceCenter();
 }
 	

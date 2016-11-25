@@ -2,12 +2,11 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script> -->
-	<div class="div__serviceCenter_form js_serviceCenter">
+	<div class="div__serviceCenter_form js_serviceCenter point">
 		<div class="div__serviceCenter_form_title">
 				고객센터
 		</div>
-			<div class="div__serviceCenter__content">
+			<div class="div__serviceCenter__content js_content">
 				<div class="div__serviceCenter__content__header">
 					<div class="div__serviceCenter__logo">
 						<img src="/resources/img/allnight.png" class="serviceCenter_logo_image">
@@ -22,19 +21,17 @@
 					</div>
 				</div>
 				
-				<div class="div__serviceCenter__Container">
+				<div class="div__serviceCenter__Container js_container">
 					<ul class="serviceCenter_Tab">
-						<li><a href="#tab_content_frequenty" class="js_frequently">자주묻는질문</a></li>
-						<li><a href="#tab_content_question" class="js_frequently js_QuestionBoard">문의게시판</a></li>
+						<li><label class="js_frequentlyBoard">자주묻는질문</label></li>
+						<li><label class="js_QuestionBoard">문의게시판</label></li>
 					</ul>
 						
 						<div class="div__serviceCenter_Container_Tab" >
-							<div class="div__serviceCenter_Content js_service_content_tab" id="tab_content_frequenty">
+							<div class="div__serviceCenter_Content js_serviceContentTab">
 								<jsp:include page="../service/include/serviceFrequenty.jsp" />
 							</div>
-							<div class="div__serviceCenter_Content js_servcie_content_tab" id="tab_content_question">
-								<jsp:include page="../service/include/serviceQuestion.jsp" />
-							</div>
+		
 						</div>
 				</div>
 				
@@ -49,4 +46,5 @@
 					</div>
 				</div>
 			</div>
+				
 		</div>

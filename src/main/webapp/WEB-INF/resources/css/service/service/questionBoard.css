@@ -1,0 +1,111 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif;*/
+
+.questionBoardWriteForm  {
+    margin: 25px 0px 0px 40px;
+}
+
+.questionBoardWrite_title {
+    font-size: 28px;
+    display: flex;
+    border-bottom: 2px solid #eae1e1;
+}
+
+.questionBoard_sub {
+    font-size: 20px;
+    font-weight: bolder;
+    padding-bottom: 9px;
+    padding-top: 10px;
+}
+
+.questionBoard_sub2 {
+	
+}
+
+.questionBoard-content {
+    padding-top: 48px;
+    border-bottom: 2px solid #eae1e1;
+}
+
+.questionBoard_content {
+    font-size: 25px;
+}
+
+.questionBoard-title,
+.questionBoard-sub,
+.questionBoard-detail {
+    padding-top: 13px;
+}
+
+label.boardtitle {
+    padding-right: 34px;
+    /* //border-right: 1px solid #d3ddd3; */
+    font-size:20px;
+    line-height: 41px;
+}
+
+label.boardwriter {
+    padding-right: 21px;
+    font-size: 20px;
+    line-height: 41px;
+}
+.questionBoard {
+    padding-left: 30px;
+    background: url(/LCHS/Image/bg/bg_eline03.gif) no-repeat 100% 23px;
+}
+
+input.boardwriteBoard {
+	height: 37px;
+    width: 650px;
+    font-size: 21px;
+}
+
+label.boardSub {
+    padding-right: 34px;
+    font-size: 21px;
+}
+
+label.boardwriteDate {
+    padding-left: 30px;
+}
+
+input.boardwriteBoardinput {
+    height: 37px;
+    width: 200px;
+    font-size: 21px;
+}
+textarea.boardTextarea {
+    width: 750px;
+    height: 350px;
+    font-size: 21px;
+}
+
+.questionbutton {
+	padding-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.questionButton_cancel,
+.questionButton_confirm {
+    background-color: rgba(248, 230, 249, 0.66);
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 27px;
+    padding: 7px 20px;
+    font-size: 17px;
+}
+
+.questionButton_cancel:hover,
+.questionButton_confirm:hover {
+	background-color: rgba(251, 176, 255, 0.66);
+}
+
+.font {
+	font-family: 'Jeju Gothic', serif;
+}
+

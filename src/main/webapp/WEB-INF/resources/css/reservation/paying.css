@@ -4,7 +4,7 @@
     line-height: 2em;
 }
 
-.js_cardType.paying__card-choose {
+.paying__card-choose, .paying__card-number, .paying__card-pwd, .paying__expiry-date {
     padding: 4px 0px;
     border: 1px solid #b7b7b7;
     border-radius: 3px;

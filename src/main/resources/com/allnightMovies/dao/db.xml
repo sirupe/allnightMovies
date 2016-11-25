@@ -113,6 +113,13 @@
 		FROM MOVIE_SCREENING_PRICE
 		WHERE MOVIE_SCREENING_DATE=#{param1} AND MOVIE_THEATHER=#{param2}
 	</select>
+	
+	<!-- TICKETING : 영화 포스터 가져오기 -->
+	<select id="getMoviePoster" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT MOVIE_POSTER MOVIEPOSTER
+		FROM MOVIE_BASIC_INFO
+		WHERE MOVIE_TITLE=#{title}
+	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>

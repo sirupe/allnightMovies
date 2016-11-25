@@ -8,7 +8,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.allnightMovies.interceptor.KeepLoginCheckInterceptor;
-import com.allnightMovies.interceptor.LoginCookieAddIntercepter;
+import com.allnightMovies.interceptor.LoginCookieAddInterceptor;
+import com.allnightMovies.interceptor.LoginRequiredPageInterceptor;
 import com.allnightMovies.interceptor.LogoutInterceptor;
 
 
@@ -25,8 +26,9 @@ public class AllnightMoviesApplication {
 			@Override
 			public void addInterceptors(InterceptorRegistry registry) {
 				registry.addInterceptor(new KeepLoginCheckInterceptor()).addPathPatterns("/");
-				registry.addInterceptor(new LoginCookieAddIntercepter()).addPathPatterns("/movie/mainService/login");
+				registry.addInterceptor(new LoginCookieAddInterceptor()).addPathPatterns("/movie/mainService/login");
 				registry.addInterceptor(new LogoutInterceptor()).addPathPatterns("/movie/mainService/logout");
+				registry.addInterceptor(new LoginRequiredPageInterceptor()).addPathPatterns("/movie/mainService/ticketing");
 			}
 		};
 	}

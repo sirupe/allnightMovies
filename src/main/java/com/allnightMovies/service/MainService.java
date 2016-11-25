@@ -65,6 +65,7 @@ public class MainService implements Action {
 /*****은정. 기본 template의 작동*****/
 	// 기본 템플레이트 출력
 	public ModelAndView getTemplate() throws Exception {
+		
 		List<MainMenu> list = this.dbService.getMenus();
 		Map<String, MainMenu> mainMenuMap = new MenuList(list).getMainMenuMap();
 		ModelAndView mav = new ModelAndView("template");
@@ -79,6 +80,7 @@ public class MainService implements Action {
 		mav.addObject("contentCSS", this.params.getContentCSS());
 		mav.addObject("contentjs", this.params.getContentjs());
 		mav.addObject("keepLogin", this.params.getKeepLogin());
+		
 		return mav;
 	}
 
@@ -89,6 +91,7 @@ public class MainService implements Action {
 			HttpSession session = this.params.getSession();
 			session.setAttribute("userID", userLoginInfo.getUserID());
 		}
+		
 		return this.getTemplate();
 	}
 	
@@ -97,6 +100,13 @@ public class MainService implements Action {
 		this.params.getSession().invalidate();
 		return this.getTemplate();
 	}
+	
+/*****은정. loginPage *****/	
+	public ModelAndView loginPage() throws Exception {
+		ModelAndView mav = new ModelAndView("login");
+		return mav;
+	}
+	
 	
 /*****은정. join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
@@ -252,6 +262,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	
+/*****은정. ticketing *****/
 /*******연종. PWD찾기 SHIN*******/
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -547,9 +558,6 @@ public class MainService implements Action {
 		paging.makePaging(totalList, noticePage, 10, 10);
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
 		
-//		System.out.println("1.noticeBoard  --  사용자가 클릭한 page  >>  "  +  noticePage);
-//		System.out.println("1.noticeBoard  --  보여질 리스트 범위 입니다. >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
-//		
 		mav.addObject("noticePage", noticePage);
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
@@ -565,10 +573,6 @@ public class MainService implements Action {
 		Integer noticePage = this.params.getNoticePage();
 		Integer noticeNo = this.params.getNoticeNo();
 		
-//		System.out.println("noticeBoard에서 글제목을 클릭함");
-//		System.out.println("3. noticeBoardView   page  >>" + noticePage);
-//		System.out.println("3. noticeBoardView   no  >>" + noticeNo);
-		
 		CinemaNoticeBoardDTO noticeDTO = this.dbService.getNoticeBoardContent(noticeNo);
 		String content = noticeDTO.getContent();
 		String title = noticeDTO.getTitle();
@@ -581,7 +585,6 @@ public class MainService implements Action {
 		mav.addObject("page", "notice/noticeBoardView");
 		mav.addObject("contentCSS", "service/notice/noticeBoard");
 		mav.addObject("contentjs", "service/notice/notice");
-		//mav.addObject("noticePage", params.getNoticePage() == 0 ? 1 : params.getNoticePage());
 		mav.addObject("noticePage", noticePage);
 		mav.addObject("noticeNo", noticeNo);
 		return mav;
@@ -595,9 +598,6 @@ public class MainService implements Action {
 		Paging2 paging = new Paging2();
 		paging.makePaging(totalList, noticePage, 10, 10);
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
-		
-//		System.out.println("2. locationNoticeBoard 목록보기버튼의 사용자가 클릭한 page  >>  "  +  clickedPageNum);
-//		System.out.println("2. locationNoticeBoard  -- 보여질 리스트 범위입니다.  >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
 		
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
@@ -654,10 +654,7 @@ public class MainService implements Action {
 		Paging2 paging = new Paging2();
 		paging.makePaging(totalList, noticePage, 10, 10);
 		
-		System.out.println("2. 사용자 클릭  PAGE    >>  "  +  noticePage);
-		
 		List<CinemaNoticeBoardDTO> noticeBoardDTO = this.dbService.searchBoard(paging.getStartPageList(), paging.getEndPageList(), "%"+searchWord+"%");
-		
 		
 		mav.addObject("totalList", totalList);
 		mav.addObject("noticeDTO", noticeBoardDTO);

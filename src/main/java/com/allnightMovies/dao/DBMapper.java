@@ -32,13 +32,13 @@ public interface DBMapper {
 	public Integer idCheck(String id);
 	public Integer insertJoinUserInfo(UserPersonalInfoDTO userDTO);
 
-/** ji. ticketing : calendar**/
+/** ji. ticketing **/
 	public MovieScreeningDateInfo getMaxScreeningDate();
 	public List<TicketingMovieTitleInfo> getMovieTitle();
 	public List<TicketingMovieTimeInfo> getMovieTime(String movieTitle, String date);
 	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater);
 	public Integer getTicketPriceInfo(String screeningDate, String theater);
-	
+	public String getMoviePoster(String title);
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	

@@ -25,14 +25,14 @@
 				<div class="div__serviceCenter__Container">
 					<ul class="serviceCenter_Tab">
 						<li><a href="#tab_content_frequenty" class="js_frequently">자주묻는질문</a></li>
-						<li><a href="#tab_content_question" class="js_frequently">문의게시판</a></li>
+						<li><a href="#tab_content_question" class="js_frequently js_QuestionBoard">문의게시판</a></li>
 					</ul>
 						
 						<div class="div__serviceCenter_Container_Tab" >
-							<div class="div__serviceCenter_Content" id="tab_content_frequenty">
+							<div class="div__serviceCenter_Content js_service_content_tab" id="tab_content_frequenty">
 								<jsp:include page="../service/include/serviceFrequenty.jsp" />
 							</div>
-							<div class="div__serviceCenter_Content" id="tab_content_question">
+							<div class="div__serviceCenter_Content js_servcie_content_tab" id="tab_content_question">
 								<jsp:include page="../service/include/serviceQuestion.jsp" />
 							</div>
 						</div>

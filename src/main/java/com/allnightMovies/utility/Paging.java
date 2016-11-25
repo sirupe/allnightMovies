@@ -1,8 +1,8 @@
 package com.allnightMovies.utility;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class Paging {
 	
 	private int startPageNum; //처음페이지
@@ -26,13 +26,6 @@ public class Paging {
 		this.viewPageNum      = viewPageNum; // 몇개 번호를 나열?할 것인가. 
 	}
 	
-//	public Paging(int totalListCount, int boardListCount, int viewPageNum) {
-//	this.totalListCount   = totalListCount; //총글의 갯수
-//	this.boardListCount   = boardListCount; // 페이지당 보여질 게시글 갯수
-//	this.userClickPageNum = userClickPageNum; // 사용자가 누른 글
-//	this.viewPageNum      = viewPageNum; // 몇개 번호를 나열?할 것인가. 
-//}
-	
 	
 	public void setBoardPaging() {
 		//총 페이지 수
@@ -50,10 +43,11 @@ public class Paging {
 		//1-5페이지 목록 - > 5개씩 이니깐 총 25개
 		this.viewStartPageNum = ((this.userClickPageNum - 1) / this.viewPageNum) * this.viewPageNum + 1;
 		
+		System.out.println(viewStartPageNum + " : paging에서 startnum");
 		this.viewEndPageNum = (this.viewStartPageNum + this.viewPageNum - 1) > this.totalPageCount ?
 				this.totalPageCount :  (this.viewStartPageNum + this.viewPageNum) - 1;
 								
-		
+		System.out.println(viewEndPageNum + " : paing에서 ends");
 		if(this.viewStartPageNum > this.viewPageNum) {
 			this.isPreButton = true;
 		}

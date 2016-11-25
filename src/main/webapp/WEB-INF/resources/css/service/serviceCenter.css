@@ -6,9 +6,9 @@
 /*font-family: 'Nanum Gothic', serif; 비밀번호*/
 
 .div__serviceCenter_form {
-	width: 759px;
-    height: 790px;
+    width: 100%;
     display: flex;
+    height: 939px;
     flex-direction: column;
     line-height: 40px;
     padding: 20px;
@@ -69,8 +69,8 @@
 }
 
 .serviceCenter_intro_message {
-    width: 336px;
-    font-size: 15.5px;
+    width: 364;
+    font-size: 17.5px;
     font-weight: 700;
     line-height: initial;
     padding-left: 6px;
@@ -139,7 +139,7 @@ ul.serviceCenter_Tab li a {
     display: block;
     font-size: 16px;
     outline: none;
-    padding: 0 15px;
+    padding: 0 5px;
 }
 
 ul.serviceCenter_Tab li a:hover {
@@ -161,28 +161,31 @@ ul.serviceCenter_Tab li.actice a:hover {
 }
 
 .div__serviceCenter_Container_Tab {
-	BACKGROUND-COLOR: white;
-    HEIGHT: 342PX;
-	padding-left: 19px;
+	BACKGROUND-COLOR:  #ffffff;
+    HEIGHT: 419PX;
     padding-bottom: 176px
+}
+
+.div#tab_content_frequenty {
+	padding-top: 78px;
 }
 
 .div__serviceCenter_info {
 	display: flex;
     /* background-color: burlywood; */
-    padding-top: 25px;
+padding-top: 116px;
     line-height: 36px;
 }
 
 .div__serviceCenter_Tel {
-   	display: flex;
+display: flex;
     /* background-color: cadetblue; */
     width: 249px;
-    padding-left: 110px;
+    padding-left: 41px;
     font-size: 22px;
     font-weight: bolder;
-    padding-bottom: 11px;
-    border-right: 2px solid;
+    padding-bottom: 22px;
+    /* border-right: 2px solid; */
     font-family: 'Jeju Gothic', serif;
 }
 
@@ -199,17 +202,6 @@ ul.serviceCenter_Tab li.actice a:hover {
 
 /*************************************자주묻는질문 ****************************************************/
 
-.container__serviceCenterFrequenty {
-/* 	background-color: white;
-    padding: 20px;
-    width: 950px;
-    margin: auto; */
-}
-
-.container__serviceCenterFrequenty_content {
-	width: 100%;	
-}
-	
 .container__serviceCenterFrequenty__title {
 /* 	border-bottom: solid black;
     padding-bottom: 12px;
@@ -315,17 +307,14 @@ ul,li {
 }
 
 .container__serviceCenterFrequenty_content {
-    /* width: 100%; */
-    display: initial;
+    padding-top: 68px;
 }
 
-
-
 .container__serviceCenterFrequenty {
-	min-width:300px;
-	max-width:600px;
-	margin:10px;
-	background:#fff;
+    min-width: 300px;
+    max-width: 600px;
+    margin: 10px;
+    background: rgba(255, 255, 255, 0);
 }
 
 .js_service_List li {
@@ -357,11 +346,139 @@ ul,li {
 
 
 .serviceCenterFrequenty__pageButton {
-	font-family: 'Nanum Gothic', serif;
+font-family: 'Nanum Gothic', serif;
     background: beige;
     text-align: center;
     font-size: 17px;
     height: 32px;
     line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 215px;
 }
+
+.serviceCener_paging_button {
+	
+}
+
+
+.serviceCener_paging_button {
+    font-size: 23px;
+    padding-left: 17px;
+    cursor: pointer;
+}
+
+
+.js_nextButton,
+.js_preButton {
+    padding-left: 17px;
+    font-size: 22px;
+    line-height: 32px;
+    cursor: pointer;
+}
+
+.serviceCenter_search {
+	padding-top: 22px;
+    text-align: -webkit-right;
+}
+
+.serviceCenter_Searchinput {
+	width: 200px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+}
+
+
+.serviceCenter_Searchbutton {
+    background-color:#ffe1ed;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 10px;
+    padding: 6px 15px;
+    font-size: 15px;
+}
+
+.serviceCenter_Searchbutton:HOVER {
+	 background-color:#f2a3c2;
+}
+
+
+/****************************************문의 게시판***************************************/
+.questionBoard_container {
+	disflex:flex;
+	/* width:800px; */
+	flex-direction:column;
+	font-family: 'Jeju Gothic', serif;
+	font-size: 16.5px;
+	line-height: 27px;
+
+	
+}
+
+.questionBoard_top,
+.questionBoard_middle {
+	width:100%;
+	flex-basis: 40px;
+    text-align: center;
+}
+
+.questionBoard_top_no {
+	display:inline-block;
+	width:10%;	
+    background-color: gray;
+}
+
+.questionBoard_top_title {
+    display: inline-block;
+    width: 54%;
+    background-color: #e5c7c7;
+}
+
+.questionBoard_top_user {
+	display: inline-block;
+    width: 14%;
+    background-color: #e5c7c7;
+}
+
+.questionBoard_top_date {
+	display: inline-block;
+    width: 19%;
+    background-color: #e5c7c7;
+}
+
+.questionBoard_bottom {
+	width: 100%;
+    text-align: center;
+    padding-top: 12px;
+    flex-basis: 20px;
+    background-color: gray;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

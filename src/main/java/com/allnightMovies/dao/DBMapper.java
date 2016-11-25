@@ -1,13 +1,15 @@
 package com.allnightMovies.dao;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
-import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -44,14 +46,19 @@ public interface DBMapper {
 	public List<Params> searchId(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
 /** jung. 아이디 갯수 **/
 	public Integer searchIdCount(String searchIdUserName, String searchIdUserBirth, String searchIdUserGender) throws Exception;
-/** juung 이메일 **/
+/** jung 이메일 **/
 	public Integer searchEmailCount(String searchIdUserEmail) throws Exception;
 	public List<Params> searchIDEmail(String searchIdUserEmail) throws Exception;
 	
 /**고객센터--자주묻는질문**/
-	public List<MovieFrequentlyBoardDTO> serviceCenter() throws Exception;
-	public ArrayList<MovieFrequentlyBoardDTO> serviceCentergetBoard(int startPageNum, int endPageNum) throws Exception;
+	public List<CinemaFrequentlyBoardDTO> serviceCenter() throws Exception;
+	public ArrayList<CinemaFrequentlyBoardDTO> serviceCentergetBoard(int startPageNum, int endPageNum) throws Exception;
 	public Integer serviceCentergetBoardCount() throws Exception;
+	
+/**고객센터 문의사항게시판 **/
+	public Integer questionBoardCount() throws Exception;
+	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception;
+	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);

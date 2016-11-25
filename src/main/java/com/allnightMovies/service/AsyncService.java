@@ -1,6 +1,7 @@
 package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
+import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
-import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -401,10 +402,8 @@ public class AsyncService implements AsyncAction {
 		HttpSession session = this.params.getSession();
 		Integer sessionSaveNum = (Integer) session.getAttribute("confirmNumRandom");
 		System.out.println(sessionSaveNum + "맞나.");
-		
 		 
 		boolean emailAllCheck = false;
-		
 		
 		if(searchIdUserEmail == "" && userConfirmNum == null) {
 			emailAllCheck = false;
@@ -413,7 +412,6 @@ public class AsyncService implements AsyncAction {
 		}
 		asyncResult.setSuccess(emailAllCheck);
 		return asyncResult;
-		
 	}
 	
 	//자주묻는게시판 전환
@@ -427,7 +425,7 @@ public class AsyncService implements AsyncAction {
 		int page = this.params.getPageboard();
 		System.out.println(page + "page");
 		
-		List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
 		Paging boardPaging = new Paging(totBoardList, 7,page, 5);
 		boardPaging.setBoardPaging();
 		System.out.println(boardPaging + "페이지 그룹");

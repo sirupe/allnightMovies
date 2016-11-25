@@ -11,16 +11,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
+import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
-import com.allnightMovies.model.data.movieInfo.MovieFrequentlyBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -296,11 +295,11 @@ public class MainService implements Action {
 	}
 //------------------------------------------------------------------------
 	
-/*******ID찾기(회원정보) 수진*******/	
+	/*******ID찾기(회원정보) 수진*******/	
+	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		String resultMsg = null;
-		boolean userInfoResult = true;
+		boolean userInfoResult = false;
 		String searchIdUserName = this.params.getSearchIdUserName();
 		String searchIdUserBirth = this.params.getSearchIdUserBirth();
 		String searchIdUserGender = this.params.getSearchIdUserGender();
@@ -333,11 +332,9 @@ public class MainService implements Action {
 	
 	public ModelAndView searchIDEmailResult() throws Exception {
 		this.params.setDirectory("searchId");
-		this.params.setPage("searchIdEmailResult");
 		this.params.setContentCSS("searchId/searchId");
 		this.params.setContentjs("searchId/searchId");
 		
-		HttpSession session = this.params.getSession();
 		String searchIdUserEmail = (String) this.params.getSession().getAttribute("searchIdUserEmail");
 		//db보내기
 		List<Params> userEmail = this.dbService.searchIDEmail(searchIdUserEmail);
@@ -349,12 +346,13 @@ public class MainService implements Action {
 		return mav;
 		
 	}
+	
+	
 /*****수진. 상영시간표List*****/
 	public ModelAndView showtimes() throws Exception {
 		this.params.setContentCSS("reservation/timeTable");
 		this.params.setContentjs("reservation/timeTable");
 		List<MovieShowTimesMap> movieTimeTable = this.dbService.showtimes();
-	
 		
 		for(int i = 0, size=movieTimeTable.size(); i < size; i++) {
 			MovieShowTimesMap showTime = movieTimeTable.get(i);
@@ -375,28 +373,49 @@ public class MainService implements Action {
 	}
 	
 /****수진 .고객센터*****/
-	@RequestMapping(value="/serviceCenter")
 	public ModelAndView serviceCenter() throws Exception {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
 		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
 		
+		
+		/*자주묻는게시판*/
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
-		System.out.println("service글목록 갯수 : " + totBoardList);
-		
-		int page = this.params.getPageboard();
-		System.out.println(page + "page");
-		
-		List<MovieFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 7,page, 5);
+		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+		Paging boardPaging = new Paging(totBoardList, 5, 1, 4); //들어왔을때 page값 기본적으로 1 주기
 		boardPaging.setBoardPaging();
-		System.out.println(boardPaging + "페이지 그룹");
-		System.out.println(boardPaging.getStartPageNum() + "시작");
-		System.out.println(boardPaging.getEndPageNum() + "마지막");
-		System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
-
+		
+		/*문의사항*/
+		int totQuestionBoardCount = this.dbService.questionBoardCount();
+		Paging questionBoardPaging = new Paging(totQuestionBoardCount, 10, 1, 5);
+		questionBoardPaging.setBoardPaging();
+		
 		
 		ModelAndView mav = this.getTemplate();
+		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
+		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
+		mav.addObject("pageCount",boardPaging.getTotalPageCount());
+		mav.addObject("pageGroup",boardPaging);
+		
+		
+		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
+		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
+		mav.addObject("questionBoardGroup", questionBoardPaging);
+		return mav;
+	}
+	
+//자주묻는페이지 페이지 전환
+	public ModelAndView serviceCentergetBoardCount() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
+
+		int totBoardList = this.dbService.serviceCentergetBoardCount();
+		
+		int page = this.params.getPageboard();
+		
+		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+		Paging boardPaging = new Paging(totBoardList, 5,page, 4);
+		boardPaging.setBoardPaging();
+		
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
@@ -404,16 +423,12 @@ public class MainService implements Action {
 		mav.addObject("checkPage", page);
 		return mav;
 	}
-	public ModelAndView serviceCentergetBoardCount() throws Exception {
+	
+//문의 사항 게시판 전환
+	public ModelAndView serviceCenterQuestionBoardChange() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
 		
-		this.params.setDirectory("service");
-		this.params.setPage("serviceCenter");
-		this.params.setContentCSS("service/serviceCenter");
-		this.params.setContentjs("service/serviceCenter");
-		
-		int totBoardList = this.dbService.serviceCentergetBoardCount();
-		System.out.println("글목록 갯수 : " + totBoardList);
-		return this.getTemplate();
+		return mav;
 	}
 	
 /*******연종. MyINFO SHIN*******/	

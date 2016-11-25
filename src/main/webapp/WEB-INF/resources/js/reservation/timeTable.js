@@ -8,3 +8,21 @@ function movie_date() {
 		}
 	}
 }
+
+
+
+
+
+/*********************시작*******************/
+
+//function setTimeTable() {
+//	var $container = $('.js_timeTableContainer');
+//	
+//		$container.on('click', '.js_movie_date', movie_date);
+//}
+//
+//function initTimeTable() {
+//	setTimeTable();
+//}
+//
+//initTimeTable();

@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif;*/
+
+.js_intoduceContainer {
+	margin: 40px 0px 0px 90px;
+}
+
+.introduce-title {
+	font-family: 'Jeju Gothic', serif;
+    margin: 33px 0px 20px 10px;
+	font-size: 25px;
+}
+
+.introduce-img {
+	width: 830px;
+	height: 450px;
+}
+
+.font {
+	font-family: 'Jeju Gothic', serif;
+}

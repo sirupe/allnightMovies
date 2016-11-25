@@ -282,16 +282,12 @@
 			FROM (
 				SELECT *
 				FROM MOVIE_BASIC_INFO 
-				WHERE MOVIE_RELEASE_DATE
-				<![CDATA[ 
-				 < 
-				]]>
-				SYSDATE 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE 
 				ORDER BY MOVIE_TITLE ASC
 			    )
 			)    
 	</select>
-<!-- SHIN. MOVIE  PLANNEDFILM -->		
+<!-- SHIN. MOVIE  plannedFilm -->		
 	<select id="getPlannedFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO">
 		SELECT * FROM (
 			SELECT MOVIE_TITLE  movieTitle,
@@ -301,22 +297,18 @@
 			FROM (
 				SELECT *
 				FROM MOVIE_BASIC_INFO 
-				WHERE MOVIE_RELEASE_DATE
-				<![CDATA[ 
-				 > 
-				]]>
-				SYSDATE 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[>]]> SYSDATE 
 				ORDER BY MOVIE_TITLE ASC
 			    )
 			)   
 	</select>
+	
 <!-- SHIN. SERVICE noticeBoard -->
-
 	<select id="getNoticeBoardCount" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM CINEMA_NOTICE_BOARD
 	</select>
-
+	
 	<select id="getCinemaNoticeBoardDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.Integer">
 		SELECT * FROM (
 		SELECT NO		  no, 
@@ -333,4 +325,46 @@
 		)    
 		WHERE RNUM BETWEEN #{param1} AND #{param2}
 	</select>
+	
+	<select id="getNoticeBoardContent" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.Integer">
+		SELECT TITLE title, 
+			   TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') writeDate,  
+			   CONTENT content
+		FROM CINEMA_NOTICE_BOARD
+		WHERE NO = #{noticeNo}
+	</select>
+	
+	<select id="searchBoardCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM CINEMA_NOTICE_BOARD
+		WHERE TITLE LIKE #{searchWord} OR CONTENT LIKE #{searchWord}
+	</select>
+	
+	<select id="searchBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.String">
+		SELECT * FROM (
+		SELECT NO		  no, 
+		       TITLE	  title,
+		       writeDate, 
+		       CONTENT	  content,
+		       IMPORTANT  important,
+		       ROWNUM RNUM 
+		FROM (
+		         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
+		         FROM CINEMA_NOTICE_BOARD 
+		         WHERE TITLE LIKE #{param3} OR CONTENT LIKE #{param3}
+		         ORDER BY IMPORTANT DESC, writeDate DESC
+		      )
+		)    
+		WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+<!-- SHIN. theater introduce -->
+
+	<select id="getCinemaIntroImg" resultType="com.allnightMovies.model.data.theater.CinemaIntroduceDTO">
+		SELECT CINEMA_INTRO_IMAGE cinemaIntroImg
+		FROM CINEMA_INTRODUCE
+	</select>
+	
+	
+	
 </mapper>

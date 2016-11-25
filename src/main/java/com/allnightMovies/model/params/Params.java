@@ -72,5 +72,8 @@ public class Params {
 	
 // 공지사항 게시판
 	private int noticeUserClickPage;
+	private int noticePage;
 	private int noticeNo;
+	private String noticeSearachWord;
+
 }

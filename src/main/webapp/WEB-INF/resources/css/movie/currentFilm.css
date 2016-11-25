@@ -4,6 +4,13 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 /*font-family: 'Nanum Gothic', serif; 비밀번호*/
 
+.video-currentFilm__mainFilm {
+	width: 840px;
+    height: 380px;
+	/* poster: url("/../resources/img/poster/fantasticBeastsVideo.jpg"); */
+	background-color: rgb(34, 33, 36);
+}
+
 .div-currentFilm {
 	display: block;
 }

@@ -3,36 +3,61 @@
 /*font-family: 'Jeju Gothic', serif;*/
 
 .noticeBoardView {
-    display: inline-block;
-    margin: 25px 0px 0px 360px;
+   margin-top: 25px;
 }
 .noticeBoardView_title {
 	font-size: 25px;
 }
+.noticeBoard-content {
+    margin: 20px 0px 0px 25px;
+}
+
 .noticeBoard-title {
 	display: inline-flex;
 	align-items: center;
    	height: 38px;
     background-color: #d2e6cd;
     color: #2a3034;
-    margin: 25px 0px 20px 30px;
 }
 
-.title {
+.noticeBoard__title {
 	display: table;
 	width: 600px;
     font-size: 20px;
     margin-left: 20px
 }
-.writeDate {
-	width: 210px;
+.noticeBoard__writeDate {
+    width: 210px;
     font-size: 14px;
+    text-align: right;
+    margin-right: 20px;
 }
-.content {
+.noticeBoard__content {
+	white-space: pre-wrap;
+	resize: none;
+	overflow-y:hidden;
+	margin: auto;
+    margin-bottom: 20px;
+	padding: 30px;
 	border: none;
-    resize: none;
-    width: 600px;
+    width: 770px;
+    font-size: 16px;
+    border-bottom: 1px solid #d2e6cd;
 }
+.noticeBoard__listButton {
+    background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;	
+    margin-left: 4px;
+    padding: 6px 15px;
+    font-size: 15px;
+}
+.searchbutton:hover {
+	background-color: #ead2b3;
+}
+
 /*공통*/
 .font {
 	font-family: 'Jeju Gothic', serif;

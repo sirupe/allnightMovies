@@ -189,6 +189,10 @@ function payPagePopup() {
 		'position' : 'fixed'
 	});
 	
+	var $popupContainer = $('.js_payPopupPage');
+	$popupContainer.on('click', '.js_popMovieCancel', payPagePopupCancel)
+				   .on('click', '.js_popMoviePaying', payPagePopupPaying)
+	
 	showTicketingInfoAndPaying();
 }
 
@@ -203,26 +207,28 @@ function showTicketingInfoAndPaying() {
 	var url = '/movie/async/asyncService/getMoviePoster',
 		params = {'movieTitle' : movieTitle};
 		cbf = function(result) {
+			$popMovieTitle.text('<' + movieTitle + '>');
+			$popMovieDate.text(screeningDate);
+			$popMovieTime.text(movieTime);
+			$popMovieTheater.text(theater + '관');
+			$popMovieSeat.text(seatArr);
+			$popMovieCnt.text('총' + $personCnt.text() + '매');
+			$popMoviePrice.text('결제되는 금액 ' + moviePrice + '원');
 			
+			$('.js_popMoviePoster').html(
+				'<img alt="poster" src="/resources/img/poster/' + result.data + '" width="175px" height="265px"/>'
+			);
 		}
-	$popMovieTitle.text(movieTitle);
-	$popMovieDate.text(screeningDate);
-	$popMovieTime.text(movieTime);
-	$popMovieTheater.text(theater);
-	$popMovieCnt.text($personCnt.text());
-	$popMovieSeat.text(seatArr);
-	$popMoviePrice.text(moviePrice);
+		
+	$.post(url, params, cbf);
 }
 
-var movieTitle;
-var screeningDate;
-var movieTime;
-var theater;
-
-var $personCnt;
-var moviePrice;
-var seatArr;
-
+function payPagePopupCancel() {
+	$('.js_payPopupPage').css({
+		'display' : 'none',
+		'position' : 'absolute'
+	});
+}
 
 function setEvent() {
 	var $container = $('.js_ticketing');

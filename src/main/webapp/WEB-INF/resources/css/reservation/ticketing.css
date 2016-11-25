@@ -178,6 +178,7 @@
 
 .movie-time:hover {
 	color: lightcoral;
+	cursor: pointer;
 }
 
 /* theater seat info */
@@ -314,6 +315,12 @@
     border-radius: 5px;
 }
 
+/* paying popup*/
+.padding20 {
+	padding-top: 30px;
+    padding-left: 20px;
+}
+
 .pay-popup-page {
 	position: absolute;
 	background-color: rgba(92, 92, 92, 0.31);
@@ -324,8 +331,8 @@
 }
 
 .pay-popup-page__background {
-	width: 500px;
-    height: 500px;
+    width: 650px;
+    height: 350px;
     background-color: white;
     margin: auto;
     margin-top: 200px;
@@ -338,4 +345,55 @@
     height: 100%;
     border: 0.1em dashed darkgray;
     border-radius: 10px;
+    display: flex;
+}
+
+.pay-popup-page__title {
+	font-size: 30px;
+    color: lightslategray;
+    margin-bottom: 10px;
+}
+
+.pay-popup-page__result {
+	font-size: large;
+    border-top: 2px dotted lightgray;
+    padding: 12px 0px;
+}
+.pay-popup-page__result__label {
+    color: palevioletred;
+}
+
+.pay-popup-page__btn button {
+    font-family: 'Jeju Gothic', serif;
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 9px;
+    font: normal medium/normal "Trebuchet MS", Helvetica, sans-serif;
+    color: #fcf3f3;
+    text-overflow: clip;
+    background: rgb(53, 88, 121);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgb(97, 116, 120);
+    transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.pay-popup-page__btn {
+    text-align: center;
+}
+
+.pay-popup-page__result__label {
+    color: palevioletred;
+    margin-right: 15px;
+}
+
+.padding-right {
+	padding-right: 10px;
+}
+
+.pay-popup-page__result__message {
+    font-size: 18px;
+    color: dimgrey;
+    margin: 20px 0px;
 }

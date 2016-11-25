@@ -191,6 +191,10 @@ function insertQuestionBoard() {
 	    console.log(insertTextArea);
 	    console.log(insertboardPWd);
 	    console.log(insertPwdcheck);
+	    
+	    
+	    
+	    
 	
 }
 

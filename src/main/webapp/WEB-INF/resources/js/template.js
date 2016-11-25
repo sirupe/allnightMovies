@@ -15,14 +15,14 @@ function locationJoinTerms(e) {
 	submit(url, dir, page, js, css);
 }
 function locationLogon() {
-	var $userID  = $('#user-id');
-		$userPWD = $('#user-pwd');
-		url		 = '/movie/async/asyncService/login';
+	var $userID  = $('#user-id'),
+		$userPWD = $('#user-pwd'),
+		url		 = '/movie/async/asyncService/login',
 		params	 = 
 			{
 				'userID' : $userID.val(),
 				'userPWD' : $userPWD.val()
-			};
+			},
 		cbf		 = 
 			function(result) {
 				console.log(result.success);

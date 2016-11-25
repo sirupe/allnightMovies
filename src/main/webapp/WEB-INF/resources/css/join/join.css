@@ -41,7 +41,7 @@
 	margin-top: 20px;
 }
 .join-form__info2 [type="email"] {
-	width: 254px;
+	width: 263px;
 }
 .join-form__info2 [type="date"] {
 	padding: 6px 10px;
@@ -70,32 +70,21 @@
 	text-align: center;
 	margin-top: 10px;
 }
-.join-form__info2__confirm-button {
-	box-sizing: content-box;
-	cursor: pointer;
-	padding: 6px 10px;
-	border: 1px solid #018dc4;
-	border-radius: 9px;
-	font: normal 13px "Trebuchet MS", Helvetica, sans-serif;
-	color: rgba(255,255,255,0.9);
-	background: #308FBF;
-	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
-	text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
-	margin-top: 20px;
-}
+
 .join-button {
-	box-sizing: content-box;
-	cursor: pointer;
-	padding: 9px 15px;
-	border: 1px solid #018dc4;
-	border-radius: 9px;
-	font: normal medium/normal "Trebuchet MS", Helvetica, sans-serif;
-	color: rgba(255,255,255,0.9);
-	background: #444444;
-	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
-	text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
-	margin-top: 20px;
-	margin-bottom: 20px;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 15px 18px 13px;
+    border: 1px solid #018dc4;
+    border-radius: 9px;
+    color: rgba(255,255,255,0.9);
+    background: #444444;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Jeju Gothic', serif;
+    font-size: medium;
 }
 .join-button:hover {
     background: #4C4C4C;
@@ -104,17 +93,17 @@
     background: #242424;
 }
 .join-form__info2__confirm-button, .join-form__info2__input-confirm-num {
-	box-sizing: content-box;
-	cursor: pointer;
-	padding: 6px 10px;
-	border: 1px solid #018dc4;
-	border-radius: 9px;
-	font: normal 13px "Trebuchet MS", Helvetica, sans-serif;
-	color: rgba(255,255,255,0.9);
-	background: #308FBF;
-	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
-	text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
-	margin-top: 20px;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 8px 12px 7px;
+    border: 1px solid #018dc4;
+    border-radius: 9px;
+    color: rgba(255,255,255,0.9);
+    background: #308FBF;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
+    margin-top: 20px;
+    font-family: 'Jeju Gothic', serif;
 }
 .join-form__info2__confirm-button:hover {
     background-color: #36A3D9;
@@ -136,10 +125,11 @@ button#confirm-number:active {
     border: #000000;
 }
 input#confirm-number {
-    width: 296px;
+    width: 293px;
 }
 .join__resultText {
 	color: #f1859b;
     font-size: small;
     font-weight: bold;
+    padding-top: 6px;
 }

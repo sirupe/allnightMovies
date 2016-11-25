@@ -129,25 +129,42 @@ public class AsyncService implements AsyncAction {
 	
 	// 로그인
 	public AsyncResult<String> login() throws Exception {
+		System.out.println("async login()");
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		String result = null;
 		boolean resultBool = true;
+		System.out.println(this.params.getRequest().getRequestURL());
 		if(userLoginInfo.getUserStates() == 1) {
 			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
 				HttpSession session = this.params.getSession();
 				session.setAttribute("userID", userLoginInfo.getUserID());
+				result = session.getAttribute("requestURL").toString();
+				session.removeAttribute("requestURL");
 			} else {
 				result = "비밀번호가 일치하지 않습니다.";
+				resultBool = false;
 			}
 		} else {
 			result = "탈퇴하였거나 존재하지 않는 아이디입니다.";
+			resultBool = false;
 		}
+		
+		
+		
 		AsyncResult<String> async = new AsyncResult<String>();
 		async.setData(result);
 		async.setSuccess(resultBool);
+		
 		return async;
 	}
 	
+/*****은정. TICKETING : Get Movie Poster *****/
+	public AsyncResult<String> getMoviePoster() {
+		String moviePoster = this.dbService.getMoviePoster(this.params.getMovieTitle());
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData(moviePoster);
+		return async;
+	}
 /*****연종. chagePwd success check*****/	
 	public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
 		String newPWD = params.getMyInfoNewPwd();

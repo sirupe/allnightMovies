@@ -1,0 +1,78 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif; -> 이렇게 사용하심 되영*/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/*font-family: 'Nanum Gothic', serif; 비밀번호*/
+
+.margin-auto {
+	margin: auto;
+}
+.login-page {
+    font-family: 'Jeju Gothic', serif;
+    width: 700px;
+    text-align: center;
+    
+}
+.login-page-img {
+    width: 400px;
+    height: 100px;
+    margin-top: 30px;
+}
+.login-page-container__message {
+    margin: 50px 0px;
+    font-size: larger;
+}
+.login-page-container__input input[type="text"], input[type="password"] {
+    margin-bottom: 7px;
+    box-sizing: content-box;
+    padding: 15px 10px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 3px;
+    font-family: 'Jeju Gothic', serif;
+    color: #0A1F33;
+    width: 300px;
+    text-overflow: clip;
+    background: rgba(255, 255, 255, 0.63);
+    box-shadow: 2px 2px 2px 0 rgba(12,102,137,0.2) inset;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.66);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    font-size: 14px;
+}
+.login-page-container__input input[type="password"] {
+	font-family: 'Nanum Gothic', serif;
+}
+.login-page-container__btn {
+    padding: 20px;
+}
+
+button.login-page-container__btn__login, button.login-page-container__btn__cancel {
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 10px 15px;
+    border: 1px solid #d4b2b3;
+    border-radius: 3px;
+    font: normal medium/normal Arial, Helvetica, sans-serif;
+    color: rgba(255,255,255,0.9);
+    text-overflow: clip;
+    background: #d18a8d;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgb(96, 31, 31);
+    transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+    font-family: 'Jeju Gothic', serif;
+    width: 100px;
+}
+button.login-page-container__btn__login:hover, button.login-page-container__btn__cancel:hover {
+	background: #ff9b9f;
+}
+.login-page-container__links a {
+    margin: 10px;
+    text-decoration: none;
+    color: chocolate;
+}
+.login-page-container__links a:hover {
+	color: blue;
+}
+.login-page-container__links a:hover {
+    color: coral;
+}

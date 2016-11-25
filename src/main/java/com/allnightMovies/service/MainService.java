@@ -1,9 +1,7 @@
  package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +11,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
@@ -68,6 +63,7 @@ public class MainService implements Action {
 /*****은정. 기본 template의 작동*****/
 	// 기본 템플레이트 출력
 	public ModelAndView getTemplate() throws Exception {
+		
 		List<MainMenu> list = this.dbService.getMenus();
 		Map<String, MainMenu> mainMenuMap = new MenuList(list).getMainMenuMap();
 		ModelAndView mav = new ModelAndView("template");
@@ -82,6 +78,7 @@ public class MainService implements Action {
 		mav.addObject("contentCSS", this.params.getContentCSS());
 		mav.addObject("contentjs", this.params.getContentjs());
 		mav.addObject("keepLogin", this.params.getKeepLogin());
+		
 		return mav;
 	}
 
@@ -92,6 +89,7 @@ public class MainService implements Action {
 			HttpSession session = this.params.getSession();
 			session.setAttribute("userID", userLoginInfo.getUserID());
 		}
+		
 		return this.getTemplate();
 	}
 	
@@ -100,6 +98,13 @@ public class MainService implements Action {
 		this.params.getSession().invalidate();
 		return this.getTemplate();
 	}
+	
+/*****은정. loginPage *****/	
+	public ModelAndView loginPage() throws Exception {
+		ModelAndView mav = new ModelAndView("login");
+		return mav;
+	}
+	
 	
 /*****은정. join 회원가입 시의 작동*****/	
 	public ModelAndView idCheck() throws Exception {
@@ -254,7 +259,6 @@ public class MainService implements Action {
 		mav.addObject("moviePrice", moviePrice);
 		return mav;
 	}
-	
 /*******연종. PWD찾기 SHIN*******/
 	//고쳐야할것★★★ 사용자가 입력한 아이디 값을 session에 저장시키는것이 아니라
 	//DB에서 확인된 아이디를 가져와session에 저장 시켜야 함 정확하게 하기위해!!!!!!

@@ -58,7 +58,6 @@ public class DBService {
 		return dbMapper.getMaxScreeningDate();
 	}
 	
-
 	public List<TicketingMovieTitleInfo> getMovieTitle() {
 		return dbMapper.getMovieTitle();
 	}
@@ -75,6 +74,9 @@ public class DBService {
 		return dbMapper.getTicketPriceInfo(screeningDate, theater);
 	}
 	
+	public String getMoviePoster(String title) {
+		return dbMapper.getMoviePoster(title);
+	}
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();

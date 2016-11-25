@@ -20,6 +20,7 @@ import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
+import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -58,7 +59,6 @@ public class DBService {
 		return dbMapper.getMaxScreeningDate();
 	}
 	
-
 	public List<TicketingMovieTitleInfo> getMovieTitle() {
 		return dbMapper.getMovieTitle();
 	}
@@ -75,6 +75,9 @@ public class DBService {
 		return dbMapper.getTicketPriceInfo(screeningDate, theater);
 	}
 	
+	public String getMoviePoster(String title) {
+		return dbMapper.getMoviePoster(title);
+	}
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
@@ -165,6 +168,18 @@ public class DBService {
 	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum) {
 		return dbMapper.getCinemaNoticeBoardDTO(blockStartNum, blockEndNum);
 	}
-	
+	public CinemaNoticeBoardDTO getNoticeBoardContent(Integer noticeNo) {
+		return dbMapper.getNoticeBoardContent(noticeNo);
+	}
+	public List<CinemaNoticeBoardDTO> searchBoard(Integer blockStartNum, Integer blockEndNum, String searchWord) {
+		return dbMapper.searchBoard(blockStartNum, blockEndNum, searchWord);
+	}
+	public int searchBoardCount(String searchWord) {
+		return dbMapper.searchBoardCount(searchWord);
+	}
+/** shin. THEATER introduce **/
+	public List<CinemaIntroduceDTO> getCinemaIntroImg() {
+		return dbMapper.getCinemaIntroImg();
+	}
 	
 }

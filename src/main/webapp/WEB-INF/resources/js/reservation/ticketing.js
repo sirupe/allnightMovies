@@ -1,25 +1,26 @@
 var screeningDate;
 var movieTitle;
-var $screeningDate;
-var $movieTitle;
-var $movieTime;
+var movieTime;
 var $personCnt;
 var theater;
-var $moviePrice;
+var moviePrice;
 var seatArr;
+var $movieTitle;
+var $screeningDate;
+var $movieTime;
 
 
 function calendarPrevBtnClick() {
-	var thisMonth 	= $('.js_calendarMonth').text() - 1;
-		thisYear 	= $('.js_calendarYear').text();
-		month 		= thisMonth < 1 ? 12 : thisMonth;
-		year 		= thisMonth < 1 ? thisYear - 1 : thisYear;
+	var thisMonth 	= $('.js_calendarMonth').text() - 1,
+		thisYear 	= $('.js_calendarYear').text(),
+		month 		= thisMonth < 1 ? 12 : thisMonth,
+		year 		= thisMonth < 1 ? thisYear - 1 : thisYear,
 		
-		url 		= '/movie/mainService/calendar';
+		url 		= '/movie/mainService/calendar',
 		params 		= {
 				'calendarMonth' : month,
 				'calendarYear' : year
-		};
+		},
 		cbf 		= function(result) {
 				$('.calendar').html(result);
 		};
@@ -28,16 +29,16 @@ function calendarPrevBtnClick() {
 }
 
 function calendarNextBtnClick() {
-	var thisMonth 	= Number($('.js_calendarMonth').text()) + 1;
-		thisYear 	= Number($('.js_calendarYear').text());
-		month 		= thisMonth > 12 ? 1 : thisMonth;
-		year 		= thisMonth > 12 ? thisYear + 1 : thisYear;
+	var thisMonth 	= Number($('.js_calendarMonth').text()) + 1,
+		thisYear 	= Number($('.js_calendarYear').text()),
+		month 		= thisMonth > 12 ? 1 : thisMonth,
+		year 		= thisMonth > 12 ? thisYear + 1 : thisYear,
 		
-		url 		= '/movie/mainService/calendar';
+		url 		= '/movie/mainService/calendar',
 		params 		= {
 				'calendarMonth' : month,
 				'calendarYear' : year
-		};
+		},
 		cbf 		= function(result) {
 				$('.calendar').html(result);
 		};
@@ -63,6 +64,7 @@ function movieTitleClick() {
 }
 
 function ticketingDateClick() {
+	
 	$personCnt = undefined;
 	$('.js_seatInfo').html('');
 	if($screeningDate != undefined) {
@@ -70,8 +72,8 @@ function ticketingDateClick() {
 	}
 	
 	$screeningDate = $(this);
-	var year = $('.js_calendarYear').text();
-		month = $('.js_calendarMonth').text();
+	var year = $('.js_calendarYear').text(),
+		month = $('.js_calendarMonth').text(),
 		date = $screeningDate.text().trim();
 	screeningDate = year + '.' + month + '.' + date;
 //	#ffd5e3
@@ -88,11 +90,11 @@ function nonTicketingDateClick() {
 }
 
 function getMovieTicketingInfo() {
-	var url = '/movie/mainService/screeningPlanned';
+	var url = '/movie/mainService/screeningPlanned',
 		params = {
 				'screeningDate' : screeningDate,
 				'movieTitle' : movieTitle
-		};
+		},
 		cbf = function(result) {
 			$('.js_movieTime').html(result);
 		};
@@ -105,17 +107,18 @@ function movieTimeClick() {
 		cssColor($movieTime, '', '');
 	}
 	$movieTime = $(this);
+	movieTime = $movieTime.text().trim();
 	theater = $movieTime.attr('data-theater');
 	
 	cssColor($movieTime, '', 'lightcoral');
 	
-	var url = '/movie/mainService/seatInfo';
+	var url = '/movie/mainService/seatInfo',
 		params = {
 				'screeningDate' : screeningDate,
 		        'movieTitle' : movieTitle,
 		        'movieTime' : $movieTime.text(),
 		        'theater' : theater     
-		};
+		},
 		cbf = function(result) {
 			$('.js_seatInfo').html(result);
 		};
@@ -138,7 +141,8 @@ function ticketingPersonCntClick() {
 	cssColor($personCnt, 'rosybrown', 'white');
 
 	var price = $moviePrice.attr('data-price');
-	$moviePrice.text(numberWithCommas(price * $personCnt.text()));
+	$moviePrice.text(numberWithCommas(price * $personCnt.text()))
+	moviePrice = $moviePrice.text().trim();
 }
 
 function seatNumberClick() {
@@ -148,8 +152,8 @@ function seatNumberClick() {
 		return;
 	}
 	
-	var $clickSeat = $(this);
-	var clickSeatNum = $clickSeat.attr('data-seatNum');
+	var $clickSeat = $(this),
+		clickSeatNum = $clickSeat.attr('data-seatNum');
 
 	// 선택한 자리가 이미 선택한 자리라면
 	if(seatArr.includes(clickSeatNum)) {
@@ -174,6 +178,58 @@ function seatNumberClick() {
 	}
 }
 
+function payPagePopup() {
+	var left = ( $(window).scrollLeft() + ($(window).width() - $('.js_payPopupPage').width()) / 2 ),
+		top = ( $(window).scrollTop() + ($(window).height() - $('.js_payPopupPage').height()) / 2 );
+	
+	$('.js_payPopupPage').css({
+		'display' : 'inline',
+		'left' : left,
+		'top' : top,
+		'position' : 'fixed'
+	});
+	
+	var $popupContainer = $('.js_payPopupPage');
+	$popupContainer.on('click', '.js_popMovieCancel', payPagePopupCancel)
+				   .on('click', '.js_popMoviePaying', payPagePopupPaying)
+	
+	showTicketingInfoAndPaying();
+}
+
+function showTicketingInfoAndPaying() {
+	var $popMovieTitle = $('.js_popMovieTitle'),
+		$popMovieDate = $('.js_popMovieDate'),
+		$popMovieTime = $('.js_popMovieTime'),
+		$popMovieTheater = $('.js_popMovieTheater'),
+		$popMovieCnt = $('.js_popMovieCnt'),
+		$popMovieSeat = $('.js_popMovieSeat'),
+		$popMoviePrice = $('.js_popMoviePrice');
+	var url = '/movie/async/asyncService/getMoviePoster',
+		params = {'movieTitle' : movieTitle};
+		cbf = function(result) {
+			$popMovieTitle.text('<' + movieTitle + '>');
+			$popMovieDate.text(screeningDate);
+			$popMovieTime.text(movieTime);
+			$popMovieTheater.text(theater + '관');
+			$popMovieSeat.text(seatArr);
+			$popMovieCnt.text('총' + $personCnt.text() + '매');
+			$popMoviePrice.text('결제되는 금액 ' + moviePrice + '원');
+			
+			$('.js_popMoviePoster').html(
+				'<img alt="poster" src="/resources/img/poster/' + result.data + '" width="175px" height="265px"/>'
+			);
+		}
+		
+	$.post(url, params, cbf);
+}
+
+function payPagePopupCancel() {
+	$('.js_payPopupPage').css({
+		'display' : 'none',
+		'position' : 'absolute'
+	});
+}
+
 function setEvent() {
 	var $container = $('.js_ticketing');
 	$container.on('click', '.js_calendarPrev', calendarPrevBtnClick)
@@ -184,6 +240,7 @@ function setEvent() {
 			  .on('click', '.js_movieTimeClick', movieTimeClick)
 			  .on('click', '.js_ticketingPersonCnt', ticketingPersonCntClick)
 			  .on('click', '.js_seatNum', seatNumberClick)
+			  .on('click', '.js_letTicketingBtn', payPagePopup)
 }
 
 function cssColor(element, backgroundColor, color) {

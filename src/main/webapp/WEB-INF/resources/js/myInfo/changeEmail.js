@@ -58,15 +58,15 @@ function chageEmailAddr() {
    var $confirmNum = $('.js_emailConfirmNumInput'),
        $EmailAddr  = $('.js_emailChangeEmailInput'),
        confirmNum  = $confirmNum.val(),
-       EmailAddr   = $EmailAddr.val();
+       EmailAddr   = $EmailAddr.val(),
    
-   	   url	  = '/movie/async/asyncService/updateEmailAddr';
+   	   url	  = '/movie/async/asyncService/updateEmailAddr',
    	   params = {
    			   			'myInfoEmailConfirmNum' : confirmNum ,
    			   			'myInfoChageEmail' : EmailAddr
-        		 };
+        		 },
    	   cbf	  = function(chageEmailResult) {
-		            if(chageEmailResult.data == 'false'){
+		            if(chageEmailResult.data == 'false') {
 		               alert('인증번호를 다시 확인해주세요.');
 		            } else {
 		               location.href=chageEmailResult.data;

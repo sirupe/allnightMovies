@@ -20,6 +20,7 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.Paging;
+import com.allnightMovies.utility.Paging2;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 
@@ -129,25 +130,42 @@ public class AsyncService implements AsyncAction {
 	
 	// 로그인
 	public AsyncResult<String> login() throws Exception {
+		System.out.println("async login()");
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		String result = null;
 		boolean resultBool = true;
+		System.out.println(this.params.getRequest().getRequestURL());
 		if(userLoginInfo.getUserStates() == 1) {
 			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
 				HttpSession session = this.params.getSession();
 				session.setAttribute("userID", userLoginInfo.getUserID());
+				result = session.getAttribute("requestURL").toString();
+				session.removeAttribute("requestURL");
 			} else {
 				result = "비밀번호가 일치하지 않습니다.";
+				resultBool = false;
 			}
 		} else {
 			result = "탈퇴하였거나 존재하지 않는 아이디입니다.";
+			resultBool = false;
 		}
+		
+		
+		
 		AsyncResult<String> async = new AsyncResult<String>();
 		async.setData(result);
 		async.setSuccess(resultBool);
+		
 		return async;
 	}
 	
+/*****은정. TICKETING : Get Movie Poster *****/
+	public AsyncResult<String> getMoviePoster() {
+		String moviePoster = this.dbService.getMoviePoster(this.params.getMovieTitle());
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData(moviePoster);
+		return async;
+	}
 /*****연종. chagePwd success check*****/	
 	public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
 		String newPWD = params.getMyInfoNewPwd();
@@ -412,5 +430,29 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 	}
 	
-	
+	//자주묻는게시판 전환
+	public AsyncResult pagingBoard() throws Exception {
+		
+		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
+			
+		int totBoardList = this.dbService.serviceCentergetBoardCount();
+		System.out.println("service글목록 갯수 : " + totBoardList);
+		
+		int page = this.params.getPageboard();
+		System.out.println(page + "page");
+		
+		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
+		Paging boardPaging = new Paging(totBoardList, 7,page, 5);
+		boardPaging.setBoardPaging();
+		System.out.println(boardPaging + "페이지 그룹");
+		System.out.println(boardPaging.getStartPageNum() + "시작");
+		System.out.println(boardPaging.getEndPageNum() + "마지막");
+		System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
+		String boardpagingResult = "/movie/mainService/serviceCenter";
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		asyncResult.setData(boardpagingResult);
+		return asyncResult;
+			
+	}
 }
+	

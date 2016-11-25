@@ -58,8 +58,10 @@ public class Params {
 	private String myInfoEmailConfirmNum;
 
 	
+
 // 회원탈퇴 	------------------------------------------------------------------
 	private String withdrawUserPwd;
+
 // 예매하기(ticketing)
 	private int calendarMonth;
 	private int CalendarYear;
@@ -67,8 +69,9 @@ public class Params {
 	private String movieTitle;
 	private int theater;
 	private String movieTime;
-// 공지사항 게시판
+	
 	private int noticeUserClickPage;
+	private int noticePage;
 	private int noticeNo;
 	
 // 고객센터 게시판
@@ -76,5 +79,6 @@ public class Params {
 	private Integer questionBoard; //문의사항게시판 페이징
 	
 	private Integer questionBoardNum;
+	private String noticeSearachWord;
 
 }

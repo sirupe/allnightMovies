@@ -15,6 +15,7 @@ import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
+import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -31,13 +32,13 @@ public interface DBMapper {
 	public Integer idCheck(String id);
 	public Integer insertJoinUserInfo(UserPersonalInfoDTO userDTO);
 
-/** ji. ticketing : calendar**/
+/** ji. ticketing **/
 	public MovieScreeningDateInfo getMaxScreeningDate();
 	public List<TicketingMovieTitleInfo> getMovieTitle();
 	public List<TicketingMovieTimeInfo> getMovieTime(String movieTitle, String date);
 	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater);
 	public Integer getTicketPriceInfo(String screeningDate, String theater);
-	
+	public String getMoviePoster(String title);
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	
@@ -76,5 +77,9 @@ public interface DBMapper {
 /** shin. SERVICE noticeBoard **/
 	public int getNoticeBoardCount();
 	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum);
-	
+	public CinemaNoticeBoardDTO getNoticeBoardContent(Integer noticeNo);
+	public int searchBoardCount(String searchWord);
+	public List<CinemaNoticeBoardDTO> searchBoard(Integer blockStartNum, Integer blockEndNum, String searchWord);
+/** shin. THEATER introduce **/	
+	public List<CinemaIntroduceDTO> getCinemaIntroImg();
 }

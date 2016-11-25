@@ -1,8 +1,10 @@
 package com.allnightMovies.model.data.cinemaInfo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CinemaNoticeBoardDTO {
 	private int no;
 	private String title;

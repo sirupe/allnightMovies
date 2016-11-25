@@ -15,14 +15,14 @@ function locationJoinTerms(e) {
 	submit(url, dir, page, js, css);
 }
 function locationLogon() {
-	var $userID  = $('#user-id');
-		$userPWD = $('#user-pwd');
-		url		 = '/movie/async/asyncService/login';
+	var $userID  = $('#user-id'),
+		$userPWD = $('#user-pwd'),
+		url		 = '/movie/async/asyncService/login',
 		params	 = 
 			{
 				'userID' : $userID.val(),
 				'userPWD' : $userPWD.val()
-			};
+			},
 		cbf		 = 
 			function(result) {
 				console.log(result.success);
@@ -73,7 +73,6 @@ function locationMyInfo() {
 		css  = 'myInfo/myInfo';
 	submit(url, dir, page, js, css);
 }
-/*shin myInfo*/
 
 /**아이디 찾기**/
 function locationSearchID(e) {
@@ -86,11 +85,6 @@ function locationSearchID(e) {
 	e.stopPropagation();
 	submit(url, dir, page, js, css);
 }
-
-
-		
-
-
 
 
 function locationMenus(method, action, directory, page) {
@@ -111,6 +105,18 @@ function locationMenus(method, action, directory, page) {
 function submit(action, directory, page, js, css) {
 	$(document).ready(function() {
 		$('form').attr({'method' : 'POST'});
+		$('form').attr({'action' : action});
+		$('#hidden-dir').val(directory);
+		$('#hidden-page').val(page);
+		$('#hidden-js').val(js);
+		$('#hidden-css').val(css);
+		$('form').submit();
+	});
+}
+
+function submitGET(action, directory, page, js, css) {
+	$(document).ready(function() {
+		$('form').attr({'method' : 'GET'});
 		$('form').attr({'action' : action});
 		$('#hidden-dir').val(directory);
 		$('#hidden-page').val(page);

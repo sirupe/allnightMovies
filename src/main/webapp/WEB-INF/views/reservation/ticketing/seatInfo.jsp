@@ -66,3 +66,26 @@
 <button type="button" class="js_letTicketingBtn  theater-seat__ticketing-btn  font-family">
 	예매하기
 </button>
+
+
+<div class="js_payPopupPage  pay-popup-page" >
+	<div class="pay-popup-page__background">
+		<div class="pay-popup-page__border">
+			<div class="pay-popup-page__title"></div>
+			<div class="pay-popup-page__date-time"></div>
+			<div class="pay-popup-page__theater-seat"></div>
+			<div class="pay-popup-page__message">
+				
+			</div>
+			<div class="pay-popup-page__btn"></div>
+		
+		
+		
+		
+		
+		
+		
+		</div>
+	</div>
+
+</div>

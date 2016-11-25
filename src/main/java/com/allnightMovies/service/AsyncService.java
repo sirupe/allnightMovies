@@ -139,8 +139,10 @@ public class AsyncService implements AsyncAction {
 			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
 				HttpSession session = this.params.getSession();
 				session.setAttribute("userID", userLoginInfo.getUserID());
-				result = session.getAttribute("requestURL").toString();
-				session.removeAttribute("requestURL");
+				if(session.getAttribute("requestURL") != null) {
+					result = session.getAttribute("requestURL").toString();
+					session.removeAttribute("requestURL");
+				}
 			} else {
 				result = "비밀번호가 일치하지 않습니다.";
 				resultBool = false;

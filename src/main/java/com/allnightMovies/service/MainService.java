@@ -262,7 +262,12 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-/*****은정. ticketing *****/
+/*****은정. ticketing : paying *****/
+	public ModelAndView ticketingPaying() {
+		ModelAndView mav = new ModelAndView("reservation/ticketing/payPopupPage-paying");
+		return mav;
+	}
+	
 /*******연종. PWD찾기 SHIN*******/
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();

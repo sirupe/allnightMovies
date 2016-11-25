@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="js_payPopupPage  pay-popup-page" >
 	<div class="pay-popup-page__background">
-		<div class="pay-popup-page__border">
+		<div class="js_popupMovieBaseGround pay-popup-page__border">
 			<div class="js_popMoviePoster pay-popup-page__poster padding20">
 			</div>
 			<div class="pay-popup-page__text padding20">

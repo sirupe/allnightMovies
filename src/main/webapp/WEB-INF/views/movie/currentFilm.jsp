@@ -7,8 +7,10 @@
 	</div>
 	<div class="div-currentFilm__content">
 		<span class="span-currentFilm__mainFilm">
-		<button class="video-currentFilm__start  js_currentFilmStartBtn">▶</button>
-		<!-- <embed src="https://www.youtube.com/embed/OYKq9C3Waao?list=PL3m5qREasgOoPfgodul0ybHp1uVmktJmI" class="video-currentFilm__mainFilm" /> -->
+			<button class="video-currentFilm__start  js_currentFilmStartBtn">▶</button>
+			<video muted class="video-currentFilm__mainFilm js_video" controls ><!-- autoplay -->
+				<source src="/resources/img/movieVideo/fantasticBeasts.ogv">
+			</video>
 		</span>
 		<span class="div-currentFilm__etc">
 			<label class="label-currentFilm-sort  js_currentFilmSortReservation">예매순 </label>|

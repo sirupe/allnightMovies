@@ -11,10 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
@@ -29,6 +27,7 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
+import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -38,7 +37,6 @@ import com.allnightMovies.utility.Paging2;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
-
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
 // 메인 컨트롤러에서는 별도의 생성 없이 사용 가능.
@@ -254,9 +252,8 @@ public class MainService implements Action {
 	}
 	
 /*******연종. PWD찾기 SHIN*******/
-	//고쳐야할것★★★ 사용자가 입력한 아이디 값을 session에 저장시키는것이 아니라
-	//DB에서 확인된 아이디를 가져와session에 저장 시켜야 함 정확하게 하기위해!!!!!!
-	public ModelAndView searchID() throws Exception {
+	//TODO 클래스명 수정할것
+	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String searchPwdUserID = this.params.getSearchPwdUserID();
 		Integer result = this.dbService.searchPWD(searchPwdUserID);
@@ -495,10 +492,13 @@ public class MainService implements Action {
 /*******연종. THEATER introduce.jsp 극장소개*******/	
 	public ModelAndView introduce() throws Exception{
 		ModelAndView mav = this.getTemplate();
+		List<CinemaIntroduceDTO> cinemaIntroduceDTO = this.dbService.getCinemaIntroImg();
+		int imgCount =  cinemaIntroduceDTO.size();
+		mav.addObject("imgSrc", cinemaIntroduceDTO);
+		mav.addObject("imgCount", imgCount);
 		mav.addObject("directory", "theater");
 		mav.addObject("page", "introduce");
 		mav.addObject("contentCSS", "theater/introduce");
-		mav.addObject("contentjs", "theater/introduce");
 		return mav;
 	}
 //-----------------------------------------------------------------------
@@ -529,9 +529,60 @@ public class MainService implements Action {
 		int clickedPageNum = this.params.getNoticeUserClickPage();
 		Paging2 paging = new Paging2();
 		paging.makePaging(totalList, clickedPageNum);
-		System.out.println( "사용자클릭 >> "  + clickedPageNum); 
+		System.out.println("noticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
 		
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
+		
+		System.out.println("noticeBoard  --  보여질 리스트 범위 입니다. >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
+		mav.addObject("noticeDTO", noticeDTO);
+		mav.addObject("paging", paging);
+		mav.addObject("no", clickedPageNum);
+		
+		mav.addObject("directory", "service");
+		mav.addObject("page", "notice/notice");
+		mav.addObject("contentCSS", "service/notice/notice");
+		mav.addObject("contentjs", "service/notice/notice");
+		return mav;
+	}
+	
+	public ModelAndView noticeBoardView() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		Integer noticeNo = this.params.getNoticeNo();
+		
+		//getNoticeBoardContent
+		CinemaNoticeBoardDTO noticeDTO = this.dbService.getNoticeBoardContent(noticeNo);
+		String content = noticeDTO.getContent();
+		String title = noticeDTO.getTitle();
+		String writeDate = noticeDTO.getWriteDate();
+		
+		System.out.println("noticeBoardView 게시글 현재PAGE  >>  " + params.getNoticePage()
+		                               + "   현재 NO  >> " +  params.getNoticeNo());
+	
+		mav.addObject("title", title);
+		mav.addObject("content", content);
+		mav.addObject("writeDate", writeDate);
+		mav.addObject("directory", "service");
+		mav.addObject("page", "notice/noticeBoardView");
+		mav.addObject("contentCSS", "service/notice/noticeBoard");
+		mav.addObject("contentjs", "service/notice/notice");
+		mav.addObject("noticePage", params.getNoticePage());
+		mav.addObject("noticeNo", params.getNoticeNo());
+		
+		return mav;
+	}
+	
+	public ModelAndView locationNoticeBoard() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		int totalList = this.dbService.getNoticeBoardCount();
+		int clickedPageNum = this.params.getNoticePage();
+		
+		System.out.println("locationNoticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
+		
+		Paging2 paging = new Paging2();
+		paging.makePaging(totalList, clickedPageNum);
+		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
+		
+		System.out.println("locationNoticeBoard  -- 보여질 리스트 범위입니다.  >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
 		
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
@@ -543,11 +594,34 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-	public ModelAndView noticeBoardView() throws Exception {
+	public ModelAndView searchNoticeBoard() throws Exception {
 		ModelAndView mav = this.getTemplate();
+		//사용자가 검색한 단어 저장 
+		String searchWord = this.params.getNoticeSearachWord();
+		//페이징처리를 위한 과정 
+		this.params.setNoticeUserClickPage(1);
+		int clickedPageNum = this.params.getNoticeUserClickPage();
+		int totalList = this.dbService.searchBoardCount("%"+searchWord+"%");
 		
+		System.out.println("MAIN   searchWord  >>   " + searchWord);
+		System.out.println("MAIN   totalList  >>   " + totalList);
+		
+		Paging2 paging = new Paging2();
+		paging.makePaging(totalList, clickedPageNum);
+		List<CinemaNoticeBoardDTO> noticeBoardDTO = this.dbService.searchBoard(paging.getStartPageList(), paging.getEndPageList(),"%"+searchWord+"%");
+		//TEST
+		System.out.println("noticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
+		System.out.println("noticeBoard  --  보여질 리스트 범위 입니다. >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
+		
+		mav.addObject("noticeDTO", noticeBoardDTO);
+		mav.addObject("paging", paging);
+		mav.addObject("no", clickedPageNum);
+		mav.addObject("directory", "service");
+		mav.addObject("page", "notice/notice");
+		mav.addObject("contentCSS", "service/notice/notice");
+		mav.addObject("contentjs", "service/notice/notice");
 		return mav;
 	}
 	
-	
+//-----------------------------------------------------------------------
 }

@@ -98,6 +98,10 @@ a{
 .import {
 	color: #ff4d2d;
 }
+.importImg {
+	width: 15px;
+	height: 13px;
+}
 .writer {
 	width: 160px;
 	text-align: center;

@@ -22,7 +22,7 @@ function searchPwdResult() {
 	var $inputID = $('.js_searchPwdidInput');
 		inputID  = $inputID.val();
 		
-		url 	 = '/movie/mainService/searchID'; //main service 에 searchID메소드  
+		url 	 = '/movie/mainService/searchPwdID'; //main service 에 searchID메소드  
 		dir  	 = 'searchPwd';				 	  //디렉토리                        
 		page 	 = 'searchPwdResult';			  //페이지                         
 		js   	 = 'searchPwd/searchPwd';   	  //자바스크립트                      

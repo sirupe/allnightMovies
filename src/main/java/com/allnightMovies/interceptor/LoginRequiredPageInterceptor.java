@@ -11,7 +11,7 @@ public class LoginRequiredPageInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		System.out.println("LoginRequiredPageInterceptor :" +  (session.getAttribute("userID") == null));
+		
 		if(session.getAttribute("userID") == null) {
 			session.setAttribute("requestURL", request.getRequestURL());
 			response.sendRedirect("/movie/mainService/loginPage");

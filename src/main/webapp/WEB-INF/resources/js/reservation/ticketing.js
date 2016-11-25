@@ -180,12 +180,12 @@ function seatNumberClick() {
 
 function payPagePopup() {
 	var left = ( $(window).scrollLeft() + ($(window).width() - $('.js_payPopupPage').width()) / 2 ),
-		top = ( $(window).scrollTop() + ($(window).height() - $('.js_payPopupPage').height()) / 2 );
+		top = $(window).scrollTop();
 	
 	$('.js_payPopupPage').css({
 		'display' : 'inline',
 		'left' : left,
-		'top' : top,
+		'top' : '0px',
 		'position' : 'fixed'
 	});
 	
@@ -194,6 +194,7 @@ function payPagePopup() {
 				   .on('click', '.js_popMoviePaying', payPagePopupPaying)
 	
 	showTicketingInfoAndPaying();
+	
 }
 
 function showTicketingInfoAndPaying() {
@@ -228,6 +229,16 @@ function payPagePopupCancel() {
 		'display' : 'none',
 		'position' : 'absolute'
 	});
+}
+
+function payPagePopupPaying() {
+	var url = '/movie/mainService/ticketingPaying',
+		cbf = function(result) {
+			$('.js_popupMovieBaseGround').html(result);
+			$('.js_payingMessagePrice').text($('.js_moviePrice').text());
+		}
+	
+	$.post(url,cbf);
 }
 
 function setEvent() {

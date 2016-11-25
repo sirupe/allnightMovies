@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+.pay-ing {
+    padding: 15px;
+    line-height: 2em;
+}
+
+.js_cardType.paying__card-choose {
+    padding: 4px 0px;
+    border: 1px solid #b7b7b7;
+    border-radius: 3px;
+    color: #0A1F33;
+    text-overflow: clip;
+    box-shadow: 1px 2px 2px 0 rgba(120, 124, 125, 0.2) inset;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.66);
+    font-family: 'Jeju Gothic', serif;
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}

@@ -17,17 +17,17 @@ $(function() {
 function setSearchIDStart() {
 	var $container = $('.js_userFindIdcontainer');
 	
-	$container.on('click','.js_confirmIdCheck',confirmIdCheck);
-	$container.on('keyup','.js_userFindIdBirth',userFindIdBirth);
-	$container.on('click','.js_emailCheck_send',emailCheck_send);
-	$container.on('click','.js_confirmNumber_Check',confirmNumber_Check);
-	$container.on('click','.js_email_resultCheck',email_resultCheck);
-	$container.on('click','.js_locationMain', locationMain); // 홈으로
-	$container.on('click','.js_locationSearchPwd', locationSearchPwd); // 비밀번호찾기
-	
-	$container.on('click','.js_locationSearchPwdEmail', locationMain);
-	$container.on('click','.js_locationSearchPwdEmail', locationSearchPwd);
-	$container.on('click','.js_locationSearchPwdEmail',locationSearchID)
+		$container.on('click','.js_confirmIdCheck',confirmIdCheck)
+					.on('keyup','.js_userFindIdBirth',userFindIdBirth)
+					.on('click','.js_emailCheck_send',emailCheck_send)
+					.on('click','.js_confirmNumber_Check',confirmNumber_Check)
+					.on('click','.js_email_resultCheck',email_resultCheck)
+					.on('click','.js_locationMain', locationMain) // 홈으로
+					.on('click','.js_locationSearchPwd', locationSearchPwd) // 비밀번호찾기
+					
+					.on('click','.js_locationSearchPwdEmail', locationMain)
+					.on('click','.js_locationSearchPwdEmail', locationSearchPwd)
+					.on('click','.js_locationSearchPwdEmail',locationSearchID);
 }
 
 function setSearchID() {
@@ -152,11 +152,6 @@ function emailCheck_send() {
 	$insertConfirmNumber.html(resultMsg);
 	$userFindIdConfirmNumber.removeAttr('readonly');
 	$emailConfirmNumberCheck.removeAttr('readonly');
-	//return isResult;
-	//이메일 정합성검사
-	//이메일 안적었다면 적어달라하기
-	//일치하면 텍스트박스 막기
-	//확인
 }
 
 //인증번호 확인 /인증번호 일치하는지 안하는지

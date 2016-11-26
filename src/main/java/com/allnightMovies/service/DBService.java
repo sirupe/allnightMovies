@@ -119,10 +119,10 @@ public class DBService {
 	}
 	public CinemaQuestionBoardDTO questionBoardList(Integer questionBoardNum) throws Exception {
 		return dbMapper.questionBoardList(questionBoardNum);
-		
 	}
-
-	
+	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception {
+		return dbMapper.InsertAskWriteBoard(cinemaQuestionBoardDTO);
+	}
 	
 /** shin. SEARCH PWD **/	
 	public Integer searchPWD(String searchPwdUserID)  {

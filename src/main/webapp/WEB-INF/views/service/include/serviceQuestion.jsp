@@ -28,10 +28,21 @@
 			<span class="questionBoard_top_no">
 				<label class="js_questionBoard_no">${questionBoardPage.getNo() }</label>
 			</span>
-			<span class="questionBoard_top_title">
-				<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
-						${questionBoardPage.getTitle()}</label>
-			</span>
+			<c:choose>
+				<c:when test="${ questionBoardPage.getIsPwd() == 1}">
+					<span class="questionBoard_top_title">
+						<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
+								<img src="/resources/img/lock.png" >${questionBoardPage.getTitle()}</label>
+					</span>
+				</c:when>
+				<c:otherwise>
+					<span class="questionBoard_top_title">
+						<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
+							${questionBoardPage.getTitle()}</label>
+					</span>
+				</c:otherwise>
+				
+			</c:choose>
 			<span class="questionBoard_top_user">	
 				${questionBoardPage.getUser_Id() }
 			</span>

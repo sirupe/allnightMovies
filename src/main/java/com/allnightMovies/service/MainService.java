@@ -2,6 +2,7 @@
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
+import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
@@ -449,9 +451,6 @@ public class MainService implements Action {
 		
 		HttpSession session = this.params.getSession();
 		String LoginUserID = (String)session.getAttribute("userID");
-		System.out.println("로그인한 유저아이디 (문의사항에서 문의사항에서뽑고있음.) questionBoard : " + LoginUserID);
-		
-		
 		
 		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
 		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
@@ -467,7 +466,6 @@ public class MainService implements Action {
 		
 		int questionBoard = this.params.getQuestionBoard();
 		
-		
 		int totQuestionBoardCount = this.dbService.questionBoardCount();
 		Paging questionBoardPaging = new Paging(totQuestionBoardCount, 7, questionBoard , 4);
 		questionBoardPaging.setBoardPaging();
@@ -482,6 +480,7 @@ public class MainService implements Action {
 		mav.addObject("questionBoardGroup", questionBoardPaging);
 		mav.addObject("checkPage", questionBoard);
 		mav.addObject("loginUserId",LoginUserID);
+		
 		return mav;
 	}
 	
@@ -505,13 +504,19 @@ public class MainService implements Action {
 		System.out.println("들어와?");
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
 		System.out.println("문의사항 글보기 : " + questionBoardNum);
+
 		
 		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
 		System.out.println(questionBoardList.getTitle() + " : 정보들");
+		System.out.println(questionBoardList.getWritePwd() + ": 번호");
 		
 		HttpSession session = this.params.getSession();
 		String LoginUserID = (String)session.getAttribute("userID");
+		
 		System.out.println("로그인한 유저아이디 (문의사항에서 글보기에서뽑고있음.) serviceCenter : " + LoginUserID);
+		System.out.println(questionBoardList.getUser_Id() + " : 너가쓴거야 .");
+		boolean isUserRight = questionBoardList.getUser_Id().equals(LoginUserID);
+		System.out.println(questionBoardList.getIsPwd() + " : 비밀글인가아닌가.");
 		
 		
 		ModelAndView mav = new ModelAndView("service/include/questionViewBoard");
@@ -522,8 +527,52 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "service/service/questionBoard");
 		mav.addObject("questionBoardList", questionBoardList);
 		mav.addObject("loginUserId", LoginUserID);
+		mav.addObject("isUserRight", isUserRight);
 		return mav;
 	}
+	
+///*******수진. 문의사항 글등록 *******/
+	public ModelAndView InsertAskWriteBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/questionViewBoard");
+		
+		String title     = this.params.getInsertTitle();
+		String content   = this.params.getInsertTextArea();
+		int writePwd     = this.params.getInsertboardPWd() == null ? null : this.params.getInsertboardPWd();
+		int isPwd        = this.params.isInsertPwdcheck() == true ? 1 : 0;
+		
+		//1은 비밀글 등록 // 2면 일반글등록
+		boolean isResult = true;
+		String result  = "";
+		
+		HttpSession session = this.params.getSession();
+		String user_Id = (String)session.getAttribute("userID");
+		System.out.println("로그인한 유저아이디 (어싱크 글등록.) InsertAskWriteBoard : " + user_Id);
+		
+		System.out.println("제목 : " + title);
+		System.out.println("내용 : " + content);
+		System.out.println("비밀번호 : " + writePwd);
+		System.out.println("여부 : " + isPwd);
+		System.out.println("아이디 : " + user_Id);
+	
+			CinemaQuestionBoardDTO cinemaQuestionBoardDTO = new CinemaQuestionBoardDTO();
+			cinemaQuestionBoardDTO.setTitle(title);
+			cinemaQuestionBoardDTO.setContent(content);
+			cinemaQuestionBoardDTO.setUser_Id(user_Id);
+			cinemaQuestionBoardDTO.setWritePwd(writePwd);
+			cinemaQuestionBoardDTO.setIsPwd(isPwd);
+			
+			this.dbService.InsertAskWriteBoard(cinemaQuestionBoardDTO);
+		
+		return mav;
+		
+	}
+	public ModelAndView reCheckPwdWriteForm() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/reCheckPwdWriteForm");
+		return mav;
+		
+	}
+
+   
 
 /*******연종. MyINFO SHIN*******/	
 	public ModelAndView viewMyInfo() throws Exception {

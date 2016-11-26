@@ -26,7 +26,7 @@
 				</div>
 				<div class="questionBoard-pwd">
 					<label class="boardPwd">비밀번호</label>
-					<input class="boardwriteBoardPwd js_boardWriteBoardPwd" type="password" value="11">
+					<input class="boardwriteBoardPwd js_boardWriteBoardPwd" type="password" readonly>
 				</div>
 			</div>
 			<div class="questionbutton">

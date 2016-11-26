@@ -210,9 +210,9 @@
 
 	 <select id="questionBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 			SELECT * FROM (
-      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, ROWNUM RNUM 
+      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
       				FROM (
-              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT
+              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD
               			 FROM CINEMA_ASKED_BOARD 
                			 ORDER BY NO DESC
            			 )		
@@ -223,17 +223,38 @@
 <!-- 문의사항게시판 전체 뽑아오기 -->	
 	<select id="questionBoardList" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 					SELECT * FROM (
-      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, ROWNUM RNUM 
+      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
       				FROM (
-              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT
+              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD
               			 FROM CINEMA_ASKED_BOARD 
                			 ORDER BY NO DESC
            			 )		
      			 )    
       			WHERE NO = #{param1}
 	</select>
-	
-	
+
+<!-- 문의사항 글등록 -->
+	<select id="InsertAskWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		INSERT INTO CINEMA_ASKED_BOARD(
+		    NO,
+		    TITLE,
+		    CONTENT,
+		    USER_ID,
+		    WRITE_DATE,
+		    WRITEPWD,
+		    ISPWD
+   		 ) VALUES (
+       		ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+       		#{title},
+       		#{content},
+       		#{user_Id},
+       		SYSDATE,
+       		#{writePwd},
+       		#{isPwd}
+       	)
+
+	</select>
+
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(*) 

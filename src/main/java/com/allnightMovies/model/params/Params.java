@@ -81,5 +81,10 @@ public class Params {
 	
 	private Integer questionBoardNum;
 	private String noticeSearachWord;
+// 문의 사항 게시판
+	private String insertTextArea; //내용
+	private String insertTitle; //제목
+	private Integer insertboardPWd; //비밀번호
+	private boolean insertPwdcheck; //비번체크여부
 
 }

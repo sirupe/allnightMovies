@@ -11,45 +11,31 @@
     margin: 33px 0px 20px 10px;
 	font-size: 25px;	
 }
-.screeningsPlanned-content {
-	
+.video-plannedFilm__mainFilm {
+    width: 980px;
+    height: 380px;
+	cursor: pointer;	
 }
 /*비디오*/
 .screeningsPlanned-vedio {
-    margin-bottom: 40px;
-	display: flex;
+    display: flex;
 	align-items: center;
     justify-content: center;
     opacity: 0.9;
 	background-repeat:no-repeat;
 	width: 980px;
 	height: 380px;
-	background-image: url("/../resources/img/poster/fantasticBeastsVideo.jpg");	
+	background-color: rgb(34, 33, 36);
+	/* background-image: url("/../resources/img/poster/fantasticBeastsVideo.jpg");	 */
 }
 .screeningsPlanned-vedio:hover {
 	opacity: 1;
     box-shadow: inset rgba(13, 32, 50, 0.27) 0 0 0 0;
 }
-/*비디오 실행버튼*/
-.vedio__startBtn {
-	padding: 5px 15px 5px 15px;
-    box-sizing: content-box;
-    cursor: pointer;
-    width: 60px;
-    height: 80px;
-    font-size: 50px;
-    color: white;
-    border-radius: 46px;
-    border: 3px solid white;
-    background: rgba(156, 158, 162, 0);
-}
-.vedio__startBtn:hover {
-    background: rgba(156, 158, 162, 0.4);
-}
 
 /*상영예정작 포스터가 들어갈 구역*/
 .screeningsPlanned-posters {
-	margin-left: 30px;
+	margin: 70px 0px 30px 0px;
 }
 .screeningsPlanned-posters__info {
     display: inline-block;

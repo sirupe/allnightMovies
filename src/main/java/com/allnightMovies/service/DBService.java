@@ -121,7 +121,6 @@ public class DBService {
 		return dbMapper.questionBoardList(questionBoardNum);
 		
 	}
-
 	
 	
 /** shin. SEARCH PWD **/	
@@ -137,9 +136,6 @@ public class DBService {
 		return dbMapper.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
 	}
 
-
-
-	
 /** shin. MY INFO **/	
 	public UserPersonalInfoDTO selectMyInfo(String myInfoID) {
 		return dbMapper.selectMyInfo(myInfoID);
@@ -161,6 +157,13 @@ public class DBService {
 	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO() {
 		return dbMapper.getPlannedFilmDTO();
 	}
+	public List<MovieCurrentFilmDTO> sortScore() {
+		return dbMapper.sortScore();
+	}
+	public List<MovieCurrentFilmDTO> sortTicketing() {
+		return dbMapper.sortTicketing();
+	}
+	
 /** shin. SERVICE noticeBoard **/
 	public int getNoticeBoardCount() {
 		return dbMapper.getNoticeBoardCount();
@@ -177,6 +180,7 @@ public class DBService {
 	public int searchBoardCount(String searchWord) {
 		return dbMapper.searchBoardCount(searchWord);
 	}
+	
 /** shin. THEATER introduce **/
 	public List<CinemaIntroduceDTO> getCinemaIntroImg() {
 		return dbMapper.getCinemaIntroImg();

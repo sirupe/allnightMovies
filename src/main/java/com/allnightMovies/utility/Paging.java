@@ -19,6 +19,7 @@ public class Paging {
 	private boolean isPreButton =  false; //이전버튼
 	private boolean isNextButton = true; //다음 버튼
 	
+
 	public Paging(int totalListCount, int boardListCount, int userClickPageNum, int viewPageNum) {
 		this.totalListCount   = totalListCount; //총글의 갯수
 		this.boardListCount   = boardListCount; // 페이지당 보여질 게시글 갯수

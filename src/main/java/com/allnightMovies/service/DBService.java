@@ -117,6 +117,10 @@ public class DBService {
 	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception {
 		return dbMapper.questionBoard(startPageNum, endPageNum);
 	}
+	public CinemaQuestionBoardDTO questionBoardList(Integer questionBoardNum) throws Exception {
+		return dbMapper.questionBoardList(questionBoardNum);
+		
+	}
 
 	
 	

@@ -301,10 +301,6 @@ public class AsyncService implements AsyncAction {
       asyncResult.setData(searchPwdResult);
       return asyncResult;
    }
-
-   
-   /***********연종. SERVIEC notice***************/   
-   
    /**수진 이메일 인증번호 생성하여 보내기**/
    //이메일
    @SuppressWarnings("rawtypes")

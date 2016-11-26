@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,7 @@ import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -346,7 +346,6 @@ public class MainService implements Action {
 	}
 	
 /*****수진. 아이디찾기(email)*****/
-	
 	public ModelAndView searchIDEmailResult() throws Exception {
 		this.params.setDirectory("searchId");
 		this.params.setContentCSS("searchId/searchId");
@@ -393,44 +392,41 @@ public class MainService implements Action {
 	public ModelAndView serviceCenter() throws Exception {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
-		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		System.out.println("로그인한 유저아이디 (고객센터에서 뽑고있음) serviceCenter : " + LoginUserID);
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("loginUserId",LoginUserID);
+		return mav;
+	}
+	
+	//자주묻는페이지 가져오기
+	public ModelAndView serviceCenterFreQuentlyBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
 		
-		
-		/*자주묻는게시판*/
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
 		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 5, 1, 4); //들어왔을때 page값 기본적으로 1 주기
+		Paging boardPaging = new Paging(totBoardList, 7, 1, 4); //들어왔을때 page값 기본적으로 1 주기
 		boardPaging.setBoardPaging();
 		
-		/*문의사항*/
-		int totQuestionBoardCount = this.dbService.questionBoardCount();
-		Paging questionBoardPaging = new Paging(totQuestionBoardCount, 10, 1, 5);
-		questionBoardPaging.setBoardPaging();
-		
-		
-		ModelAndView mav = this.getTemplate();
+		System.out.println();
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
 		mav.addObject("pageGroup",boardPaging);
-		
-		
-		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
-		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
-		mav.addObject("questionBoardGroup", questionBoardPaging);
+		//mav.addObject("loginUserId",LoginUserID);
 		return mav;
 	}
+	
 	
 //자주묻는페이지 페이지 전환
 	public ModelAndView serviceCentergetBoardCount() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
 
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
-		
 		int page = this.params.getPageboard();
-		
 		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 5,page, 4);
+		Paging boardPaging = new Paging(totBoardList, 7,page, 4);
 		boardPaging.setBoardPaging();
 		
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
@@ -441,13 +437,94 @@ public class MainService implements Action {
 		return mav;
 	}
 	
+	
+	/*문의사항*/
+	public ModelAndView questionBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
+		
+		int totQuestionBoardCount = this.dbService.questionBoardCount();
+		Paging questionBoardPaging = new Paging(totQuestionBoardCount,7, 1, 4);
+		questionBoardPaging.setBoardPaging();
+		
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		System.out.println("로그인한 유저아이디 (문의사항에서 문의사항에서뽑고있음.) questionBoard : " + LoginUserID);
+		
+		
+		
+		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
+		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
+		mav.addObject("questionBoardGroup", questionBoardPaging);
+		mav.addObject("loginUserId",LoginUserID);
+		return mav;
+		
+	}
+	
 //문의 사항 게시판 전환
 	public ModelAndView serviceCenterQuestionBoardChange() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
 		
+		int questionBoard = this.params.getQuestionBoard();
+		
+		
+		int totQuestionBoardCount = this.dbService.questionBoardCount();
+		Paging questionBoardPaging = new Paging(totQuestionBoardCount, 7, questionBoard , 4);
+		questionBoardPaging.setBoardPaging();
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		System.out.println("로그인한 유저아이디 (문의사항에서 게시판전환에서뽑고있음.) serviceCenterQuestionBoardChange : " + LoginUserID);
+		
+		
+		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
+		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
+		mav.addObject("questionBoardGroup", questionBoardPaging);
+		mav.addObject("checkPage", questionBoard);
+		mav.addObject("loginUserId",LoginUserID);
 		return mav;
 	}
 	
+/***수진 문의사항 글쓰기***/
+	public ModelAndView questionBoardWriteForm() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/AskWriteBoard");
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		System.out.println("로그인한 유저아이디 (문의사항에서 글쓰기에서뽑고있음.) questionBoardWriteForm : " + LoginUserID);
+		
+		
+		mav.addObject("contentCSS", "service/serviceCenter");
+		mav.addObject("contentjs", "service/service/questionBoard");
+		mav.addObject("LoginUserID", LoginUserID);
+		
+		return mav;
+	}
+/***수진 문의사항 글보기***/
+	public ModelAndView questionViewBoard() throws Exception {
+		System.out.println("들어와?");
+		Integer questionBoardNum = this.params.getQuestionBoardNum();
+		System.out.println("문의사항 글보기 : " + questionBoardNum);
+		
+		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
+		System.out.println(questionBoardList.getTitle() + " : 정보들");
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		System.out.println("로그인한 유저아이디 (문의사항에서 글보기에서뽑고있음.) serviceCenter : " + LoginUserID);
+		
+		
+		ModelAndView mav = new ModelAndView("service/include/questionViewBoard");
+		
+		this.params.setContentCSS("service/service/questionBoard");
+		
+		mav.addObject("contentCSS", "service/service/questionBoard");
+		mav.addObject("contentjs", "service/service/questionBoard");
+		mav.addObject("questionBoardList", questionBoardList);
+		mav.addObject("loginUserId", LoginUserID);
+		return mav;
+	}
+
 /*******연종. MyINFO SHIN*******/	
 	public ModelAndView viewMyInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -534,7 +611,7 @@ public class MainService implements Action {
 		return mav;
 	}
 //-----------------------------------------------------------------------
-/*******연종. SERVICE notice.jsp 공지사항*******/ //TODO
+/*******연종. SERVICE notice.jsp 공지사항*******/
 	//1. 처음 공지사항 을눌렀을때  리스트를 뿌려줌 
 	public ModelAndView notice() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -613,7 +690,6 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "service/notice/notice");
 		return mav;
 	}
-	
 	//5. 검색후 리스트 뿌려짐 항상1page
 	public ModelAndView searchNoticeBoard() throws Exception {
 		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");

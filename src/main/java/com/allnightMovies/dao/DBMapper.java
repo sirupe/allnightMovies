@@ -58,6 +58,7 @@ public interface DBMapper {
 /**고객센터 문의사항게시판 **/
 	public Integer questionBoardCount() throws Exception;
 	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception;
+	public CinemaQuestionBoardDTO questionBoardList(Integer no) throws Exception;
 	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);

@@ -19,7 +19,6 @@
 				<input class="boardcheck js_boardCheck"  type="checkbox"><label>비밀글</label>
 			</div>
 		
-		${LoginUserID }	:아이디	
 			<div class="questionBoard-sub">
 				<div class="questionBoard_subject">
 					<label class="boardSub">내용</label>

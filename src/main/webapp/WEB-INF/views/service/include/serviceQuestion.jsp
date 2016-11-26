@@ -4,46 +4,41 @@
 
 
 <div class="questionBoard_container js_questionBoardContainer">
+	<div class="questionBoard_sub">문의사항이나 불편사항은 이 곳에 남겨주세요. 최대한 빠른 시간 안에 답변 드리겠습니다.</div>
 	<div class="questionBoard_top">
-		<span class="questionBoard_top_no">
+		<span class="no">
 			번호
 		</span>
-		<span class="questionBoard_top_title">
+		<span class="toptitle">
 			제목
 		</span>
-		<span class="questionBoard_top_user">	
+		<span class="user">	
 			글쓴이
 		</span>
-		<span class="questionBoard_top_date">
+		<span class="date">
 			작성일
 		</span>
-		<span class="questionBoard_top_ref">
-			
-		</span>
-	
 	</div>
 	
+	<div class="questionBoard_list">
 	<c:forEach items="${questionBoardPage }" var="questionBoardPage">	
 		<div class="questionBoard_middle">
-			<span class="questionBoard_top_no">
+			<span class="no">
 				<label class="js_questionBoard_no">${questionBoardPage.getNo() }</label>
 			</span>
-			<span class="questionBoard_top_title">
+			<span class="title">
 				<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
 						${questionBoardPage.getTitle()}</label>
 			</span>
-			<span class="questionBoard_top_user">	
+			<span class="user">	
 				${questionBoardPage.getUser_Id() }
 			</span>
-			<span class="questionBoard_top_date">
+			<span class="date">
 				${questionBoardPage.getWrite_date() }
-			</span>
-			<span class="questionBoard_top_ref">
-				
 			</span>
 		</div>
 	</c:forEach>
-
+	</div>
 	<div class="questionBoard_bottom">
 		<c:if test="${questionBoardGroup.isPreButton()}"><span data-QuestionprePage="${questionBoardGroup.viewStartPageNum - 1}" class="js_questionPreButton">◀</span></c:if>
 			<c:forEach begin="${questionBoardGroup.viewStartPageNum }" end="${questionBoardGroup.viewEndPageNum }" var="page">
@@ -61,13 +56,7 @@
 			</c:forEach>
 		<c:if test="${questionBoardGroup.isNextButton() }"><span data-QuestionnextPage="${questionBoardGroup.viewEndPageNum +1 }" class="js_questionNextButton">▶</span></c:if>
 	</div> 	
-		
-				<div class="serviceCenter_WriteFormButton">
-					<button class="serviceCenter_QuestionWrite js_QuestionWriteForm" type="button">글쓰기</button>
-				</div>
-
-	
-	
+		<button class="serviceCenter_QuestionWrite js_QuestionWriteForm" type="button">글쓰기</button>
 </div>
 
 

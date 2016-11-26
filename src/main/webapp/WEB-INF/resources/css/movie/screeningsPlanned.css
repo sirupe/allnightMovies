@@ -35,7 +35,7 @@
 
 /*상영예정작 포스터가 들어갈 구역*/
 .screeningsPlanned-posters {
-	margin: 70px 0px 30px 0px;
+	margin: 70px 0px 30px 25px;
 }
 .screeningsPlanned-posters__info {
     display: inline-block;

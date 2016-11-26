@@ -1,7 +1,10 @@
  package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +36,7 @@ import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.Paging2;
+import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
@@ -266,6 +270,80 @@ public class MainService implements Action {
 		return mav;
 	}
 	
+	public ModelAndView ticketingTry() throws ParseException {
+		ParseCheck check = new ParseCheck();
+		boolean result = true;
+		String cardType 		= this.params.getCardType();
+		String cardNum 			= this.params.getCardNum();
+		String cardPWD 			= this.params.getCardPWD();
+		String cardExpiryMonth 	= this.params.getCardExpiryDateMonth();
+		String cardExpiryYear	= this.params.getCardExpiryDateYear();
+		String cardOwnerBirth 	= this.params.getCardOwnerBirth();
+		String[] seatArr 		= this.params.getSeatArr().split(",");
+		
+		
+		System.out.println("cardType : "  + cardType);
+		System.out.println("cardNum : "  + cardNum);
+		System.out.println("cardPWD : "  + cardPWD);
+		System.out.println("cardExpiryMonth : " +  cardExpiryMonth);
+		System.out.println("cardExpiryYear : " +  cardExpiryYear);
+		System.out.println("cardOwnerBirth : " +  cardOwnerBirth);
+		System.out.println("seatArr : "  + seatArr);
+		
+		if(cardType.equals("선택")) {
+			result = false;
+		}
+		if(cardNum.length() != 16 || !check.isParseLong(cardNum)) {
+			result = false;
+		}
+		if(!check.isParseInt(cardPWD) || cardPWD.length() != 2) {
+			result = false;
+		}
+
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM");
+		String[] toDate = (format.format(System.currentTimeMillis())).split("-");
+		List<String> list = Arrays.asList(toDate);
+		
+		if(!check.isParseInt(cardExpiryMonth) || !check.isParseInt(cardExpiryYear)) {
+			result = false;
+		}
+		if(cardExpiryMonth.length() != 2 || cardExpiryYear.length() != 2) {
+			result = false;
+		}
+		int toYear = Integer.parseInt(toDate[0]);
+		int expiryYear = Integer.parseInt(cardExpiryYear);
+		int toMonth = Integer.parseInt(toDate[1]);
+		int expiryMonth = Integer.parseInt(cardExpiryMonth);
+		if(toYear > expiryYear) {
+			result = false;
+		}
+		if(toYear == expiryYear && expiryMonth < toMonth) {
+			result = false;
+		}
+		
+		if(expiryMonth > 12) {
+			result = false;
+		}
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+		Date today = new Date();
+		Date inputDate = dateFormat.parse(cardOwnerBirth);
+		double diffDays = (today.getTime() - inputDate.getTime()) / (24 * 60 * 60 * 1000);
+		if(diffDays < 1) {
+			System.out.println("생일이 오늘날짜 이후 : " + (diffDays < 1) + " / diffDays : " + diffDays);
+			result = false;
+		}
+		
+		
+		if(result) {
+			
+			
+		}
+		
+		ModelAndView mav = new ModelAndView("reservation/ticketing/ticketingComplete");
+		mav.addObject("resultBool", result);
+		return mav;
+	}
 /*******연종. PWD찾기 SHIN*******/
 	//TODO 클래스명 수정할것
 	public ModelAndView searchPwdID() throws Exception {

@@ -63,17 +63,26 @@ public class Params {
 	private String withdrawUserPwd;
 
 // 예매하기(ticketing)
-	private int calendarMonth;
-	private int CalendarYear;
 	private String screeningDate;
 	private String movieTitle;
-	private int theater;
 	private String movieTime;
+	private int personCnt;
+	private int theater;
+	private String seatArr;
+	private int calendarMonth;
+	private int calendarYear;
 	
-// 공지사항 게시판
+// 결제
+	private String cardType;
+	private String cardNum;
+	private String cardPWD;
+	private String cardExpiryDateMonth;
+	private String cardExpiryDateYear;
+	private String cardOwnerBirth;
+
+	// 공지사항 게시판
 	private int noticeUserClickPage;
 	private int noticePage;
 	private int noticeNo;
 	private String noticeSearachWord;
-
 }

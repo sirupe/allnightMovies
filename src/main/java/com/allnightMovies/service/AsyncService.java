@@ -1,7 +1,6 @@
 package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -15,12 +14,10 @@ import org.springframework.stereotype.Service;
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.Paging;
-import com.allnightMovies.utility.Paging2;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 
@@ -40,10 +37,10 @@ public class AsyncService implements AsyncAction {
 	}
 /*****은정. join success check*****/	
 	public AsyncResult<String> joinSuccessCheck() throws Exception {
-		String userID = params.getUserIDCheck();
-		String userPWD = params.getUserPWD();
+		String userID 	 = params.getUserIDCheck();
+		String userPWD 	 = params.getUserPWD();
 		String userRePWD = params.getUserRePWD();
-		String userName = params.getUserName();
+		String userName  = params.getUserName();
 		String userBirth = params.getUserBirth();
 		
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
@@ -362,7 +359,7 @@ public class AsyncService implements AsyncAction {
 		return async;
 	}
 	
-	/*******수진 인증번호일치여부 수진*********/
+/*******수진 인증번호일치여부 수진*********/
 	@SuppressWarnings("rawtypes")
 	public AsyncResult confirmNumberCheck() throws Exception {
 		String result = "입력하신 인증번호와 일치합니다.";

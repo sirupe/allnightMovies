@@ -181,5 +181,4 @@ public class DBService {
 	public List<CinemaIntroduceDTO> getCinemaIntroImg() {
 		return dbMapper.getCinemaIntroImg();
 	}
-	
 }

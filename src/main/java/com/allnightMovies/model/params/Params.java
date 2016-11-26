@@ -70,7 +70,8 @@ public class Params {
 	private int theater;
 	private String movieTime;
 	
-	private int noticeUserClickPage;
+// 공지사항 게시판
+	private int noticeUserClickPage;/*삭제예정*/
 	private int noticePage;
 	private int noticeNo;
 	

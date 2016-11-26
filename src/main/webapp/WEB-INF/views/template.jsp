@@ -23,12 +23,12 @@
 					<c:choose>
 						<c:when test="${directory == '' || directory == null}">
 							<article class="content__body">
-								<jsp:include page="./${main.mainMenuPage }/${sub }.jsp"/>
+								<jsp:include page="./${main.mainMenuPage}/${sub}.jsp"/>
 							</article>
 						</c:when>
 						<c:otherwise>
 							<article class="content__body">
-								<jsp:include page="./${directory }/${page }.jsp"/>
+								<jsp:include page="./${directory}/${page}.jsp"/>
 							</article>
 						</c:otherwise>
 					</c:choose> 
@@ -42,7 +42,7 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script type="text/javascript" src="/resources/js/template.js"></script>
-	<c:if test="${contentjs != '' && contentjs != null }">
-		<script type="text/javascript" src="/resources/js/${contentjs }.js"></script>
+	<c:if test="${contentjs != '' && contentjs != null}">
+		<script type="text/javascript" src="/resources/js/${contentjs}.js"></script>
 	</c:if>
 </html>

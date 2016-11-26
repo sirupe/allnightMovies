@@ -323,18 +323,18 @@
 	
 	<select id="getCinemaNoticeBoardDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.Integer">
 		SELECT * FROM (
-		SELECT NO		  no, 
-		       TITLE	  title,
-		       writeDate, 
-		       CONTENT	  content,
-		       IMPORTANT  important,
-		       ROWNUM RNUM 
-		FROM (
-		         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
-		         FROM CINEMA_NOTICE_BOARD 
-		         ORDER BY IMPORTANT DESC, writeDate DESC
-		      )
-		)    
+			SELECT NO		  no, 
+			       TITLE	  title,
+			       writeDate, 
+			       CONTENT	  content,
+			       IMPORTANT  important,
+			       ROWNUM RNUM 
+			FROM (
+			         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
+			         FROM CINEMA_NOTICE_BOARD 
+			         ORDER BY IMPORTANT DESC, writeDate DESC
+			      )
+			)    
 		WHERE RNUM BETWEEN #{param1} AND #{param2}
 	</select>
 	
@@ -352,7 +352,7 @@
 		WHERE TITLE LIKE #{searchWord} OR CONTENT LIKE #{searchWord}
 	</select>
 	
-	<select id="searchBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.String">
+	<select id="searchBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO">
 		SELECT * FROM (
 		SELECT NO		  no, 
 		       TITLE	  title,
@@ -376,7 +376,5 @@
 		SELECT CINEMA_INTRO_IMAGE cinemaIntroImg
 		FROM CINEMA_INTRODUCE
 	</select>
-	
-	
 	
 </mapper>

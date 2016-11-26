@@ -5,12 +5,10 @@
 /*font-family: 'Nanum Gothic', serif; 비밀번호*/
 
 .video-currentFilm__mainFilm {
-	width: 840px;
+    width: 980px;
     height: 380px;
-	/* poster: url("/../resources/img/poster/fantasticBeastsVideo.jpg"); */
-	background-color: rgb(34, 33, 36);
+    cursor: pointer;
 }
-
 .div-currentFilm {
 	display: block;
 }
@@ -22,7 +20,7 @@
 }
 /*현재상영작 포스터가 들어갈 구역*/
 .div-currentFilm-images {
-	margin-left: 30px;
+	margin-left: 20px;
 }
 .span-currentFilm-images {
     display: inline-block;
@@ -65,29 +63,11 @@
 	background-repeat:no-repeat;
 	width: 980px;
 	height: 380px;
-	background-image: url("/../resources/img/poster/fantasticBeastsVideo.jpg");
+	background-color: rgb(34, 33, 36);
 }
 .span-currentFilm__mainFilm:hover {
 	opacity: 1;
     box-shadow: inset rgba(13, 32, 50, 0.27) 0 0 0 0;
-}
-
-/*비디오 실행버튼*/
-.video-currentFilm__start {
-	padding: 5px 15px 5px 15px;
-    box-sizing: content-box;
-    cursor: pointer;
-    width: 60px;
-    height: 80px;
-    font-size: 50px;
-    color: white;
-    border-radius: 46px;
-    border: 3px solid white;
-    background: rgba(156, 158, 162, 0);
-}
-
-.video-currentFilm__start:hover {
-    background: rgba(156, 158, 162, 0.4);
 }
 
 /*예매순/평점순/예매하기 버튼*/

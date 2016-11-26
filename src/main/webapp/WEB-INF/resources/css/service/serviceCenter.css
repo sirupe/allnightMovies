@@ -5,23 +5,277 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 /*font-family: 'Nanum Gothic', serif; 비밀번호*/
 
+.div__serviceCenter_Container_Tab {
+    border: 3px solid #e8f2e6;
+    height: 560px;
+    width: 900px;
+}
 .div__serviceCenter_form {
-    width: 100%;
-    
-    display: flex;
-    height: 939px;
-    flex-direction: column;
-    line-height: 40px;
+	margin: 25px 0px 0px 10px;
+	width: 900px;
+}
+.servieCenterTitle {
+	font-size: 25px;
+}
+.div__serviceCenter__intro {
     padding: 20px;
-    background-color: #F0F0F0;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    font-size: 20px;
+    margin: 20px 0px 0px 20px;
 }
 
-.div__serviceCenter_form_title {
-	background-color: #383838;
-	color: white;
-	padding-left: 20px;
+/*자주하는 질문*/
+.container__serviceCenterFrequenty_content {
+	margin: 30px 0px 20px 0px;
+} 
+.container__serviceCenterFrequenty {
+	height: 500px;
+}
+.js_service_List .js_con {
+    border-top: 1px solid #e8f2e6;
+    font-size: 18px;
+    padding: 20px;
+    width: 760px;
+}
+.js_service_List .on .js_sub {
+    font-weight: bold;
+    font-size: 18px;
+}
+.ul.serviceCenter_Tab {
+    padding: 0px;
+    height: 48px;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-radius: 12px;
+}
+ul.serviceCenter_Tab li {
+	margin-bottom: -21px;
+    margin-left: -40px;
+    border: 1px solid #d6dfd5;
+    display: inline-block;
+    background-color: #e8f2e6;
+    width: 300px;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    overflow: hidden;
+}
+.serviceCenterFrequenty__pageButton {
+    /* background: beige;
+    font-size: 17px;
+    height: 32px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 215px; */
+    text-align: center;
+}
+
+.js_service_List .js_sub {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 800px;
+}
+.js_service_List li {
+    border-bottom: 3px solid #e8f2e6;
+    width: 800px;
+}
+.serviceCenter_search {
+	display: flex;
+    align-items: center;
+	margin: 5px 0px 20px 0px;
+}
+.search-icon {
+	width: 26px;
+	height: 25px;
+	margin-right: 3px;
+	background-image: url('/resources/img/notice/search.png');
+	background-repeat: no-repeat;
+	background-size: 26px 25px;
+}
+.serviceCenter_QuestionWrite,
+.serviceCenter_Searchbutton {
+    background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;	
+    margin-left: 4px;
+    padding: 6px 15px;
+    font-size: 15px;
+    font-family: 'Jeju Gothic', serif;
+}
+.div__serviceCenter__Container {
+	display: inline-block;
+ }
+ 
+.serviceCenter_Searchinput {
+    width: 200px;
+    height: 20px;
+    font-size: 16px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+	font-family: 'Jeju Gothic', serif;
+}
+
+/*문의게시판*/
+.questionBoard_container {
+    disflex: flex;
+    margin: 0px 0px 10px 40px;
+    line-height: 27px; 
+}
+
+.questionBoard_top{
+	display: inline-flex;
+    font-size: 20px;
+    text-align: center;
+    padding: 4px;
+    border-top: 3px solid #d2e6cd;
+    border-bottom: 3px solid #d2e6cd;
+}
+.questionBoard_middle {
+	display: inline-flex;
+	font-size: 16px;
+	text-align: center;
+    border-bottom: 3px dotted #ebe1d2;
+	padding: 5px;
+}
+
+.questionBoard_list {
+	height: 400px;
+}
+
+.questionBoard_sub {
+    padding: 8px;
+    font-size: 15px;
+    color: #ff6a6a;
+    text-align: center;
+}
+
+.no {
+	width: 50px;
+}
+.toptitle {
+	width: 480px;
+}
+.title {
+	width: 460px;
+	text-align: left;
+	margin-left: 20px;
+}
+.user {
+	width: 150px;
+}
+.date {
+	width: 100px;
+}
+.serviceCener_paging_button {
+    font-size: 15px;
+    cursor: pointer;
+}
+/**************글등록창 ******/
+.questionBoard_content {
+	font-size: 20px;
+}
+.questionBoard-content {
+    text-align: center;
+   	margin: 10px 0px 15px 0px;
+}
+
+.boardwriteBoard {
+    width: 620px;
+    font-size: 18px;
+    height: 25px;
+    font-family: 'Jeju Gothic', serif;
+    margin-bottom: 10px;
+}
+
+textarea.boardTextarea,
+textarea.boardViewTextarea {
+    width: 700px;
+    height: 320px;
+    font-size: 18px;
+    resize: none;
+    font-family: 'Jeju Gothic', serif;
+    margin: 1px 0px 10px 5px;
+}
+
+.boardtitle,
+.boardSub{
+	font-size: 20px;
+	margin-right: 30px;
+}
+.boardPwd {
+	font-size: 17px;
+	margin-right: 5px;
+}
+
+.boardwriteBoardPwd {
+	width: 150px;
+	font-size: 22px;
+}
+.questionButton_cancel,
+.questionButton_confirm {
+	background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 4px;
+    padding: 8px 25px;
+    font-size: 18px;
+    font-family: 'Jeju Gothic', serif;
+}
+.questionButton_cancel {
+	margin-right: 30px;
+}
+
+.serviceCenter_QuestionWrite:hover,
+.serviceCenter_Searchbutton:hover,
+.questionButton_cancel:hover,
+.questionButton_confirm:hover {
+	background-color: #ecd9ff;
+}
+
+ul,li {
+	text-decoration: none;	
+	list-style: none;
+}
+
+.questionbutton {
+	padding-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*마지막 검토하면서 추가한것*/
+.questionBoard_bottom {
+	text-align: center;
+}
+.questionBoard {
+	margin-left: 40px;
+}
+
+.questionBoard_subject,
+.questionBoardView_subject {
+    display: flex;
+}
+
+
+
+
+
+
+
+/********************************위에까지 내꺼**************************************/
+
+
+/* .div__serviceCenter_form_title {
+	font-size: 25px;
 	font-family: 'Jeju Gothic', serif;
 }
 
@@ -40,54 +294,13 @@
 	font-family: 'Jeju Gothic', serif;
 }
 
-.div__serviceCenter__logo {
-	display: flex;
-	/* background-color: aliceblue; */
-	width: 215px;
-	height: 107px;
-}
-
-.serviceCenter_logo_image {
-	 /* width: 211px; */
-	 width:100%;
-}
-
-.serviceCenter_question_image {
-    width: 69px;
-    height: 45px;
-    padding-top: 10px;
-}
-
-.div__serviceCenter__intro {
-    display: flex;
-    flex-direction: column;
-    /* background-color: bisque; */
-    padding-left: 7px;
-    height: 107px;
-    width:397px;
-    flex: none;
-    overflow: hidden;
-}
-
-.serviceCenter_intro_message {
-    width: 364;
-    font-size: 17.5px;
-    font-weight: 700;
-    line-height: initial;
-    padding-left: 6px;
-    /* text-align: center; */
-   /*  background-color: burlywood; */
-    color: #283cab;
-}
 
 .div__serviceCenter__intro_bundle {
-	/* background-color: aquamarine; */
     display: flex;
     height: 65px;
 }
 
 .serviceCenter_intro_title {
-    /* background-color: beige; */
     width: 140px;
     height: 34px;
     font-size: 25px;
@@ -95,42 +308,6 @@
     line-height: 30px;
     padding-top: 19px;
     padding-left: 10px;
-}
-
-.div__serviceCenter__Container {
-    padding-left: 20px;
-    padding-top: 27px;
-    padding-right: 15px;
- }
-
-
-ul.serviceCenter_Tab {
-	padding: 0px;
-	float: left;
-	list-style: none;
-	height: 48px;
-	border-bottom: 1px solid;
-	border-left: 1px solid;
-	width: 100%;
-	border-radius: 12px;
-}
-
-ul.serviceCenter_Tab li {
-    float: left;
-    margin: 0;
-    padding: 0;
-    width: 138px;
-    /* padding-right: 50px; */
-    height: 47px;
-    line-height: 50px;
-    text-align: center;
-    border: 1px solid;
-    margin-bottom: -1px;
-    overflow: hidden;
-    position: relative;
-    border-left: none;
-    border-radius: 10px;
-
 }
 
 ul.serviceCenter_Tab li a {
@@ -158,13 +335,6 @@ ul.serviceCenter_Tab li.actice a:hover {
 	clear: both;
 	float: left;
 	background: bisque;
-	width: 100%;
-}
-
-.div__serviceCenter_Container_Tab {
-	BACKGROUND-COLOR:  #ffffff;
-    HEIGHT: 419PX;
-    padding-bottom: 176px
 }
 
 .div#tab_content_frequenty {
@@ -173,27 +343,23 @@ ul.serviceCenter_Tab li.actice a:hover {
 
 .div__serviceCenter_info {
 	display: flex;
-    /* background-color: burlywood; */
-padding-top: 116px;
+	padding-top: 116px;
     line-height: 36px;
 }
 
 .div__serviceCenter_Tel {
-display: flex;
-    /* background-color: cadetblue; */
+	display: flex;
     width: 249px;
     padding-left: 41px;
     font-size: 22px;
     font-weight: bolder;
     padding-bottom: 22px;
-    /* border-right: 2px solid; */
+    border-right: 2px solid;
     font-family: 'Jeju Gothic', serif;
 }
 
 .div_serviceCenter_Email {
     display: flex;
-    /* background-color: cadetblue; */
-    width: 268px;
     padding-left: 34px;
     font-size: 21px;
     font-weight: bolder;
@@ -201,14 +367,18 @@ display: flex;
     font-family: 'Jeju Gothic', serif;
 }
 
-/*************************************자주묻는질문 ****************************************************/
 
-.container__serviceCenterFrequenty__title {
-/* 	border-bottom: solid black;
-    padding-bottom: 12px;
-    margin-top: -1px; */
-}
-	
+
+
+
+
+
+
+
+
+************************************자주묻는질문 ***************************************************
+
+
 button.serviceCenterFrequenty_title {
 background-color: #fff;
     color: #444;
@@ -270,7 +440,7 @@ div.serviceCenterFrequenty_panel.show {
 .serviceCenterFrequenty__contents {
 display: inline-block;
     width: 94%;
-    /* background-color: white; */
+    background-color: white;
     opacity: 1.0;
     filter: alpha(opacity=50);
     font-family: 'Jeju Gothic', serif;
@@ -303,72 +473,9 @@ display: inline-block;
 
 
 
-/*******************************자주묻는질문*******************************************/
+******************************자주묻는질문******************************************
 ul,li {
 	list-style:none
-}
-
-.container__serviceCenterFrequenty_content {
-    padding-top: 68px;
-    HEIGHT: 403PX;
-}
-
-.container__serviceCenterFrequenty {
-    min-width: 300px;
-    margin: 10px;
-    background: rgba(255, 255, 255, 0);
-}
-
-.js_service_List li {
-	border-bottom:1px solid #0b0523;
-}
-
-.js_service_List .js_sub {
-	font-family: 'Jeju Gothic', serif;
-	display:block;
-	padding:8px;
-	cursor:pointer;
-	font-size: large;
-}
-
-.js_service_List .js_con {
-    font-family: 'Nanum Gothic', serif;
-    font-size: 16px;
-    border: 1px solid #d5d5d5;
-    border-radius: 13px;
-    padding: 10px;
-}
-
-.js_service_List .on .js_sub {
-	font-family: 'Nanum Gothic', serif;
-    color: #5864bb;
-    font-weight: 900;
-    font-size: 18px;
-}
-
-
-.serviceCenterFrequenty__pageButton {
-font-family: 'Nanum Gothic', serif;
-    background: beige;
-    text-align: center;
-    font-size: 17px;
-    height: 32px;
-    line-height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 215px;
-}
-
-.serviceCener_paging_button {
-	
-}
-
-
-.serviceCener_paging_button {
-    font-size: 23px;
-    padding-left: 17px;
-    cursor: pointer;
 }
 
 
@@ -380,79 +487,34 @@ font-family: 'Nanum Gothic', serif;
     cursor: pointer;
 }
 
-.serviceCenter_search {
-	padding-top: 22px;
-    text-align: -webkit-right;
-}
 
-.serviceCenter_Searchinput {
-	width: 200px;
-    font-size: 13px;
-    padding: 5px 10px;
-    border: 1px solid #b7b7b7;
-    border-radius: 6px;
-    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
-    height: 20px;
-}
+***************************************문의 게시판**************************************
 
-
-.serviceCenter_Searchbutton {
-    background-color:#ffe1ed;
-    border: 1px solid #2a3034;
-    cursor: pointer;
-    border-radius: 3px;
-    outline: none;
-    margin-left: 10px;
-    padding: 6px 15px;
-    font-size: 15px;
-}
-
-.serviceCenter_Searchbutton:HOVER {
-	 background-color:#f2a3c2;
-}
-
-
-/****************************************문의 게시판***************************************/
-.questionBoard_container {
-	disflex:flex;
-	/* width:800px; */
-	flex-direction:column;
-	font-family: 'Jeju Gothic', serif;
-	font-size: 16.5px;
-	line-height: 27px;
-
-	
-}
-
-.questionBoard_top,
-.questionBoard_middle {
-	width:100%;
-	flex-basis: 40px;
+.questionBoard_top{
     text-align: center;
+    font-size: 20px;
+}
+
+.questionBoard_middle {
+	font-size: 18px;
 }
 
 .questionBoard_top_no {
 	display:inline-block;
 	width:10%;	
-    background-color: gray;
 }
 
 .questionBoard_top_title {
     display: inline-block;
     width: 54%;
-    background-color: #e5c7c7;
 }
 
 .questionBoard_top_user {
 	display: inline-block;
-    width: 14%;
-    background-color: #e5c7c7;
 }
 
 .questionBoard_top_date {
 	display: inline-block;
-    width: 19%;
-    background-color: #e5c7c7;
 }
 
 .questionBoard_bottom {
@@ -489,24 +551,12 @@ font-family: 'Nanum Gothic', serif;
     border-bottom: 2px solid #eae1e1;
 }
 
-.questionBoard_sub,
-.questionBoardView_sub {
-    font-size: 20px;
-    font-weight: bolder;
-    padding-bottom: 9px;
-    padding-top: 10px;
-}
 
 .questionBoard_sub2 {
 	
-}
+} */
 
-.questionBoard-content {
-    padding-top: 48px;
-    border-bottom: 2px solid #eae1e1;
-}
-
-.questionBoard_content,
+/* .questionBoard_content,
 .questionBoardView_content {
     font-size: 25px;
 }
@@ -519,24 +569,6 @@ font-family: 'Nanum Gothic', serif;
 .questionBoardView-sub,
 .questionBoard-pwd {
     padding-top: 13px;
-}
-
-label.boardtitle,
-label.boardViewtitle {
-    padding-right: 34px;
-    /* //border-right: 1px solid #d3ddd3; */
-    font-size:20px;
-    line-height: 41px;
-}
-
-label.boardwriter,
-label.boardViewwriter {
-    padding-right: 21px;
-    font-size: 20px;
-    line-height: 41px;
-}
-.questionBoard {
-    padding-left: 30px;
 }
 
 input.boardwriteBoard,
@@ -574,9 +606,10 @@ input.boardwriteBoardViewinput {
 }
 textarea.boardTextarea,
 textarea.boardViewTextarea {
-    width: 750px;
-    height: 350px;
-    font-size: 21px;
+	width: 730px;
+    height: 320px;
+    font-size: 18px;
+    resize: none;
 }
 
 .questionbutton {
@@ -585,24 +618,6 @@ textarea.boardViewTextarea {
     align-items: center;
     justify-content: center;
 }
-
-.questionButton_cancel,
-.questionButton_confirm {
-    background-color: rgba(248, 230, 249, 0.66);
-    border: 1px solid #2a3034;
-    cursor: pointer;
-    border-radius: 3px;
-    outline: none;
-    margin-left: 27px;
-    padding: 7px 20px;
-    font-size: 17px;
-}
-
-.questionButton_cancel:hover,
-.questionButton_confirm:hover {
-	background-color: rgba(251, 176, 255, 0.66);
-}
-
 .font {
 	font-family: 'Jeju Gothic', serif;
 }
@@ -610,11 +625,4 @@ textarea.boardViewTextarea {
 .questionBoard_subject,
 .questionBoardView_subject {
     display: flex;
-}
-
-
-
-
-
-
-
+} */

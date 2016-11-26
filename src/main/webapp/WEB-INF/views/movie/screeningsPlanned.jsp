@@ -6,8 +6,10 @@
 		상영예정작
 	</div>
 	<div class="screeningsPlanned-content">
-		<span class="screeningsPlanned-vedio"> 
-			<button class="vedio__startBtn  js_screeningsPlanned-vedio_startBtn">▶</button>
+		<span class="screeningsPlanned-vedio js_mainFilm"> 
+			<video  class="video-plannedFilm__mainFilm js_video" loop poster="/resources/img/movieVideo/masterVideo.png">
+				<source src="/resources/img/movieVideo/master.ogv">
+			</video>
 		</span>
 	</div>
 	<div class="screeningsPlanned-posters">

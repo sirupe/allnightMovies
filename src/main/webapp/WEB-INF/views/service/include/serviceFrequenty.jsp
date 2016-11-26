@@ -1,16 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="container__serviceCenterFrequenty js_frequentlyBoardContainer">
-	<ul class="container__serviceCenterFrequenty_content js_service_List">
-	<c:forEach items="${boardPage }" var="boardPage">
-			<li>
-				<div class="serviceCenterFrequenty__subject js_sub" onclick="frequentlyBoard()">Q.${boardPage.getQUESTION() }</div>	
-				<div class="serviceCenterFrequenty__contents js_con">${boardPage.getASKED() }</div>
-			</li>
-	</c:forEach>
-	</ul>
-	
+<div class="js_frequentlyBoardContainer">
+	<div class="container__serviceCenterFrequenty">
+		<ul class="container__serviceCenterFrequenty_content js_service_List">
+		<div class="serviceCenter_search">
+			<img  class="search-icon"></img>
+			<input class="serviceCenter_Searchinput" type="text" placeholder="고객센터 내용 검색">
+			<button class="serviceCenter_Searchbutton js_serviceCenter_button" type="button">검색</button>
+		</div>
+		<c:forEach items="${boardPage }" var="boardPage">
+				<li>
+					<div class="serviceCenterFrequenty__subject js_sub" onclick="frequentlyBoard()">Q.${boardPage.getQUESTION() }</div>	
+					<div class="serviceCenterFrequenty__contents js_con">${boardPage.getASKED() }</div>
+				</li>
+		</c:forEach>
+		</ul>
+	</div>
 	<div class="serviceCenterFrequenty__pageButton js_servicePageButton">
 		<c:if test="${pageGroup.isPreButton()}"><span data-prepage="${pageGroup.viewStartPageNum - 1}" class="js_preButton">이전</span></c:if>
 			<c:forEach begin="${pageGroup.viewStartPageNum }" end="${pageGroup.viewEndPageNum }" var="page">
@@ -27,11 +33,6 @@
 					</div>
 			</c:forEach>
 		<c:if test="${pageGroup.isNextButton() }"><span data-nextpage="${pageGroup.viewEndPageNum + 1 }"  class="js_nextButton">다음</span></c:if>
-	</div>
-	
-	<div class="serviceCenter_search">
-		<input class="serviceCenter_Searchinput" type="text" placeholder="고객센터 내용 검색">
-		<button class="serviceCenter_Searchbutton js_serviceCenter_button" type="button">검색</button>
 	</div>
 </div>
 

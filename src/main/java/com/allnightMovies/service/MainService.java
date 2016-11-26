@@ -608,11 +608,8 @@ public class MainService implements Action {
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
 	public ModelAndView currentFilm() throws Exception{
 		ModelAndView mav = this.getTemplate();
-		
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.getCurrentFilmDTO();
 		Integer filmNum = currentFilmDTO.size();
-		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		// 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "currentFilm");
 		mav.addObject("contentCSS", "movie/currentFilm");
@@ -621,14 +618,38 @@ public class MainService implements Action {
 		mav.addObject("filmNum", filmNum);
 		return mav;
 	}
-/*******연종. MOVIE CURRENT FIRM 현재상영작*******/		
+	public ModelAndView sortScore() throws Exception{
+		System.out.println("sortScore CLICK");
+		ModelAndView mav = new ModelAndView("movie/currentFilmSort");
+		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.sortScore();
+		Integer filmNum = currentFilmDTO.size();
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "currentFilmSort");
+		mav.addObject("contentCSS", "movie/currentFilm");
+		mav.addObject("contentjs", "movie/currentFilm");
+		mav.addObject("CurrentFilmDTO", currentFilmDTO);
+		mav.addObject("filmNum", filmNum);
+		return mav;
+	}
+	//TODO 현재 가나다순 정렬 중임 
+	public ModelAndView sortTicketing() throws Exception{
+		System.out.println("sortScore CLICK");
+		ModelAndView mav = new ModelAndView("movie/currentFilmSort");
+		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.sortTicketing();
+		Integer filmNum = currentFilmDTO.size();
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "currentFilmSort");
+		mav.addObject("contentCSS", "movie/currentFilm");
+		mav.addObject("contentjs", "movie/currentFilm");
+		mav.addObject("CurrentFilmDTO", currentFilmDTO);
+		mav.addObject("filmNum", filmNum);
+		return mav;
+	}
+/*******연종. MOVIE PLANNED FIRM 상영예정작*******/		
 	public ModelAndView screeningsPlanned() throws Exception{
 		ModelAndView mav = this.getTemplate();
-		
 		List<MovieScreeningsPlannedDTO> screeningsPlannedDTO = this.dbService.getPlannedFilmDTO();
 		Integer filmNum = screeningsPlannedDTO.size();
-		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		// 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "screeningsPlanned");
 		mav.addObject("contentCSS", "movie/screeningsPlanned");
@@ -732,7 +753,6 @@ public class MainService implements Action {
 		
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
-//		mav.addObject("no", clickedPageNum);
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");

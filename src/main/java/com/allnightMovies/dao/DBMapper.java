@@ -75,6 +75,8 @@ public interface DBMapper {
 /** shin. MOVIE currentFilm **/	
 	public List<MovieCurrentFilmDTO> getCurrentFilmDTO();
 	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO();
+	public List<MovieCurrentFilmDTO> sortScore();
+	public List<MovieCurrentFilmDTO> sortTicketing();
 /** shin. SERVICE noticeBoard **/
 	public int getNoticeBoardCount();
 	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum);

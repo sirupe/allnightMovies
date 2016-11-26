@@ -6,9 +6,8 @@
 		현재상영작
 	</div>
 	<div class="div-currentFilm__content">
-		<span class="span-currentFilm__mainFilm">
-			<button class="video-currentFilm__start  js_currentFilmStartBtn">▶</button>
-			<video muted class="video-currentFilm__mainFilm js_video" controls ><!-- autoplay -->
+		<span class="span-currentFilm__mainFilm js_mainFilm">
+			<video class="video-currentFilm__mainFilm js_video" loop poster="/resources/img/movieVideo/fantasticBeasts.png">
 				<source src="/resources/img/movieVideo/fantasticBeasts.ogv">
 			</video>
 		</span>
@@ -18,34 +17,5 @@
 		</span>
 		<button class="button-currentFilm-reservation  js_urrentFilmReservationBtn">예매하기</button>
 	</div>
-	<div class="div-currentFilm-images">
-		<c:forEach begin="1" end="${filmNum}" step="1" items="${CurrentFilmDTO }" var="CurrentFilmDTO" varStatus="filmNum" >
-			<c:choose>
-				<c:when test="${filmNum.count % 3 != 0}">
-					<span class="span-currentFilm-images">
-						<span class="span-filmImgs  js_currentFilmInOut" style="background-image: url('/../resources/img/poster/${CurrentFilmDTO.moviePoster }');">
-							<label class="hiddenText js_text">상세보기</label>
-						</span>
-						<span class="span-currentFilm-text">
-							<label class = "ageLimit${CurrentFilmDTO.movieAgeLimit }">${CurrentFilmDTO.movieAgeLimit }</label>
-							<label class="label-currentFilm__movieTitle">${CurrentFilmDTO.movieTitle }</label>
-						</span>
-					</span>
-				</c:when>
-				<c:otherwise>
-					<span class="span-currentFilm-images">
-						<span class="span-filmImgs  js_currentFilmInOut" style="background-image: url('/../resources/img/poster/${CurrentFilmDTO.moviePoster }');">
-							<label class="hiddenText js_text">상세보기</label>
-						</span>
-						<span class="span-currentFilm-text">
-							<label class = "ageLimit${CurrentFilmDTO.movieAgeLimit }">${CurrentFilmDTO.movieAgeLimit }</label>
-							<label class="label-currentFilm__movieTitle">${CurrentFilmDTO.movieTitle }</label>
-						</span>
-					</span>
-					<p>
-				</c:otherwise>
-			</c:choose>
-			
-		</c:forEach>
-	</div>
+	<jsp:include page="./currentFilmSort.jsp"></jsp:include>
 </div>

@@ -39,14 +39,14 @@
 			<span class="mainContiner-notice-content">
 				<c:choose>
 					<c:when test="${mainNoticeDTO.important == 1}">
-						<label>
+						<label class="noticeTitle">
 							<img class="importImg" src="/resources/img/notice/notice.png">&nbsp;&nbsp;
 							<a  class="noticeTitle import" href="/movie/mainService/noticeBoardView?noticePage=1&noticeNo=${mainNoticeDTO.no}">${mainNoticeDTO.title}</a>
 						</label>
 						<label class="noticeDate">${mainNoticeDTO.writeDate}</label>
 					</c:when>
 					<c:otherwise>
-						<label>
+						<label class="noticeTitle">
 							<a class="noticeTitle titleHover" href="/movie/mainService/noticeBoardView?noticePage=1&noticeNo=${mainNoticeDTO.no}">${mainNoticeDTO.title}</a>
 						</label>
 						<label class="noticeDate">${mainNoticeDTO.writeDate}</label>

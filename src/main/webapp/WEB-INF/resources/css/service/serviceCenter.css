@@ -308,4 +308,79 @@ button.QuestionBoardReCheckPWd_checkBtn2 {
 }
 
 
+/*수정전폼*/
+.questionBoardView-detail {
+    margin-bottom: 14px;
+}
 
+.questionBoardView-title {
+    margin-bottom: 14px;
+}
+
+input.boardwriteBoardViewinput {
+    outline: none;
+    margin-left: 14px;
+     height: 30px;
+      font-family: 'Jeju Gothic', serif;
+          font-size: 18px;
+}
+
+
+label.boardViewtitle {
+    font-size: 20px;
+    margin-left: 30px;
+}
+
+input.boardViewwriteBoard {
+    outline: none;
+    margin-left: 22px;
+    height: 30px;
+    width: 334px;
+     font-family: 'Jeju Gothic', serif;
+         font-size: 18px;
+}
+
+label.boardViewwriteDate {
+    margin-left: 18px;
+}
+
+input.boardwriteBoardViewinput {
+    margin-left: 7px;
+     height: 30px;
+      font-family: 'Jeju Gothic', serif;
+          font-size: 18px;
+          border: none;
+}
+
+.questionBoardView-title {
+    margin-bottom: 14px;
+}
+
+label.boardViewwriter {
+    font-size: 20px;
+}
+
+.questionBoardView-sub {
+    margin-left: 30px;
+}
+
+label.boardViewSub {
+    padding-right: 24px;
+    font-size: 20px;
+}
+
+.questionBoardView-detail {
+    margin-bottom: 14px;
+
+
+    width: 700px;
+    font-size: 18px;
+    resize: none;
+    font-family: 'Jeju Gothic', serif;
+    margin: 1px 0px 10px 5px;
+    margin-left: 27px;
+}
+
+label.boardViewwriteDate {
+    margin-left: 18px;
+} 

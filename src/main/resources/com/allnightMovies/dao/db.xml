@@ -408,4 +408,44 @@
 		FROM CINEMA_INTRODUCE
 	</select>
 	
+<!-- MAIN PAGE -->	
+	<select id="getMainEvnetImg" resultType="com.allnightMovies.model.data.movieInfo.MainPageEventDTO">
+		SELECT MAIN_EVENT mainEventImg
+		FROM MAIN_PAGE
+	</select>
+	
+	<select id="getNewFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
+		SELECT * FROM (
+				SELECT MOVIE_TITLE  movieTitle,
+	                   MOVIE_POSTER moviePoster,
+	                   MOVIE_RELEASE_DATE,
+	                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+	                   ROWNUM RNUM
+				FROM (
+					SELECT *
+					FROM MOVIE_BASIC_INFO 
+					WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE 
+					ORDER BY MOVIE_TITLE ASC
+				    )
+				) 
+	      WHERE RNUM <![CDATA[<]]>= 4
+	</select>
+	
+	<select id="getMainNoticeDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
+		SELECT * FROM (
+			SELECT NO		  no, 
+			       TITLE	  title,
+			       writeDate, 
+			       CONTENT	  content,
+			       IMPORTANT  important,
+			       ROWNUM RNUM 
+			FROM (
+			         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
+			         FROM CINEMA_NOTICE_BOARD 
+			         ORDER BY IMPORTANT DESC, writeDate DESC
+			      )
+			)    
+		WHERE RNUM <![CDATA[<]]>= 10
+	</select>
+	
 </mapper>

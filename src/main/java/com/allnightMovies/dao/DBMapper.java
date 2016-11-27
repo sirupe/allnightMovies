@@ -9,6 +9,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -76,12 +77,19 @@ public interface DBMapper {
 	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO();
 	public List<MovieCurrentFilmDTO> sortScore();
 	public List<MovieCurrentFilmDTO> sortTicketing();
+	
 /** shin. SERVICE noticeBoard **/
 	public int getNoticeBoardCount();
 	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum);
 	public CinemaNoticeBoardDTO getNoticeBoardContent(Integer noticeNo);
 	public int searchBoardCount(String searchWord);
 	public List<CinemaNoticeBoardDTO> searchBoard(Integer blockStartNum, Integer blockEndNum, String searchWord);
+	
 /** shin. THEATER introduce **/	
 	public List<CinemaIntroduceDTO> getCinemaIntroImg();
+	
+/** shin. MAIN event**/
+	public List<MainPageEventDTO> getMainEvnetImg();
+	public List<MovieCurrentFilmDTO> getNewFilmDTO();
+	public List<CinemaNoticeBoardDTO> getMainNoticeDTO();
 }

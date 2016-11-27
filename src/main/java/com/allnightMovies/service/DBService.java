@@ -14,6 +14,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -184,5 +185,16 @@ public class DBService {
 /** shin. THEATER introduce **/
 	public List<CinemaIntroduceDTO> getCinemaIntroImg() {
 		return dbMapper.getCinemaIntroImg();
+	}
+	
+/** shin. MAIN eventImg**/
+	public List<MainPageEventDTO> getMainEvnetImg() {
+		return dbMapper.getMainEvnetImg();
+	}
+	public List<MovieCurrentFilmDTO> getNewFilmDTO() {
+		return dbMapper.getNewFilmDTO();
+	}
+	public List<CinemaNoticeBoardDTO> getMainNoticeDTO() {
+		return dbMapper.getMainNoticeDTO();
 	}
 }

@@ -25,7 +25,7 @@
 					    	</c:otherwise>
 					    </c:choose>
 					    <span class="writer">AllnightMovies</span>
-					    <span class="date">${noticeDTO.writeDate }</span>
+					    <span class="date">${noticeDTO.writeDate}</span>
 					</div>
 				</c:forEach>
 			</div>

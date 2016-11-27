@@ -51,10 +51,10 @@ function locationMain(e) {
 
 /*shin searchPwd*/
 function locationSearchPwd(e) {
-	var url = '/movie/mainService/getTemplate';
-		dir = 'searchPwd';
-		page = 'searchPwd';
-		js	 = 'searchPwd/searchPwd';
+	var url = '/movie/mainService/getTemplate',
+		dir = 'searchPwd',
+		page = 'searchPwd',
+		js	 = 'searchPwd/searchPwd',
 		css = 'searchPwd/searchPwd';
 	e.preventDefault();
 	e.stopPropagation();

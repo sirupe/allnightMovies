@@ -17,8 +17,10 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
 
 
@@ -40,6 +42,8 @@ public interface DBMapper {
 	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater);
 	public Integer getTicketPriceInfo(String screeningDate, String theater);
 	public String getMoviePoster(String title);
+	public Integer checkEmptySeats(UserCheckEmptySeatsDTO checkEmptyDTO);
+	public Integer userTicketingInfoInsert(UserTicketingInfo ticketingInfo);
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	
@@ -60,6 +64,7 @@ public interface DBMapper {
 	public Integer questionBoardCount() throws Exception;
 	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception;
 	public CinemaQuestionBoardDTO questionBoardList(Integer no) throws Exception;
+	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception;
 	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);

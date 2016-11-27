@@ -1,22 +1,25 @@
 package com.allnightMovies.model.data.userInfo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import lombok.Getter;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 
-@Getter
+@Data
 @Service
+@Accessors(chain=true)
 public class UserTicketingInfo {
-	private String theaterSeat;
 	private String movieScreeningDate;
 	private String movieTitle;
-	private String userID;
 	private int theater;
-	private int userTicketCount;
-	private int userTotalPrice;
-	private int userTicketNumber;
+	private List<String> theaterSeat;
+	private String userID;
 	private Date userTicketingDate;
+	private int userTicketCount;
+	private String userTicketNumber;
+	private int userTotalPrice;
 }

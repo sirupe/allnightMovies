@@ -15,8 +15,17 @@
 		<div class="questionBoard">
 			<div class="questionBoardView-title">
 				<label class="boardViewtitle">제목</label>
-				<input class="boardViewwriteBoard" type="text" value="${questionBoardList.getTitle() }" readonly>
-				<input class="boardViewcheck" type="checkbox"><label>비밀글</label>
+				<c:choose>
+					<c:when test="${questionBoardList.getIsPwd() == 1 }">
+						<input class="boardViewwriteBoard" type="text" value="${questionBoardList.getTitle() }" readonly>
+						<input class="boardViewcheck" type="checkbox" checked disabled ><label>비밀글</label>
+					</c:when>
+					
+					<c:otherwise>
+						<input class="boardViewwriteBoard" type="text" value="${questionBoardList.getTitle() }" readonly>
+						<input class="boardViewcheck" type="checkbox" disabled ><label>비밀글</label>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			
 			<div class="questionBoardView-detail">
@@ -33,20 +42,22 @@
 					<textarea class="boardViewTextarea" rows="" cols="" readonly>${questionBoardList.getContent() }</textarea>
 				</div>
 			</div>
-<%-- 			${loginUserId != null}
-			${loginUserId == questionBoardList.getUser_Id()}
-			${questionBoardList.getUser_Id() }
-			${ loginUserId} --%>
-				<div class="serviceCenter_viewForm">
-					<button class="serviceCenter_QuestionWrite js_QuestionWriteUpdateBtn" type="button">수정하기</button>
-					<button class="serviceCenter_QuestionWrite js_QuestionWriteDeleteBtn" type="button">삭제하기</button>
-					<button class="serviceCenter_QuestionWrite js_QuestionList" type="button">글목록</button>
-				</div>
-				<div class="serviceCenter_viewForm">
-					<button class="serviceCenter_QuestionWrite js_QuestionList">글목록</button>
-				</div>
-		
-		
+			
+			<c:choose>
+				<c:when test="${isUserRight == true }">
+					<div class="serviceCenter_viewForm">
+						<button class="serviceCenter_QuestionWrite js_QuestionWriteUpdateBtn" type="button">수정하기</button>
+						<button class="serviceCenter_QuestionWrite js_QuestionWriteDeleteBtn" type="button">삭제하기</button>
+						<button class="serviceCenter_QuestionWrite js_QuestionList" type="button">글목록</button>
+					</div>
+				
+				</c:when>
+				
+				<c:otherwise>
+					<div class="serviceCenter_viewForm">
+						<button class="serviceCenter_QuestionWrite js_QuestionList" type="button">글목록</button>
+					</div>
+				</c:otherwise>			
+			</c:choose>
 		</div>
-
 </div>

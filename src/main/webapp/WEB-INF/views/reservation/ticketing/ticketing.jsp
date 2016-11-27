@@ -8,10 +8,10 @@
 			<ul class="movie-title__body">
 				<c:forEach items="${movieTitle }" var="title">
 					<li class="js_movieTitleClick   movie-title__body__li  cursor">
-						<label class="movie-title__body__limit   cursor   limit${title.movieAgeLimit }">
+						<label class="movie-title__body__limit cursor limit${title.movieAgeLimit }">
 							${title.movieAgeLimit }
 						</label> 
-						<label class="js_movieTitle   movie-title__body__title   cursor">
+						<label class="js_movieTitle movie-title__body__title cursor">
 							${title.movieTitle }
 						</label>
 					</li>
@@ -39,5 +39,6 @@
 		</div>
 	</div>
 </div>
-
-<jsp:include page="./paypopup.jsp"/>
+<div class="js_payPopupPage  pay-popup-page" >
+	<jsp:include page="./paypopup.jsp"/>
+</div>

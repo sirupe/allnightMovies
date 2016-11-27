@@ -120,6 +120,47 @@
 		FROM MOVIE_BASIC_INFO
 		WHERE MOVIE_TITLE=#{title}
 	</select>
+	
+	<!-- TICKETING : 고객이 선택한 좌석이 예매되어있는지 확인 -->
+	<select id="checkEmptySeats" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO">
+		SELECT COUNT(*) CNT 
+		FROM USER_TICKETING_INFO
+		WHERE MOVIE_TITLE=#{movieTitle}
+		AND THEATER=#{theater}
+		AND MOVIE_SCREENING_DATE=#{movieScreeningDate}
+		AND (
+			<foreach collection="seatsList" index="index" item="type" separator="OR">
+		    	THEATER_SEAT=#{type}
+		    </foreach>
+		)
+	</select>
+	
+	<!-- TICKETING : 예매정보 insert -->
+	<insert id="userTicketingInfoInsert" parameterType="com.allnightMovies.model.data.userInfo.UserTicketingInfo">
+		<foreach collection="theaterSeat" index="index" item="seat" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
+			INTO USER_TICKETING_INFO (
+				USER_ID, 
+				MOVIE_TITLE, 
+				THEATER, 
+				MOVIE_SCREENING_DATE, 
+				THEATER_SEAT, 
+				USER_TICKET_COUNT, 
+				USER_TOTAL_PRICE, 
+				USER_TICKETING_DATE, 
+				USER_TICKET_NUMBER
+			) VALUES (
+				#{userID}, 
+				#{movieTitle},
+				#{theater}, 
+				#{movieScreeningDate}, 
+				#{seat}, 
+				#{userTicketCount}, 
+				#{userTotalPrice}, 
+				SYSDATE, 
+				#{userTicketNumber}
+			)
+		</foreach>
+	</insert>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>
@@ -210,9 +251,9 @@
 
 	 <select id="questionBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 			SELECT * FROM (
-      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, ROWNUM RNUM 
+      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
       				FROM (
-              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT
+              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD
               			 FROM CINEMA_ASKED_BOARD 
                			 ORDER BY NO DESC
            			 )		
@@ -223,17 +264,38 @@
 <!-- 문의사항게시판 전체 뽑아오기 -->	
 	<select id="questionBoardList" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 					SELECT * FROM (
-      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, ROWNUM RNUM 
+      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
       				FROM (
-              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT
+              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD
               			 FROM CINEMA_ASKED_BOARD 
                			 ORDER BY NO DESC
            			 )		
      			 )    
       			WHERE NO = #{param1}
 	</select>
-	
-	
+
+<!-- 문의사항 글등록 -->
+	<select id="InsertAskWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		INSERT INTO CINEMA_ASKED_BOARD(
+		    NO,
+		    TITLE,
+		    CONTENT,
+		    USER_ID,
+		    WRITE_DATE,
+		    WRITEPWD,
+		    ISPWD
+   		 ) VALUES (
+       		ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+       		#{title},
+       		#{content},
+       		#{user_Id},
+       		SYSDATE,
+       		#{writePwd},
+       		#{isPwd}
+       	)
+
+	</select>
+
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(*) 

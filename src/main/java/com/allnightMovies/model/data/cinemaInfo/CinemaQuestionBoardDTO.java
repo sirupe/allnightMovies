@@ -9,6 +9,10 @@ public class CinemaQuestionBoardDTO {
 	private String content;
 	private String user_Id;
 	private String write_date;
+	
+	private int writePwd;
+	private int isPwd;
+	
 	private String rnum;
 	
 	

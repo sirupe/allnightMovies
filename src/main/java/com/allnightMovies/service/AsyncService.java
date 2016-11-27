@@ -10,12 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -26,140 +25,141 @@ import com.allnightMovies.utility.SendEmail;
 
 @Service
 public class AsyncService implements AsyncAction {
-   private Params params;
-   @Autowired
-   DBService dbService;
-   
-   @SuppressWarnings("rawtypes")
-   @Override
-   public AsyncResult asyncExcute(Params params) throws Throwable {
-      Method method = this.getClass().getDeclaredMethod(params.getMethod());
-      this.params = params;
-      return (AsyncResult) method.invoke(this);
-   }
-/*****은정. join success check*****/   
-   public AsyncResult<String> joinSuccessCheck() throws Exception {
-      String userID = params.getUserIDCheck();
-      String userPWD = params.getUserPWD();
-      String userRePWD = params.getUserRePWD();
-      String userName = params.getUserName();
-      String userBirth = params.getUserBirth();
-      
-      AsyncResult<String> asyncResult = new AsyncResult<String>();
-      
-      boolean checkBool = true;
-      
-      // 중복되는 아이디인지 체크
-      if(this.dbService.idCheck(userID) > 0) {
-         System.out.println("중복되는 아이디인지 : " + (this.dbService.idCheck(userID) > 0));
-         checkBool = false;
-      }
-      // 아이디 길이기 4~15자인지 체크
-      if(userID.length() < 4 || userID.length() > 15) {
-         System.out.println("아이디 길이기 4~15자 : " + (userID.length() < 4 || userID.length() > 15));
-         checkBool = false;
-      }
-      // 아이디 regex 체크
-      if(!RegexCheck.idRegexCheck(userID)) {
-         System.out.println("아이디 regex : " + !RegexCheck.idRegexCheck(userID));
-         checkBool = false;
-      }
-      // 비밀번호 regex 체크
-      if(!RegexCheck.passwdRegexCheck(userPWD)) {
-         System.out.println("비밀번호 regex : " + !RegexCheck.passwdRegexCheck(userPWD));
-         checkBool = false;
-      }
-      // 비밀번호 8~15자 이내인지 체크
-      if(userPWD.length() < 8 || userPWD.length() > 15) {
-         System.out.println("비밀번호 8~15자 이내 : " + (userPWD.length() < 8 || userPWD.length() > 15));
-         checkBool = false;
-      }
-      // pwd와 repwd 일치하는지 체크
-      if(!userPWD.equals(userRePWD)) {
-         System.out.println("pwd와 repwd 일치 : " + !userPWD.equals(userRePWD));
-         checkBool = false;
-      }
-      // 이름 regex 체크
-      if(userName == "") {
-         checkBool = false;
-      }
-      if(!RegexCheck.nameRegecCheck(params.getUserName())) {
-         System.out.println("이름 regex : " + !RegexCheck.nameRegecCheck(params.getUserName()));
-         checkBool = false;
-      }
-      if(userBirth == "") {
-         System.out.println("birth 가 공백");
-         checkBool = false;
-      }
-      // 생일이 오늘날짜 이후인지 체크
-      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-      Date today = new Date();
-      Date inputDate = dateFormat.parse(params.getUserBirth());
-      double diffDays = (today.getTime() - inputDate.getTime()) / (24 * 60 * 60 * 1000);
-      if(diffDays < 1) {
-         System.out.println("생일이 오늘날짜 이후 : " + (diffDays < 1) + " / diffDays : " + diffDays);
-         checkBool = false;
-      }
-      // 이메일 regex 체크
-      if(!RegexCheck.emailRegexCheck(params.getUserEmail())) {
-         System.out.println("이메일 regex" + !RegexCheck.emailRegexCheck(params.getUserEmail()));
-         checkBool = false;
-      }
-      // 인증을 받은 상태인지 체크
-      checkBool = (boolean) params.getSession().getAttribute("isConfirm");
-      
-      String resultStr = null;
-      
-      if(checkBool) {
-         UserPersonalInfoDTO personalDTO = new UserPersonalInfoDTO();
-         personalDTO.setUserName(userName);
-         personalDTO.setUserID(userID);
-         personalDTO.setUserPWD(userPWD);
-         personalDTO.setUserGender(this.params.getUserGender());
-         personalDTO.setUserEmail(this.params.getUserEmail());
-         personalDTO.setUserBirth(userBirth);
-         this.dbService.insertJoinUserInfo(personalDTO);
-         this.params.getSession().setAttribute("userID", this.params.getUserIDCheck());
-         resultStr = "/movie/mainService/locationJoinSuccess";
-      }
-      asyncResult.setSuccess(checkBool);
-      asyncResult.setData(resultStr);
-      return asyncResult;
-   }
-   
-   // 로그인
-   public AsyncResult<String> login() throws Exception {
-      System.out.println("async login()");
-      UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
-      String result = null;
-      boolean resultBool = true;
-      System.out.println(this.params.getRequest().getRequestURL());
-      if(userLoginInfo.getUserStates() == 1) {
-         if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
-            HttpSession session = this.params.getSession();
-            session.setAttribute("userID", userLoginInfo.getUserID());
-            if(session.getAttribute("requestURL") != null) {
-               result = session.getAttribute("requestURL").toString();
-               session.removeAttribute("requestURL");
-            }
-         } else {
-            result = "비밀번호가 일치하지 않습니다.";
-            resultBool = false;
-         }
-      } else {
-         result = "탈퇴하였거나 존재하지 않는 아이디입니다.";
-         resultBool = false;
-      }
-      
-      
-      
-      AsyncResult<String> async = new AsyncResult<String>();
-      async.setData(result);
-      async.setSuccess(resultBool);
-      
-      return async;
-   }
-   
+	private Params params;
+	@Autowired
+	DBService dbService;
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public AsyncResult asyncExcute(Params params) throws Throwable {
+	   Method method = this.getClass().getDeclaredMethod(params.getMethod());
+	   this.params = params;
+	   return (AsyncResult) method.invoke(this);
+	}
+/*****은정. join success check*****/	
+	public AsyncResult<String> joinSuccessCheck() throws Exception {
+		String userID 	 = params.getUserIDCheck();
+		String userPWD 	 = params.getUserPWD();
+		String userRePWD = params.getUserRePWD();
+		String userName  = params.getUserName();
+		String userBirth = params.getUserBirth();
+		
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		
+		boolean checkBool = true;
+		
+		// 중복되는 아이디인지 체크
+		if(this.dbService.idCheck(userID) > 0) {
+			System.out.println("중복되는 아이디인지 : " + (this.dbService.idCheck(userID) > 0));
+			checkBool = false;
+		}
+		// 아이디 길이기 4~15자인지 체크
+		if(userID.length() < 4 || userID.length() > 15) {
+			System.out.println("아이디 길이기 4~15자 : " + (userID.length() < 4 || userID.length() > 15));
+			checkBool = false;
+		}
+		
+		// 아이디 regex 체크
+		if(!RegexCheck.idRegexCheck(userID)) {
+			System.out.println("아이디 regex : " + !RegexCheck.idRegexCheck(userID));
+			checkBool = false;
+		}
+		// 비밀번호 regex 체크
+		if(!RegexCheck.passwdRegexCheck(userPWD)) {
+			System.out.println("비밀번호 regex : " + !RegexCheck.passwdRegexCheck(userPWD));
+			checkBool = false;
+		}
+		// 비밀번호 8~15자 이내인지 체크
+		if(userPWD.length() < 8 || userPWD.length() > 15) {
+			System.out.println("비밀번호 8~15자 이내 : " + (userPWD.length() < 8 || userPWD.length() > 15));
+			checkBool = false;
+		}
+		// pwd와 repwd 일치하는지 체크
+		if(!userPWD.equals(userRePWD)) {
+			System.out.println("pwd와 repwd 일치 : " + !userPWD.equals(userRePWD));
+			checkBool = false;
+		}
+		// 이름 regex 체크
+		if(userName == "") {
+			checkBool = false;
+		}
+		if(!RegexCheck.nameRegecCheck(params.getUserName())) {
+			System.out.println("이름 regex : " + !RegexCheck.nameRegecCheck(params.getUserName()));
+			checkBool = false;
+		}
+		if(userBirth == "") {
+			System.out.println("birth 가 공백");
+			checkBool = false;
+		}
+		// 생일이 오늘날짜 이후인지 체크
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = new Date();
+		Date inputDate = dateFormat.parse(params.getUserBirth());
+		double diffDays = (today.getTime() - inputDate.getTime()) / (24 * 60 * 60 * 1000);
+		if(diffDays < 1) {
+			System.out.println("생일이 오늘날짜 이후 : " + (diffDays < 1) + " / diffDays : " + diffDays);
+			checkBool = false;
+		}
+		// 이메일 regex 체크
+		if(!RegexCheck.emailRegexCheck(params.getUserEmail())) {
+			System.out.println("이메일 regex" + !RegexCheck.emailRegexCheck(params.getUserEmail()));
+			checkBool = false;
+		}
+		// 인증을 받은 상태인지 체크
+		checkBool = (boolean) params.getSession().getAttribute("isConfirm");
+		
+		String resultStr = null;
+		
+		if(checkBool) {
+			UserPersonalInfoDTO personalDTO = new UserPersonalInfoDTO();
+			personalDTO.setUserName(userName);
+			personalDTO.setUserID(userID);
+			personalDTO.setUserPWD(userPWD);
+			personalDTO.setUserGender(this.params.getUserGender());
+			personalDTO.setUserEmail(this.params.getUserEmail());
+			personalDTO.setUserBirth(userBirth);
+			this.dbService.insertJoinUserInfo(personalDTO);
+			this.params.getSession().setAttribute("userID", this.params.getUserIDCheck());
+			resultStr = "/movie/mainService/locationJoinSuccess";
+		}
+		asyncResult.setSuccess(checkBool);
+		asyncResult.setData(resultStr);
+		return asyncResult;
+	}
+	
+	// 로그인
+	public AsyncResult<String> login() throws Exception {
+		System.out.println("async login()");
+		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
+		String result = null;
+		boolean resultBool = true;
+		System.out.println(this.params.getRequest().getRequestURL());
+		if(userLoginInfo.getUserStates() == 1) {
+			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
+				HttpSession session = this.params.getSession();
+				session.setAttribute("userID", userLoginInfo.getUserID());
+				if(session.getAttribute("requestURL") != null) {
+					result = session.getAttribute("requestURL").toString();
+					session.removeAttribute("requestURL");
+				}
+			} else {
+				result = "비밀번호가 일치하지 않습니다.";
+				resultBool = false;
+			}
+		} else {
+			result = "탈퇴하였거나 존재하지 않는 아이디입니다.";
+			resultBool = false;
+		}
+		
+		
+		
+		AsyncResult<String> async = new AsyncResult<String>();
+		async.setData(result);
+		async.setSuccess(resultBool);
+		
+		return async;
+	}
+
 /*****은정. TICKETING : Get Movie Poster *****/
    public AsyncResult<String> getMoviePoster() {
       String moviePoster = this.dbService.getMoviePoster(this.params.getMovieTitle());
@@ -451,5 +451,82 @@ public class AsyncService implements AsyncAction {
       return asyncResult;
          
    }
+   
+   /*******수진. 문의사항 글등록 *******/
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public AsyncResult InsertAskWriteBoard() throws Exception {
+		AsyncResult asyncResult = new AsyncResult<String>();
+		
+		String title     = this.params.getInsertTitle();
+		String content   = this.params.getInsertTextArea();
+		int writePwd     = this.params.getInsertboardPWd() == null ? null : this.params.getInsertboardPWd();
+		int isPwd        = this.params.isInsertPwdcheck() == true ? 1 : 0;
+		
+		//1은 비밀글 등록 // 2면 일반글등록
+		boolean isResult = true;
+		String result  = "";
+		
+		HttpSession session = this.params.getSession();
+		String user_Id = (String)session.getAttribute("userID");
+		System.out.println("로그인한 유저아이디 (어싱크 글등록.) InsertAskWriteBoard : " + user_Id);
+		
+		
+		System.out.println("제목 : " + title);
+		System.out.println("내용 : " + content);
+		System.out.println("비밀번호 : " + writePwd);
+		System.out.println("여부 : " + isPwd);
+		System.out.println("아이디 : " + user_Id);
+		
+		
+		if(title == "" && content == "") {
+			isResult = false;
+			result = "글 모두 써주세요";
+		} else if(isPwd == 1 && writePwd == 0) {
+			isResult = false;
+			result ="비밀번호 입력 바랍니다.";
+		} else {
+			isResult = true;
+			result = "/movie/mainService/InsertAskWriteBoard";//목록으로 가기..?
+		}
+
+		asyncResult.setData(result);
+		return asyncResult;
+		
+	}
+	
+	/***수진 문의사항 글보기***/
+	public AsyncResult<String> questionViewBoard() throws Exception {
+		String result = "";
+		System.out.println("들어와?");
+		Integer questionBoardNum = this.params.getQuestionBoardNum();
+		System.out.println("문의사항 글보기 : " + questionBoardNum);
+
+		
+		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
+		System.out.println(questionBoardList.getTitle() + " : 정보들");
+		System.out.println(questionBoardList.getWritePwd() + ": 번호");
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		
+		System.out.println("로그인한 유저아이디 (문의사항에서 글보기에서뽑고있음.) serviceCenter : " + LoginUserID);
+		System.out.println(questionBoardList.getUser_Id() + " : 너가쓴거야 .");
+		System.out.println(questionBoardList.getIsPwd() + " : 비밀글인가아닌가.");
+		
+		
+		if(questionBoardList.getIsPwd() == 1) {
+			result = "/movie/mainService/reCheckPwdWriteForm"; //d비밀글이니깐 비번입력해.
+		} else {
+			result = "/movie/mainService/questionViewBoard";
+		}
+		
+		//ModelAndView mav = new ModelAndView("service/include/questionViewBoard");
+		
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		asyncResult.setData(result);
+		return asyncResult;
+	}
+
+   
 }
    

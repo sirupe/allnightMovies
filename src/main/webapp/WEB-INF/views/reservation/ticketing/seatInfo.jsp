@@ -78,13 +78,6 @@
 				
 			</div>
 			<div class="pay-popup-page__btn"></div>
-		
-		
-		
-		
-		
-		
-		
 		</div>
 	</div>
 

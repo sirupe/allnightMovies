@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter 
+@Setter
 public class Params {
 	private HttpServletRequest request;
 	private HttpSession session;
@@ -63,13 +63,23 @@ public class Params {
 	private String withdrawUserPwd;
 
 // 예매하기(ticketing)
-	private int calendarMonth;
-	private int CalendarYear;
 	private String screeningDate;
 	private String movieTitle;
-	private int theater;
 	private String movieTime;
+	private int personCnt;
+	private int theater;
+	private String seatArr;
+	private int calendarMonth;
+	private int calendarYear;
 	
+// 결제
+	private String cardType;
+	private String cardNum;
+	private String cardPWD;
+	private String cardExpiryDateMonth;
+	private String cardExpiryDateYear;
+	private String cardOwnerBirth;
+
 // 공지사항 게시판
 	private int noticeUserClickPage;/*삭제예정*/
 	private int noticePage;
@@ -81,5 +91,10 @@ public class Params {
 	
 	private Integer questionBoardNum;
 	private String noticeSearachWord;
+// 문의 사항 게시판
+	private String insertTextArea; //내용
+	private String insertTitle; //제목
+	private Integer insertboardPWd; //비밀번호
+	private boolean insertPwdcheck; //비번체크여부
 
 }

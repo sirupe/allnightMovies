@@ -26,19 +26,33 @@
 			<span class="no">
 				<label class="js_questionBoard_no">${questionBoardPage.getNo() }</label>
 			</span>
-			<span class="title">
-				<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
-						${questionBoardPage.getTitle()}</label>
-			</span>
+			<c:choose>
+				<c:when test="${ questionBoardPage.getIsPwd() == 1}">
+					<span class="title">
+						<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
+								<img src="/resources/img/lock.png" >${questionBoardPage.getTitle()}</label>
+					</span>
+					
+				</c:when>
+				<c:otherwise>
+					<span class="title">
+						<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
+							${questionBoardPage.getTitle()}</label>
+					</span>
+				</c:otherwise>
+				
+			</c:choose>
 			<span class="user">	
 				${questionBoardPage.getUser_Id() }
 			</span>
+			
 			<span class="date">
 				${questionBoardPage.getWrite_date() }
 			</span>
 		</div>
 	</c:forEach>
 	</div>
+	
 	<div class="questionBoard_bottom">
 		<c:if test="${questionBoardGroup.isPreButton()}"><span data-QuestionprePage="${questionBoardGroup.viewStartPageNum - 1}" class="js_questionPreButton">◀</span></c:if>
 			<c:forEach begin="${questionBoardGroup.viewStartPageNum }" end="${questionBoardGroup.viewEndPageNum }" var="page">

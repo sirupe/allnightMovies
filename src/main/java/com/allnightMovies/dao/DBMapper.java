@@ -9,6 +9,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -16,8 +17,10 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
 import com.sun.corba.se.impl.presentation.rmi.ExceptionHandlerImpl;
 
@@ -40,6 +43,8 @@ public interface DBMapper {
 	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater);
 	public Integer getTicketPriceInfo(String screeningDate, String theater);
 	public String getMoviePoster(String title);
+	public Integer checkEmptySeats(UserCheckEmptySeatsDTO checkEmptyDTO);
+	public Integer userTicketingInfoInsert(UserTicketingInfo ticketingInfo);
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	
@@ -79,12 +84,19 @@ public interface DBMapper {
 	public List<MovieScreeningsPlannedDTO> getPlannedFilmDTO();
 	public List<MovieCurrentFilmDTO> sortScore();
 	public List<MovieCurrentFilmDTO> sortTicketing();
+	
 /** shin. SERVICE noticeBoard **/
 	public int getNoticeBoardCount();
 	public List<CinemaNoticeBoardDTO> getCinemaNoticeBoardDTO(int blockStartNum, int blockEndNum);
 	public CinemaNoticeBoardDTO getNoticeBoardContent(Integer noticeNo);
 	public int searchBoardCount(String searchWord);
 	public List<CinemaNoticeBoardDTO> searchBoard(Integer blockStartNum, Integer blockEndNum, String searchWord);
+	
 /** shin. THEATER introduce **/	
 	public List<CinemaIntroduceDTO> getCinemaIntroImg();
+	
+/** shin. MAIN event**/
+	public List<MainPageEventDTO> getMainEvnetImg();
+	public List<MovieCurrentFilmDTO> getNewFilmDTO();
+	public List<CinemaNoticeBoardDTO> getMainNoticeDTO();
 }

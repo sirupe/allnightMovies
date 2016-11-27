@@ -9,6 +9,7 @@ var $movieTitle;
 var $screeningDate;
 var $movieTime;
 
+document.write('<script src="/resources/js/reservation/paying.js"></script>');
 
 function calendarPrevBtnClick() {
 	var thisMonth 	= $('.js_calendarMonth').text() - 1,

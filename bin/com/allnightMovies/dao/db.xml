@@ -120,6 +120,47 @@
 		FROM MOVIE_BASIC_INFO
 		WHERE MOVIE_TITLE=#{title}
 	</select>
+	
+	<!-- TICKETING : 고객이 선택한 좌석이 예매되어있는지 확인 -->
+	<select id="checkEmptySeats" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO">
+		SELECT COUNT(*) CNT 
+		FROM USER_TICKETING_INFO
+		WHERE MOVIE_TITLE=#{movieTitle}
+		AND THEATER=#{theater}
+		AND MOVIE_SCREENING_DATE=#{movieScreeningDate}
+		AND (
+			<foreach collection="seatsList" index="index" item="type" separator="OR">
+		    	THEATER_SEAT=#{type}
+		    </foreach>
+		)
+	</select>
+	
+	<!-- TICKETING : 예매정보 insert -->
+	<insert id="userTicketingInfoInsert" parameterType="com.allnightMovies.model.data.userInfo.UserTicketingInfo">
+		<foreach collection="theaterSeat" index="index" item="seat" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
+			INTO USER_TICKETING_INFO (
+				USER_ID, 
+				MOVIE_TITLE, 
+				THEATER, 
+				MOVIE_SCREENING_DATE, 
+				THEATER_SEAT, 
+				USER_TICKET_COUNT, 
+				USER_TOTAL_PRICE, 
+				USER_TICKETING_DATE, 
+				USER_TICKET_NUMBER
+			) VALUES (
+				#{userID}, 
+				#{movieTitle},
+				#{theater}, 
+				#{movieScreeningDate}, 
+				#{seat}, 
+				#{userTicketCount}, 
+				#{userTotalPrice}, 
+				SYSDATE, 
+				#{userTicketNumber}
+			)
+		</foreach>
+	</insert>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>
@@ -445,6 +486,46 @@
 	<select id="getCinemaIntroImg" resultType="com.allnightMovies.model.data.theater.CinemaIntroduceDTO">
 		SELECT CINEMA_INTRO_IMAGE cinemaIntroImg
 		FROM CINEMA_INTRODUCE
+	</select>
+	
+<!-- MAIN PAGE -->	
+	<select id="getMainEvnetImg" resultType="com.allnightMovies.model.data.movieInfo.MainPageEventDTO">
+		SELECT MAIN_EVENT mainEventImg
+		FROM MAIN_PAGE
+	</select>
+	
+	<select id="getNewFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
+		SELECT * FROM (
+				SELECT MOVIE_TITLE  movieTitle,
+	                   MOVIE_POSTER moviePoster,
+	                   MOVIE_RELEASE_DATE,
+	                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+	                   ROWNUM RNUM
+				FROM (
+					SELECT *
+					FROM MOVIE_BASIC_INFO 
+					WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE 
+					ORDER BY MOVIE_TITLE ASC
+				    )
+				) 
+	      WHERE RNUM <![CDATA[<]]>= 4
+	</select>
+	
+	<select id="getMainNoticeDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
+		SELECT * FROM (
+			SELECT NO		  no, 
+			       TITLE	  title,
+			       writeDate, 
+			       CONTENT	  content,
+			       IMPORTANT  important,
+			       ROWNUM RNUM 
+			FROM (
+			         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
+			         FROM CINEMA_NOTICE_BOARD 
+			         ORDER BY IMPORTANT DESC, writeDate DESC
+			      )
+			)    
+		WHERE RNUM <![CDATA[<]]>= 10
 	</select>
 	
 </mapper>

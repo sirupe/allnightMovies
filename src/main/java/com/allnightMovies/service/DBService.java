@@ -2,7 +2,6 @@ package com.allnightMovies.service;
 
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,10 @@ import org.springframework.stereotype.Service;
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -22,11 +22,11 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
-
-import oracle.net.aso.d;
 
 
 
@@ -79,7 +79,16 @@ public class DBService {
 	public String getMoviePoster(String title) {
 		return dbMapper.getMoviePoster(title);
 	}
-/** jung. 상영시간표 **/
+	
+	public Integer checkEmptySeats(UserCheckEmptySeatsDTO checkEmptyDTO) {
+		return dbMapper.checkEmptySeats(checkEmptyDTO);
+	}
+	
+	public Integer userTicketingInfoInsert(UserTicketingInfo ticketingInfo) {
+		return dbMapper.userTicketingInfoInsert(ticketingInfo);
+	}
+	
+/** jung. 상영시간표 **/ //TODO 수진
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
 	}
@@ -134,7 +143,7 @@ public class DBService {
 	}
 	
 	
-/** shin. SEARCH PWD **/	
+/** shin. SEARCH PWD **/ //TODO 연종
 	public Integer searchPWD(String searchPwdUserID)  {
 		return dbMapper.searchPWD(searchPwdUserID);
 	}
@@ -195,5 +204,16 @@ public class DBService {
 /** shin. THEATER introduce **/
 	public List<CinemaIntroduceDTO> getCinemaIntroImg() {
 		return dbMapper.getCinemaIntroImg();
+	}
+	
+/** shin. MAIN eventImg**/
+	public List<MainPageEventDTO> getMainEvnetImg() {
+		return dbMapper.getMainEvnetImg();
+	}
+	public List<MovieCurrentFilmDTO> getNewFilmDTO() {
+		return dbMapper.getNewFilmDTO();
+	}
+	public List<CinemaNoticeBoardDTO> getMainNoticeDTO() {
+		return dbMapper.getMainNoticeDTO();
 	}
 }

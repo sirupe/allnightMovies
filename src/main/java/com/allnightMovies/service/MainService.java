@@ -3,6 +3,9 @@
 import java.lang.reflect.Method;
 
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
-import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
@@ -31,12 +34,15 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.Paging2;
+import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
@@ -107,6 +113,7 @@ public class MainService implements Action {
 /*****은정. loginPage *****/	
 	public ModelAndView loginPage() throws Exception {
 		ModelAndView mav = new ModelAndView("login");
+		mav.addObject("loginResult", true);
 		return mav;
 	}
 	
@@ -257,7 +264,6 @@ public class MainService implements Action {
 		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
 		
 		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, String.valueOf(this.params.getTheater()));
-		System.out.println("금액 : " + moviePrice);
 		
 		
 		mav.addObject("seatList", seatInfoList);
@@ -271,6 +277,118 @@ public class MainService implements Action {
 		return mav;
 	}
 	
+	public ModelAndView ticketingTry() throws ParseException {
+		ParseCheck check = new ParseCheck();
+		boolean result = true;
+		String cardType 		= this.params.getCardType();
+		String cardNum 			= this.params.getCardNum();
+		String cardPWD 			= this.params.getCardPWD();
+		String cardExpiryMonth 	= this.params.getCardExpiryDateMonth();
+		String cardExpiryYear	= this.params.getCardExpiryDateYear();
+		String cardOwnerBirth 	= this.params.getCardOwnerBirth();
+		String[] seatArr 		= this.params.getSeatArr().split(",");
+		
+		
+		if(cardType.equals("선택")) {
+			result = false;
+		}
+		if(cardNum.length() != 16 || !check.isParseLong(cardNum)) {
+			result = false;
+		}
+		if(!check.isParseInt(cardPWD) || cardPWD.length() != 2) {
+			result = false;
+		}
+
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM");
+		String[] toDate = (format.format(System.currentTimeMillis())).split("-");
+		
+		if(!check.isParseInt(cardExpiryMonth) || !check.isParseInt(cardExpiryYear)) {
+			result = false;
+		}
+		if(cardExpiryMonth.length() != 2 || cardExpiryYear.length() != 2) {
+			result = false;
+		}
+		int toYear = Integer.parseInt(toDate[0]);
+		int expiryYear = Integer.parseInt(cardExpiryYear);
+		int toMonth = Integer.parseInt(toDate[1]);
+		int expiryMonth = Integer.parseInt(cardExpiryMonth);
+		if(toYear > expiryYear) {
+			result = false;
+		}
+		if(toYear == expiryYear && expiryMonth < toMonth) {
+			result = false;
+		}
+		
+		if(expiryMonth > 12) {
+			result = false;
+		}
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+		Date today = new Date();
+		Date inputDate = dateFormat.parse(cardOwnerBirth);
+		double diffDays = (today.getTime() - inputDate.getTime()) / (24 * 60 * 60 * 1000);
+		if(diffDays < 1) {
+			result = false;
+		}
+		String resultMessage = "";
+		
+		List<String> seatsList = Arrays.asList(seatArr);
+		if(result) {
+			String userID 		 = (String) this.params.getSession().getAttribute("userID");
+			String screeningDate = this.params.getScreeningDate();
+			String movieTitle 	 = this.params.getMovieTitle();
+			int theater 		 = this.params.getTheater();
+			
+			
+			// 먼저 사용자가 선택한 좌석이 이미 예매되어있는지를 확인한다.
+			UserCheckEmptySeatsDTO checkSeatsDTO = new UserCheckEmptySeatsDTO();
+			checkSeatsDTO.setMovieScreeningDate(screeningDate)
+						 .setMovieTitle(movieTitle)
+						 .setSeatsList(seatsList)
+						 .setTheater(theater);
+
+			for(String n : checkSeatsDTO.getSeatsList()) {
+				System.out.print(n + ",");
+			}
+			Integer seats = this.dbService.checkEmptySeats(checkSeatsDTO);
+			if(seats > 0) {
+				resultMessage = "이미 예약된 좌석입니다.<br/>다른 좌석을 선택해주세요.";
+				result = false;
+			} else {
+				
+				String ticketNum = screeningDate.replace(".", "").substring(4, 8);
+				ticketNum += "-" + String.valueOf(System.currentTimeMillis()).substring(5, 13);
+				Integer moviePrice = this.dbService.getTicketPriceInfo(screeningDate, String.valueOf(theater));
+				
+				UserTicketingInfo userTicketingInfo = new UserTicketingInfo();
+				userTicketingInfo.setMovieScreeningDate(screeningDate)
+								 .setMovieTitle(movieTitle)
+								 .setTheater(theater)
+								 .setTheaterSeat(seatsList)
+								 .setUserID(userID)
+								 .setUserTicketCount(seatsList.size())
+								 .setUserTicketNumber(ticketNum)
+								 .setUserTotalPrice(moviePrice * seatsList.size());
+				
+				System.out.println(userTicketingInfo.toString());
+				this.dbService.userTicketingInfoInsert(userTicketingInfo);
+				resultMessage = "예매가 완료되었습니다. <br/> 예매확인 페이지에서 확인 가능합니다.";
+			}
+		
+		} else {
+			resultMessage = "카드 정보가 정확하지 않습니다. <br/> 다시 진행해주세요.";
+			result = false;
+		}
+		
+		ModelAndView mav = new ModelAndView("reservation/ticketing/ticketingResult");
+		mav.addObject("resultBool", result);
+		mav.addObject("resultMessage", resultMessage);
+		return mav;
+	}
+	
+	public ModelAndView ticketingCancelSet() {
+		return new ModelAndView("reservation/ticketing/paypopup");
+	}
 /*******연종. PWD찾기 SHIN*******/
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -397,7 +515,6 @@ public class MainService implements Action {
 		this.params.setContentjs("service/serviceCenter");
 		HttpSession session = this.params.getSession();
 		String LoginUserID = (String)session.getAttribute("userID");
-		System.out.println("로그인한 유저아이디 (고객센터에서 뽑고있음) serviceCenter : " + LoginUserID);
 		ModelAndView mav = this.getTemplate();
 		mav.addObject("loginUserId",LoginUserID);
 		return mav;
@@ -473,7 +590,6 @@ public class MainService implements Action {
 		
 		HttpSession session = this.params.getSession();
 		String LoginUserID = (String)session.getAttribute("userID");
-		System.out.println("로그인한 유저아이디 (문의사항에서 게시판전환에서뽑고있음.) serviceCenterQuestionBoardChange : " + LoginUserID);
 		
 		
 		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
@@ -491,7 +607,6 @@ public class MainService implements Action {
 		
 		HttpSession session = this.params.getSession();
 		String LoginUserID = (String)session.getAttribute("userID");
-		System.out.println("로그인한 유저아이디 (문의사항에서 글쓰기에서뽑고있음.) questionBoardWriteForm : " + LoginUserID);
 		
 		
 		mav.addObject("contentCSS", "service/serviceCenter");
@@ -502,9 +617,7 @@ public class MainService implements Action {
 	}
 /***수진 문의사항 글보기***/
 	public ModelAndView questionViewBoard() throws Exception {
-		System.out.println("들어와?");
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
-		System.out.println("문의사항 글보기 : " + questionBoardNum);
 
 		
 		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
@@ -518,6 +631,7 @@ public class MainService implements Action {
 		System.out.println("로그인한 유저아이디 (문의사항에서 글보기에서뽑고있음.) serviceCenter : " + LoginUserID);
 		System.out.println(questionBoardList.getUser_Id() + " : 너가쓴거야 .");
 		System.out.println(questionBoardList.getIsPwd() + " : 비밀글인가아닌가.");
+		//boolean isUserRight = questionBoardList.getUser_Id().equals(LoginUserID);
 		
 		String isUserRight = questionBoardList.getUser_Id();
 		
@@ -554,7 +668,6 @@ public class MainService implements Action {
 		
 		HttpSession session = this.params.getSession();
 		String user_Id = (String)session.getAttribute("userID");
-		System.out.println("로그인한 유저아이디 (어싱크 글등록.) InsertAskWriteBoard : " + user_Id);
 		
 		System.out.println("제목 : " + title);
 		System.out.println("내용 : " + content);
@@ -631,8 +744,10 @@ public class MainService implements Action {
 			cinemaQuestionBoardDTO.setIsPwd(isPwd);
 			cinemaQuestionBoardDTO.setNo(no);
 		}
-		this.dbService.completeUPdateWriteBoard(title, content, writePwd, isPwd, no);
 		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
+	
+		this.dbService.InsertAskWriteBoard(cinemaQuestionBoardDTO);
+	
 		return mav;
 	}
 	
@@ -942,5 +1057,4 @@ public class MainService implements Action {
 		
 		return mav;
 	}
-//-----------------------------------------------------------------------
 }

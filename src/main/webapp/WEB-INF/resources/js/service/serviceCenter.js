@@ -17,7 +17,6 @@ function questionBoardTab() {
 	var url = '/movie/mainService/questionBoard'
 		cbf = function(result) {
 			var $questionTab = $('.js_frequentlyBoardContainer');
-				
 			
 			$questionTab
 				.html(result);
@@ -138,16 +137,15 @@ function questionBoardpageNextNumber() {
 
 /******글보기*******/
 function questionViewBoard() {
-	var $userClickPageNum = $('.js_questionBoard_title');
-		userClickPageNum  = $userClickPageNum.attr('data-questionBoardPageNum');
 	
+	var userClickPageNum = $(this).attr('data-questionBoardPageNum');
 	
-	var url    = '/movie/async/asyncService/questionViewBoard';
+	var url    = '/movie/mainService/questionViewBoard';
 		params = {'questionBoardNum' : userClickPageNum};
-		cbf    = function(result) {
+		cbf    = function(mav) {
 			var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
-				$questionBoardViewchange.html(result);
-			
+				
+				$questionBoardViewchange.html(mav);
 	};
 		$.post(url, params, cbf);
 }
@@ -165,7 +163,7 @@ function questionWriteForm() {
 }
 
 
-function idPwdCheck() {
+function activePwdInput() {
 	if($(".js_boardCheck").is(":checked") == false) {
 		$('.js_boardWriteBoardPwd').attr({'readonly' : true});
 	} else {
@@ -178,7 +176,7 @@ function idPwdCheck() {
 function insertQuestionBoard() {
 	
 	var isResult        = true;
-		$insertTitle  = $('.js_boardContent');
+		$insertTitle    = $('.js_boardContent');
 	    $insertTextArea = $('.js_boardTextArea');
 	    $insertboardPwd = $('.js_boardWriteBoardPwd');
 	    
@@ -187,25 +185,17 @@ function insertQuestionBoard() {
 	    insertTextArea  = $('.js_boardTextArea').val();
 	    insertboardPWd  = $('.js_boardWriteBoardPwd').val(); //비
 
-	    url    = '/movie/async/asyncService/InsertAskWriteBoard';
+	    url    = '/movie/mainService/InsertAskWriteBoard';
 	    params = {
 	    		'insertPwdcheck' : insertPwdcheck,
 	    		'insertTitle'    : insertTitle,
 	    		'insertTextArea' : insertTextArea,
 	    		'insertboardPWd' : insertboardPWd
 	    };
-	    
-		    cbf    = function(result,isPwd, title) {
-		    		console.log(result);
-		    		console.log(isPwd);
-		    		console.log(title);
-			    	if(result) {
-			    			alert("글등록 성공");
-			    			location.href=result.data;
-			    	}else {
-			    		alert('실패겠지뭐');
-			    	}
-			    };
+		    cbf    = function(mav) {
+	    			var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
+	    			$questionBoardViewchange.html(mav);
+		    }
 		  
 	    //일단 기본적으로 비었을때
 	    if(insertTitle == '' && insertTextArea == '') {
@@ -220,23 +210,122 @@ function insertQuestionBoard() {
 	    }
 }
 
-//문의 사항 수정
+//문의 사항 수정폼
 function updateQuestionBoard() {
+	userClickNum = $('.js_boardViewNo').attr('data-userClickNum');
 	
-	var isResult          = true;
-		$userClickPageNum = $('.js_questionBoard_title');
-		userClickPageNum  = $userClickPageNum.attr('data-questionBoardPageNum');
+		console.log(userClickNum);
+	
+	    url    = '/movie/mainService/updateWriteForm?'+ userClickNum;
+	    params = {'questionBoardNum' : userClickNum};
+	    cbf    = function(mav) {
+	    	console.log(mav);
+	    	var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
+			
+			$questionBoardViewchange.html(mav);
+	    };
+	    $.post(url,params, cbf);
+}
 
-		$insertTitle      = $('.js_boardContent');
-	    $insertTextArea   = $('.js_boardTextArea');
-	    $insertboardPwd   = $('.js_boardWriteBoardPwd');
-	    
-	    insertPwdcheck    = $(".js_boardCheck").is(":checked"); //비밀번호체크여부
-	    insertTitle       = $('.js_boardContent').val(); 
-	    insertTextArea    = $('.js_boardTextArea').val();
-	    insertboardPWd    = $('.js_boardWriteBoardPwd').val(); //
+function activeRePwdInput() {
+	if($(".js_UpdateboardCheck").is(":checked") == false) {
+		$('.js_UpdateboardWriteBoardPwd').attr({'readonly' : true});
+	} else {
+		$('.js_UpdateboardWriteBoardPwd').attr({'readonly' : false});
+		
+	}
+}
+
+
+//완전한 수정
+function completeUpdateQuestionBoard() {
 	
+	userClickNum = $('.js_boardViewNo').attr('data-userClickNum');
+	
+	console.log(userClickNum);
+	var isResult        = true;
+	 
+		$insertTitle    = $('.js_UpdateboardContent'); //제목
+	    $insertTextArea = $('.js_UpdateBoardTextArea'); //내용
+	    $insertboardPwd = $('.js_UpdateboardWriteBoardPwd'); //비밀번호
 	    
+	    insertPwdcheck  = $(".js_UpdateboardCheck").is(":checked"); //비밀번호체크여부
+	    insertTitle     = $('.js_UpdateboardContent').val(); 
+	    insertTextArea  = $('.js_UpdateBoardTextArea').val();
+	    insertboardPWd  = $('.js_UpdateboardWriteBoardPwd').val(); //비
+	    
+	    url    = '/movie/mainService/completeUPdateWriteBoard';
+	    params = {
+	    		'updateQuestionBoardNum' : userClickNum,
+	    		'insertTitle'            : insertTitle,
+	    		'insertTextArea'         : insertTextArea,
+	    		'insertboardPWd'         : insertboardPWd,
+	    		'insertPwdcheck'         : insertPwdcheck,		
+	    	};
+	    cbf    = function(mav) {
+	    	if(isResult) {
+	    		alert('글수정 성공');
+	    		var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
+	    		$questionBoardViewchange.html(mav);
+	    	} else {
+	    		alert('실패');
+	    	}
+	    }
+	    
+	    if(insertTitle == '' && insertTextArea == '') {
+	    	alert('모두입력해주세요!');
+	    	isResult = false;
+	    }else if(insertPwdcheck == true && insertboardPWd == '') {
+	    	alert('비밀번호 입력 해주세요');
+	    	isResult = false;
+	    } else {
+	    	isResult = true;
+	    	$.post(url, params, cbf);
+	    }
+}
+
+function deleteQuestionBoard() {
+	userClickNum = $('.js_boardViewNo').attr('data-userClickNum');
+	console.log(userClickNum);
+	
+	url     = '/movie/mainService/completeDeleteQuestionBoard';
+	params  = {'updateQuestionBoardNum' : userClickNum};
+	cbf     = function(mav) {
+				alert('삭제 성공!');
+				var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
+				$questionBoardViewchange.html(mav);
+	}
+		if(confirm('정말 삭제하시겠습니까?') == true) {
+			$.post(url, params, cbf);
+		} else {
+			return;
+		}
+}
+
+function recheckpwdQuestionForm() {
+	
+	var 
+		$userInsertPwd      = $('.QuestionBoardReCheckPWd_input');
+		userInsertPwd       = $('.QuestionBoardReCheckPWd_input').val(); //내가입력한 비밀번호
+		
+		userClickNum  = $('.js_QuestionReCheckPwdboardViewNo').attr('data-questionBoardPageNum');
+		//게시글등록때 입력한 것
+
+		url    =  '/movie/mainService/confirmPWdQuestionBoard';
+		params = {
+				'userInsertPwd'       : userInsertPwd,
+				'questionBoardNum'    : userClickNum
+			};
+		cbf    = function(mav) {
+			var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
+				$questionBoardViewchange.html(mav);
+		};
+		if(userInsertPwd == '') {
+			alert('입력해주세요');
+		} else {
+			$.post(url, params, cbf);
+		}
+		
 }
 
 /************************시작***************************/
@@ -266,14 +355,16 @@ function setServiceCenter() {
 				.on('click', '.js_QuestionList', questionBoardTab)
 				
 				.on('click', '.js_questionButtonConfirm', insertQuestionBoard) //글 등록하기
-				.on('click', '.js_boardCheck',idPwdCheck)
-//				.on('click', '.js_QuestionWriteDeleteBtn', deleteQuestionBoard)
-//				.on('click', '.js_QuestionWriteUpdateBtn', updateQuestionBoard)
+				.on('click', '.js_boardCheck',activePwdInput) //비밀글체크
+				.on('click', '.js_QuestionWriteDeleteBtn', deleteQuestionBoard)//삭제하기
+				.on('click', '.js_QuestionWriteUpdateBtn', updateQuestionBoard) //수정하는 폼으로
+				.on('click', '.js_QuestionUpdateBtn',completeUpdateQuestionBoard) //수정하기
+				.on('click', '.js_UpdateboardCheck', activeRePwdInput)
+				.on('click', '.js_rePwdCheckQuestionForm', recheckpwdQuestionForm);
 }
 
 function initServiceCenter() {
 	frequentlyBoardTab();
-	//$('.js_serviceContentTab2').hide();//문의사항내용 숨기기
 	setServiceCenter();
 }
 	

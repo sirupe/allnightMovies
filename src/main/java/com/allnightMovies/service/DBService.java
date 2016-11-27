@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.metadata.Db2CallMetaDataProvider;
 import org.springframework.stereotype.Service;
 
 import com.allnightMovies.dao.DBMapper;
@@ -122,6 +123,14 @@ public class DBService {
 	}
 	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception {
 		return dbMapper.InsertAskWriteBoard(cinemaQuestionBoardDTO);
+	}
+	
+	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception {
+		return dbMapper.completeUPdateWriteBoard(title, content, writePwd, isPwd, no);
+	}
+	
+	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum) throws Exception {
+		return dbMapper.completeDeleteQuestionBoard(completeDeleteQuestionBoardNum);
 	}
 	
 	

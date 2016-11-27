@@ -254,6 +254,24 @@
        	)
 
 	</select>
+	
+<!--문의사항게시판 수정 -->
+	<select id="completeUPdateWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		UPDATE 
+			CINEMA_ASKED_BOARD 
+			SET TITLE = #{param1}, 
+				CONTENT = #{param2}, 
+				WRITEPWD = #{param3}, 
+				ISPWD = #{param4} 
+			WHERE NO = #{param5}
+	</select>
+
+<!--문의사항게시판 삭제 -->
+	<select id="completeDeleteQuestionBoard" parameterType="java.lang.String" >
+		DELETE 
+			FROM CINEMA_ASKED_BOARD
+		WHERE NO = #{param1}
+	</select> 
 
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">

@@ -19,6 +19,7 @@ import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
+import com.sun.corba.se.impl.presentation.rmi.ExceptionHandlerImpl;
 
 
 public interface DBMapper {
@@ -60,7 +61,8 @@ public interface DBMapper {
 	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception;
 	public CinemaQuestionBoardDTO questionBoardList(Integer no) throws Exception;
 	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception;
-	
+	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception;
+	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum);
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);

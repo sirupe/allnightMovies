@@ -7,7 +7,7 @@
 
 .div__serviceCenter_Container_Tab {
     border: 3px solid #e8f2e6;
-    height: 560px;
+    height: 656px;
     width: 900px;
 }
 .div__serviceCenter_form {
@@ -59,16 +59,13 @@ ul.serviceCenter_Tab li {
     text-align: center;
     overflow: hidden;
 }
+
 .serviceCenterFrequenty__pageButton {
-    /* background: beige;
-    font-size: 17px;
-    height: 32px;
-    line-height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 215px; */
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 36px;
 }
 
 .js_service_List .js_sub {
@@ -265,364 +262,50 @@ ul,li {
     display: flex;
 }
 
-
-
-
-
-
-
-/********************************위에까지 내꺼**************************************/
-
-
-/* .div__serviceCenter_form_title {
-	font-size: 25px;
-	font-family: 'Jeju Gothic', serif;
+<!---->
+/*비밀번호 재확인*/
+.reCheckFormContainer {
+    margin-top: 180px;
+    text-align: center;
 }
 
-.div__serviceCenter__content {
-	flex-basis: 739px;
-	border: 1px solid gray;
-	font-size: 12px;
-	line-height: 1.5em;
-	background-color: white;
+label.reCheckFormContainer_label {
+    font-size: 33px;
 }
 
-.div__serviceCenter__content__header {
-	display: flex;
-	flex-direction: row;
-	height: 105px;
-	font-family: 'Jeju Gothic', serif;
+label.QuestionBoardReCheckPWd_label {
+    line-height: 4;
 }
 
-
-.div__serviceCenter__intro_bundle {
-    display: flex;
-    height: 65px;
+.QuestionBoardReCheckPWd_content {
+    margin-top: 41px;
+    font-size: 28px;
 }
 
-.serviceCenter_intro_title {
-    width: 140px;
-    height: 34px;
-    font-size: 25px;
-    font-weight: 900;
-    line-height: 30px;
-    padding-top: 19px;
-    padding-left: 10px;
-}
-
-ul.serviceCenter_Tab li a {
-    text-decoration: none;
-    color: rgb(42, 27, 30);
-    font-weight: bold;
-    display: block;
-    font-size: 16px;
-    outline: none;
-    padding: 0 5px;
-}
-
-ul.serviceCenter_Tab li a:hover {
-	background: #d2e1f9;
-}
-
-ul.serviceCenter_Tab li.active,
-ul.serviceCenter_Tab li.actice a:hover {
-	background: #73b5d5;
-}
-
-.div__serviceCenter_Container {
-	border-top: none;
-	overflow: hidden;
-	clear: both;
-	float: left;
-	background: bisque;
-}
-
-.div#tab_content_frequenty {
-	padding-top: 78px;
-}
-
-.div__serviceCenter_info {
-	display: flex;
-	padding-top: 116px;
-    line-height: 36px;
-}
-
-.div__serviceCenter_Tel {
-	display: flex;
-    width: 249px;
+.QuestionBoardReCheckPWd_Btn {
+    margin-top: 30px;
     padding-left: 41px;
-    font-size: 22px;
-    font-weight: bolder;
-    padding-bottom: 22px;
-    border-right: 2px solid;
-    font-family: 'Jeju Gothic', serif;
 }
 
-.div_serviceCenter_Email {
-    display: flex;
-    padding-left: 34px;
-    font-size: 21px;
-    font-weight: bolder;
-    padding-bottom: 13px;
-    font-family: 'Jeju Gothic', serif;
+input.QuestionBoardReCheckPWd_input {
+    width: 212px;
+    height: 35px;
+    font-size: 25px;
 }
 
-
-
-
-
-
-
-
-
-
-************************************자주묻는질문 ***************************************************
-
-
-button.serviceCenterFrequenty_title {
-background-color: #fff;
-    color: #444;
-    cursor: pointer;
-    PADDING-BOTTOM: 0PX;
-    width: 100%;
-    line-height: 50px;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 19px;
-    border-bottom: 1px solid;
-    font-family: 'Jeju Gothic', serif;
-}
-
-button.serviceCenterFrequenty_title.active, button.serviceCenterFrequenty_title:hover {
-	background-color: rgb(255, 255, 255);
-    color: #191717;
-    font-size: 17px;
-}
-
-div.serviceCenterFrequenty_panel {
-	background-color: white;
-    max-height: 0;
-    overflow: hidden;
-    width:1100px;
-    transition: 0.6s ease-in-out;
-    opacity: 0;
-    width: 100%;
-}
-
-div.serviceCenterFrequenty_panel.show {
-    opacity: 1;
-    max-height: 800px;
-}
-
-.serviceCenterFrequenty__subjects {
-    display: flex;
-    background-color: #e0c198;
-    height: 60px;
-    line-height: 30px;
-    width: 100%;
-    font-size: 14px;
-    text-overflow: ellipsis;
-    border-bottom: 1px dashed;
-    font-family: 'Nanum Gothic', serif;
-}
-	
-	
-.movie__title {
-	display: inline-block;
-	width: 35%;
-	background-color: 
-	opacity: 1.0;
-    filter: alpha(opacity=100);
-    
-}
-
-.serviceCenterFrequenty__contents {
-display: inline-block;
-    width: 94%;
-    background-color: white;
-    opacity: 1.0;
-    filter: alpha(opacity=50);
-    font-family: 'Jeju Gothic', serif;
-}
-	
-.serviceCenterFrequenty__contents:hover {
-	opacity: 0.5;
-	filter: alpha(opacity=100);
-}
-
-.movie__room2 {
-	display: inline-block;
-	width:15%;
-}
-	
-.movie__room2:hover {
-	opacity: 0.5;
-	filter: alpha(opacity=100);
-}
-	
-.movie__room3 {
-	display: inline-block;
-	width:15%;
-}
-	
-.movie__room3:hover {
-	opacity: 0.5;
-	filter: alpha(opacity=100);
-}	
-
-
-
-******************************자주묻는질문******************************************
-ul,li {
-	list-style:none
-}
-
-
-.js_nextButton,
-.js_preButton {
-    padding-left: 17px;
-    font-size: 22px;
-    line-height: 32px;
-    cursor: pointer;
-}
-
-
-***************************************문의 게시판**************************************
-
-.questionBoard_top{
-    text-align: center;
-    font-size: 20px;
-}
-
-.questionBoard_middle {
-	font-size: 18px;
-}
-
-.questionBoard_top_no {
-	display:inline-block;
-	width:10%;	
-}
-
-.questionBoard_top_title {
-    display: inline-block;
-    width: 54%;
-}
-
-.questionBoard_top_user {
-	display: inline-block;
-}
-
-.questionBoard_top_date {
-	display: inline-block;
-}
-
-.questionBoard_bottom {
-	width: 100%;
-    text-align: center;
-    padding-top: 12px;
-    flex-basis: 20px;
-   
-}
-
-
-.serviceCenter_QuestionWrite {
+button.QuestionBoardReCheckPWd_checkBtn1,
+button.QuestionBoardReCheckPWd_checkBtn2 {
+    /* padding-right: 30px; */
     background-color: #fdecd2;
     border: 1px solid #2a3034;
     cursor: pointer;
-    border-radius: 3px;
-    outline: none;	
+    border-radius: 10px;
+    outline: none;
     margin-left: 4px;
-    padding: 6px 15px;
-    font-size: 15px;
-}
-
-.point {
-	cursor: pointer;
-}
-
-.questionBoardWriteForm  {
-    margin: 25px 0px 0px 40px;
-}
-
-.questionBoardWrite_title {
-    font-size: 28px;
-    display: flex;
-    border-bottom: 2px solid #eae1e1;
-}
-
-
-.questionBoard_sub2 {
-	
-} */
-
-/* .questionBoard_content,
-.questionBoardView_content {
-    font-size: 25px;
-}
-
-.questionBoard-title,
-.questionBoard-sub,
-.questionBoard-detail,
-.questionBoardView-title,
-.questionBoardView-detail,
-.questionBoardView-sub,
-.questionBoard-pwd {
-    padding-top: 13px;
-}
-
-input.boardwriteBoard,
-input.boardViewwriteBoard,
-input.boardwriteBoardPwd {
-	height: 37px;
-    width: 650px;
-    font-size: 21px;
-}
-
-input.boardwriteBoardPwd {
-	height: 37px;
-    width: 300px;
-    font-size: 21px;
-}
-
-label.boardSub,
-label.boardViewSub,
-label.boardPwd {
-    padding-right: 34px;
-    font-size: 21px;
-    display:inline-block;
-}
-
-label.boardwriteDate,
-label.boardViewwriteDate {
-    padding-left: 30px;
-}
-
-input.boardwriteBoardinput,
-input.boardwriteBoardViewinput {
-    height: 37px;
-    width: 200px;
-    font-size: 21px;
-}
-textarea.boardTextarea,
-textarea.boardViewTextarea {
-	width: 730px;
-    height: 320px;
+    padding: 8px 25px;
     font-size: 18px;
-    resize: none;
+    font-family: 'Jeju Gothic', serif;
 }
 
-.questionbutton {
-	padding-top: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.font {
-	font-family: 'Jeju Gothic', serif;
-}
 
-.questionBoard_subject,
-.questionBoardView_subject {
-    display: flex;
-} */
+

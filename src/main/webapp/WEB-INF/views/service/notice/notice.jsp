@@ -7,7 +7,7 @@
 	<div class="notice-search">
         <span  class="search-icon"></span>
         <input class="search-input font js_searchInput " type="text" name="noticeBoardSearch" placeholder=" 공지사항내용 검색"> 
-        <button class="searchbutton font js_searchBtn">검색</button>
+        <button class="searchbutton font js_searchBtn" type="button">검색</button>
 	</div>
 	
 	<div class="notice-list__title  font  ">

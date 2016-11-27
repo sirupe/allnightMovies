@@ -38,20 +38,20 @@ function payingBtnClick() {
 			'cardExpiryDateMonth' : cardExpiryDateMonth,       
 			'cardExpiryDateYear'  : cardExpiryDateYear, 	   
 			'cardOwnerBirth' 	  : cardOwnerBirth,
-			'screeningDate'		  : screeningDate,
+			'screeningDate'		  : screeningDate + ' ' + movieTime,
 			'movieTitle'		  : movieTitle,
-			'movieTime'			  : movieTime,
 			'personCnt'			  : $personCnt.text(),
 			'theater'			  : theater,
 			'seatArr'			  : seatArr.toString()
 		},
 		cbf = function(result) {
-			console.log(result);
+			$('.js_popupMovieBaseGround').html(result);
 		}
 	
 	if(cardInfoValidation()) {
-		console.log('결제하기 발리데이션 통과');
 		$.post(url, params, cbf);
+	} else {
+		alert('입력하신 정보가 정확하지 않습니다. 다시 입력해주세요.');
 	}
 }
 
@@ -149,9 +149,17 @@ function cardOwnerBirthValidation(date) {
 	} 	
 }
 
+function payingCancelBtnClick() {
+	payPagePopupCancel();
+	var url = '/movie/mainService/ticketingCancelSet',
+		cbf = function(result) {
+			$('.js_payPopupPage').html(result);
+		}
+	$.post(url, cbf);
+}
+
 function setPayingEvents() {
 	var $payingContainer = $('.js_payingContainer');
-	
 	$payingContainer.on('keyup', '.js_cardNumber1', inputNum)
 					.on('keyup', '.js_cardNumber2', inputNum)
 					.on('keyup', '.js_cardNumber3', inputNum)
@@ -161,9 +169,11 @@ function setPayingEvents() {
 					.on('keyup', '.js_cardExpiryDate2', inputNum)
 					.on('keyup', '.js_cardOwnerBirth', inputNum)
 					.on('click', '.js_payingButton', payingBtnClick)
+					.on('click', '.js_popMoviePayingCancel', payingCancelBtnClick)
 }
 
 function initPaying() {	
 	setPayingEvents();
+	console.log('paying 로딩됨')
 }
 initPaying();

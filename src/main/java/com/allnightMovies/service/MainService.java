@@ -3,7 +3,6 @@
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +20,8 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -30,8 +31,10 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.Paging;
@@ -40,6 +43,7 @@ import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
+
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
 // 메인 컨트롤러에서는 별도의 생성 없이 사용 가능.
@@ -106,6 +110,7 @@ public class MainService implements Action {
 /*****은정. loginPage *****/	
 	public ModelAndView loginPage() throws Exception {
 		ModelAndView mav = new ModelAndView("login");
+		mav.addObject("loginResult", true);
 		return mav;
 	}
 	
@@ -256,7 +261,6 @@ public class MainService implements Action {
 		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
 		
 		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, String.valueOf(this.params.getTheater()));
-		System.out.println("금액 : " + moviePrice);
 		
 		
 		mav.addObject("seatList", seatInfoList);
@@ -282,14 +286,6 @@ public class MainService implements Action {
 		String[] seatArr 		= this.params.getSeatArr().split(",");
 		
 		
-		System.out.println("cardType : "  + cardType);
-		System.out.println("cardNum : "  + cardNum);
-		System.out.println("cardPWD : "  + cardPWD);
-		System.out.println("cardExpiryMonth : " +  cardExpiryMonth);
-		System.out.println("cardExpiryYear : " +  cardExpiryYear);
-		System.out.println("cardOwnerBirth : " +  cardOwnerBirth);
-		System.out.println("seatArr : "  + seatArr);
-		
 		if(cardType.equals("선택")) {
 			result = false;
 		}
@@ -302,7 +298,6 @@ public class MainService implements Action {
 
 		SimpleDateFormat format = new SimpleDateFormat("yy-MM");
 		String[] toDate = (format.format(System.currentTimeMillis())).split("-");
-		List<String> list = Arrays.asList(toDate);
 		
 		if(!check.isParseInt(cardExpiryMonth) || !check.isParseInt(cardExpiryYear)) {
 			result = false;
@@ -330,22 +325,68 @@ public class MainService implements Action {
 		Date inputDate = dateFormat.parse(cardOwnerBirth);
 		double diffDays = (today.getTime() - inputDate.getTime()) / (24 * 60 * 60 * 1000);
 		if(diffDays < 1) {
-			System.out.println("생일이 오늘날짜 이후 : " + (diffDays < 1) + " / diffDays : " + diffDays);
+			result = false;
+		}
+		String resultMessage = "";
+		
+		List<String> seatsList = Arrays.asList(seatArr);
+		if(result) {
+			String userID 		 = (String) this.params.getSession().getAttribute("userID");
+			String screeningDate = this.params.getScreeningDate();
+			String movieTitle 	 = this.params.getMovieTitle();
+			int theater 		 = this.params.getTheater();
+			
+			
+			// 먼저 사용자가 선택한 좌석이 이미 예매되어있는지를 확인한다.
+			UserCheckEmptySeatsDTO checkSeatsDTO = new UserCheckEmptySeatsDTO();
+			checkSeatsDTO.setMovieScreeningDate(screeningDate)
+						 .setMovieTitle(movieTitle)
+						 .setSeatsList(seatsList)
+						 .setTheater(theater);
+
+			for(String n : checkSeatsDTO.getSeatsList()) {
+				System.out.print(n + ",");
+			}
+			Integer seats = this.dbService.checkEmptySeats(checkSeatsDTO);
+			if(seats > 0) {
+				resultMessage = "이미 예약된 좌석입니다.<br/>다른 좌석을 선택해주세요.";
+				result = false;
+			} else {
+				
+				String ticketNum = screeningDate.replace(".", "").substring(4, 8);
+				ticketNum += "-" + String.valueOf(System.currentTimeMillis()).substring(5, 13);
+				Integer moviePrice = this.dbService.getTicketPriceInfo(screeningDate, String.valueOf(theater));
+				
+				UserTicketingInfo userTicketingInfo = new UserTicketingInfo();
+				userTicketingInfo.setMovieScreeningDate(screeningDate)
+								 .setMovieTitle(movieTitle)
+								 .setTheater(theater)
+								 .setTheaterSeat(seatsList)
+								 .setUserID(userID)
+								 .setUserTicketCount(seatsList.size())
+								 .setUserTicketNumber(ticketNum)
+								 .setUserTotalPrice(moviePrice * seatsList.size());
+				
+				System.out.println(userTicketingInfo.toString());
+				this.dbService.userTicketingInfoInsert(userTicketingInfo);
+				resultMessage = "예매가 완료되었습니다. <br/> 예매확인 페이지에서 확인 가능합니다.";
+			}
+		
+		} else {
+			resultMessage = "카드 정보가 정확하지 않습니다. <br/> 다시 진행해주세요.";
 			result = false;
 		}
 		
-		
-		if(result) {
-			
-			
-		}
-		
-		ModelAndView mav = new ModelAndView("reservation/ticketing/ticketingComplete");
+		ModelAndView mav = new ModelAndView("reservation/ticketing/ticketingResult");
 		mav.addObject("resultBool", result);
+		mav.addObject("resultMessage", resultMessage);
 		return mav;
 	}
+	
+	public ModelAndView ticketingCancelSet() {
+		return new ModelAndView("reservation/ticketing/paypopup");
+	}
 /*******연종. PWD찾기 SHIN*******/
-	//TODO 클래스명 수정할것
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String searchPwdUserID = this.params.getSearchPwdUserID();
@@ -423,7 +464,6 @@ public class MainService implements Action {
 	}
 	
 /*****수진. 아이디찾기(email)*****/
-	
 	public ModelAndView searchIDEmailResult() throws Exception {
 		this.params.setDirectory("searchId");
 		this.params.setContentCSS("searchId/searchId");
@@ -470,44 +510,40 @@ public class MainService implements Action {
 	public ModelAndView serviceCenter() throws Exception {
 		this.params.setContentCSS("service/serviceCenter");
 		this.params.setContentjs("service/serviceCenter");
-		//페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("loginUserId",LoginUserID);
+		return mav;
+	}
+	
+	//자주묻는페이지 가져오기
+	public ModelAndView serviceCenterFreQuentlyBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
 		
-		
-		/*자주묻는게시판*/
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
 		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 5, 1, 4); //들어왔을때 page값 기본적으로 1 주기
+		Paging boardPaging = new Paging(totBoardList, 7, 1, 4); //들어왔을때 page값 기본적으로 1 주기
 		boardPaging.setBoardPaging();
 		
-		/*문의사항*/
-		int totQuestionBoardCount = this.dbService.questionBoardCount();
-		Paging questionBoardPaging = new Paging(totQuestionBoardCount, 10, 1, 5);
-		questionBoardPaging.setBoardPaging();
-		
-		
-		ModelAndView mav = this.getTemplate();
+		System.out.println();
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
 		mav.addObject("pageGroup",boardPaging);
-		
-		
-		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
-		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
-		mav.addObject("questionBoardGroup", questionBoardPaging);
+		//mav.addObject("loginUserId",LoginUserID);
 		return mav;
 	}
+	
 	
 //자주묻는페이지 페이지 전환
 	public ModelAndView serviceCentergetBoardCount() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
 
 		int totBoardList = this.dbService.serviceCentergetBoardCount();
-		
 		int page = this.params.getPageboard();
-		
 		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-		Paging boardPaging = new Paging(totBoardList, 5,page, 4);
+		Paging boardPaging = new Paging(totBoardList, 7,page, 4);
 		boardPaging.setBoardPaging();
 		
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
@@ -518,13 +554,126 @@ public class MainService implements Action {
 		return mav;
 	}
 	
+	
+	/*문의사항*/
+	public ModelAndView questionBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
+		
+		int totQuestionBoardCount = this.dbService.questionBoardCount();
+		Paging questionBoardPaging = new Paging(totQuestionBoardCount,7, 1, 4);
+		questionBoardPaging.setBoardPaging();
+		
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		
+		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
+		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
+		mav.addObject("questionBoardGroup", questionBoardPaging);
+		mav.addObject("loginUserId",LoginUserID);
+		return mav;
+		
+	}
+	
 //문의 사항 게시판 전환
 	public ModelAndView serviceCenterQuestionBoardChange() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
 		
+		int questionBoard = this.params.getQuestionBoard();
+		
+		int totQuestionBoardCount = this.dbService.questionBoardCount();
+		Paging questionBoardPaging = new Paging(totQuestionBoardCount, 7, questionBoard , 4);
+		questionBoardPaging.setBoardPaging();
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		
+		
+		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
+		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
+		mav.addObject("questionBoardGroup", questionBoardPaging);
+		mav.addObject("checkPage", questionBoard);
+		mav.addObject("loginUserId",LoginUserID);
+		
 		return mav;
 	}
 	
+/***수진 문의사항 글쓰기***/
+	public ModelAndView questionBoardWriteForm() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/AskWriteBoard");
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		
+		
+		mav.addObject("contentCSS", "service/serviceCenter");
+		mav.addObject("contentjs", "service/service/questionBoard");
+		mav.addObject("LoginUserID", LoginUserID);
+		
+		return mav;
+	}
+/***수진 문의사항 글보기***/
+	public ModelAndView questionViewBoard() throws Exception {
+		Integer questionBoardNum = this.params.getQuestionBoardNum();
+
+		
+		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		
+		boolean isUserRight = questionBoardList.getUser_Id().equals(LoginUserID);
+		
+		
+		ModelAndView mav = new ModelAndView("service/include/questionViewBoard");
+		
+		this.params.setContentCSS("service/service/questionBoard");
+		
+		mav.addObject("contentCSS", "service/service/questionBoard");
+		mav.addObject("contentjs", "service/service/questionBoard");
+		mav.addObject("questionBoardList", questionBoardList);
+		mav.addObject("loginUserId", LoginUserID);
+		mav.addObject("isUserRight", isUserRight);
+		return mav;
+	}
+	
+///*******수진. 문의사항 글등록 *******/
+	public ModelAndView InsertAskWriteBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/questionViewBoard");
+		
+		String title     = this.params.getInsertTitle();
+		String content   = this.params.getInsertTextArea();
+		int writePwd     = this.params.getInsertboardPWd() == null ? null : this.params.getInsertboardPWd();
+		int isPwd        = this.params.isInsertPwdcheck() == true ? 1 : 0;
+		
+		//1은 비밀글 등록 // 2면 일반글등록
+		boolean isResult = true;
+		String result  = "";
+		
+		HttpSession session = this.params.getSession();
+		String user_Id = (String)session.getAttribute("userID");
+		
+	
+		CinemaQuestionBoardDTO cinemaQuestionBoardDTO = new CinemaQuestionBoardDTO();
+		cinemaQuestionBoardDTO.setTitle(title);
+		cinemaQuestionBoardDTO.setContent(content);
+		cinemaQuestionBoardDTO.setUser_Id(user_Id);
+		cinemaQuestionBoardDTO.setWritePwd(writePwd);
+		cinemaQuestionBoardDTO.setIsPwd(isPwd);
+		
+		this.dbService.InsertAskWriteBoard(cinemaQuestionBoardDTO);
+	
+		return mav;
+		
+	}
+	public ModelAndView reCheckPwdWriteForm() throws Exception {
+		ModelAndView mav = new ModelAndView("service/include/reCheckPwdWriteForm");
+		return mav;
+		
+	}
+
+   
+
 /*******연종. MyINFO SHIN*******/	
 	public ModelAndView viewMyInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -559,11 +708,8 @@ public class MainService implements Action {
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
 	public ModelAndView currentFilm() throws Exception{
 		ModelAndView mav = this.getTemplate();
-		
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.getCurrentFilmDTO();
 		Integer filmNum = currentFilmDTO.size();
-		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "currentFilm");
 		mav.addObject("contentCSS", "movie/currentFilm");
@@ -572,14 +718,38 @@ public class MainService implements Action {
 		mav.addObject("filmNum", filmNum);
 		return mav;
 	}
-/*******연종. MOVIE CURRENT FIRM 현재상영작*******/		
+	public ModelAndView sortScore() throws Exception{
+		System.out.println("sortScore CLICK");
+		ModelAndView mav = new ModelAndView("movie/currentFilmSort");
+		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.sortScore();
+		Integer filmNum = currentFilmDTO.size();
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "currentFilmSort");
+		mav.addObject("contentCSS", "movie/currentFilm");
+		mav.addObject("contentjs", "movie/currentFilm");
+		mav.addObject("CurrentFilmDTO", currentFilmDTO);
+		mav.addObject("filmNum", filmNum);
+		return mav;
+	}
+	//TODO 현재 가나다순 정렬 중임 
+	public ModelAndView sortTicketing() throws Exception{
+		System.out.println("sortScore CLICK");
+		ModelAndView mav = new ModelAndView("movie/currentFilmSort");
+		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.sortTicketing();
+		Integer filmNum = currentFilmDTO.size();
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "currentFilmSort");
+		mav.addObject("contentCSS", "movie/currentFilm");
+		mav.addObject("contentjs", "movie/currentFilm");
+		mav.addObject("CurrentFilmDTO", currentFilmDTO);
+		mav.addObject("filmNum", filmNum);
+		return mav;
+	}
+/*******연종. MOVIE PLANNED FIRM 상영예정작*******/		
 	public ModelAndView screeningsPlanned() throws Exception{
 		ModelAndView mav = this.getTemplate();
-		
 		List<MovieScreeningsPlannedDTO> screeningsPlannedDTO = this.dbService.getPlannedFilmDTO();
 		Integer filmNum = screeningsPlannedDTO.size();
-		System.out.println("Mainservice DTO.size 갯수  >> " + filmNum);
-		//TODO 지금은 이름 오름차순 이지만 나중엔 예매율순으로 바꿀꺼!
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "screeningsPlanned");
 		mav.addObject("contentCSS", "movie/screeningsPlanned");
@@ -611,62 +781,55 @@ public class MainService implements Action {
 		return mav;
 	}
 //-----------------------------------------------------------------------
-/*******연종. SERVICE notice.jsp 공지사항*******/	
+/*******연종. SERVICE notice.jsp 공지사항*******/
+	//1. 처음 공지사항 을눌렀을때  리스트를 뿌려줌 
 	public ModelAndView notice() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		int totalList = this.dbService.getNoticeBoardCount();
-		this.params.setNoticeUserClickPage(1);
-		int clickedPageNum = this.params.getNoticeUserClickPage();
+		this.params.setNoticePage(1);
+		int noticePage = this.params.getNoticePage();
 		
 		Paging2 paging = new Paging2();
-		paging.makePaging(totalList, clickedPageNum);
-
+		paging.makePaging(totalList, noticePage, 10, 10);
+		
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
-		mav.addObject("no", clickedPageNum);
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/notice");
 		return mav;
 	}
-	
+	//2. 비동기로 사용자가 클릭한 page 를 가지고 계산한 paging 처리
 	public ModelAndView noticeBoard() throws Exception {
 		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
 		int totalList = this.dbService.getNoticeBoardCount();
-		int clickedPageNum = this.params.getNoticeUserClickPage();
+		int noticePage = this.params.getNoticePage();
 		Paging2 paging = new Paging2();
-		paging.makePaging(totalList, clickedPageNum);
-		System.out.println("noticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
-		
+		paging.makePaging(totalList, noticePage, 10, 10);
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
 		
-		System.out.println("noticeBoard  --  보여질 리스트 범위 입니다. >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
+		mav.addObject("noticePage", noticePage);
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
-		mav.addObject("no", clickedPageNum);
-		
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/notice");
-		return mav;
+		return mav;         
 	}
-	
+	//3. noticeBoard에서 글제목을 클릭하면 실행
 	public ModelAndView noticeBoardView() throws Exception {
 		ModelAndView mav = this.getTemplate();
+		Integer noticePage = this.params.getNoticePage();
 		Integer noticeNo = this.params.getNoticeNo();
 		
-		//getNoticeBoardContent
 		CinemaNoticeBoardDTO noticeDTO = this.dbService.getNoticeBoardContent(noticeNo);
 		String content = noticeDTO.getContent();
 		String title = noticeDTO.getTitle();
 		String writeDate = noticeDTO.getWriteDate();
 		
-		System.out.println("noticeBoardView 게시글 현재PAGE  >>  " + params.getNoticePage()
-		                               + "   현재 NO  >> " +  params.getNoticeNo());
-	
 		mav.addObject("title", title);
 		mav.addObject("content", content);
 		mav.addObject("writeDate", writeDate);
@@ -674,63 +837,85 @@ public class MainService implements Action {
 		mav.addObject("page", "notice/noticeBoardView");
 		mav.addObject("contentCSS", "service/notice/noticeBoard");
 		mav.addObject("contentjs", "service/notice/notice");
-		mav.addObject("noticePage", params.getNoticePage());
-		mav.addObject("noticeNo", params.getNoticeNo());
-		
+		mav.addObject("noticePage", noticePage);
+		mav.addObject("noticeNo", noticeNo);
 		return mav;
 	}
-	
+	//4. 목록보기를 누르면 사용자가 마지막으로 본 page 리스트가 불림
 	public ModelAndView locationNoticeBoard() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		int totalList = this.dbService.getNoticeBoardCount();
-		int clickedPageNum = this.params.getNoticePage();
-		
-		System.out.println("locationNoticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
+		int noticePage = this.params.getNoticePage();
 		
 		Paging2 paging = new Paging2();
-		paging.makePaging(totalList, clickedPageNum);
+		paging.makePaging(totalList, noticePage, 10, 10);
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
-		
-		System.out.println("locationNoticeBoard  -- 보여질 리스트 범위입니다.  >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
 		
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
-		mav.addObject("no", clickedPageNum);
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/notice");
 		return mav;
 	}
-	
+	//5. 검색후 리스트 뿌려짐 항상1page
 	public ModelAndView searchNoticeBoard() throws Exception {
-		ModelAndView mav = this.getTemplate();
+		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
+		CinemaNoticeSearchBoardDTO searchBoardDTO = new CinemaNoticeSearchBoardDTO();
 		//사용자가 검색한 단어 저장 
 		String searchWord = this.params.getNoticeSearachWord();
 		//페이징처리를 위한 과정 
-		this.params.setNoticeUserClickPage(1);
-		int clickedPageNum = this.params.getNoticeUserClickPage();
+		this.params.setNoticePage(1);
+		int noticePage = this.params.getNoticePage();
 		int totalList = this.dbService.searchBoardCount("%"+searchWord+"%");
+		System.out.println("1. 검색결과  list count >>" + totalList);
 		
-		System.out.println("MAIN   searchWord  >>   " + searchWord);
-		System.out.println("MAIN   totalList  >>   " + totalList);
 		
 		Paging2 paging = new Paging2();
-		paging.makePaging(totalList, clickedPageNum);
-		List<CinemaNoticeBoardDTO> noticeBoardDTO = this.dbService.searchBoard(paging.getStartPageList(), paging.getEndPageList(),"%"+searchWord+"%");
-		//TEST
-		System.out.println("noticeBoard  --  사용자가 클릭한 page  >>  "  +  clickedPageNum);
-		System.out.println("noticeBoard  --  보여질 리스트 범위 입니다. >>  " + paging.getStartPageList() + "  ~  "  + paging.getEndPageList() );
+		paging.makePaging(totalList, noticePage, 10, 10);
+		searchBoardDTO.setBlockStartNum(paging.getStartPageList());
+		searchBoardDTO.setBlockEndNum(paging.getEndPageList());
+		searchBoardDTO.setSearchWord("%"+searchWord+"%");
 		
+		List<CinemaNoticeBoardDTO> noticeBoardDTO = this.dbService.searchBoard(searchBoardDTO.getBlockStartNum(), searchBoardDTO.getBlockEndNum(),searchBoardDTO.getSearchWord());
+		
+		mav.addObject("totalList", totalList);
 		mav.addObject("noticeDTO", noticeBoardDTO);
 		mav.addObject("paging", paging);
-		mav.addObject("no", clickedPageNum);
+		mav.addObject("search", "Search");
 		mav.addObject("directory", "service");
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/notice");
+		
 		return mav;
 	}
 	
+	public ModelAndView searchNoticeBoardPage() throws Exception {
+		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
+		//사용자가 검색한 단어 저장 
+		String searchWord = this.params.getNoticeSearachWord();
+		System.out.println("2. searchWord 저장 " + searchWord);
+		//페이징처리를 위한 과정 
+		int noticePage = this.params.getNoticePage();
+		int totalList = this.dbService.searchBoardCount("%"+searchWord+"%");
+		
+		Paging2 paging = new Paging2();
+		paging.makePaging(totalList, noticePage, 10, 10);
+		
+		List<CinemaNoticeBoardDTO> noticeBoardDTO = this.dbService.searchBoard(paging.getStartPageList(), paging.getEndPageList(), "%"+searchWord+"%");
+		
+		mav.addObject("totalList", totalList);
+		mav.addObject("noticeDTO", noticeBoardDTO);
+		mav.addObject("paging", paging);
+		mav.addObject("search", "Search");
+		mav.addObject("directory", "service");
+		mav.addObject("page", "notice/notice");
+		mav.addObject("contentCSS", "service/notice/notice");
+		mav.addObject("contentjs", "service/notice/searchNotice");
+		
+		return mav;
+	}
 //-----------------------------------------------------------------------
 }

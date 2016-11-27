@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter 
+@Setter
 public class Params {
 	private HttpServletRequest request;
 	private HttpSession session;
@@ -57,7 +57,7 @@ public class Params {
 	private String myInfoChageEmail;
 	private String myInfoEmailConfirmNum;
 
-	private Integer pageboard;
+	
 
 // 회원탈퇴 	------------------------------------------------------------------
 	private String withdrawUserPwd;
@@ -80,9 +80,21 @@ public class Params {
 	private String cardExpiryDateYear;
 	private String cardOwnerBirth;
 
-	// 공지사항 게시판
-	private int noticeUserClickPage;
+// 공지사항 게시판
+	private int noticeUserClickPage;/*삭제예정*/
 	private int noticePage;
 	private int noticeNo;
+	
+// 고객센터 게시판
+	private Integer pageboard; //자주묻는게시판 페이징
+	private Integer questionBoard; //문의사항게시판 페이징
+	
+	private Integer questionBoardNum;
 	private String noticeSearachWord;
+// 문의 사항 게시판
+	private String insertTextArea; //내용
+	private String insertTitle; //제목
+	private Integer insertboardPWd; //비밀번호
+	private boolean insertPwdcheck; //비번체크여부
+
 }

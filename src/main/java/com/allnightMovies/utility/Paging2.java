@@ -16,10 +16,10 @@ public class Paging2 {
 	private int startPageBlock; //한 블럭에 시작하는 page 숫자 = 6
 	private int endPageBlock;	//한 블럭에 마지막 page 숫자 = 10
 	
-	public void makePaging(int totalList, int clickedPageNum) {
-		this.pageList = 10;		//한페이지당 뿌려질 list 갯수	
+	public void makePaging(int totalList, int clickedPageNum, int pageList, int pageBlockNum) {
+//		this.pageList = 10;		//한페이지당 뿌려질 list 갯수	
 		this.startPageNum = 1;	//시작페이지 번호
-		this.pageBlockNum = 10;  //한 블럭에 보여질 수
+//		this.pageBlockNum = 10;  //한 블럭에 보여질 수
 		
 		//마지막 페이지 
 		int endPage = (totalList + (pageList - 1)) / pageList; 

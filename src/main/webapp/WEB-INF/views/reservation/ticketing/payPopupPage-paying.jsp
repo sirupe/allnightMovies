@@ -65,7 +65,7 @@
 			<button class="js_payingButton paying__btn" type="button">
 				결제하기
 			</button>
-			<button class="paying__btn" type="button">
+			<button class="js_popMoviePayingCancel paying__btn" type="button">
 				결제취소
 			</button>
 		</div>

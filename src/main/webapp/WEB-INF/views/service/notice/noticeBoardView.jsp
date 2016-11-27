@@ -10,6 +10,6 @@
 	        <label class="noticeBoard__writeDate">작성일 : ${writeDate}</label>
         </span>
 	    <pre class="noticeBoard__content font  js_noticeBoardContent" >${content}</pre>
-	    <button class="noticeBoard__listButton font  js_noticeBoardBtn" data-notice-page="${noticePage}" data-notice-no="${noticeNo}" >목록보기</button>
+	    <button class="noticeBoard__listButton font  js_noticeBoardBtn" type="button" data-notice-page="${noticePage}" data-notice-no="${noticeNo}">목록보기</button>
     </div>
 </div>

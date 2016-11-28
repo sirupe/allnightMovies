@@ -1,4 +1,4 @@
-function init() {
+/*function init() {
 	setEvent();
 }
 init()
@@ -15,8 +15,8 @@ function setEvent() {
 		
 }
 
-/*******************페이징*******************/
-/*처음PAGE*/
+*//*******************페이징*******************//*
+처음PAGE
 function locationFirstPageSearch() {
 	var firstPageData = $('.js_firstPageSearch').attr('data-firstPage'),
 	
@@ -30,7 +30,7 @@ function locationFirstPageSearch() {
 	$.post(url, params, cbf);
 }
 
-/*이전PAGE*/
+이전PAGE
 function locationPrePageSearch() {
 	var prePageData = $('.js_prePageSearchSearch').attr('data-prePage'),
 	
@@ -42,7 +42,7 @@ function locationPrePageSearch() {
 					   
 	$.post(url, params, cbf);	
 }
-/*현재PAGE*/
+현재PAGE
 function locationCurrentPageSearch() {
 	var currentPage = $(this).attr('data-currentPage'),
 		
@@ -54,7 +54,7 @@ function locationCurrentPageSearch() {
 		$.post(url, params, cbf);
 	
 }
-/*다음PAGE*/
+다음PAGE
 function locationNextPageSearch() {
 	var nextPageData = $('.js_nextPageSearch').attr('data-nextPage'),
 	    
@@ -65,7 +65,7 @@ function locationNextPageSearch() {
 					   };
 	$.post(url, params, cbf);
 }
-/*마지막PAGE*/
+마지막PAGE
 function locationLastPageSearch() {
 	var lastPageData = $('.js_lastPageSearch').attr('data-lastPage'),
 	
@@ -76,3 +76,4 @@ function locationLastPageSearch() {
 					   };
 	$.post(url, params, cbf);
 }
+*/

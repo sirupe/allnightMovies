@@ -7,7 +7,7 @@
 			<c:when test="${filmNum.count % 3 != 0}">
 				<span class="span-currentFilm-images">
 					<span class="span-filmImgs  js_currentFilmInOut" style="background-image: url('/../resources/img/poster/${CurrentFilmDTO.moviePoster }');">
-						<label class="hiddenText js_text">상세보기</label>
+						<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${CurrentFilmDTO.movieTitle}">상세보기</a>
 					</span>
 					<span class="span-currentFilm-text">
 						<label class = "ageLimit${CurrentFilmDTO.movieAgeLimit}">${CurrentFilmDTO.movieAgeLimit}</label>
@@ -18,7 +18,7 @@
 			<c:otherwise>
 				<span class="span-currentFilm-images">
 					<span class="span-filmImgs  js_currentFilmInOut" style="background-image: url('/../resources/img/poster/${CurrentFilmDTO.moviePoster }');">
-						<label class="hiddenText js_text">상세보기</label>
+						<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${CurrentFilmDTO.movieTitle}">상세보기</a>
 					</span>
 					<span class="span-currentFilm-text">
 						<label class = "ageLimit${CurrentFilmDTO.movieAgeLimit}">${CurrentFilmDTO.movieAgeLimit}</label>

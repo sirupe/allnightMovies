@@ -21,7 +21,7 @@
 					    		</a>
 					    	</c:when>
 					    	<c:otherwise>
-					    		<a class="title bold" href="/movie/mainService/noticeBoardView?noticePage=${params.noticePage}&noticeNo=${noticeDTO.no}">${noticeDTO.title}</a>
+				    		<a class="title bold" href="/movie/mainService/noticeBoardView?noticePage=${params.noticePage}&noticeNo=${noticeDTO.no}">${noticeDTO.title}</a>
 					    	</c:otherwise>
 					    </c:choose>
 					    <span class="writer">AllnightMovies</span>
@@ -37,9 +37,18 @@
 			<label class="js_firstPage${search} paging bold" data-firstPage="${paging.startPageNum}"  >◀</label>
 			<label class="js_prePage${search} paging bold" data-prePage="${paging.startPageBlock - 1}" >◁</label>
         </c:if>
+        
         <c:forEach begin="${paging.startPageBlock}" end="${paging.endPageBlock}" var="page">
-       		<label class="js_currentPage${search} paging bold" data-currentPage="${page}">${page}&nbsp;&nbsp;</label>
+        	<c:choose>
+	        	<c:when test="${params.noticePage == page}">
+	       			<label class="paging_current js_currentPage${search} paging bold" data-currentPage="${page}">${page}&nbsp;&nbsp;</label>
+	        	</c:when>
+	        	<c:otherwise>
+	    	    	<label class="js_currentPage${search} paging bold" data-currentPage="${page}">${page}&nbsp;&nbsp;</label>
+	        	</c:otherwise>
+        	</c:choose>
         </c:forEach>
+        
         <c:if test="${paging.endPageBlock != paging.endPageNum}">
 			<label class="js_nextPage${search} paging bold" data-nextPage="${paging.endPageBlock + 1}">▷</label>
 			<label class="js_lastPage${search} paging bold" data-lastPage="${paging.endPageNum}">▶</label>

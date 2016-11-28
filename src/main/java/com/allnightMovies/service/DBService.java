@@ -14,6 +14,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
 import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -207,4 +208,11 @@ public class DBService {
 	public List<CinemaNoticeBoardDTO> getMainNoticeDTO() {
 		return dbMapper.getMainNoticeDTO();
 	}
+	
+/** shin. 영화 상세정보  **/
+	public MovieBasicInfo getMovieBasicInfo(String movieTitle) {
+		return dbMapper.getMovieBasicInfo(movieTitle);
+	}
+	
+	
 }

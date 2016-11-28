@@ -17,5 +17,5 @@
 		</span>
 		<button class="button-currentFilm-reservation  js_urrentFilmReservationBtn">예매하기</button>
 	</div>
-	<jsp:include page="./currentFilmSort.jsp"></jsp:include>
+	<jsp:include page="./include/currentFilmSort.jsp"></jsp:include>
 </div>

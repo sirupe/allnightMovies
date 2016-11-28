@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -869,11 +871,10 @@ public class MainService implements Action {
 		this.params.setNoticePage(1);
 		int noticePage = this.params.getNoticePage();
 		int totalList = this.dbService.searchBoardCount("%"+searchWord+"%");
-		System.out.println("1. 검색결과  list count >>" + totalList);
-		
 		
 		Paging2 paging = new Paging2();
 		paging.makePaging(totalList, noticePage, 10, 10);
+		
 		searchBoardDTO.setBlockStartNum(paging.getStartPageList());
 		searchBoardDTO.setBlockEndNum(paging.getEndPageList());
 		searchBoardDTO.setSearchWord("%"+searchWord+"%");
@@ -915,6 +916,55 @@ public class MainService implements Action {
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/searchNotice");
 		
+		return mav;
+	}
+//영화상세정보
+	public ModelAndView movieDetailInfo() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		String movieTitle = this.params.getMovieInfoTitle();
+		boolean reviewResult = true;
+		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
+		
+		HttpSession session = this.params.getSession();
+		String user = (String)session.getAttribute("userID");
+		
+		String movieReleadeDate = movieBasicInfo.getMovieReleaseDate();
+		Date currentTime = new Date ();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		
+		try {
+			date = format.parse(movieReleadeDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int compare = date.compareTo(currentTime);
+		if(compare >= 0){
+			reviewResult = false;
+		}
+		
+//		System.out.println("MAIN movieDetailInfo >>  "+ movieTitle);
+//		System.out.println("상영날짜        >>    " + movieReleadeDate);
+//		System.out.println("오늘날짜        >>    " + currentTime);
+//		System.out.println("reviewResult   >>  " + reviewResult );
+//		System.out.println("userCheck >> "  + user);
+		
+		mav.addObject("userCheck", user);
+		mav.addObject("reviewResult", reviewResult);
+		mav.addObject("movieBasicInfo", movieBasicInfo);
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "movieBasicInfo");
+		mav.addObject("contentCSS", "movie/movieBasicInfo");
+		mav.addObject("contentjs", "movie/movieBasicInfo");
+		return mav;
+	}
+	public ModelAndView getReviewBoard() {
+		ModelAndView mav = new ModelAndView("movie/include/reviewBoard");
+		
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "movieBasicInfo");
+//		mav.addObject("contentCSS", "movie/notice/notice");
+//		mav.addObject("contentjs", "movie/notice/searchNotice");
 		return mav;
 	}
 }

@@ -2,9 +2,11 @@ package com.allnightMovies.model.data.movieInfo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class MovieBasicInfo {
 	private String movieDirector;
 	private String movieAuthor;
@@ -14,6 +16,7 @@ public class MovieBasicInfo {
 	private String movieReleaseDate;
 	private String movieGenre;
 	private String moviePoster;
+	private String movieAgeLimitText;
 	private int reviewEvaluate;
 	private int movieAgeLimit;
 	private int movieRuntime;

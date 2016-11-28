@@ -492,7 +492,6 @@
 				) 
 	      WHERE RNUM <![CDATA[<]]>= 4
 	</select>
-	
 	<select id="getMainNoticeDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
 		SELECT * FROM (
 			SELECT NO		  no, 
@@ -508,6 +507,30 @@
 			      )
 			)    
 		WHERE RNUM <![CDATA[<]]>= 10
+	</select>
+<!-- 상세정보보기 -->
+	<select id="getMovieBasicInfo" resultType="com.allnightMovies.model.data.movieInfo.MovieBasicInfo" parameterType="java.lang.String">
+		SELECT MOVIE_TITLE 			movieTitle,
+    		   MOVIE_RELEASE_DATE   movieReleaseDate,
+    		   MOVIE_DIRECTOR       movieDirector,
+			   MOVIE_AUTHOR			movieAuthor,
+			   MOVIE_GENRE			movieGenre,
+			   MOVIE_CAST			movieCast,
+			   DECODE(MOVIE_AGE_LIMIT, 0, '전체', 12, '12세', 15, '15세', 19, '19세') as movieAgeLimitText,
+			   MOVIE_RUNTIME		movieRuntime,
+			   MOVIE_INTRO			movieIntro,
+			   MOVIE_POSTER			moviePoster,
+			   REVIEW_EVALUATE		reviewEvaluate
+	   FROM MOVIE_BASIC_INFO
+	   WHERE MOVIE_TITLE = #{movieTitle}
+	</select>
+	<select id="getReviewBoard" resultType="com.allnightMovies.model.data.movieInfo.MovieReviewBoard" parameterType="java.lang.String">
+		SELECT REVIEW_EVALUATE  				 AS reviewEvaluate,  
+		       REVIEW_CONTENTS 				 	 AS reviewContents,   
+		       USER_ID		   					 AS reviewWriter,    
+		       TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate       
+		FROM MOVIE_REVIEW_BOARD                         
+		WHERE MOVIE_TITLE = #{movieTitle}
 	</select>
 	
 </mapper>

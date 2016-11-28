@@ -10,7 +10,7 @@
 	
 	<div class="QuestionBoardReCheckPWd_Btn">
 		<button class="QuestionBoardReCheckPWd_checkBtn1 js_rePwdCheckQuestionForm" type="button">확인</button>
-		<button class="QuestionBoardReCheckPWd_checkBtn2" type="button">목록보기</button>
+		<button class="QuestionBoardReCheckPWd_checkBtn2 js_QuestionList" type="button">목록보기</button>
 	</div>
 
 </div>

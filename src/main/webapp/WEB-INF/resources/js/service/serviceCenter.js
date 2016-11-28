@@ -77,14 +77,89 @@ function pagingPreButton() {
 			var $frequently = $('.js_serviceContentTab');
 			$frequently
 				.html(result);
-		$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents').css('display', 'none');
-	};
+				$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents')
+					.css('display', 'none');
+		};
 	$.post(url, params, cbf);
 }
 
 
-/*********************************문의사항게시판*********************************************/
+/*******************자주묻는게시판 다음 페이지********************/
 
+//자주묻는게시판 검색(처음페이지)
+function searchQuestionBoard() {
+	var $userSearchInput = $('.js_searchCenter_input');
+		userSearchInput  = $('.js_searchCenter_input').val();
+		
+		console.log(userSearchInput);
+		
+	url     = '/movie/mainService/getUserSearchList',
+	params  = {'serviceCenterSearchWord' : userSearchInput},
+			
+	cbf     = function(mav) {
+				$('.js_frequentlyBoardContainer').html(mav);
+				
+				$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents')
+					.css('display', 'none');
+			};
+		$.post(url, params, cbf);	
+}
+
+//자주묻는 게시판 검색 이전 페이지
+function searchPrePageBoard() {
+	var preSearchPage = $('.js_preButtonSearch').attr('data-prepage');
+	
+	url     = '/movie/mainService/getUserSearhPage',
+	params  = {'pageboard' : preSearchPage,
+				'serviceCenterSearchWord' : userSearchInput},
+	cbf     = function(mav) {
+				$('.js_frequentlyBoardContainer').html(mav);
+				$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents')
+					.css('display', 'none');
+			};
+	$.post(url, params, cbf);	
+}
+
+
+//검색 다음 게시판
+function searchNextPageBoard() {
+	var nextSearchPage = $('.js_nextButtonSearch').attr('data-nextpage');
+	$userSearchInput = $('.js_searchCenter_input');
+	userSearchInput  = $('.js_searchCenter_input').val();
+	
+	url     = '/movie/mainService/getUserSearhPage',
+	params  = {'pageboard' : nextSearchPage,
+			   'serviceCenterSearchWord' : userSearchInput},
+	
+	cbf     = function(mav) {
+				$('.js_frequentlyBoardContainer').html(mav);
+				$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents')
+					.css('display', 'none');
+			};
+	$.post(url, params, cbf);	
+}
+
+//현재페이지
+function searchCurrentPageBoard() {
+	var CurrentSearchPage = $(this).attr('data-currentPage');
+		PageNum           = $(this).attr('data-PageNum');
+	console.log(CurrentSearchPage);
+
+	url     = '/movie/mainService/getUserSearhPage',
+	params  = {'pageboard' : CurrentSearchPage,
+				'serviceCenterSearchWord' : userSearchInput},
+	cbf     = function(mav) {
+				$('.js_frequentlyBoardContainer').html(mav);
+				$('.container__serviceCenterFrequenty_content .serviceCenterFrequenty__contents')
+					.css('display', 'none');
+			};
+	$.post(url, params, cbf);	
+}
+
+
+
+
+/*********************************문의사항게시판*********************************************/
 
 //현재 
 function questionBoardPageNumber() {
@@ -113,12 +188,14 @@ function questionBoardPagePreNumber() {
 				var $question = $('.js_questionBoardContainer');
 				$question
 					.html(result);
+				
 		};
 		$.post(url, params, cbf);
 }
 
 //다음페이지
 function questionBoardpageNextNumber() {
+	
 	var $userClickPageNum = $('.js_questionNextButton');
 	userClickPageNum  = $userClickPageNum.attr('data-QuestionnextPage');
 	
@@ -133,7 +210,6 @@ function questionBoardpageNextNumber() {
 	};
 		$.post(url, params, cbf);
 	}
-
 
 /******글보기*******/
 function questionViewBoard() {
@@ -157,7 +233,6 @@ function questionWriteForm() {
 		cbf    = function(mav) {
 			var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
 				$questionBoardViewchange.html(mav);
-			
 	};
 		$.post(url, cbf);
 }
@@ -175,12 +250,12 @@ function activePwdInput() {
 //문의사항 글등록하기
 function insertQuestionBoard() {
 	
-	var isResult        = true;
+	var
 		$insertTitle    = $('.js_boardContent');
 	    $insertTextArea = $('.js_boardTextArea');
 	    $insertboardPwd = $('.js_boardWriteBoardPwd');
 	    
-	    insertPwdcheck  = $(".js_boardCheck").is(":checked"); //비밀번호체크여부
+	    insertPwdcheck  = $(".js_boardCheck").is(':checked'); //비밀번호체크여부
 	    insertTitle     = $('.js_boardContent').val(); 
 	    insertTextArea  = $('.js_boardTextArea').val();
 	    insertboardPWd  = $('.js_boardWriteBoardPwd').val(); //비
@@ -195,17 +270,14 @@ function insertQuestionBoard() {
 		    cbf    = function(mav) {
 	    			var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
 	    			$questionBoardViewchange.html(mav);
-		    }
+		    };
 		  
 	    //일단 기본적으로 비었을때
 	    if(insertTitle == '' && insertTextArea == '') {
 	    	alert('모두입력해주세요!');
-	    	isResult = false;
 	    }else if(insertPwdcheck == true && insertboardPWd == '') {
 	    	alert('비밀번호 입력 해주세요');
-	    	isResult = false;
 	    } else {
-	    	isResult = true;
 	    	$.post(url, params, cbf);
 	    }
 }
@@ -298,6 +370,7 @@ function deleteQuestionBoard() {
 		if(confirm('정말 삭제하시겠습니까?') == true) {
 			$.post(url, params, cbf);
 		} else {
+			alert('비밀번호가 다릅니다.');
 			return;
 		}
 }
@@ -352,7 +425,14 @@ function setServiceCenter() {
 				
 				.on('click', '.js_QuestionWriteForm', questionWriteForm) // 글쓰기폼이동
 				.on('click', '.js_questionBoard_title', questionViewBoard) //문의사항
-				.on('click', '.js_QuestionList', questionBoardTab)
+				.on('click', '.js_QuestionList', questionBoardTab) //목록으로
+				.on('click', '.js_questionButtonCancel',questionBoardTab)
+				.on('click', '.js_QuestionUpdateForm', questionBoardTab)
+				.on('click', '.js_serviceCenter_button',searchQuestionBoard) //검색
+				.on('click', '.js_preButtonSearch',searchPrePageBoard)
+				.on('click', '.js_nextButtonSearch' ,searchNextPageBoard)
+				.on('click', '.js_pagingNumberSearch',searchCurrentPageBoard)
+				.on('click', '.js_currentNumberSearch',searchCurrentPageBoard)
 				
 				.on('click', '.js_questionButtonConfirm', insertQuestionBoard) //글 등록하기
 				.on('click', '.js_boardCheck',activePwdInput) //비밀글체크
@@ -366,6 +446,7 @@ function setServiceCenter() {
 function initServiceCenter() {
 	frequentlyBoardTab();
 	setServiceCenter();
+	
 }
 	
 initServiceCenter();

@@ -13,6 +13,7 @@ public class CinemaQuestionBoardDTO {
 	private int writePwd;
 	private int isPwd;
 	
+	
 	private String rnum;
 	
 	

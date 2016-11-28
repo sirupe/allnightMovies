@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
@@ -118,10 +119,15 @@ public class DBService {
 		return dbMapper.serviceCentergetBoardCount();
 	}
 	
+	public Integer userSearchList(String serviceCenterSearchWord) throws Exception {
+		return dbMapper.userSearchList(serviceCenterSearchWord);
+	}
+	public List<CinemaFrequentlyBoardDTO> getUserSearchList(int searchStartNum, int searchEndNum, String serviceCenterSearchWord) {
+		return dbMapper.getUserSearchList(searchStartNum, searchEndNum, serviceCenterSearchWord);
+	}
 	
 /**JUNG 문의사항게시판 **/
 	public Integer questionBoardCount() throws Exception {
-		System.out.println("Dbservie");
 		return dbMapper.questionBoardCount();
 	}
 	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception {

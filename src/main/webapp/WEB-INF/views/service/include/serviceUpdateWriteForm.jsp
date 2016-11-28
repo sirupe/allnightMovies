@@ -15,19 +15,8 @@
 		<div class="questionUpdateBoard">
 			<div class="questionUpdateBoardView-title">
 				<label class="UpdateboardViewtitle">제목</label>
-<%-- 				<c:choose>
-					<c:when test="${questionBoardList.getIsPwd() == 1 }">
-						<input class="UpdateboardViewwriteBoard" type="text" value="${questionBoardList.getTitle() }" >
-						<input class="UpdateboardViewcheck" type="checkbox" checked disabled ><label>비밀글</label>
-					</c:when>
-					
-					<c:otherwise>
-						<input class="UpdateboardViewwriteBoard" type="text" value="${questionBoardList.getTitle() }" >
-						<input class="UPdateboardViewcheck" type="checkbox" disabled ><label>비밀글</label>
-					</c:otherwise>
-				</c:choose> --%>
-						<input class="UpdateboardViewwriteBoard js_UpdateboardContent" type="text" value="${questionBoardList.getTitle() }" >
-						<input class="UPdateboardViewcheck js_UpdateboardCheck" type="checkbox" ><label>비밀글</label>
+					<input class="UpdateboardViewwriteBoard js_UpdateboardContent" type="text" value="${questionBoardList.getTitle() }" >
+					<input class="UPdateboardViewcheck js_UpdateboardCheck" type="checkbox" ><label>비밀글</label>
 			</div>
 			
 			<div class="questionUpdateBoardView-detail">
@@ -53,7 +42,7 @@
 					<div class="serviceCenter_viewForm">
 						<button class="serviceCenter_updateWriteBoardInsert js_QuestionUpdateBtn" type="button">등록하기</button>
 						<button class="serviceCenter_updateWriteBoardDelete js_QuestionDeleteBtn" type="button">삭제하기</button>
-						<button class="serviceCenter_QuestionWrite js_QuestionList" type="button">글목록</button>
+						<button class="serviceCenter_QuestionWrite js_QuestionUpdateForm" type="button">글목록</button>
 					</div>
 		</div>
 </div>

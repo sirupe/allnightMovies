@@ -220,7 +220,8 @@
 	
 <!-- 자주묻는질문게시판 -->
 	<select id="serviceCenter" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
-		SELECT 
+		SELECT
+			NO,
 			QUESTION,
 			ASKED
 		FROM CINEMA_FREQUENTLY_BOARD
@@ -242,6 +243,34 @@
 		 SELECT COUNT(*) 
 		 	FROM CINEMA_FREQUENTLY_BOARD
 	</select>
+<!--자주묻는게시판 검색 갯수-->
+	<select id="userSearchList" resultType="java.lang.Integer" >
+		SELECT COUNT(*)
+			 FROM CINEMA_FREQUENTLY_BOARD 
+			 	WHERE QUESTION LIKE #{serviceCenterSearchWord} 
+			 			OR ASKED LIKE #{serviceCenterSearchWord}
+	</select>	
+	
+<!--리스트불러오기 -->
+	<select id="getUserSearchList" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
+		SELECT * 
+		FROM (
+			SELECT 
+				NO, 
+				QUESTION, 
+				ASKED,
+           		ROWNUM RNUM
+  			FROM (
+	        	SELECT 
+	        		NO, 
+	        		QUESTION, 
+	        		ASKED
+	        	FROM CINEMA_FREQUENTLY_BOARD
+	        	WHERE QUESTION LIKE #{param3} OR ASKED LIKE #{param3}
+	        )
+	    ) WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
 	
 <!-- 문의사항게시판 -->
 	<select id="questionBoardCount" resultType="java.lang.Integer">
@@ -313,6 +342,8 @@
 			FROM CINEMA_ASKED_BOARD
 		WHERE NO = #{param1}
 	</select> 
+	
+
 
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">

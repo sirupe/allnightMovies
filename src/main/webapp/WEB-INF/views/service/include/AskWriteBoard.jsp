@@ -24,7 +24,7 @@
 			</div>
 			<div class="questionbutton">
 				<button class="questionButton_cancel js_questionButtonCancel">취소</button>
-				<button class="questionButton_confirm js_questionButtonConfirm">확인</button>
+				<button class="questionButton_confirm js_questionButtonConfirm" type="button">확인</button>
 			</div>
 		
 		</div>

@@ -100,6 +100,7 @@ public class MainService implements Action {
 		if(userLoginInfo.getUserStates() == 1) {
 			HttpSession session = this.params.getSession();
 			session.setAttribute("userID", userLoginInfo.getUserID());
+			session.setAttribute("userStatus", 1);
 		} else if(userLoginInfo.getUserStates() == 2) {
 			HttpSession session = this.params.getSession();
 			session.setAttribute("userID", userLoginInfo.getUserID());

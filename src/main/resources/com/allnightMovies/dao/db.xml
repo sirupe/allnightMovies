@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.allnightMovies.dao.DBMapper">
-
+<!-- 	<insert id="doTestInsert" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO">
+		INSERT INTO CINEMA_THEATER_SEAT_INFO (
+			CNT,
+		    THEATER,
+		    SEAT_ROWS,
+		    SEAT_COLS,
+		    NAME,
+		    STATUS
+		) VALUES (
+			CINEMA_THEATER_SEAT_INFO_SEQ.NEXTVAL,
+		    #{theater},
+		    #{row},
+		    #{col},
+		    #{name},
+		    #{status}
+		)
+	</insert>
+ -->
 <!-- /* JI. SELECT MENU */ --> 	
 	<resultMap type="com.allnightMovies.model.data.SubMenu" id="SubMenu">
 		<result column="subMenuName" property="subMenuName"/>
@@ -94,19 +111,7 @@
 		WHERE MOVIE_TITLE=#{param1} AND MOVIE_SCREENING_DATE LIKE #{param2}||'%'
 		ORDER BY MOVIETHEATHER, MOVIETIME
 	</select>
-	
-	<!-- TICKETING : 영화관 좌석정보 가져오기 -->
-	<select id="getTheaterSeatInfo" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO" parameterType="int">
-		SELECT 
-			THEATER,
-		    THEATER_SEAT_ROW THEATERSEATROW,
-		    THEATER_SEAT_COL_START THEATERSEATCOLSTART,
-		    THEATER_SEAT_COL_END THEATERSEATCOLEND,
-		    THEATER_WAY_INFO THEATERWAYINFO
-		FROM CINEMA_THEATER_SEAT_INFO
-		WHERE THEATER=#{theater}
-	</select>
-	
+
 	<!-- TICKETING : 영화 금액정보 가져오기 -->
 	<select id="getTicketPriceInfo" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT MOVIE_PRICE MOVIEPRICE 
@@ -135,6 +140,34 @@
 		)
 	</select>
 	
+	<!-- TICKETING : 좌석정보 가져오기 -->
+	<select id="getTheaterSeatInfo" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo">
+		SELECT 
+			THEATER,
+			NAME,
+		    SEAT_ROWS SEATROW,
+		    SEAT_COLS SEATCOL,
+		    STATUS,
+		    THEATERSEAT
+		FROM CINEMA_THEATER_SEAT_INFO M
+		LEFT OUTER JOIN (
+			SELECT DISTINCT(THEATER_SEAT) THEATERSEAT
+		    FROM USER_TICKETING_INFO
+		    WHERE MOVIE_TITLE=#{movieTitle}
+		    AND THEATER=#{theater}
+		    AND MOVIE_SCREENING_DATE=#{movieScreeningDate}
+		) Y ON(M.NAME = Y.THEATERSEAT)
+		WHERE THEATER=#{theater}
+		ORDER BY CNT
+	</select>
+	
+	<!-- TICKETING : 좌석 COL 갯수 가져오기 -->
+	<select id="getTheaterSeatColCnt" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(DISTINCT SEAT_COLS) cnt
+		FROM CINEMA_THEATER_SEAT_INFO
+		WHERE THEATER=#{theater}
+	</select>
+		
 	<!-- TICKETING : 예매정보 insert -->
 	<insert id="userTicketingInfoInsert" parameterType="com.allnightMovies.model.data.userInfo.UserTicketingInfo">
 		<foreach collection="theaterSeat" index="index" item="seat" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
@@ -161,6 +194,14 @@
 			)
 		</foreach>
 	</insert>
+	<!-- TICKETING : 예매된 좌석정보 가져오기 -->
+	<select id="reservationSeatInfo" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo" resultType="java.lang.String">
+		SELECT DISTINCT(THEATER_SEAT) THEATERSEAT
+		FROM USER_TICKETING_INFO
+		WHERE MOVIE_TITLE=#{movieTitle}
+		AND THEATER=#{theater}
+		AND MOVIE_SCREENING_DATE=#{movieScreeningDate}
+	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>

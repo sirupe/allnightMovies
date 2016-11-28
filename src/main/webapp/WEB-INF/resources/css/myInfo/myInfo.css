@@ -16,27 +16,37 @@
     margin-bottom: 40px;
 }
 
+
 /*내정보 타이틀*/
 
 .tab-myinfo__title {
 	display: inline-block;
-	background-color: #383838;
+	background-color: #97675e;
 	width: 180px;
 	font-family: 'Jeju Gothic', serif;
     color: white;
     padding-left: 20px;	
     font-size: 20px;
+    cursor: pointer;
 }
 .tab-reservationInfo__title {
 	display: inline-block;
-	background-color: #383838;
+	background-color: #97675e;
 	width: 180px;
 	font-family: 'Jeju Gothic', serif;
     color: white;
     padding-left: 20px;	
     font-size: 20px;
+    cursor: pointer;
 }
 
+.tab-myinfo__title:hover {
+    background-color: #CA9381;
+}
+
+.tab-reservationInfo__title:hover {
+    background-color: #CA9381;
+}
 /*내정보 내용부분*/
 .div-myinfo__content {
 	font-family: 'Jeju Gothic', serif;
@@ -45,7 +55,7 @@
     justify-content: flex-start;
     flex-direction: column;
     border: 1px solid gray;
-    font-size: 12px;
+    /*font-size: 12px;*/
     line-height: 1.5em;
     background-color: white;
 }

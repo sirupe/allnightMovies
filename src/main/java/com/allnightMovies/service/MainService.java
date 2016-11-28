@@ -1,15 +1,11 @@
  package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
-
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -17,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -28,9 +23,11 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -50,6 +47,7 @@ import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
+
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -263,15 +261,27 @@ public class MainService implements Action {
 	
 	public ModelAndView seatInfo() {
 		ModelAndView mav = new ModelAndView("reservation/ticketing/seatInfo");
-		
 		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
-		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
+		String movieTitle = this.params.getMovieTitle();
+		int theater = this.params.getTheater();
+		String strTheater = String.valueOf(theater);
+		// 이미 예약되어있는 좌석 정보
+		CinemaSeatReserveInfo seatReserveInfo = new CinemaSeatReserveInfo();
+		seatReserveInfo.setMovieTitle(movieTitle)
+					   .setTheater(theater)
+					   .setMovieScreeningDate(screeningDateTime);
 		
-		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, String.valueOf(this.params.getTheater()));
+		List<String> reserveSeatInfo = this.dbService.reservationSeatInfo(seatReserveInfo); // seatInfoList에 보냈으므로 ...
+		List<CinemaSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(seatReserveInfo);
+		int colCnt = this.dbService.getTheaterSeatColCnt(strTheater);
+		colCnt = theater == 1 ? colCnt + 1 : colCnt;
+
 		
-		
-		mav.addObject("seatList", seatInfoList);
+		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, strTheater);
+
 		mav.addObject("moviePrice", moviePrice);
+		mav.addObject("seatInfoList", seatInfoList);
+		mav.addObject("colCnt", colCnt);
 		return mav;
 	}
 	
@@ -1141,12 +1151,9 @@ public class MainService implements Action {
 	public ModelAndView movieDetailInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String movieTitle = this.params.getMovieInfoTitle();
-		boolean reviewResult = true;
 		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
 		
-		HttpSession session = this.params.getSession();
-		String user = (String)session.getAttribute("userID");
-		
+		boolean reviewResult = true;
 		String movieReleadeDate = movieBasicInfo.getMovieReleaseDate();
 		Date currentTime = new Date ();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -1162,13 +1169,12 @@ public class MainService implements Action {
 			reviewResult = false;
 		}
 		
-//		System.out.println("MAIN movieDetailInfo >>  "+ movieTitle);
 //		System.out.println("상영날짜        >>    " + movieReleadeDate);
 //		System.out.println("오늘날짜        >>    " + currentTime);
 //		System.out.println("reviewResult   >>  " + reviewResult );
 //		System.out.println("userCheck >> "  + user);
+//		System.out.println("MAIN movieDetailInfo >>  "+ movieTitle);
 		
-		mav.addObject("userCheck", user);
 		mav.addObject("reviewResult", reviewResult);
 		mav.addObject("movieBasicInfo", movieBasicInfo);
 		mav.addObject("directory", "movie");
@@ -1179,14 +1185,19 @@ public class MainService implements Action {
 	}
 	public ModelAndView getReviewBoard() {
 		ModelAndView mav = new ModelAndView("movie/include/reviewBoard");
-		System.out.println("getReviewBoard 메소드 ㄱ성공용");
 		
+		String movieTitle = this.params.getMovieInfoTitle();
 		
-		System.out.println("movieInfoTitle >> " + this.params.getMovieInfoTitle() );
-		mav.addObject("directory", "movie");
-		mav.addObject("page", "movieBasicInfo");
-		mav.addObject("contentCSS", "movie/movieBasicInfo");
-		mav.addObject("contentjs", "movie/movieBasicInfo/reviewBoard");
+		HttpSession session = this.params.getSession();
+		String user = (String)session.getAttribute("userID");
+		
+		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
+		System.out.println("MovieReviewBoard  평점갯수" + reviewBoardDTO.size());
+		
+		mav.addObject("reviewBoardDTO", reviewBoardDTO);
+		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
+		mav.addObject("userCheck", user);
+		
 		return mav;
 	}
 }

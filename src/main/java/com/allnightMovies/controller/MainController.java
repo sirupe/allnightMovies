@@ -46,6 +46,17 @@ public class MainController {
 		mav.addObject("NewFilmDTO", getNewFilmDTO);
 		mav.addObject("mainNoticeDTO",mainNoticeDTO);
 		mav.addObject("list", list);
+		
+		
+//		
+//		try {
+//			this.service.doTestInsert();
+//		} catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+		
 		return mav;
 	}
 	

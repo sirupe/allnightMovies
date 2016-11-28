@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script async="async" type="text/javascript" src="/resources/js/movie/reviewBoard/reviewBoard.js"></script>
 
 <div class="js_reviewBoardContainer">
 	<div class="reviewBoard">
@@ -30,14 +31,16 @@
 				<textarea class="reviewTextarea js_reviewText" placeholder="글자수는 120자로 제한됩니다."></textarea>
 			</c:otherwise>
 		</c:choose>
-		<button class="reviewBoardBtn js_reviewInsertBtn" type="button">등록</button>
+		<button class="reviewBoardBtn js_revewInsertBtn" type="button">등록</button>
 	</div>
-	<div class="reviewBoard">
-		<span class="reviewBoardFont">
-			<label>10점</label>
-			<label>시간</label>
-		</span>
-		<textarea class="reviewContentTextarea" readonly="readonly"></textarea>
-		<label class="">글쓴이</label>
-	</div>
+	<c:forEach begin="1" end="${reviewBoardCount}" items="${reviewBoardDTO}" var="reviewBoardDTO">
+		<div class="reviewBoard">
+			<span class="reviewBoardFont">
+				<label>${reviewBoardDTO.reviewEvaluate}점</label>
+				<label>${reviewBoardDTO.writeDate}</label>
+			</span>
+			<textarea class="reviewContentTextarea" readonly="readonly">${reviewBoardDTO.reviewContents}</textarea>
+			<label class="">${reviewBoardDTO.reviewWriter}</label>
+		</div>
+	</c:forEach>
 </div>

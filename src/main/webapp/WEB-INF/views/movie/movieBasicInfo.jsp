@@ -8,7 +8,7 @@
 	<div class="movieBasicInfo-intro">
 		<img class="moviePoster" src="/resources/img/poster/${movieBasicInfo.moviePoster}"></img>
 		<span class="span-movieBasicInfo-intro">
-			<label class="intro__lable__title" data-info-title>${movieBasicInfo.movieTitle}</label><br><br>
+			<label class="intro__lable__title js_basicInfomovieTitle" data-movie-info-title="${movieBasicInfo.movieTitle}">${movieBasicInfo.movieTitle}</label><br><br>
 			<label class="intro__label">개요&nbsp;:&nbsp;${movieBasicInfo.movieGenre}</label><br><br>
 			<label class="intro__label">감독&nbsp;:&nbsp;${movieBasicInfo.movieDirector}&nbsp;|&nbsp;저자&nbsp;:&nbsp;${movieBasicInfo.movieAuthor}</label><br><br>
 			<label class="intro__label">출연&nbsp;:&nbsp;${movieBasicInfo.movieCast}</label><br><br>

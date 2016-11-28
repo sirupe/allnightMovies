@@ -14,11 +14,14 @@ function setEvent() {
 
 function tabReview() {
 	var $movieInfoTitle = $('.js_basicInfomovieTitle'),
-		movieInfoTitle = $movieInfoTitle.val(),
+		movieInfoTitle = $movieInfoTitle.attr('data-movie-info-title'),
+		
 		url = '/movie/mainService/getReviewBoard',  
 		params = {'movieInfoTitle' : movieInfoTitle}
 		cbf	= function(mav) {
-				$('.js_currentFilmSort').html(mav);
+				$('.js_reviewBoardContainer').html(mav);
 			  }; 
-	$.post(url, cbf);
+			  
+	$.post(url,params, cbf);
 }
+

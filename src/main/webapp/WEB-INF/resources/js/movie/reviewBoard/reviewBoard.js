@@ -1,3 +1,5 @@
+/*************reviewBoard.js**************/
+
 $(document).ready(function() {
     $('.js_reviewText').on('keyup', function() {
         if($(this).val().length > 120) {
@@ -39,4 +41,3 @@ var starRating = function(){
   });
 };
 starRating();
-

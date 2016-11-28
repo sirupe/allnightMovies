@@ -17,6 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
+import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.service.DBService;
 
@@ -30,8 +33,18 @@ public class MainController {
 	public ModelAndView controller() throws Exception {
 		ModelAndView mav = new ModelAndView("template");
 		List<MainMenu> list = this.service.getMenus();
+		List<MainPageEventDTO> mainEventDTO = this.service.getMainEvnetImg();		//상단 이벤트 이미지
+		int mainEventImg = mainEventDTO.size();
+		List<MovieCurrentFilmDTO> getNewFilmDTO = this.service.getNewFilmDTO();		//최신상영작 DTO
+		List<CinemaNoticeBoardDTO> mainNoticeDTO = this.service.getMainNoticeDTO();	//공지사항 DTO
 		mav.addObject("directory", "include");
 		mav.addObject("page", "mainPage");
+		mav.addObject("contentCSS", "mainPage");
+		mav.addObject("contentjs", "mainPage");
+		mav.addObject("mainEventImg", mainEventImg);
+		mav.addObject("mainEventDTO", mainEventDTO);
+		mav.addObject("NewFilmDTO", getNewFilmDTO);
+		mav.addObject("mainNoticeDTO",mainNoticeDTO);
 		mav.addObject("list", list);
 		
 		

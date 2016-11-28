@@ -11,8 +11,7 @@
 				<input class="boardwriteBoard js_boardContent" type="text" value="fds">
 				<input class="boardcheck js_boardCheck"  type="checkbox"><label>비밀글</label>
 			</div>
-
-
+			
 			<div class="questionBoard-sub">
 				<div class="questionBoard_subject">
 					<label class="boardSub">내용</label>

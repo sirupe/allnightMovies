@@ -89,12 +89,15 @@ public class Params {
 	private Integer pageboard; //자주묻는게시판 페이징
 	private Integer questionBoard; //문의사항게시판 페이징
 	
-	private Integer questionBoardNum;
+	private Integer questionBoardNum;//고객센터 게시글 번호
+	private String updateQuestionBoardNum; //문의사항 게시글번호
 	private String noticeSearachWord;
 // 문의 사항 게시판
 	private String insertTextArea; //내용
 	private String insertTitle; //제목
 	private Integer insertboardPWd; //비밀번호
 	private boolean insertPwdcheck; //비번체크여부
+	private Integer userInsertPwd; //확인비밀번호
+	
 
 }

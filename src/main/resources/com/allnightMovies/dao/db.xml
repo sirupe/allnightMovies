@@ -336,6 +336,24 @@
        	)
 
 	</select>
+	
+<!--문의사항게시판 수정 -->
+	<select id="completeUPdateWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		UPDATE 
+			CINEMA_ASKED_BOARD 
+			SET TITLE = #{param1}, 
+				CONTENT = #{param2}, 
+				WRITEPWD = #{param3}, 
+				ISPWD = #{param4} 
+			WHERE NO = #{param5}
+	</select>
+
+<!--문의사항게시판 삭제 -->
+	<select id="completeDeleteQuestionBoard" parameterType="java.lang.String" >
+		DELETE 
+			FROM CINEMA_ASKED_BOARD
+		WHERE NO = #{param1}
+	</select> 
 
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
@@ -509,6 +527,46 @@
 	<select id="getCinemaIntroImg" resultType="com.allnightMovies.model.data.theater.CinemaIntroduceDTO">
 		SELECT CINEMA_INTRO_IMAGE cinemaIntroImg
 		FROM CINEMA_INTRODUCE
+	</select>
+	
+<!-- MAIN PAGE -->	
+	<select id="getMainEvnetImg" resultType="com.allnightMovies.model.data.movieInfo.MainPageEventDTO">
+		SELECT MAIN_EVENT mainEventImg
+		FROM MAIN_PAGE
+	</select>
+	
+	<select id="getNewFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
+		SELECT * FROM (
+				SELECT MOVIE_TITLE  movieTitle,
+	                   MOVIE_POSTER moviePoster,
+	                   MOVIE_RELEASE_DATE,
+	                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+	                   ROWNUM RNUM
+				FROM (
+					SELECT *
+					FROM MOVIE_BASIC_INFO 
+					WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE 
+					ORDER BY MOVIE_TITLE ASC
+				    )
+				) 
+	      WHERE RNUM <![CDATA[<]]>= 4
+	</select>
+	
+	<select id="getMainNoticeDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
+		SELECT * FROM (
+			SELECT NO		  no, 
+			       TITLE	  title,
+			       writeDate, 
+			       CONTENT	  content,
+			       IMPORTANT  important,
+			       ROWNUM RNUM 
+			FROM (
+			         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
+			         FROM CINEMA_NOTICE_BOARD 
+			         ORDER BY IMPORTANT DESC, writeDate DESC
+			      )
+			)    
+		WHERE RNUM <![CDATA[<]]>= 10
 	</select>
 	
 </mapper>

@@ -14,6 +14,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
+import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -189,6 +190,14 @@ public class DBService {
 		return dbMapper.InsertAskWriteBoard(cinemaQuestionBoardDTO);
 	}
 	
+	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception {
+		return dbMapper.completeUPdateWriteBoard(title, content, writePwd, isPwd, no);
+	}
+	
+	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum) throws Exception {
+		return dbMapper.completeDeleteQuestionBoard(completeDeleteQuestionBoardNum);
+	}
+	
 	
 /** shin. SEARCH PWD **/ //TODO 연종
 	public Integer searchPWD(String searchPwdUserID)  {
@@ -251,5 +260,16 @@ public class DBService {
 /** shin. THEATER introduce **/
 	public List<CinemaIntroduceDTO> getCinemaIntroImg() {
 		return dbMapper.getCinemaIntroImg();
+	}
+	
+/** shin. MAIN eventImg**/
+	public List<MainPageEventDTO> getMainEvnetImg() {
+		return dbMapper.getMainEvnetImg();
+	}
+	public List<MovieCurrentFilmDTO> getNewFilmDTO() {
+		return dbMapper.getNewFilmDTO();
+	}
+	public List<CinemaNoticeBoardDTO> getMainNoticeDTO() {
+		return dbMapper.getMainNoticeDTO();
 	}
 }

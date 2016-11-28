@@ -454,7 +454,7 @@ public class AsyncService implements AsyncAction {
    
    /*******수진. 문의사항 글등록 *******/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public AsyncResult InsertAskWriteBoard() throws Exception {
+	public AsyncResult<String> InsertAskWriteBoard() throws Exception {
 		AsyncResult asyncResult = new AsyncResult<String>();
 		
 		String title     = this.params.getInsertTitle();
@@ -476,57 +476,20 @@ public class AsyncService implements AsyncAction {
 		System.out.println("비밀번호 : " + writePwd);
 		System.out.println("여부 : " + isPwd);
 		System.out.println("아이디 : " + user_Id);
-		
-		
+
 		if(title == "" && content == "") {
 			isResult = false;
-			result = "글 모두 써주세요";
-		} else if(isPwd == 1 && writePwd == 0) {
+		}
+		if(isPwd == 1 && writePwd == 0) {
 			isResult = false;
-			result ="비밀번호 입력 바랍니다.";
-		} else {
-			isResult = true;
-			result = "/movie/mainService/InsertAskWriteBoard";//목록으로 가기..?
 		}
-
+		if(isResult) {
+			result = "/movie/mainService/InsertAskWriteBoard";
+		}
 		asyncResult.setData(result);
 		return asyncResult;
 		
 	}
-	
-	/***수진 문의사항 글보기***/
-	public AsyncResult<String> questionViewBoard() throws Exception {
-		String result = "";
-		System.out.println("들어와?");
-		Integer questionBoardNum = this.params.getQuestionBoardNum();
-		System.out.println("문의사항 글보기 : " + questionBoardNum);
 
-		
-		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
-		System.out.println(questionBoardList.getTitle() + " : 정보들");
-		System.out.println(questionBoardList.getWritePwd() + ": 번호");
-		
-		HttpSession session = this.params.getSession();
-		String LoginUserID = (String)session.getAttribute("userID");
-		
-		System.out.println("로그인한 유저아이디 (문의사항에서 글보기에서뽑고있음.) serviceCenter : " + LoginUserID);
-		System.out.println(questionBoardList.getUser_Id() + " : 너가쓴거야 .");
-		System.out.println(questionBoardList.getIsPwd() + " : 비밀글인가아닌가.");
-		
-		
-		if(questionBoardList.getIsPwd() == 1) {
-			result = "/movie/mainService/reCheckPwdWriteForm"; //d비밀글이니깐 비번입력해.
-		} else {
-			result = "/movie/mainService/questionViewBoard";
-		}
-		
-		//ModelAndView mav = new ModelAndView("service/include/questionViewBoard");
-		
-		AsyncResult<String> asyncResult = new AsyncResult<String>();
-		asyncResult.setData(result);
-		return asyncResult;
-	}
-
-   
 }
    

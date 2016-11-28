@@ -194,11 +194,11 @@ body {
 }
 
 .footer {
-    flex-basis: 150px;
+    flex-basis: 90px;
     font-family: 'Jeju Gothic', serif; 
     background-color: rgba(232, 159, 161, 0.13);
     color: #716263;
-    padding: 20px;
+    padding: 40px;
 }
 
 .header__logon {
@@ -359,4 +359,9 @@ body {
     box-shadow: 2px 2px 2px 0 rgba(12,102,137,0.2) inset;
     text-shadow: 1px 1px 0 rgba(255,255,255,0.66);
     transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.test {
+	height: 1000px;
+	
 }

@@ -22,7 +22,8 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -43,6 +44,7 @@ import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
+
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -256,15 +258,27 @@ public class MainService implements Action {
 	
 	public ModelAndView seatInfo() {
 		ModelAndView mav = new ModelAndView("reservation/ticketing/seatInfo");
-		
 		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
-		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
+		String movieTitle = this.params.getMovieTitle();
+		int theater = this.params.getTheater();
+		String strTheater = String.valueOf(theater);
+		// 이미 예약되어있는 좌석 정보
+		CinemaSeatReserveInfo seatReserveInfo = new CinemaSeatReserveInfo();
+		seatReserveInfo.setMovieTitle(movieTitle)
+					   .setTheater(theater)
+					   .setMovieScreeningDate(screeningDateTime);
 		
-		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, String.valueOf(this.params.getTheater()));
+		List<String> reserveSeatInfo = this.dbService.reservationSeatInfo(seatReserveInfo); // seatInfoList에 보냈으므로 ...
+		List<CinemaSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(seatReserveInfo);
+		int colCnt = this.dbService.getTheaterSeatColCnt(strTheater);
+		colCnt = theater == 1 ? colCnt + 1 : colCnt;
+
 		
-		
-		mav.addObject("seatList", seatInfoList);
+		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, strTheater);
+
 		mav.addObject("moviePrice", moviePrice);
+		mav.addObject("seatInfoList", seatInfoList);
+		mav.addObject("colCnt", colCnt);
 		return mav;
 	}
 	

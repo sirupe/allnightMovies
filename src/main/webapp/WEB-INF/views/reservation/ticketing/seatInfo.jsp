@@ -20,47 +20,39 @@
 </div>
 <div class="theater-seat__container">
 	<div class="theater-seat__screen">screen</div>
-	<table class="js_theaterSeatTable  theater-seat__seat-info  margin-auto">
-		<tr class="theater-seat__seat-info__tr  theater-seat__screen"></tr>
-		<c:forEach items="${seatList }" var="seatInfo">
-			
-			<tr class="theater-seat__seat-info__tr">
-				<th class="theater-seat__seat-info__th">${seatInfo.theaterSeatRow }</th>
-				
-				
-				
-				<fmt:parseNumber value="${seatInfo.theaterSeatColStart }" type="Number" var="start"/>
-				<fmt:parseNumber value="${seatInfo.theaterSeatColEnd}" type="Number" var="end"/>
-				
-				<c:forEach begin="1" end="${end}" varStatus="status">
-					<c:choose>
-						<c:when test="${status.count < start }">
-							<td></td>
-						</c:when>
-						<c:otherwise>
-							<td class="js_seatNum  theater-seat__seat-info__td  theater-seat__seat-info__td__color" 
-								data-seatNum="${seatInfo.theaterSeatRow}${status.index}">
-								
-								${status.index}
-							
-							</td>
-						</c:otherwise>
-					</c:choose>
-					<c:if test="${seatInfo.theater == 1 }">
-						<c:choose>
-							<c:when test="${seatInfo.theaterWayInfo == status.index}">
-								<td class="theater-seat__seat-info__td"></td>
-							</c:when>
-						</c:choose>
-					</c:if>
-				</c:forEach>
-				
-			</tr>
-			<c:if test="${seatInfo.theaterWayInfo == seatInfo.theaterSeatRow }">
-				<tr class="theater-seat__seat-info__tr"></tr>
+	<div class="js_theaterSeatTable theater-seat__seat-info">
+		<c:forEach items="${seatInfoList}" var="seatInfo" varStatus="status">
+			<%-- o${seatInfo.seatRow }o --%>
+			<c:if test="${status.count % colCnt == 1 }">
+				<div class="theater-seat__seat-info__th">${seatInfo.seatRow }</div>		
 			</c:if>
+			
+	
+			<c:choose>
+				<c:when test="${seatInfo.status == 0 }">
+					<div class="theater-seat__seat-info__td">${seatInfo.seatCol}</div>
+				</c:when>
+			
+				<c:when test="${seatInfo.name == seatInfo.theaterSeat}">
+					<div class="theater-seat__seat-info__td theater-seat__seat-info__td-impossible">
+						<span>${seatInfo.seatCol}</span>
+					</div>
+				</c:when>
+			
+				<c:otherwise>
+					<div class="js_seatNum theater-seat__seat-info__td theater-seat__seat-info__td__color" data-seatNum="${seatInfo.name }">
+						<span>${seatInfo.seatCol}</span>
+					</div>		
+				</c:otherwise>
+			</c:choose>
+			
+	
+			<c:if test="${status.count % colCnt == 0 }">
+				<br>
+			</c:if>
+		
 		</c:forEach>
-	</table>
+	</div>
 </div>
 
 <button type="button" class="js_letTicketingBtn  theater-seat__ticketing-btn  font-family">

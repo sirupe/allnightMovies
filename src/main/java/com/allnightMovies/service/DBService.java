@@ -12,7 +12,8 @@ import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -33,6 +34,54 @@ public class DBService {
 	
 	@Autowired
 	DBMapper dbMapper;
+	
+	
+//	public void doTestInsert() throws Throwable{
+//		
+//		System.out.println("init");
+//		
+//		List<CinemaSeatDTO> insertList = Lists.newArrayList();
+//		
+//		List<String> rowList = Arrays.asList(new String [] {
+//				"A", "B", "C", "D",  "E","Z","F", "G", "H", "I","J"
+//		});
+//		
+//		for(int i = 0; i < rowList.size(); i++) {
+//			String rows = rowList.get(i);
+//			
+//			for(int j = 0, col = 1; j < 11; j++) {
+//				CinemaSeatDTO dto = new CinemaSeatDTO();
+//				if(rows.equals("Z")) {
+//					dto
+//					.setTheater("3")
+//					.setRow("")
+//					.setCol("")
+//					.setName("")
+//					.setStatus(0);
+//
+//				} else {
+//						dto
+//						.setTheater("3")
+//						.setRow(rows)
+//						.setCol(col + "")
+//						.setName(rows + col)
+//						.setStatus(1);
+//						col++;
+//					}
+//				
+//				
+//				insertList.add(dto);
+//			}
+//			
+//		}
+//		
+//		for(CinemaSeatDTO dto : insertList) {
+//			System.out.println(dto.toString());
+//			this.dbMapper.doTestInsert(dto);
+//		}
+//		
+//	}
+//	
 /** ji. Menu Loading **/
 	public List<MainMenu> getMenus() throws Exception {
 		return dbMapper.getMenus();
@@ -65,10 +114,6 @@ public class DBService {
 	public List<TicketingMovieTimeInfo> getMovieTime(String movieTitle, String date) {
 		return dbMapper.getMovieTime(movieTitle, date);
 	}
-	
-	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater) {
-		return dbMapper.getTheaterSeatInfo(theater);
-	}
 
 	public Integer getTicketPriceInfo(String screeningDate, String theater) {
 		return dbMapper.getTicketPriceInfo(screeningDate, theater);
@@ -84,6 +129,18 @@ public class DBService {
 	
 	public Integer userTicketingInfoInsert(UserTicketingInfo ticketingInfo) {
 		return dbMapper.userTicketingInfoInsert(ticketingInfo);
+	}
+	
+	public List<String> reservationSeatInfo(CinemaSeatReserveInfo seatReserveInfo) {
+		return dbMapper.reservationSeatInfo(seatReserveInfo);
+	}
+	
+	public List<CinemaSeatDTO> getTheaterSeatInfo(CinemaSeatReserveInfo reserveInfo) {
+		return dbMapper.getTheaterSeatInfo(reserveInfo);
+	}
+	
+	public Integer getTheaterSeatColCnt(String theater) {
+		return dbMapper.getTheaterSeatColCnt(theater);
 	}
 	
 /** jung. 상영시간표 **/ //TODO 수진

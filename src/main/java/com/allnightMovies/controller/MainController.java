@@ -33,6 +33,17 @@ public class MainController {
 		mav.addObject("directory", "include");
 		mav.addObject("page", "mainPage");
 		mav.addObject("list", list);
+		
+		
+//		
+//		try {
+//			this.service.doTestInsert();
+//		} catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+		
 		return mav;
 	}
 	

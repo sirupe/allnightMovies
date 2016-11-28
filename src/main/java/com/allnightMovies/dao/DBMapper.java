@@ -63,7 +63,11 @@ public interface DBMapper {
 /**고객센터--자주묻는질문**/
 	public List<CinemaFrequentlyBoardDTO> serviceCenter() throws Exception;
 	public ArrayList<CinemaFrequentlyBoardDTO> serviceCentergetBoard(int startPageNum, int endPageNum) throws Exception;
+	
+	public List<CinemaFrequentlyBoardDTO> getUserSearchList(int searchStartNum, int searchEndNum, String serviceCenterSearchWord);
+	
 	public Integer serviceCentergetBoardCount() throws Exception;
+	public Integer userSearchList(String serviceCenterSearchWord);
 	
 /**고객센터 문의사항게시판 **/
 	public Integer questionBoardCount() throws Exception;
@@ -72,6 +76,7 @@ public interface DBMapper {
 	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception;
 	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception;
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum);
+	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);

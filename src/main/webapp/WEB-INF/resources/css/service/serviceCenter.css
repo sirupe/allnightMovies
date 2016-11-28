@@ -68,6 +68,10 @@ ul.serviceCenter_Tab li {
     letter-spacing: 36px;
 }
 
+.serviceCenterFrequenty__pageButton--active {
+	color:blue;
+}
+
 .js_service_List .js_sub {
     padding: 10px;
     cursor: pointer;
@@ -119,6 +123,13 @@ ul.serviceCenter_Tab li {
 }
 
 /*문의게시판*/
+label.js_questionBoard_title:hover {
+    color: #bd8e8e;
+    /* font-weight: 900; */
+}
+label.js_questionBoard_title {
+    color: #2b2b33;
+}
 .questionBoard_container {
     disflex: flex;
     margin: 0px 0px 10px 40px;
@@ -173,12 +184,49 @@ ul.serviceCenter_Tab li {
     font-size: 15px;
     cursor: pointer;
 }
+
+.serviceCenterFrequenty__pageButton--active {
+	color: orange;
+}
+/*********수정폼************/
+.questionBoardUpdateForm.js_questionBoardUpdateWriteContainer.font {
+    margin: 25px;
+}
+
+.questionUpdateBoard-content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 22px;
+}
+
 /**************글등록창 ******/
+.questionBoard-pwd {
+    padding-top: 50px;
+}
+
+.questionBoardWriteForm.js_questionBoardWriteContainer.font {
+    margin: 19px;
+}
+
+
+label.questionBoardWrite_title {
+	font-size:30px;
+}
+
+.questionBoard-info {
+    margin-top: 14px;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+label.questionBoardView_content {
+	font-size: 23px;
+}
+
 .questionBoard_content {
 	font-size: 20px;
 }
 .questionBoard-content {
-    text-align: center;
    	margin: 10px 0px 15px 0px;
 }
 
@@ -190,8 +238,18 @@ ul.serviceCenter_Tab li {
     margin-bottom: 10px;
 }
 
-textarea.boardTextarea,
+
 textarea.boardViewTextarea {
+	border:none;
+    width: 700px;
+    height: 320px;
+    font-size: 18px;
+    resize: none;
+    font-family: 'Jeju Gothic', serif;
+    margin: 1px 0px 10px 5px;
+}
+
+textarea.boardTextarea {
     width: 700px;
     height: 320px;
     font-size: 18px;
@@ -250,9 +308,22 @@ ul,li {
 }
 
 /*마지막 검토하면서 추가한것*/
+/*문의게시판 페이징*/
 .questionBoard_bottom {
-	text-align: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 36px;
 }
+
+.questionBoard_bottom--active {
+	color:orange;
+	font-weight: bold;
+}
+
+
+
 .questionBoard {
 	margin-left: 40px;
 }
@@ -260,6 +331,7 @@ ul,li {
 .questionBoard_subject,
 .questionBoardView_subject {
     display: flex;
+    height: 300px;
 }
 
 <!---->
@@ -335,13 +407,14 @@ input.boardViewwriteBoard {
     outline: none;
     margin-left: 22px;
     height: 30px;
-    width: 334px;
+       width: 265px;
+       border : none;
      font-family: 'Jeju Gothic', serif;
          font-size: 18px;
 }
 
 label.boardViewwriteDate {
-    margin-left: 18px;
+    margin-left: 71px;
 }
 
 input.boardwriteBoardViewinput {
@@ -384,3 +457,139 @@ label.boardViewSub {
 label.boardViewwriteDate {
     margin-left: 18px;
 } 
+
+
+/*수정폼*/
+
+.questionUpdateBoardView-detail {
+    margin-bottom: 14px;
+}
+
+
+input.UpdateboardwriteBoardViewinput {
+    outline: none;
+    margin-left: 14px;
+     height: 30px;
+      font-family: 'Jeju Gothic', serif;
+          font-size: 18px;
+}
+
+
+label.UpdateboardViewtitle {
+    font-size: 20px;
+}
+
+input.UpdateboardViewwriteBoard {
+    outline: none;
+    margin-left: 22px;
+    height: 30px;
+       width: 265px;
+       border : none;
+     font-family: 'Jeju Gothic', serif;
+         font-size: 18px;
+}
+
+label.UpdateboardViewwriteDate {
+    margin-left: 18px;
+}
+
+input.UpdateboardwriteBoardViewinput {
+    margin-left: 7px;
+     height: 30px;
+      font-family: 'Jeju Gothic', serif;
+          font-size: 18px;
+          border: none;
+}
+
+.questionUpdateBoardView-title {
+    margin-bottom: 14px;
+}
+
+label.UpdateboardViewwriter {
+    font-size: 20px;
+}
+
+textarea.UpdateboardViewTextarea.js_UpdateBoardTextArea {
+    width: 500px;
+    height: 200px;
+}
+
+input.UpdateboardwriteBoardPwd.js_UpdateboardWriteBoardPwd {
+    height: 25px;
+}
+
+.questionUpdateBoardView_subject {
+    display: flex;
+    padding-bottom: 17px;
+}
+
+.questionUpdateBoard {
+    /* margin: 10px; */
+    padding-left: 20px;
+}
+
+label.UpdateboardViewSub {
+    padding-right: 24px;
+    font-size: 20px;
+}
+
+.questionBoardView-detail {
+    margin-bottom: 14px;
+
+
+    width: 700px;
+    font-size: 18px;
+    resize: none;
+    font-family: 'Jeju Gothic', serif;
+    margin: 1px 0px 10px 5px;
+    margin-left: 27px;
+}
+
+label.boardViewwriteDate {
+    margin-left: 18px;
+} 
+
+
+button.serviceCenter_updateWriteBoardInsert,
+button.serviceCenter_updateWriteBoardDelete {
+    background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 60px;
+    padding: 6px 10px;
+    font-size: 18px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+label.UpdateboardViewSub {
+    padding-right: 37px;
+    font-size: 20px;
+}
+
+.serviceCenter_viewForm {
+    padding-top: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.point {
+	cursor: pointer;
+}

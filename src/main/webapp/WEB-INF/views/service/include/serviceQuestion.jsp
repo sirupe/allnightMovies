@@ -58,12 +58,12 @@
 			<c:forEach begin="${questionBoardGroup.viewStartPageNum }" end="${questionBoardGroup.viewEndPageNum }" var="page">
 				<span>
 					<c:choose>
-						<c:when test="${checkPage == questionBoardGroup.userClickPageNum }">
-							[<label class="js_currentQuestionPage">${page }</label>]
+						<c:when test="${checkPage == page }">
+							<label class="questionBoard_bottom--active js_currentQuestionPage">${page }</label>
 						</c:when>	
 						
 						<c:otherwise>
-							[<label class="js_QuestionPagingNumber">${page }</label>]
+							<label class="js_QuestionPagingNumber">${page }</label>
 						</c:otherwise>
 					</c:choose>
 				</span>

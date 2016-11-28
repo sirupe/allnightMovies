@@ -10,7 +10,9 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -114,4 +116,7 @@ public interface DBMapper {
 	public List<MainPageEventDTO> getMainEvnetImg();
 	public List<MovieCurrentFilmDTO> getNewFilmDTO();
 	public List<CinemaNoticeBoardDTO> getMainNoticeDTO();
+	
+	public MovieBasicInfo getMovieBasicInfo(String movieTitle);
+	public List<MovieReviewBoard> getReviewBoard(String movieTitle);
 }

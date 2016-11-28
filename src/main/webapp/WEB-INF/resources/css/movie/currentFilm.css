@@ -41,17 +41,18 @@
     opacity: 0.9;
 }
 .hiddenText {
-    font-family: 'Jeju Gothic', serif;
-    cursor: pointer;
     position: absolute;
-    margin: 150px 46px;
-    color: #d7cdac;
-    font-size: 24px;
     width: 110px;
-    border-radius: 7px;
-    border: 1px solid #d7cdac;
+    cursor: pointer;
+    margin: 150px 46px;
     padding: 15px 10px 10px 30px;
     opacity: 0;
+    color: #d7cdac;
+    border-radius: 7px;
+    border: 1px solid #d7cdac;
+    text-decoration: none;
+    font-size: 24px;
+    font-family: 'Jeju Gothic', serif;
 }
 
 /*비디오 */

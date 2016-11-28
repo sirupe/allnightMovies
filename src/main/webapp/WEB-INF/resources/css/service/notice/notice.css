@@ -115,7 +115,9 @@ a{
 	cursor: pointer;
 	color: #313131;
 }
-
+.paging_current {
+	color: tomato;
+}
 .bold:hover {
 	color: #a8a8a8;
 	font-weight: bold;

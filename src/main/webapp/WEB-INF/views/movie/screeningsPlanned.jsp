@@ -18,7 +18,7 @@
 				<c:when test="${filmNum.count % 3 != 0}">
 					<span class="screeningsPlanned-posters__info">
 						<span class="screeningsPlanned-posters__image" style="background-image: url('/../resources/img/poster/${ScreeningsPlannedDTO.moviePoster }');">
-							<label class="hiddenText">상세보기</label>
+							<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${ScreeningsPlannedDTO.movieTitle}">상세보기</a>
 						</span>
 						<span class="screeningsPlanned-posters__title">
 							<label class="ageLimit${ScreeningsPlannedDTO.movieAgeLimit }">${ScreeningsPlannedDTO.movieAgeLimit }</label>
@@ -29,7 +29,7 @@
 				<c:otherwise>
 					<span class="screeningsPlanned-posters__info">
 						<span class="screeningsPlanned-posters__image" style="background-image: url('/../resources/img/poster/${ScreeningsPlannedDTO.moviePoster }');">
-							<label class="hiddenText">상세보기</label>
+							<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${ScreeningsPlannedDTO.movieTitle}">상세보기</a>
 						</span>
 						<span class="screeningsPlanned-posters__title">
 							<label class="ageLimit${ScreeningsPlannedDTO.movieAgeLimit }">${ScreeningsPlannedDTO.movieAgeLimit }</label>

@@ -53,11 +53,10 @@ public class Params {
 	private String myInfoPresentPwd;
 	private String myInfoNewPwd;
 	private String myInfoNewPwdCheck;
+	
 // 이메일 변경 ------------------------------------------------------------------
 	private String myInfoChageEmail;
 	private String myInfoEmailConfirmNum;
-
-	
 
 // 회원탈퇴 	------------------------------------------------------------------
 	private String withdrawUserPwd;
@@ -88,16 +87,18 @@ public class Params {
 // 고객센터 게시판
 	private Integer pageboard; //자주묻는게시판 페이징
 	private Integer questionBoard; //문의사항게시판 페이징
-	
-	private Integer questionBoardNum;
+	private Integer questionBoardNum;//고객센터 게시글 번호
+	private String serviceCenterSearchWord;
 	private String noticeSearachWord;
-
+	private String updateQuestionBoardNum; //문의사항 게시글번호
+	
 // 문의 사항 게시판
 	private String insertTextArea; //내용
 	private String insertTitle; //제목
 	private Integer insertboardPWd; //비밀번호
 	private boolean insertPwdcheck; //비번체크여부
-
+	private Integer userInsertPwd; //확인비밀번호
+	
 //영화 상세보기
 	private String movieInfoTitle;
 }

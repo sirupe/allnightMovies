@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
@@ -23,6 +24,7 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
+import com.sun.corba.se.impl.presentation.rmi.ExceptionHandlerImpl;
 
 
 public interface DBMapper {
@@ -59,13 +61,19 @@ public interface DBMapper {
 /**고객센터--자주묻는질문**/
 	public List<CinemaFrequentlyBoardDTO> serviceCenter() throws Exception;
 	public ArrayList<CinemaFrequentlyBoardDTO> serviceCentergetBoard(int startPageNum, int endPageNum) throws Exception;
+	
+	public List<CinemaFrequentlyBoardDTO> getUserSearchList(int searchStartNum, int searchEndNum, String serviceCenterSearchWord);
+	
 	public Integer serviceCentergetBoardCount() throws Exception;
+	public Integer userSearchList(String serviceCenterSearchWord);
 	
 /**고객센터 문의사항게시판 **/
 	public Integer questionBoardCount() throws Exception;
 	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception;
 	public CinemaQuestionBoardDTO questionBoardList(Integer no) throws Exception;
 	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception;
+	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception;
+	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum);
 	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);

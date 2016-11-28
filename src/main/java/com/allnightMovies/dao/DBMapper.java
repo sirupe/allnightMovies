@@ -1,15 +1,14 @@
 package com.allnightMovies.dao;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -23,10 +22,11 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
-import com.sun.corba.se.impl.presentation.rmi.ExceptionHandlerImpl;
 
 
 public interface DBMapper {
+	public void doTestInsert(CinemaSeatDTO dto) throws Throwable;
+	
 /** ji. Menu Loading **/
 	public List<MainMenu> getMenus() throws Exception;
 
@@ -41,11 +41,14 @@ public interface DBMapper {
 	public MovieScreeningDateInfo getMaxScreeningDate();
 	public List<TicketingMovieTitleInfo> getMovieTitle();
 	public List<TicketingMovieTimeInfo> getMovieTime(String movieTitle, String date);
-	public List<CinemaTheaterSeatDTO> getTheaterSeatInfo(int theater);
 	public Integer getTicketPriceInfo(String screeningDate, String theater);
 	public String getMoviePoster(String title);
 	public Integer checkEmptySeats(UserCheckEmptySeatsDTO checkEmptyDTO);
 	public Integer userTicketingInfoInsert(UserTicketingInfo ticketingInfo);
+	public List<String> reservationSeatInfo(CinemaSeatReserveInfo seatReserveInfo);
+	public List<CinemaSeatDTO> getTheaterSeatInfo(CinemaSeatReserveInfo reserveInfo);
+	public Integer getTheaterSeatColCnt(String theater);
+	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	

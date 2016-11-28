@@ -323,16 +323,32 @@ function completeUpdateQuestionBoard() {
 	userClickNum = $('.js_boardViewNo').attr('data-userClickNum');
 	
 	console.log(userClickNum);
-	var isResult        = true;
+	var isResult         = true;
 	 
-		$insertTitle    = $('.js_UpdateboardContent'); //제목
-	    $insertTextArea = $('.js_UpdateBoardTextArea'); //내용
-	    $insertboardPwd = $('.js_UpdateboardWriteBoardPwd'); //비밀번호
+		$insertTitle     =  $('.js_UpdateboardContent'); //제목
+	    $insertTextArea  = $('.js_UpdateBoardTextArea'); //내용
+	    $insertboardPwd  = $('.js_UpdateboardWriteBoardPwd'); //비밀번호
+	    $insertUser_id  = $('.js_UpdateboardUserId');
+	    $insertWriteDate = $('.js_UpdateboardWriteDate');
+	    
+	    
 	    
 	    insertPwdcheck  = $(".js_UpdateboardCheck").is(":checked"); //비밀번호체크여부
 	    insertTitle     = $('.js_UpdateboardContent').val(); 
 	    insertTextArea  = $('.js_UpdateBoardTextArea').val();
 	    insertboardPWd  = $('.js_UpdateboardWriteBoardPwd').val(); //비
+	    insertUser_id  = $('.js_UpdateboardUserId').val();
+	    insertWriteDate = $('.js_UpdateboardWriteDate').val();
+	    
+	    
+	    
+	    console.log(insertPwdcheck);
+	    console.log(insertTitle);
+	    console.log(insertTextArea);
+	    console.log(insertboardPWd);
+	    console.log(insertUser_id);
+	    console.log(insertWriteDate);
+	    
 	    
 	    url    = '/movie/mainService/completeUPdateWriteBoard';
 	    params = {
@@ -340,8 +356,11 @@ function completeUpdateQuestionBoard() {
 	    		'insertTitle'            : insertTitle,
 	    		'insertTextArea'         : insertTextArea,
 	    		'insertboardPWd'         : insertboardPWd,
-	    		'insertPwdcheck'         : insertPwdcheck,		
+	    		'insertPwdcheck'         : insertPwdcheck	
+	    		//'insertUser_id'          : insertUser_id,
+	    		//'insertWriteDate'        : insertWriteDate
 	    	};
+	    
 	    cbf    = function(mav) {
 	    	if(isResult) {
 	    		alert('글수정 성공');

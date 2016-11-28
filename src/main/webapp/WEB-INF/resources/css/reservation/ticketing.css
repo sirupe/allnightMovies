@@ -217,15 +217,18 @@
 
 /* seat info table */
 .theater-seat__seat-info {
-    border-spacing: 5px;
+	padding: 30px;
 }
 
 
 .theater-seat__seat-info__td {
     width: 15px;
     text-align: center;
-    padding: 4px;
+    padding: 5px 4px;
     font-size: smaller;
+    display: inline-block;
+    margin-bottom: 5px;
+    border-radius: 4px;
 }
 
 .theater-seat__seat-info__td__color {
@@ -233,10 +236,22 @@
     color: brown;	
 }
 
+.theater-seat__seat-info__td-impossible {
+    background-color: lightgray;
+    color: white;
+}
+
 .theater-seat__seat-info__tr {
     height: 22px;
 }
 
+.theater-seat__seat-info__th {
+    padding-right: 10px;
+    color: #c0716b;
+	text-align: center;
+    display: inline-block;
+    width: 20px;
+}
 .theater-seat__count__price {
     padding-left: 40px;
     flex-Grow: 1;
@@ -251,11 +266,6 @@
 }
 
 
-.theater-seat__seat-info__th {
-    padding-right: 10px;
-    color: #c0716b;
-	text-align: center;
-}
 
 .theater-seat__seat-info__td__color:hover {
     background-color: #cb7575;

@@ -101,6 +101,8 @@ public class Params {
 	private Integer insertboardPWd; //비밀번호
 	private boolean insertPwdcheck; //비번체크여부
 	private Integer userInsertPwd; //확인비밀번호
+	private String insertUser_id;
+	private String insertWriteDate;
 	
 
 }

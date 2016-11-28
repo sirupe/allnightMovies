@@ -3,11 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="div-myinfo js_myInfoContainer">
 	<div class="div-myinfo__title">
-	   <span class="tab-myinfo__title"><a>내정보</a></span>
-	   <span class="tab-reservationInfo__title"><a>예약정보</a></span>
-   </div>  
+	   <span class="js_myInfoTitleClick tab-myinfo__title"><a>내정보</a></span>
+	   <span class="js_reserveInfoTitleClick tab-reservationInfo__title"><a>예매정보</a></span>
+	</div>  
    <div class="div-myinfo__content">
-      <span>
+<%--       <span>
          <label class="label-myinfo__content__id">아이디</label>
          <input id="myinfo-id" name ="myInfoID" value="${myInfoList.getUserID() }" class="text-myinfo__content" type="text" readonly="readonly">
       </span>
@@ -32,6 +32,8 @@
          <button class="button-myinfo-change-email js_myInfo_changeEmailBtn">이메일 변경</button>
          <button class="button-myinfo-change-pwd js_myInfo_changePwdBtn">비밀번호 변경</button>
          <button class="button-myinfo-change-withdraw js_myInfo_withdrawBtn">회원탈퇴</button>
-      </span>
+      </span>  --%>
+      
+      <jsp:include page="./ticketConfirmation/ticketInfoView.jsp"></jsp:include>
    </div>
 </div>

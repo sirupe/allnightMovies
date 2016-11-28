@@ -27,7 +27,8 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaTheaterSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
@@ -48,6 +49,7 @@ import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
+
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -261,15 +263,27 @@ public class MainService implements Action {
 	
 	public ModelAndView seatInfo() {
 		ModelAndView mav = new ModelAndView("reservation/ticketing/seatInfo");
-		
 		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
-		List<CinemaTheaterSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(this.params.getTheater());
+		String movieTitle = this.params.getMovieTitle();
+		int theater = this.params.getTheater();
+		String strTheater = String.valueOf(theater);
+		// 이미 예약되어있는 좌석 정보
+		CinemaSeatReserveInfo seatReserveInfo = new CinemaSeatReserveInfo();
+		seatReserveInfo.setMovieTitle(movieTitle)
+					   .setTheater(theater)
+					   .setMovieScreeningDate(screeningDateTime);
 		
-		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, String.valueOf(this.params.getTheater()));
+		List<String> reserveSeatInfo = this.dbService.reservationSeatInfo(seatReserveInfo); // seatInfoList에 보냈으므로 ...
+		List<CinemaSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(seatReserveInfo);
+		int colCnt = this.dbService.getTheaterSeatColCnt(strTheater);
+		colCnt = theater == 1 ? colCnt + 1 : colCnt;
+
 		
-		
-		mav.addObject("seatList", seatInfoList);
+		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, strTheater);
+
 		mav.addObject("moviePrice", moviePrice);
+		mav.addObject("seatInfoList", seatInfoList);
+		mav.addObject("colCnt", colCnt);
 		return mav;
 	}
 	
@@ -531,7 +545,6 @@ public class MainService implements Action {
 		Paging boardPaging = new Paging(totBoardList, 7, 1, 4); //들어왔을때 page값 기본적으로 1 주기
 		boardPaging.setBoardPaging();
 		
-		System.out.println();
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
@@ -581,8 +594,6 @@ public class MainService implements Action {
 		
 		List<CinemaFrequentlyBoardDTO> boardPage = this.dbService.getUserSearchList(cinemaFrequentlyBoardNumberDTO.getSearchStartNum(), cinemaFrequentlyBoardNumberDTO.getSearchEndNum(), cinemaFrequentlyBoardNumberDTO.getServiceCenterSearchWord());
 
-		System.out.println(boardPage + " :");
-		
 		
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage",boardPage);
@@ -598,16 +609,10 @@ public class MainService implements Action {
 	public ModelAndView getUserSearhPage() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
 		
-		System.out.println("2. 검색 페이지 ");
 		
 		String serviceCenterSearchWord = this.params.getServiceCenterSearchWord();
 		
-		System.out.println("2. 검색 페이지단어 :" +serviceCenterSearchWord);
-		
 		int countlist = this.dbService.userSearchList("%"+serviceCenterSearchWord+"%");
-		
-		System.out.println("2. 검색 페이지 " + countlist);
-		System.out.println();
 		
 		int page = this.params.getPageboard();
 		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
@@ -689,18 +694,11 @@ public class MainService implements Action {
 /***수진 문의사항 글보기***/
 	public ModelAndView questionViewBoard() throws Exception {
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
-
-		
 		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
-		
-		System.out.println(questionBoardList.getTitle() + " : 정보들");
-		System.out.println(questionBoardList.getWritePwd() + ": 번호");
 		
 		HttpSession session = this.params.getSession();
 		String LoginUserID = (String)session.getAttribute("userID");
 		
-		System.out.println("로그인한 유저아이디 (문의사항에서 글보기에서뽑고있음.) serviceCenter : " + LoginUserID);
-
 		String isUserRight = questionBoardList.getUser_Id();
 		
 		String result = "";
@@ -740,7 +738,6 @@ public class MainService implements Action {
 		HttpSession session = this.params.getSession();
 		String user_Id = (String)session.getAttribute("userID");
  
-		
 		if(title == "" && content == "") {
 			isResult = false;
 		}
@@ -783,19 +780,34 @@ public class MainService implements Action {
 	
 	//수정 완전 완료
 	public ModelAndView completeUPdateWriteBoard() throws Exception {
-		String no        = this.params.getUpdateQuestionBoardNum();
-		String title     = this.params.getInsertTitle();
-		String content   = this.params.getInsertTextArea();
-		int writePwd     = this.params.getInsertboardPWd() == null ? 0 : this.params.getInsertboardPWd();
-		int isPwd        = this.params.isInsertPwdcheck() == true ? 1 : 0;
+		
+		String no            = this.params.getUpdateQuestionBoardNum();
+		String title         = this.params.getInsertTitle();
+		String content       = this.params.getInsertTextArea();
+		//String user_Id       = this.params.getInsertUser_id();
+		//String write_date    = this.params.getInsertWriteDate();
+		int writePwd         = this.params.getInsertboardPWd() == null ? 0 : this.params.getInsertboardPWd();
+		int isPwd            = this.params.isInsertPwdcheck() == true ? 1 : 0;
 		
 		System.out.println();
+		
+		int questionBoard = this.params.getQuestionBoard();
+		System.out.println(questionBoard + " :?");
+		int totQuestionBoardCount = this.dbService.questionBoardCount();
+		Paging questionBoardPaging = new Paging(totQuestionBoardCount,7, 1, 4);
+		questionBoardPaging.setBoardPaging();
+		
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		
 		System.out.println("_______수정완료________");
 		System.out.println("수정 사항번호 : " + no);
 		System.out.println("제목 : " + title);
 		System.out.println("내용 : " + content);
 		System.out.println("비밀번호 : " + writePwd);
 		System.out.println("여부 : " + isPwd);
+		//System.out.println(user_Id);
+		//System.out.println(write_date);
 		
 		boolean isResult = true;
 		
@@ -812,10 +824,18 @@ public class MainService implements Action {
 			cinemaQuestionBoardDTO.setWritePwd(writePwd);
 			cinemaQuestionBoardDTO.setIsPwd(isPwd);
 			cinemaQuestionBoardDTO.setNo(no);
+			//cinemaQuestionBoardDTO.setWrite_date(write_date);
+			//cinemaQuestionBoardDTO.setUser_Id(user_Id);
 		}
+		this.dbService.completeUPdateWriteBoard(title, content, writePwd, isPwd, no);
 		ModelAndView mav = new ModelAndView("service/include/serviceQuestion");
+		
+		mav.addObject("questionBoardGroup", questionBoardPaging);
+		mav.addObject("checkPage", questionBoard);
+		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
+		mav.addObject("questionBoardGroup", questionBoardPaging);
+		mav.addObject("loginUserId",LoginUserID);
 	
-		this.dbService.InsertAskWriteBoard(cinemaQuestionBoardDTO);
 	
 		return mav;
 	}
@@ -832,7 +852,6 @@ public class MainService implements Action {
 		String user_Id = (String)session.getAttribute("userID");
 //		
 		String completeDeleteQuestionBoardNum = this.params.getUpdateQuestionBoardNum();
-		System.out.println(completeDeleteQuestionBoardNum + " : 삭제할 게시글 번호");
 		
 		this.dbService.completeDeleteQuestionBoard(completeDeleteQuestionBoardNum);
 		
@@ -848,7 +867,6 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("service/include/reCheckPwdWriteForm");
 		
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
-		System.out.println("비밀글ㅇ화인 글보기 : " + questionBoardNum);
 		
 		this.params.setDirectory("service");
 		this.params.setPage("service/include/reCheckPwdWriteForm");

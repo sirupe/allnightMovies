@@ -360,8 +360,10 @@ body {
     text-shadow: 1px 1px 0 rgba(255,255,255,0.66);
     transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
 }
-
-.test {
-	height: 1000px;
-	
+.footer-location {
+	text-decoration: none;
+	color: #706667;
+}
+.footer-location:hover {
+	color: black;	
 }

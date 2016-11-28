@@ -22,7 +22,13 @@
 					<div class="div__serviceCenter_Content js_serviceContentTab">
 						<jsp:include page="../service/include/serviceFrequenty.jsp" />
 					</div>
+					
+			<%-- <c:if></c:if> 관리자 계정이 2일때 들어오게 할꺼얏.--%>
+					<div>
+						<button class="button_managerWriteBtn js_button_FrequentlyInsertBtn" type="button">글등록하기</button>
+					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>

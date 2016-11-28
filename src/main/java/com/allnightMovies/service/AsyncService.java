@@ -441,10 +441,7 @@ public class AsyncService implements AsyncAction {
       List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
       Paging boardPaging = new Paging(totBoardList, 7,page, 5);
       boardPaging.setBoardPaging();
-      System.out.println(boardPaging + "페이지 그룹");
-      System.out.println(boardPaging.getStartPageNum() + "시작");
-      System.out.println(boardPaging.getEndPageNum() + "마지막");
-      System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
+      
       String boardpagingResult = "/movie/mainService/serviceCenter";
       AsyncResult<String> asyncResult = new AsyncResult<String>();
       asyncResult.setData(boardpagingResult);
@@ -469,13 +466,6 @@ public class AsyncService implements AsyncAction {
 		HttpSession session = this.params.getSession();
 		String user_Id = (String)session.getAttribute("userID");
 		System.out.println("로그인한 유저아이디 (어싱크 글등록.) InsertAskWriteBoard : " + user_Id);
-		
-		
-		System.out.println("제목 : " + title);
-		System.out.println("내용 : " + content);
-		System.out.println("비밀번호 : " + writePwd);
-		System.out.println("여부 : " + isPwd);
-		System.out.println("아이디 : " + user_Id);
 
 		if(title == "" && content == "") {
 			isResult = false;

@@ -1,11 +1,8 @@
  package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
-
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -29,7 +25,9 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
+import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
@@ -101,6 +99,9 @@ public class MainService implements Action {
 	public ModelAndView login() throws Exception {
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		if(userLoginInfo.getUserStates() == 1) {
+			HttpSession session = this.params.getSession();
+			session.setAttribute("userID", userLoginInfo.getUserID());
+		} else if(userLoginInfo.getUserStates() == 2) {
 			HttpSession session = this.params.getSession();
 			session.setAttribute("userID", userLoginInfo.getUserID());
 		}
@@ -533,6 +534,7 @@ public class MainService implements Action {
 		String LoginUserID = (String)session.getAttribute("userID");
 		ModelAndView mav = this.getTemplate();
 		mav.addObject("loginUserId",LoginUserID);
+
 		return mav;
 	}
 	
@@ -549,7 +551,7 @@ public class MainService implements Action {
 		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
 		mav.addObject("pageCount",boardPaging.getTotalPageCount());
 		mav.addObject("pageGroup",boardPaging);
-		//mav.addObject("loginUserId",LoginUserID);
+		mav.addObject("contentCSS", "service/service/ServiceCenterManagement");
 		return mav;
 	}
 	
@@ -650,6 +652,8 @@ public class MainService implements Action {
 		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
 		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
 		mav.addObject("questionBoardGroup", questionBoardPaging);
+		mav.addObject("contentCSS", "service/service/ServiceCenterManagement");
+
 		mav.addObject("loginUserId",LoginUserID);
 		return mav;
 		
@@ -910,7 +914,18 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-
+/*******수진<관리자> .고객센터 자주묻는게시판 폼 열기**********/
+	public ModelAndView managementServiceCenterWriteForm() {
+		ModelAndView mav = new ModelAndView("service/serviceCenterManger/serviceCenterManagement");
+		
+		
+		mav.addObject("contentCSS", "service/service/questionBoard");
+		mav.addObject("contentjs", "service/service/questionBoard");
+		return mav;
+		
+		
+		
+	}
    
 
 /*******연종. MyINFO SHIN*******/	
@@ -943,6 +958,10 @@ public class MainService implements Action {
 		this.params.setContentjs("myInfo/changePwd");
 		return this.logout();	
 	}	
+	
+
+
+	
 //------------------------------------------------------------------------
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
 	public ModelAndView currentFilm() throws Exception{
@@ -1108,11 +1127,10 @@ public class MainService implements Action {
 		this.params.setNoticePage(1);
 		int noticePage = this.params.getNoticePage();
 		int totalList = this.dbService.searchBoardCount("%"+searchWord+"%");
-		System.out.println("1. 검색결과  list count >>" + totalList);
-		
 		
 		Paging2 paging = new Paging2();
 		paging.makePaging(totalList, noticePage, 10, 10);
+		
 		searchBoardDTO.setBlockStartNum(paging.getStartPageList());
 		searchBoardDTO.setBlockEndNum(paging.getEndPageList());
 		searchBoardDTO.setSearchWord("%"+searchWord+"%");
@@ -1153,6 +1171,59 @@ public class MainService implements Action {
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/searchNotice");
+		
+		return mav;
+	}
+//영화상세정보
+	public ModelAndView movieDetailInfo() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		String movieTitle = this.params.getMovieInfoTitle();
+		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
+		
+		boolean reviewResult = true;
+		String movieReleadeDate = movieBasicInfo.getMovieReleaseDate();
+		Date currentTime = new Date ();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		
+		try {
+			date = format.parse(movieReleadeDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int compare = date.compareTo(currentTime);
+		if(compare >= 0){
+			reviewResult = false;
+		}
+		
+//		System.out.println("상영날짜        >>    " + movieReleadeDate);
+//		System.out.println("오늘날짜        >>    " + currentTime);
+//		System.out.println("reviewResult   >>  " + reviewResult );
+//		System.out.println("userCheck >> "  + user);
+//		System.out.println("MAIN movieDetailInfo >>  "+ movieTitle);
+		
+		mav.addObject("reviewResult", reviewResult);
+		mav.addObject("movieBasicInfo", movieBasicInfo);
+		mav.addObject("directory", "movie");
+		mav.addObject("page", "movieBasicInfo");
+		mav.addObject("contentCSS", "movie/movieBasicInfo");
+		mav.addObject("contentjs", "movie/movieBasicInfo");
+		return mav;
+	}
+	public ModelAndView getReviewBoard() {
+		ModelAndView mav = new ModelAndView("movie/include/reviewBoard");
+		
+		String movieTitle = this.params.getMovieInfoTitle();
+		
+		HttpSession session = this.params.getSession();
+		String user = (String)session.getAttribute("userID");
+		
+		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
+		System.out.println("MovieReviewBoard  평점갯수" + reviewBoardDTO.size());
+		
+		mav.addObject("reviewBoardDTO", reviewBoardDTO);
+		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
+		mav.addObject("userCheck", user);
 		
 		return mav;
 	}

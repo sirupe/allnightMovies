@@ -184,10 +184,10 @@ function questionBoardPagePreNumber() {
 		url    = '/movie/mainService/serviceCenterQuestionBoardChange';
 		params = {'questionBoard' : userClickPageNum};
 		cbf    = function(result) {
-				console.log(result);
+
 				var $question = $('.js_questionBoardContainer');
-				$question
-					.html(result);
+					$question
+						.html(result);
 				
 		};
 		$.post(url, params, cbf);
@@ -202,7 +202,7 @@ function questionBoardpageNextNumber() {
 	url    = '/movie/mainService/serviceCenterQuestionBoardChange';
 	params = {'questionBoard' : userClickPageNum};
 	cbf    = function(result) {
-			console.log(result);
+
 			var $question = $('.js_questionBoardContainer');
 			$question
 				.html(result)
@@ -259,14 +259,6 @@ function insertQuestionBoard() {
 	    insertTitle     = $('.js_boardContent').val(); 
 	    insertTextArea  = $('.js_boardTextArea').val();
 	    insertboardPWd  = $('.js_boardWriteBoardPwd').val(); //비
-
-	    
-	    console.log(insertPwdcheck);
-	    console.log(insertTitle);
-	    console.log(insertTextArea);
-	    console.log(insertboardPWd);
-	    
-	    
 	    
 	    url    = '/movie/mainService/InsertAskWriteBoard';
 	    params = {
@@ -339,17 +331,7 @@ function completeUpdateQuestionBoard() {
 	    insertboardPWd  = $('.js_UpdateboardWriteBoardPwd').val(); //비
 	    insertUser_id  = $('.js_UpdateboardUserId').val();
 	    insertWriteDate = $('.js_UpdateboardWriteDate').val();
-	    
-	    
-	    
-	    console.log(insertPwdcheck);
-	    console.log(insertTitle);
-	    console.log(insertTextArea);
-	    console.log(insertboardPWd);
-	    console.log(insertUser_id);
-	    console.log(insertWriteDate);
-	    
-	    
+
 	    url    = '/movie/mainService/completeUPdateWriteBoard';
 	    params = {
 	    		'updateQuestionBoardNum' : userClickNum,
@@ -409,11 +391,6 @@ function recheckpwdQuestionForm() {
 		
 		userClickNum  = $('.js_QuestionReCheckPwdboardViewNo').attr('data-questionBoardPageNum');
 
-		
-	    console.log(userClickNum);
-	    console.log(userInsertPwd);
-
-	    
 		url    =  '/movie/mainService/confirmPWdQuestionBoard';
 		params = {
 				'userInsertPwd'       : userInsertPwd,
@@ -430,6 +407,18 @@ function recheckpwdQuestionForm() {
 			$.post(url, params, cbf);
 		}
 		
+}
+
+/****************************관리자 페이지********************************************/
+//자주묻는게시판 글등록폼
+function managementFreQuentlyWriteBoard() {
+	
+	url    = 'movie/mainService/managementServiceCenterWriteForm',
+	cbf    = function(mav) {
+			 $('.js_frequentlyBoardContainer').html(mav);
+	};
+	$.post(url, cbf);
+	
 }
 
 /************************시작***************************/
@@ -457,9 +446,9 @@ function setServiceCenter() {
 				.on('click', '.js_QuestionWriteForm', questionWriteForm) // 글쓰기폼이동
 				.on('click', '.js_questionBoard_title', questionViewBoard) //문의사항
 				.on('click', '.js_QuestionList', questionBoardTab) //목록으로
-				.on('click', '.js_questionButtonCancel',questionBoardTab)
-				.on('click', '.js_QuestionUpdateForm', questionBoardTab)
-				.on('click', '.js_serviceCenter_button',searchQuestionBoard) //검색
+				.on('click', '.js_questionButtonCancel',questionBoardTab) //목록으로(취소)
+				.on('click', '.js_QuestionUpdateForm', questionBoardTab) //
+				.on('click', '.js_serviceCenter_button',searchQuestionBoard) //검색버튼
 				.on('click', '.js_preButtonSearch',searchPrePageBoard)
 				.on('click', '.js_nextButtonSearch' ,searchNextPageBoard)
 				.on('click', '.js_pagingNumberSearch',searchCurrentPageBoard)
@@ -470,8 +459,14 @@ function setServiceCenter() {
 				.on('click', '.js_QuestionWriteDeleteBtn', deleteQuestionBoard)//삭제하기
 				.on('click', '.js_QuestionWriteUpdateBtn', updateQuestionBoard) //수정하는 폼으로
 				.on('click', '.js_QuestionUpdateBtn',completeUpdateQuestionBoard) //수정하기
-				.on('click', '.js_UpdateboardCheck', activeRePwdInput)
-				.on('click', '.js_rePwdCheckQuestionForm', recheckpwdQuestionForm);
+				.on('click', '.js_UpdateboardCheck', activeRePwdInput) //비밀글 체크됬는지안됬는지여부
+				.on('click', '.js_rePwdCheckQuestionForm', recheckpwdQuestionForm) //비밀글 체크됬는지안됬는지여부
+		
+		
+		/**************************************관리자 등록(*******************************************/
+		
+		.on('click','.js_button_FrequentlyInsertBtn', managementFreQuentlyWriteBoard) //자주묻는게시판->글등록
+		
 }
 
 function initServiceCenter() {

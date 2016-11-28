@@ -55,4 +55,11 @@ function myInfoTitleClick() {
 function reserveInfoTitleClick() {
 	$(this).css({'background-color' : '#CA9381'});
 	$('.js_myInfoTitleClick').css({'background-color' : ''});
+	
+	var url = '/movie/mainService/ticketingConfirmation',
+		cbf = function(result) {
+			$('.js_myInfoContainer').html(result);
+		}
+	
+	$.post(url, cbf);
 }

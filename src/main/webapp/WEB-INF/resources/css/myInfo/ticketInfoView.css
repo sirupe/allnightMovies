@@ -5,7 +5,7 @@
 .ticket-info__part {
     display: flex;
     padding: 15px 0;
-    width: 500px;
+    width: 550px;
     margin: auto;
 }
 
@@ -17,8 +17,8 @@ hr.ticket-info__hr {
 
 .ticket-info__part__content {
     margin-left: 20px;
-    padding-top: 10px;
-}}
+    padding-top: 22px;
+}
 
 span.ticket-info__part__text {
     font-size: 16px;

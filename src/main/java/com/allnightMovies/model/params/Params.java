@@ -71,6 +71,7 @@ public class Params {
 	private String seatArr;
 	private int calendarMonth;
 	private int calendarYear;
+	private String screeningDateType;
 	
 // 결제
 	private String cardType;

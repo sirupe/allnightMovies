@@ -6,8 +6,8 @@
 	   <span class="js_myInfoTitleClick tab-myinfo__title"><a>내정보</a></span>
 	   <span class="js_reserveInfoTitleClick tab-reservationInfo__title"><a>예매정보</a></span>
 	</div>  
-   <div class="div-myinfo__content">
-<%--       <span>
+   <div class="js_myInfoContainer div-myinfo__content">
+       <span>
          <label class="label-myinfo__content__id">아이디</label>
          <input id="myinfo-id" name ="myInfoID" value="${myInfoList.getUserID() }" class="text-myinfo__content" type="text" readonly="readonly">
       </span>
@@ -32,8 +32,8 @@
          <button class="button-myinfo-change-email js_myInfo_changeEmailBtn">이메일 변경</button>
          <button class="button-myinfo-change-pwd js_myInfo_changePwdBtn">비밀번호 변경</button>
          <button class="button-myinfo-change-withdraw js_myInfo_withdrawBtn">회원탈퇴</button>
-      </span>  --%>
+      </span>
       
-      <jsp:include page="./ticketConfirmation/ticketInfoView.jsp"></jsp:include>
+      <%-- <jsp:include page="./ticketConfirmation/ticketInfoView.jsp"></jsp:include> --%>
    </div>
 </div>

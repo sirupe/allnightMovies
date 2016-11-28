@@ -20,14 +20,16 @@
 					<span class="ticket-info__part__text">10:00 ~ 12:00</span>
 				</div>
 				<div>
-					<span class="ticket-info__part__title">좌석정보</span>
-					<span class="ticket-info__part__text">총 1매</span>
-					<span class="ticket-info__part__text">1관</span>
-					<span class="ticket-info__part__text">B2</span>
-				</div>
-				<div>
-					<span class="ticket-info__part__title">금액정보</span>
-					<span class="ticket-info__part__text">10,000원</span>
+					<span>
+						<span class="ticket-info__part__title">좌석정보</span>
+						<span class="ticket-info__part__text">총 1매</span>
+						<span class="ticket-info__part__text">1관</span>
+						<span class="ticket-info__part__text">B2</span>
+					</span>
+					<span>
+						<span class="ticket-info__part__title">금액정보</span>
+						<span class="ticket-info__part__text">10,000원</span>
+					</span>
 				</div>
 				<div>
 					<span class="ticket-info__part__title">예매번호</span>

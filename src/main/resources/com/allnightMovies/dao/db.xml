@@ -180,7 +180,8 @@
 				USER_TICKET_COUNT, 
 				USER_TOTAL_PRICE, 
 				USER_TICKETING_DATE, 
-				USER_TICKET_NUMBER
+				USER_TICKET_NUMBER,
+				MOVIE_SCREENING_DATE_TYPE
 			) VALUES (
 				#{userID}, 
 				#{movieTitle},
@@ -190,17 +191,51 @@
 				#{userTicketCount}, 
 				#{userTotalPrice}, 
 				SYSDATE, 
-				#{userTicketNumber}
+				#{userTicketNumber},
+				#{movieScreeningDateType}
 			)
 		</foreach>
 	</insert>
+	
 	<!-- TICKETING : 예매된 좌석정보 가져오기 -->
-	<select id="reservationSeatInfo" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo" resultType="java.lang.String">
-		SELECT DISTINCT(THEATER_SEAT) THEATERSEAT
-		FROM USER_TICKETING_INFO
-		WHERE MOVIE_TITLE=#{movieTitle}
-		AND THEATER=#{theater}
-		AND MOVIE_SCREENING_DATE=#{movieScreeningDate}
+	<select id="reservationSeatInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo">
+		SELECT
+			THEATERSEAT,
+		    USER_TICKET_NUMBER userTicketNumber,
+		    USER_TOTAL_PRICE userTotalPrice,
+		    USER_TICKET_COUNT userTicketCount,
+		    USER_TICKETING_DATE userTicketingDate,
+		    THEATER,
+		    MOVIE_TITLE movieTitle,
+		    MOVIE_SCREENING_DATE movieScreeningDate,
+	        MOVIE_SCREENING_DATE_TYPE movieScreeningDateType
+		FROM (SELECT 
+		        LISTAGG(THEATER_SEAT, ',') WITHIN GROUP(ORDER BY USER_TICKET_NUMBER) THEATERSEAT,
+		        USER_TICKET_NUMBER,
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    FROM USER_TICKETING_INFO
+		    GROUP BY 
+		        USER_TICKET_NUMBER, 
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    ORDER BY MOVIE_SCREENING_DATE DESC)
+		WHERE USER_ID='test3' AND MOVIE_SCREENING_DATE_TYPE > SYSDATE
+	</select>
+<!-- JI. TICKET CONFIRMATION : 예매내역 확인 -->
+	<select id="">
 	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">

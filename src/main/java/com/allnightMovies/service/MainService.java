@@ -1,11 +1,8 @@
  package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
-
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -40,6 +36,7 @@ import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.MonthCalendar;
@@ -103,6 +100,10 @@ public class MainService implements Action {
 		if(userLoginInfo.getUserStates() == 1) {
 			HttpSession session = this.params.getSession();
 			session.setAttribute("userID", userLoginInfo.getUserID());
+		} else if(userLoginInfo.getUserStates() == 2) {
+			HttpSession session = this.params.getSession();
+			session.setAttribute("userID", userLoginInfo.getUserID());
+			session.setAttribute("userStatus", 2);
 		}
 		
 		return this.getTemplate();
@@ -273,7 +274,6 @@ public class MainService implements Action {
 					   .setTheater(theater)
 					   .setMovieScreeningDate(screeningDateTime);
 		
-		List<String> reserveSeatInfo = this.dbService.reservationSeatInfo(seatReserveInfo); // seatInfoList에 보냈으므로 ...
 		List<CinemaSeatDTO> seatInfoList = this.dbService.getTheaterSeatInfo(seatReserveInfo);
 		int colCnt = this.dbService.getTheaterSeatColCnt(strTheater);
 		colCnt = theater == 1 ? colCnt + 1 : colCnt;
@@ -376,6 +376,11 @@ public class MainService implements Action {
 				ticketNum += "-" + String.valueOf(System.currentTimeMillis()).substring(5, 13);
 				Integer moviePrice = this.dbService.getTicketPriceInfo(screeningDate, String.valueOf(theater));
 				
+				SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+				Date d = formatDate.parse(screeningDate);
+				
+				
+				
 				UserTicketingInfo userTicketingInfo = new UserTicketingInfo();
 				userTicketingInfo.setMovieScreeningDate(screeningDate)
 								 .setMovieTitle(movieTitle)
@@ -384,8 +389,8 @@ public class MainService implements Action {
 								 .setUserID(userID)
 								 .setUserTicketCount(seatsList.size())
 								 .setUserTicketNumber(ticketNum)
-								 .setUserTotalPrice(moviePrice * seatsList.size());
-				
+								 .setUserTotalPrice(moviePrice * seatsList.size())
+							 	 .setMovieScreeningDateType(d);
 				System.out.println(userTicketingInfo.toString());
 				this.dbService.userTicketingInfoInsert(userTicketingInfo);
 				resultMessage = "예매가 완료되었습니다. <br/> 예매확인 페이지에서 확인 가능합니다.";
@@ -446,6 +451,19 @@ public class MainService implements Action {
 		this.params.setDirectory("searchPwd");
 		this.params.setPage("searchPwdChangeCompleted");
 		return this.logout();
+	}
+	
+/***** 은정. 예매내역확인 *****/
+	public ModelAndView ticketingConfirmation() {
+		ModelAndView mav = new ModelAndView("");
+		String userID = (String) this.params.getSession().getAttribute("userID");
+		List<UserSelectTicketingInfo> ticketingInfo = this.dbService.reservationSeatInfo(userID);
+		for(UserSelectTicketingInfo dto : ticketingInfo) {
+			System.out.println(dto.toString());
+			
+		}
+		
+		return mav;
 	}
 //------------------------------------------------------------------------
 	

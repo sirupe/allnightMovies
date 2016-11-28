@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
@@ -26,6 +25,7 @@ import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
 
@@ -133,16 +133,17 @@ public class DBService {
 		return dbMapper.userTicketingInfoInsert(ticketingInfo);
 	}
 	
-	public List<String> reservationSeatInfo(CinemaSeatReserveInfo seatReserveInfo) {
-		return dbMapper.reservationSeatInfo(seatReserveInfo);
-	}
-	
 	public List<CinemaSeatDTO> getTheaterSeatInfo(CinemaSeatReserveInfo reserveInfo) {
 		return dbMapper.getTheaterSeatInfo(reserveInfo);
 	}
 	
 	public Integer getTheaterSeatColCnt(String theater) {
 		return dbMapper.getTheaterSeatColCnt(theater);
+	}
+	
+/** ji. ticketing confirmation 예매확인 **/
+	public List<UserSelectTicketingInfo> reservationSeatInfo(String userID) {
+		return dbMapper.reservationSeatInfo(userID);
 	}
 	
 /** jung. 상영시간표 **/ //TODO 수진

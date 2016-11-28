@@ -22,6 +22,7 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
@@ -144,6 +145,10 @@ public class DBService {
 /** ji. ticketing confirmation 예매확인 **/
 	public List<UserSelectTicketingInfo> reservationSeatInfo(String userID) {
 		return dbMapper.reservationSeatInfo(userID);
+	}
+	
+	public MovieEndTimeDTO getMovieEndTime(String ticketNum) {
+		return dbMapper.getMovieEndTime(ticketNum);
 	}
 	
 /** jung. 상영시간표 **/ //TODO 수진

@@ -3,6 +3,7 @@
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,7 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
@@ -411,6 +413,30 @@ public class MainService implements Action {
 	public ModelAndView ticketingCancelSet() {
 		return new ModelAndView("reservation/ticketing/paypopup");
 	}
+	
+	
+/***** 은정. 예매내역확인 *****/
+	public ModelAndView ticketingConfirmation() {
+		ModelAndView mav = new ModelAndView("myInfo/ticketConfirmation/ticketInfoView");
+		String userID = (String) this.params.getSession().getAttribute("userID");
+		List<UserSelectTicketingInfo> ticketingInfo = this.dbService.reservationSeatInfo(userID);
+		List<UserSelectTicketingInfo> sendTicketingInfo = new ArrayList<UserSelectTicketingInfo>();
+		
+		for(UserSelectTicketingInfo info : ticketingInfo) {
+			MovieEndTimeDTO movieEndTime = this.dbService.getMovieEndTime(info.getUserTicketNumber());
+			info.setMovieEndTime(movieEndTime.getMovieEndTime());
+			info.setMoviePoster(movieEndTime.getMoviePoster());
+			sendTicketingInfo.add(info);
+		}
+		for(UserSelectTicketingInfo info : sendTicketingInfo) {
+			System.out.println(info.toString());
+		}
+		
+		
+		mav.addObject("ticketingInfo", sendTicketingInfo);
+		return mav;
+	}
+	
 /*******연종. PWD찾기 SHIN*******/
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -452,19 +478,6 @@ public class MainService implements Action {
 		this.params.setDirectory("searchPwd");
 		this.params.setPage("searchPwdChangeCompleted");
 		return this.logout();
-	}
-	
-/***** 은정. 예매내역확인 *****/
-	public ModelAndView ticketingConfirmation() {
-		ModelAndView mav = new ModelAndView("");
-		String userID = (String) this.params.getSession().getAttribute("userID");
-		List<UserSelectTicketingInfo> ticketingInfo = this.dbService.reservationSeatInfo(userID);
-		for(UserSelectTicketingInfo dto : ticketingInfo) {
-			System.out.println(dto.toString());
-			
-		}
-		
-		return mav;
 	}
 //------------------------------------------------------------------------
 	

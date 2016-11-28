@@ -197,14 +197,15 @@
 		</foreach>
 	</insert>
 	
-	<!-- TICKETING : 예매된 좌석정보 가져오기 -->
+<!-- JI. TICKET CONFIRMATION : 예매내역 확인 -->
+	<!-- TICKET CONFIRMATION : 예매된 좌석정보 가져오기 -->
 	<select id="reservationSeatInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo">
 		SELECT
 			THEATERSEAT,
 		    USER_TICKET_NUMBER userTicketNumber,
 		    USER_TOTAL_PRICE userTotalPrice,
 		    USER_TICKET_COUNT userTicketCount,
-		    USER_TICKETING_DATE userTicketingDate,
+		    TO_CHAR(USER_TICKETING_DATE, 'YYYY.MM.DD HH24:MI') userTicketingDate,
 		    THEATER,
 		    MOVIE_TITLE movieTitle,
 		    MOVIE_SCREENING_DATE movieScreeningDate,
@@ -234,8 +235,17 @@
 		    ORDER BY MOVIE_SCREENING_DATE DESC)
 		WHERE USER_ID='test3' AND MOVIE_SCREENING_DATE_TYPE > SYSDATE
 	</select>
-<!-- JI. TICKET CONFIRMATION : 예매내역 확인 -->
-	<select id="">
+
+	<!-- TICKET CONFIRMATION 영화 상영 종료시간 구하기 -->
+	<select id="getMovieEndTime" resultType="com.allnightMovies.model.data.userInfo.MovieEndTimeDTO" parameterType="java.lang.String">
+		SELECT 
+			DISTINCT TO_CHAR(MOVIE_SCREENING_DATE_TYPE + MOVIE_RUNTIME/(24*60), 'HH24:MI') movieEndTime,
+		    MOVIE_POSTER moviePoster
+		FROM USER_TICKETING_INFO JOIN (
+		    SELECT MOVIE_RUNTIME, MOVIE_TITLE, MOVIE_POSTER
+		    FROM MOVIE_BASIC_INFO
+		) USING(MOVIE_TITLE)
+		WHERE USER_TICKET_NUMBER=#{ticketNum}
 	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
@@ -254,7 +264,7 @@
 	</resultMap>
 	
 <!-- JUNG. 상영시간표  -> 상영날짜 LIST -->
-	<select id="showtimes" resultMap="MovieShowTimesMap" parameterType="java.util.Map"> 
+	<select id="showtimes" resultMap="MovieShowTimesMap" parameterType="java.lang.String"> 
 		SELECT 
 		    DISTINCT SUBSTR(MOVIE_SCREENING_DATE,6,5) AS SCREENING_DATE,
 		    MOVIE_THEATHER,

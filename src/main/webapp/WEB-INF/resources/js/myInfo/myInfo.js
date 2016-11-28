@@ -50,15 +50,16 @@ function withdrawForm() {
 function myInfoTitleClick() {
 	$(this).css({'background-color' : '#CA9381'});
 	$('.js_reserveInfoTitleClick').css({'background-color' : ''});
+	locationMyInfo();
 }
 
 function reserveInfoTitleClick() {
 	$(this).css({'background-color' : '#CA9381'});
-	$('.js_myInfoTitleClick').css({'background-color' : ''});
+	$('.js_myInfoTitleClick').css({'background-color' : '#97675e'});
 	
 	var url = '/movie/mainService/ticketingConfirmation',
 		cbf = function(result) {
-			$('.js_myInfoContainer').html(result);
+			$('.js_myInfoInnerContainer').html(result);
 		}
 	
 	$.post(url, cbf);

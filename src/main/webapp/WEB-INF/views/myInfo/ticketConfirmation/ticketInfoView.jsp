@@ -4,36 +4,37 @@
 <link rel="stylesheet" href="/resources/css/myInfo/ticketInfoView.css">
 <script async="async" type="text/javascript" src="/resources/js/reservation/paying.js"></script>
 <div class="ticket-info">
-	<c:forEach begin="1" end="3">
+	<c:forEach items="${ticketingInfo }" var="info">
 		<div class="ticket-info__part">
 			<img height="268px" width="200px" alt="movie poster" src="/resources/img/poster/lucky.jpg">
 			<div class="ticket-info__part__content">
-				<div class="ticket-info__part__movieTitle">[럭키]</div>
+				<div class="ticket-info__part__movieTitle">${info.movieTitle}</div>
 				<div>
 					<span class="ticket-info__part__title">예매일시</span>
-					<span class="ticket-info__part__text">2016.11.28</span>
-					<span class="ticket-info__part__text">10:00</span>
+					<span class="ticket-info__part__text">${info.userTicketingDate }</span>
 				</div>
 				<div>
 					<span class="ticket-info__part__title">상영일시</span>
-					<span class="ticket-info__part__text">2016.12.01</span>
-					<span class="ticket-info__part__text">10:00 ~ 12:00</span>
+					<span class="ticket-info__part__text">${info.movieScreeningDate}</span>
+					<span class="ticket-info__part__text">${info.movieEndTime }</span>
 				</div>
 				<div>
 					<span>
 						<span class="ticket-info__part__title">좌석정보</span>
-						<span class="ticket-info__part__text">총 1매</span>
-						<span class="ticket-info__part__text">1관</span>
-						<span class="ticket-info__part__text">B2</span>
+						<span class="ticket-info__part__text">총 ${info.userTicketCount }매</span>
+						<span class="ticket-info__part__text">${info.theater }관</span>
+						<span class="ticket-info__part__text">${info.theaterSeat}</span>
 					</span>
+				</div>
+				<div>
 					<span>
 						<span class="ticket-info__part__title">금액정보</span>
-						<span class="ticket-info__part__text">10,000원</span>
+						<span class="ticket-info__part__text">${info.userTotalPrice }원</span>
 					</span>
 				</div>
 				<div>
 					<span class="ticket-info__part__title">예매번호</span>
-					<span class="ticket-info__part__text">1234-12345</span>
+					<span class="ticket-info__part__text">${info.userTicketNumber }</span>
 				</div>
 				<button class="ticket-info__btn" type="button">
 					예매취소

@@ -587,6 +587,7 @@ public class MainService implements Action {
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage",boardPage);
 		mav.addObject("pageCount", countlist);
+		mav.addObject("serviceCenterSearchWord", serviceCenterSearchWord);
 		mav.addObject("checkPage", page);
 		mav.addObject("pageGroup",boardPaging);
 		mav.addObject("search","Search");
@@ -621,6 +622,7 @@ public class MainService implements Action {
 		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
 		mav.addObject("boardPage",boardPage);
 		mav.addObject("pageCount", countlist);
+		mav.addObject("serviceCenterSearchWord", serviceCenterSearchWord);
 		mav.addObject("checkPage", page);
 		mav.addObject("pageGroup",boardPaging);
 		mav.addObject("search","Search");

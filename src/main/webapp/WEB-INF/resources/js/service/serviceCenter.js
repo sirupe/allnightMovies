@@ -260,6 +260,14 @@ function insertQuestionBoard() {
 	    insertTextArea  = $('.js_boardTextArea').val();
 	    insertboardPWd  = $('.js_boardWriteBoardPwd').val(); //비
 
+	    
+	    console.log(insertPwdcheck);
+	    console.log(insertTitle);
+	    console.log(insertTextArea);
+	    console.log(insertboardPWd);
+	    
+	    
+	    
 	    url    = '/movie/mainService/InsertAskWriteBoard';
 	    params = {
 	    		'insertPwdcheck' : insertPwdcheck,
@@ -370,7 +378,6 @@ function deleteQuestionBoard() {
 		if(confirm('정말 삭제하시겠습니까?') == true) {
 			$.post(url, params, cbf);
 		} else {
-			alert('비밀번호가 다릅니다.');
 			return;
 		}
 }
@@ -382,8 +389,12 @@ function recheckpwdQuestionForm() {
 		userInsertPwd       = $('.QuestionBoardReCheckPWd_input').val(); //내가입력한 비밀번호
 		
 		userClickNum  = $('.js_QuestionReCheckPwdboardViewNo').attr('data-questionBoardPageNum');
-		//게시글등록때 입력한 것
 
+		
+	    console.log(userClickNum);
+	    console.log(userInsertPwd);
+
+	    
 		url    =  '/movie/mainService/confirmPWdQuestionBoard';
 		params = {
 				'userInsertPwd'       : userInsertPwd,
@@ -395,7 +406,8 @@ function recheckpwdQuestionForm() {
 		};
 		if(userInsertPwd == '') {
 			alert('입력해주세요');
-		} else {
+		}
+		else {
 			$.post(url, params, cbf);
 		}
 		

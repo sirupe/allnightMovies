@@ -22,4 +22,5 @@ public class UserTicketingInfo {
 	private int userTicketCount;
 	private String userTicketNumber;
 	private int userTotalPrice;
+	private Date movieScreeningDateType;
 }

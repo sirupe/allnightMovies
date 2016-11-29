@@ -180,7 +180,8 @@
 				USER_TICKET_COUNT, 
 				USER_TOTAL_PRICE, 
 				USER_TICKETING_DATE, 
-				USER_TICKET_NUMBER
+				USER_TICKET_NUMBER,
+				MOVIE_SCREENING_DATE_TYPE
 			) VALUES (
 				#{userID}, 
 				#{movieTitle},
@@ -190,18 +191,69 @@
 				#{userTicketCount}, 
 				#{userTotalPrice}, 
 				SYSDATE, 
-				#{userTicketNumber}
+				#{userTicketNumber},
+				#{movieScreeningDateType}
 			)
 		</foreach>
 	</insert>
-	<!-- TICKETING : 예매된 좌석정보 가져오기 -->
-	<select id="reservationSeatInfo" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo" resultType="java.lang.String">
-		SELECT DISTINCT(THEATER_SEAT) THEATERSEAT
-		FROM USER_TICKETING_INFO
-		WHERE MOVIE_TITLE=#{movieTitle}
-		AND THEATER=#{theater}
-		AND MOVIE_SCREENING_DATE=#{movieScreeningDate}
+	
+<!-- JI. TICKET CONFIRMATION : 예매내역 확인 -->
+	<!-- TICKET CONFIRMATION : 예매된 좌석정보 가져오기 -->
+	<select id="reservationSeatInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo">
+		SELECT
+			THEATERSEAT,
+		    USER_TICKET_NUMBER userTicketNumber,
+		    USER_TOTAL_PRICE userTotalPrice,
+		    USER_TICKET_COUNT userTicketCount,
+		    TO_CHAR(USER_TICKETING_DATE, 'YYYY.MM.DD HH24:MI') userTicketingDate,
+		    THEATER,
+		    MOVIE_TITLE movieTitle,
+		    MOVIE_SCREENING_DATE movieScreeningDate,
+	        MOVIE_SCREENING_DATE_TYPE movieScreeningDateType
+		FROM (SELECT 
+		        LISTAGG(THEATER_SEAT, ',') WITHIN GROUP(ORDER BY USER_TICKET_NUMBER) THEATERSEAT,
+		        USER_TICKET_NUMBER,
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    FROM USER_TICKETING_INFO
+		    GROUP BY 
+		        USER_TICKET_NUMBER, 
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    ORDER BY MOVIE_SCREENING_DATE DESC)
+		WHERE USER_ID=#{userID} AND MOVIE_SCREENING_DATE_TYPE > SYSDATE
 	</select>
+
+	<!-- TICKET CONFIRMATION 영화 상영 종료시간 구하기 -->
+	<select id="getMovieEndTime" resultType="com.allnightMovies.model.data.userInfo.MovieEndTimeDTO" parameterType="java.lang.String">
+		SELECT 
+			DISTINCT TO_CHAR(MOVIE_SCREENING_DATE_TYPE + MOVIE_RUNTIME/(24*60), 'HH24:MI') movieEndTime,
+		    MOVIE_POSTER moviePoster
+		FROM USER_TICKETING_INFO JOIN (
+		    SELECT MOVIE_RUNTIME, MOVIE_TITLE, MOVIE_POSTER
+		    FROM MOVIE_BASIC_INFO
+		) USING(MOVIE_TITLE)
+		WHERE USER_TICKET_NUMBER=#{ticketNum}
+	</select>
+	
+	<!-- CANCEL TICKET : 예매취소 -->
+	<delete id="cancelTicket" parameterType="java.lang.String">
+		DELETE FROM USER_TICKETING_INFO
+		WHERE USER_TICKET_NUMBER=#{param1} AND USER_ID=#{param2}
+	</delete>
+
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>
@@ -219,7 +271,7 @@
 	</resultMap>
 	
 <!-- JUNG. 상영시간표  -> 상영날짜 LIST -->
-	<select id="showtimes" resultMap="MovieShowTimesMap" parameterType="java.util.Map"> 
+	<select id="showtimes" resultMap="MovieShowTimesMap" parameterType="java.lang.String"> 
 		SELECT 
 		    DISTINCT SUBSTR(MOVIE_SCREENING_DATE,6,5) AS SCREENING_DATE,
 		    MOVIE_THEATHER,
@@ -246,7 +298,7 @@
 		WHERE USER_NAME = #{param1} AND  USER_BIRTH = #{param2} AND USER_GENDER = #{param3}	
 	</select>
 
-<!-- 아이디(이메일) -->
+<!--수진 .  아이디(이메일) -->
  	<select id="searchEmailCount" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
 		SELECT COUNT(USER_ID)
 			FROM USER_PERSONAL_INFO
@@ -259,13 +311,14 @@
 		WHERE USER_EMAIL = #{param1}
 	</select>
 	
-<!-- 자주묻는질문게시판 -->
+<!-- 수진 . 자주묻는질문게시판 -->
 	<select id="serviceCenter" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
 		SELECT
 			NO,
 			QUESTION,
 			ASKED
 		FROM CINEMA_FREQUENTLY_BOARD
+		ORDER BY NO DESC
 	</select>	
 
  	<select id="serviceCentergetBoard" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
@@ -274,7 +327,7 @@
          FROM (
                 SELECT NO, QUESTION, ASKED
                   FROM CINEMA_FREQUENTLY_BOARD
-                  ORDER BY NO
+                  ORDER BY NO DESC
                 )
              )
                  WHERE RNUM BETWEEN #{param1} AND #{param2}
@@ -284,7 +337,7 @@
 		 SELECT COUNT(*) 
 		 	FROM CINEMA_FREQUENTLY_BOARD
 	</select>
-<!--자주묻는게시판 검색 갯수-->
+<!--수진 . 자주묻는게시판 검색 갯수-->
 	<select id="userSearchList" resultType="java.lang.Integer" >
 		SELECT COUNT(*)
 			 FROM CINEMA_FREQUENTLY_BOARD 
@@ -292,7 +345,7 @@
 			 			OR ASKED LIKE #{serviceCenterSearchWord}
 	</select>	
 	
-<!--리스트불러오기 -->
+<!--수진 . 리스트불러오기 -->
 	<select id="getUserSearchList" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
 		SELECT * 
 		FROM (
@@ -313,7 +366,7 @@
 	</select>
 	
 	
-<!-- 문의사항게시판 -->
+<!-- 수진 . 문의사항게시판 -->
 	<select id="questionBoardCount" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 			FROM CINEMA_ASKED_BOARD
@@ -331,7 +384,7 @@
       			WHERE RNUM BETWEEN #{param1} and #{param2}
 	</select> 
 
-<!-- 문의사항게시판 전체 뽑아오기 -->	
+<!-- 수진 . 문의사항게시판 전체 뽑아오기 -->	
 	<select id="questionBoardList" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 					SELECT * FROM (
       				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
@@ -344,7 +397,7 @@
       			WHERE NO = #{param1}
 	</select>
 
-<!-- 문의사항 글등록 -->
+<!-- 수진 . 문의사항 글등록 -->
 	<select id="InsertAskWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
 		INSERT INTO CINEMA_ASKED_BOARD(
 		    NO,
@@ -366,25 +419,54 @@
 
 	</select>
 	
-<!--문의사항게시판 수정 -->
+<!-- 수진 . 문의사항게시판 수정 -->
 	<select id="completeUPdateWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
 		UPDATE 
 			CINEMA_ASKED_BOARD 
 			SET TITLE = #{param1}, 
-				CONTENT = #{param2}, 
+				CONTENT = #{param2},
 				WRITEPWD = #{param3}, 
 				ISPWD = #{param4} 
 			WHERE NO = #{param5}
 	</select>
 
-<!--문의사항게시판 삭제 -->
-	<select id="completeDeleteQuestionBoard" parameterType="java.lang.String" >
+<!-- 수진 . 문의사항게시판 삭제 -->
+	<select id="completeDeleteQuestionBoard" parameterType="java.lang.String"  >
 		DELETE 
 			FROM CINEMA_ASKED_BOARD
 		WHERE NO = #{param1}
 	</select> 
 	
 
+<!-- 수진. 관리자(고객센터) 자주묻는게시판-->
+	<select id="managementWriteBoard" parameterType="java.lang.String" >
+		INSERT INTO 
+			CINEMA_FREQUENTLY_BOARD(
+				NO, 
+				QUESTION, 
+				ASKED
+			) VALUES(
+				FREQUENTLY_QUESTIONS_BOARD_SEQ.NEXTVAL, 
+				#{param1},
+				#{param2}
+			)
+	</select>
+<!-- 관리자(자주묻는게시판 리스트 ) -->
+	<select id="managementFrequentlyBoardCount" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">	
+		SELECT NO,
+		 	   QUESTION, 
+		 	   ASKED 
+		 FROM CINEMA_FREQUENTLY_BOARD 
+		 	WHERE NO = #{param1}
+ 	</select>
+<!-- 관리자(자주묻는게시판 수정 -->
+	<select id="managementUpdateFormComplete" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO" >
+		UPDATE 
+			CINEMA_FREQUENTLY_BOARD SET 
+				QUESTION = #{param1}, 
+				ASKED = #{param2} 
+			WHERE NO = #{param3}
+	</select>
 
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">

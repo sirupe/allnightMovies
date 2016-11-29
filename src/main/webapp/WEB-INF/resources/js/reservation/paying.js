@@ -18,6 +18,10 @@ function inputNum() {
 	}
 }
 
+String.prototype.replaceAll = function(org, dest) {
+    return this.split(org).join(dest);
+}
+
 function payingBtnClick() {
 	cardType 			= $('.js_cardType').val(),
 	cardNum 			= $('.js_cardNumber1').val() +
@@ -39,6 +43,7 @@ function payingBtnClick() {
 			'cardExpiryDateYear'  : cardExpiryDateYear, 	   
 			'cardOwnerBirth' 	  : cardOwnerBirth,
 			'screeningDate'		  : screeningDate + ' ' + movieTime,
+			'screeningDateType'	  : screeningDate.replaceAll('.','') + movieTime.replaceAll(':',''),
 			'movieTitle'		  : movieTitle,
 			'personCnt'			  : $personCnt.text(),
 			'theater'			  : theater,

@@ -7,7 +7,7 @@
 /**************MYINFO***************/
 /*내정보 전체*/
 .div-myinfo {
-	width: 800px;
+    width: 900px;
     display: flex;
     flex-direction: column;
     line-height: 40px;
@@ -21,7 +21,7 @@
 
 .tab-myinfo__title {
 	display: inline-block;
-	background-color: #97675e;
+	background-color: rgb(202, 147, 129);
 	width: 180px;
 	font-family: 'Jeju Gothic', serif;
     color: white;
@@ -54,7 +54,7 @@
 	align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    border: 1px solid gray;
+	border: 1px solid #97675e;
     /*font-size: 12px;*/
     line-height: 1.5em;
     background-color: white;

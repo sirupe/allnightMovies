@@ -1,5 +1,6 @@
 /***자주묻는게시판, 문의 사항 탭 ***/
 function frequentlyBoardTab() {
+	
 	var url = '/movie/mainService/serviceCenterFreQuentlyBoard'
 		cbf = function(result) {
 			console.log(result);
@@ -37,7 +38,7 @@ function frequentlyBoard() {
 /***페이징 번호를 눌렀을때 다음으로 전환하는 메소드***/
 function serviceCenterButton() {
 	var pageboard = $(this).text();
-	url    = '/movie/mainService/serviceCentergetBoardCount'
+	url    = '/movie/mainService/serviceCenterFreQuentlyBoard'
 	params = {'pageboard' : pageboard}
 	cbf    = function(result) {
 			var $frequently = $('.js_serviceContentTab');
@@ -54,7 +55,7 @@ function pagingNextButton() {
 	var $userClickPageNum      = $('.js_nextButton');
 		userClickPageNum       = $userClickPageNum.attr('data-nextpage');
 		
-	url    = '/movie/mainService/serviceCentergetBoardCount';
+	url    = '/movie/mainService/serviceCenterFreQuentlyBoard';
 	params = {'pageboard' : userClickPageNum};
 	cbf    = function(result) {
 			var $frequently = $('.js_serviceContentTab');
@@ -71,7 +72,7 @@ function pagingPreButton() {
 	var $userClickPageNum = $('.js_preButton');
 		userClickPageNum  = $userClickPageNum.attr('data-prepage');
 		
-	url    = '/movie/mainService/serviceCentergetBoardCount';
+	url    = '/movie/mainService/serviceCenterFreQuentlyBoard';
 	params = {'pageboard' : userClickPageNum};
 	cbf    = function(result) {
 			var $frequently = $('.js_serviceContentTab');
@@ -184,10 +185,10 @@ function questionBoardPagePreNumber() {
 		url    = '/movie/mainService/serviceCenterQuestionBoardChange';
 		params = {'questionBoard' : userClickPageNum};
 		cbf    = function(result) {
-				console.log(result);
+
 				var $question = $('.js_questionBoardContainer');
-				$question
-					.html(result);
+					$question
+						.html(result);
 				
 		};
 		$.post(url, params, cbf);
@@ -202,7 +203,7 @@ function questionBoardpageNextNumber() {
 	url    = '/movie/mainService/serviceCenterQuestionBoardChange';
 	params = {'questionBoard' : userClickPageNum};
 	cbf    = function(result) {
-			console.log(result);
+
 			var $question = $('.js_questionBoardContainer');
 			$question
 				.html(result)
@@ -259,7 +260,7 @@ function insertQuestionBoard() {
 	    insertTitle     = $('.js_boardContent').val(); 
 	    insertTextArea  = $('.js_boardTextArea').val();
 	    insertboardPWd  = $('.js_boardWriteBoardPwd').val(); //비
-
+	    
 	    url    = '/movie/mainService/InsertAskWriteBoard';
 	    params = {
 	    		'insertPwdcheck' : insertPwdcheck,
@@ -315,25 +316,34 @@ function completeUpdateQuestionBoard() {
 	userClickNum = $('.js_boardViewNo').attr('data-userClickNum');
 	
 	console.log(userClickNum);
-	var isResult        = true;
+	var isResult         = true;
 	 
-		$insertTitle    = $('.js_UpdateboardContent'); //제목
-	    $insertTextArea = $('.js_UpdateBoardTextArea'); //내용
-	    $insertboardPwd = $('.js_UpdateboardWriteBoardPwd'); //비밀번호
+		$insertTitle     =  $('.js_UpdateboardContent'); //제목
+	    $insertTextArea  = $('.js_UpdateBoardTextArea'); //내용
+	    $insertboardPwd  = $('.js_UpdateboardWriteBoardPwd'); //비밀번호
+	    $insertUser_id  = $('.js_UpdateboardUserId');
+	    $insertWriteDate = $('.js_UpdateboardWriteDate');
+	    
+	    
 	    
 	    insertPwdcheck  = $(".js_UpdateboardCheck").is(":checked"); //비밀번호체크여부
 	    insertTitle     = $('.js_UpdateboardContent').val(); 
 	    insertTextArea  = $('.js_UpdateBoardTextArea').val();
 	    insertboardPWd  = $('.js_UpdateboardWriteBoardPwd').val(); //비
-	    
+	    insertUser_id  = $('.js_UpdateboardUserId').val();
+	    insertWriteDate = $('.js_UpdateboardWriteDate').val();
+
 	    url    = '/movie/mainService/completeUPdateWriteBoard';
 	    params = {
 	    		'updateQuestionBoardNum' : userClickNum,
 	    		'insertTitle'            : insertTitle,
 	    		'insertTextArea'         : insertTextArea,
 	    		'insertboardPWd'         : insertboardPWd,
-	    		'insertPwdcheck'         : insertPwdcheck,		
+	    		'insertPwdcheck'         : insertPwdcheck	
+	    		//'insertUser_id'          : insertUser_id,
+	    		//'insertWriteDate'        : insertWriteDate
 	    	};
+	    
 	    cbf    = function(mav) {
 	    	if(isResult) {
 	    		alert('글수정 성공');
@@ -370,7 +380,6 @@ function deleteQuestionBoard() {
 		if(confirm('정말 삭제하시겠습니까?') == true) {
 			$.post(url, params, cbf);
 		} else {
-			alert('비밀번호가 다릅니다.');
 			return;
 		}
 }
@@ -382,7 +391,6 @@ function recheckpwdQuestionForm() {
 		userInsertPwd       = $('.QuestionBoardReCheckPWd_input').val(); //내가입력한 비밀번호
 		
 		userClickNum  = $('.js_QuestionReCheckPwdboardViewNo').attr('data-questionBoardPageNum');
-		//게시글등록때 입력한 것
 
 		url    =  '/movie/mainService/confirmPWdQuestionBoard';
 		params = {
@@ -395,11 +403,112 @@ function recheckpwdQuestionForm() {
 		};
 		if(userInsertPwd == '') {
 			alert('입력해주세요');
-		} else {
+		}
+		else {
 			$.post(url, params, cbf);
 		}
 		
 }
+
+/****************************관리자 페이지********************************************/
+//자주묻는게시판 글등록폼
+function managementFreQuentlyWriteBoard() {
+	
+	url    = '/movie/mainService/managementServiceCenterWriteForm',
+	cbf    = function(mav) {
+			 $('.js_frequentlyBoardContainer').html(mav);
+	};
+	$.post(url, cbf);
+}
+
+//관리자 글등록
+
+function managementFreQuentlyInsertBoard() {
+	var 
+		$question    = $('.js_managementQuestionContent');
+		$asked       = $('.js_managementQuestionButton_confirmTextArea');
+		
+		question     = $('.js_managementQuestionContent').val();
+		asked		 = $('.js_managementQuestionButton_confirmTextArea').val();
+		
+		url    = '/movie/mainService/managementWriteBoard';
+		params = {'question' : question,
+				  'asked'     : asked},
+		cbf    = function(mav) {
+			$('.js_frequentlyBoardContainer').html(mav);
+				
+		};
+		
+		if(asked == '' && question =='') {
+			alert('모두입력해주세요');
+		} else {
+			$.post(url, params, cbf)
+		}
+}
+
+//수정하는 폼으로 가기
+function managementFreQuentlyUpdateBoard() {
+		var no      = $(this).attr('data-message');
+	
+		console.log(no);
+		
+	url    = '/movie/mainService/managementUpdateBoard',
+	params = { 'no' : no},
+	cbf    = function(mav) {
+			 $('.js_frequentlyBoardContainer').html(mav);
+	};
+	$.post(url, params, cbf);
+}
+//수정완료
+function managementFreQuentlyUpdateComplete() {
+	
+	var isResult  = false;
+		$question = $('.js_managementQuestionUpdateContent');
+		$asked    = $('.js_managementQuestionUpdateButton_confirmTextArea');
+		
+		question  = $('.js_managementQuestionUpdateContent').val();
+		asked     = $('.js_managementQuestionUpdateButton_confirmTextArea').val();
+		no		  = $(this).attr('data-updateFormNum');
+		
+		console.log(question);
+		console.log(asked);
+		console.log(no);
+		
+		url    = '/movie/mainService/managementUpdateBoardComplete',
+		params = {'question' : question,
+				  'asked'    : asked,
+				  'no'        : no},
+		cbf    = function(mav) {
+			if(isResult) {
+				alert("수정완료");
+				$('.js_frequentlyBoardContainer').html(mav);
+			} else {
+				alert('다시확인 바랍니다.');
+			}
+		};
+		if(question == '' && asked == '') {
+			alert('모두입력해주세요');
+			isResult = false;
+		} else {  
+			isResult = true;
+			$.post(url, params, cbf);
+		}
+}
+
+//function managementFreQuentlyDeleteComplete() {
+//	var no = $(this).attr('data-updateFormNum');
+//	
+//	url		= '/movie/mainService/managementDeleteBoardComplete',
+//	params	= {'no' : no},
+//	cnf		= function(mav) {
+//				$('.js_frequentlyBoardContainer').html(mav);
+//			};
+//			if(confirm('정말 삭제하시겠습니까?') == true) {
+//				$.post(url, params, cbf);
+//			} else {
+//				return;
+//			}
+//}
 
 /************************시작***************************/
 function setServiceCenter() {
@@ -426,9 +535,9 @@ function setServiceCenter() {
 				.on('click', '.js_QuestionWriteForm', questionWriteForm) // 글쓰기폼이동
 				.on('click', '.js_questionBoard_title', questionViewBoard) //문의사항
 				.on('click', '.js_QuestionList', questionBoardTab) //목록으로
-				.on('click', '.js_questionButtonCancel',questionBoardTab)
-				.on('click', '.js_QuestionUpdateForm', questionBoardTab)
-				.on('click', '.js_serviceCenter_button',searchQuestionBoard) //검색
+				.on('click', '.js_questionButtonCancel',questionBoardTab) //목록으로(취소)
+				.on('click', '.js_QuestionUpdateForm', questionBoardTab) //
+				.on('click', '.js_serviceCenter_button',searchQuestionBoard) //검색버튼
 				.on('click', '.js_preButtonSearch',searchPrePageBoard)
 				.on('click', '.js_nextButtonSearch' ,searchNextPageBoard)
 				.on('click', '.js_pagingNumberSearch',searchCurrentPageBoard)
@@ -439,8 +548,20 @@ function setServiceCenter() {
 				.on('click', '.js_QuestionWriteDeleteBtn', deleteQuestionBoard)//삭제하기
 				.on('click', '.js_QuestionWriteUpdateBtn', updateQuestionBoard) //수정하는 폼으로
 				.on('click', '.js_QuestionUpdateBtn',completeUpdateQuestionBoard) //수정하기
-				.on('click', '.js_UpdateboardCheck', activeRePwdInput)
-				.on('click', '.js_rePwdCheckQuestionForm', recheckpwdQuestionForm);
+				.on('click', '.js_UpdateboardCheck', activeRePwdInput) //비밀글 체크됬는지안됬는지여부
+				.on('click', '.js_rePwdCheckQuestionForm', recheckpwdQuestionForm) //비밀글 체크됬는지안됬는지여부
+		
+		
+		/**************************************관리자 등록(*******************************************/
+		
+		.on('click','.js_button_FrequentlyInsertBtn', managementFreQuentlyWriteBoard) //자주묻는게시판->글등록폼으로가기
+		.on('click','.js_managementQuestionButtonConfirm',managementFreQuentlyInsertBoard) //글등록
+		.on('click','.js_managementQuestionButtonCancel',frequentlyBoardTab)//글등록폼에서 취소버튼
+		.on('click', '.js_Updatebtn',managementFreQuentlyUpdateBoard) //수정폼으로가기
+		.on('click', '.js_managementQuestionUpdateButtonConfirm',managementFreQuentlyUpdateComplete)
+		//.on('.click', '.js_Deletebtn',managementFreQuentlyDeleteComplete)
+		
+		
 }
 
 function initServiceCenter() {

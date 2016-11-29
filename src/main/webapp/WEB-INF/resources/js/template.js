@@ -27,7 +27,7 @@ function locationLogon() {
 			function(result) {
 				console.log(result.success);
 				if(result.success) {
-					location.href='/movie/mainService/getTemplate';
+					locationMain();
 				} else {
 					alert(result.data);
 				}
@@ -40,11 +40,8 @@ function locationLogon() {
 	}
 }
 
-function locationMain(e) {
+function locationMain() {
 	var url 	= '/';
-	
-	e.preventDefault();
-	e.stopPropagation();
 	
 	submit(url);
 }
@@ -62,7 +59,12 @@ function locationSearchPwd(e) {
 }
 
 function logout() {
-	location.href = '/movie/mainService/logout';
+	
+	var url = '/movie/mainService/logout';
+		cbf = function() {
+			locationMain();
+		}
+	$.post(url, cbf);
 }
 /*shin myInfo*/
 function locationMyInfo() {

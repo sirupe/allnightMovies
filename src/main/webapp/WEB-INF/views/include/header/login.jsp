@@ -8,8 +8,8 @@
 	</div>
 	<div class="header__login__comp">
 		<div class="header__login__comp__inputtext">
-			<input type="text" placeholder="아이디 입력" name="userID" id="user-id" value="test2"/>
-			<input type="password" placeholder="패스워드 입력" name="userPWD" id="user-pwd" value="2222"/>
+			<input type="text" placeholder="아이디 입력" name="userID" id="user-id" value="AllnightMovies"/>
+			<input type="password" placeholder="패스워드 입력" name="userPWD" id="user-pwd" value="0000"/>
 		</div>
 		<div class="header__login__comp__submit">
 			<button type="button" class="js_lobin-btn">

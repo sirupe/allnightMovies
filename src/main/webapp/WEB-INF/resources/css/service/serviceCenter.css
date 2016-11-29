@@ -573,23 +573,212 @@ label.UpdateboardViewSub {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .point {
 	cursor: pointer;
+}
+
+
+
+/**************************관리자등록**************************************/
+/**글등록하는폼으로가는 버튼**/
+.button_managerWriteBtn {
+    background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;	
+    margin-left: 4px;
+    padding: 6px 15px;
+    font-size: 15px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+/**글등록폼**/
+.managementQuestionBoardUpdateForm.js_managementQuestionBoardUpdateContainer.font {
+    margin: 19px;
+}
+
+.managementQuestionUpdate-content {
+   	margin: 10px 0px 15px 0px;
+}
+
+.managementQuestionUpdate_content {
+	font-size: 20px;
+}
+
+
+
+
+.questionBoard-info {
+    margin-top: 14px;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.questionBoard-content {
+   	margin: 10px 0px 15px 0px;
+}
+
+.managementQuestionUpdateBoard {
+    width: 620px;
+    font-size: 18px;
+    height: 25px;
+    font-family: 'Jeju Gothic', serif;
+    margin-bottom: 10px;
+}
+
+.managementQuestionUpdate_subject {
+    display: flex;
+}
+
+.managementQuestionUpdatetitle,
+.managementQuestionUpdateSub{
+	font-size: 20px;
+	margin-right: 30px;
+}
+
+textarea.managementQuestionUpdateTextarea {
+    width: 700px;
+    height: 320px;
+    font-size: 18px;
+    resize: none;
+    font-family: 'Jeju Gothic', serif;
+    margin: 1px 0px 10px 5px;
+}
+
+/**수정등록 버튼**/
+.managementQuestionUpdatebutton {
+	padding-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.managementQuestionUpdateButton_cancel,
+.managementQuestionUpdateButton_confirm {
+	background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 4px;
+    padding: 8px 25px;
+    font-size: 18px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+.managementQuestionButton_cancel {
+	margin-right: 30px;
+}
+
+.managementQuestionButton_cancel:hover,
+.managementQuestionButton_confirm:hover {
+	background-color: #ecd9ff;
+}
+
+/**관리자 자주묻는질문 수정폼*****/
+.managementQuestionBoardWriteForm.js_managementQuestionBoardWriteContainer.font {
+    margin: 19px;
+}
+
+.managementQuestion-content {
+   	margin: 10px 0px 15px 0px;
+}
+
+.managementQuestion_content {
+	font-size: 20px;
+}
+
+
+
+
+.questionBoard-info {
+    margin-top: 14px;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.questionBoard-content {
+   	margin: 10px 0px 15px 0px;
+}
+
+.managementQuestionwriteBoard {
+    width: 620px;
+    font-size: 18px;
+    height: 25px;
+    font-family: 'Jeju Gothic', serif;
+    margin-bottom: 10px;
+}
+
+.managementQuestion_subject {
+    display: flex;
+}
+
+.managementQuestiontitle,
+.managementQuestionSub{
+	font-size: 20px;
+	margin-right: 30px;
+}
+
+textarea.managementQuestionTextarea {
+    width: 700px;
+    height: 320px;
+    font-size: 18px;
+    resize: none;
+    font-family: 'Jeju Gothic', serif;
+    margin: 1px 0px 10px 5px;
+}
+
+/**글등록 버튼**/
+.managementQuestionbutton {
+	padding-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+..serviceCenterFrequenty__buttons {
+    display: inline;
+    margin-left: 97px;
+}
+
+.serviceCenterFrequenty__Updatebutton {
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 9px;
+    padding: 7px 4px;
+    font-size: 14px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+
+
+.managementQuestionButton_cancel:hover,
+.managementQuestionButton_confirm:hover {
+	background-color: #ecd9ff;
+}
+
+/**자주묻는게시판에있는  관리자 버튼***/
+.serviceCenterFrequenty__buttons {
+    display: inline-block;
+    margin-left: 100px;
+}
+
+.serviceCenterFrequenty__Updatebutton,
+.serviceCenterFrequenty__Canelbutton {
+    background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 4px;
+    padding: 6px 6px;
+    font-size: 14px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+.serviceCenterFrequenty__Updatebutton:hover,
+.serviceCenterFrequenty__Canelbutton:hover {
+	background-color: #ecd9ff;
 }

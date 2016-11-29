@@ -10,19 +10,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
-import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
-import com.allnightMovies.model.data.movieInfo.MovieReviewBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.Paging;
-import com.allnightMovies.utility.Paging2;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 
@@ -133,18 +128,20 @@ public class AsyncService implements AsyncAction {
 	
 	// 로그인
 	public AsyncResult<String> login() throws Exception {
-		System.out.println("async login()");
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		String result = null;
 		boolean resultBool = true;
 		System.out.println(this.params.getRequest().getRequestURL());
-		if(userLoginInfo.getUserStates() == 1) {
+		if(userLoginInfo.getUserStates() != 0) {
 			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
 				HttpSession session = this.params.getSession();
 				session.setAttribute("userID", userLoginInfo.getUserID());
+				session.setAttribute("userStatus", userLoginInfo.getUserStates());
 				if(session.getAttribute("requestURL") != null) {
 					result = session.getAttribute("requestURL").toString();
 					session.removeAttribute("requestURL");
+				} else {
+					result = "/";
 				}
 			} else {
 				result = "비밀번호가 일치하지 않습니다.";
@@ -446,10 +443,7 @@ public class AsyncService implements AsyncAction {
       List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
       Paging boardPaging = new Paging(totBoardList, 7,page, 5);
       boardPaging.setBoardPaging();
-      System.out.println(boardPaging + "페이지 그룹");
-      System.out.println(boardPaging.getStartPageNum() + "시작");
-      System.out.println(boardPaging.getEndPageNum() + "마지막");
-      System.out.println(this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()) + "?");
+      
       String boardpagingResult = "/movie/mainService/serviceCenter";
       AsyncResult<String> asyncResult = new AsyncResult<String>();
       asyncResult.setData(boardpagingResult);
@@ -474,13 +468,6 @@ public class AsyncService implements AsyncAction {
 		HttpSession session = this.params.getSession();
 		String user_Id = (String)session.getAttribute("userID");
 		System.out.println("로그인한 유저아이디 (어싱크 글등록.) InsertAskWriteBoard : " + user_Id);
-		
-		
-		System.out.println("제목 : " + title);
-		System.out.println("내용 : " + content);
-		System.out.println("비밀번호 : " + writePwd);
-		System.out.println("여부 : " + isPwd);
-		System.out.println("아이디 : " + user_Id);
 
 		if(title == "" && content == "") {
 			isResult = false;

@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+.js_managementQuestionButtonConfirm {
+    background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;	
+    margin-left: 4px;
+    padding: 6px 15px;
+    font-size: 15px;
+    font-family: 'Jeju Gothic', serif;
+}

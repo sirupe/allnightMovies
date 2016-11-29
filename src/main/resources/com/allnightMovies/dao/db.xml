@@ -298,7 +298,7 @@
 		WHERE USER_NAME = #{param1} AND  USER_BIRTH = #{param2} AND USER_GENDER = #{param3}	
 	</select>
 
-<!-- 아이디(이메일) -->
+<!--수진 .  아이디(이메일) -->
  	<select id="searchEmailCount" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
 		SELECT COUNT(USER_ID)
 			FROM USER_PERSONAL_INFO
@@ -311,13 +311,14 @@
 		WHERE USER_EMAIL = #{param1}
 	</select>
 	
-<!-- 자주묻는질문게시판 -->
+<!-- 수진 . 자주묻는질문게시판 -->
 	<select id="serviceCenter" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
 		SELECT
 			NO,
 			QUESTION,
 			ASKED
 		FROM CINEMA_FREQUENTLY_BOARD
+		ORDER BY NO DESC
 	</select>	
 
  	<select id="serviceCentergetBoard" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
@@ -326,7 +327,7 @@
          FROM (
                 SELECT NO, QUESTION, ASKED
                   FROM CINEMA_FREQUENTLY_BOARD
-                  ORDER BY NO
+                  ORDER BY NO DESC
                 )
              )
                  WHERE RNUM BETWEEN #{param1} AND #{param2}
@@ -336,7 +337,7 @@
 		 SELECT COUNT(*) 
 		 	FROM CINEMA_FREQUENTLY_BOARD
 	</select>
-<!--자주묻는게시판 검색 갯수-->
+<!--수진 . 자주묻는게시판 검색 갯수-->
 	<select id="userSearchList" resultType="java.lang.Integer" >
 		SELECT COUNT(*)
 			 FROM CINEMA_FREQUENTLY_BOARD 
@@ -344,7 +345,7 @@
 			 			OR ASKED LIKE #{serviceCenterSearchWord}
 	</select>	
 	
-<!--리스트불러오기 -->
+<!--수진 . 리스트불러오기 -->
 	<select id="getUserSearchList" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
 		SELECT * 
 		FROM (
@@ -365,7 +366,7 @@
 	</select>
 	
 	
-<!-- 문의사항게시판 -->
+<!-- 수진 . 문의사항게시판 -->
 	<select id="questionBoardCount" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 			FROM CINEMA_ASKED_BOARD
@@ -383,7 +384,7 @@
       			WHERE RNUM BETWEEN #{param1} and #{param2}
 	</select> 
 
-<!-- 문의사항게시판 전체 뽑아오기 -->	
+<!-- 수진 . 문의사항게시판 전체 뽑아오기 -->	
 	<select id="questionBoardList" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 					SELECT * FROM (
       				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
@@ -396,7 +397,7 @@
       			WHERE NO = #{param1}
 	</select>
 
-<!-- 문의사항 글등록 -->
+<!-- 수진 . 문의사항 글등록 -->
 	<select id="InsertAskWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
 		INSERT INTO CINEMA_ASKED_BOARD(
 		    NO,
@@ -418,25 +419,54 @@
 
 	</select>
 	
-<!--문의사항게시판 수정 -->
+<!-- 수진 . 문의사항게시판 수정 -->
 	<select id="completeUPdateWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
 		UPDATE 
 			CINEMA_ASKED_BOARD 
 			SET TITLE = #{param1}, 
-				CONTENT = #{param2}, 
+				CONTENT = #{param2},
 				WRITEPWD = #{param3}, 
 				ISPWD = #{param4} 
 			WHERE NO = #{param5}
 	</select>
 
-<!--문의사항게시판 삭제 -->
-	<select id="completeDeleteQuestionBoard" parameterType="java.lang.String" >
+<!-- 수진 . 문의사항게시판 삭제 -->
+	<select id="completeDeleteQuestionBoard" parameterType="java.lang.String"  >
 		DELETE 
 			FROM CINEMA_ASKED_BOARD
 		WHERE NO = #{param1}
 	</select> 
 	
 
+<!-- 수진. 관리자(고객센터) 자주묻는게시판-->
+	<select id="managementWriteBoard" parameterType="java.lang.String" >
+		INSERT INTO 
+			CINEMA_FREQUENTLY_BOARD(
+				NO, 
+				QUESTION, 
+				ASKED
+			) VALUES(
+				FREQUENTLY_QUESTIONS_BOARD_SEQ.NEXTVAL, 
+				#{param1},
+				#{param2}
+			)
+	</select>
+<!-- 관리자(자주묻는게시판 리스트 ) -->
+	<select id="managementFrequentlyBoardCount" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">	
+		SELECT NO,
+		 	   QUESTION, 
+		 	   ASKED 
+		 FROM CINEMA_FREQUENTLY_BOARD 
+		 	WHERE NO = #{param1}
+ 	</select>
+<!-- 관리자(자주묻는게시판 수정 -->
+	<select id="managementUpdateFormComplete" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO" >
+		UPDATE 
+			CINEMA_FREQUENTLY_BOARD SET 
+				QUESTION = #{param1}, 
+				ASKED = #{param2} 
+			WHERE NO = #{param3}
+	</select>
 
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">

@@ -96,12 +96,21 @@ public class Params {
 	private String noticeSearachWord;
 	private String updateQuestionBoardNum; //문의사항 게시글번호
 	
+// 고객센터 (관리자)->자주묻는게시판
+	private String question;
+	private String asked;
+	private String no;
+	
+	
+	
 // 문의 사항 게시판
 	private String insertTextArea; //내용
 	private String insertTitle; //제목
 	private Integer insertboardPWd; //비밀번호
 	private boolean insertPwdcheck; //비번체크여부
 	private Integer userInsertPwd; //확인비밀번호
+	private String insertUser_id;
+	private String insertWriteDate;
 	
 //영화 상세보기
 	private String movieInfoTitle;

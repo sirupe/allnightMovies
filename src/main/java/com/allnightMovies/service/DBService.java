@@ -216,7 +216,19 @@ public class DBService {
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum) throws Exception {
 		return dbMapper.completeDeleteQuestionBoard(completeDeleteQuestionBoardNum);
 	}
+
+/**JUNG 고객센터 자주묻는질문 관리자페이지 **/
+	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception {
+		return dbMapper.managementWriteBoard(question, asked);
+	}
 	
+	public CinemaFrequentlyBoardDTO managementFrequentlyBoardCount(String no) throws Exception {
+		return dbMapper.managementFrequentlyBoardCount(no);
+	}
+	
+	public CinemaFrequentlyBoardDTO managementUpdateFormComplete(String question, String asked, String no) throws Exception {
+		return dbMapper.managementUpdateFormComplete(question, asked, no);
+	}
 	
 /** shin. SEARCH PWD **/ //TODO 연종
 	public Integer searchPWD(String searchPwdUserID)  {

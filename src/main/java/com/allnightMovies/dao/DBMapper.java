@@ -88,6 +88,12 @@ public interface DBMapper {
 	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception;
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum);
 	
+/**jung 고객센터 관리자**/
+	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception;
+	public CinemaFrequentlyBoardDTO managementFrequentlyBoardCount(String no);
+	public CinemaFrequentlyBoardDTO managementUpdateFormComplete(String question, String asked, String no) throws Exception;
+	
+	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);

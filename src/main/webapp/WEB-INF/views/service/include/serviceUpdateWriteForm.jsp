@@ -21,9 +21,9 @@
 			
 			<div class="questionUpdateBoardView-detail">
 				<label class="UpdateboardViewwriter">작성자</label>
-				<input class="UpdateboardwriteBoardViewinput" value = "${questionBoardList.getUser_Id() }" type="text" readonly>
+				<input class="UpdateboardwriteBoardViewinput js_UpdateboardUserId" value = "${questionBoardList.getUser_Id() }" type="text" readonly>
 				<label class="UpdateboardViewwriteDate">작성일</label>
-				<input class="UpdateboardwriteBoardViewinput"  value="${questionBoardList.getWrite_date() }" type="text" readonly>
+				<input class="UpdateboardwriteBoardViewinput js_UpdateboardWriteDate"  value="${questionBoardList.getWrite_date() }" type="text" readonly>
 			</div>
 		
 		

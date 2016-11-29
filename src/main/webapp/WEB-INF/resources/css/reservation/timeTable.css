@@ -35,6 +35,7 @@ button.movie_screening_date.active, button.movie_screening_date:hover {
     font-size: 17px;
 }
 
+
 div.movie_screening_panel {
 	background-color: white;
     max-height: 0;
@@ -50,6 +51,15 @@ div.movie_screening_panel.show {
     opacity: 1;
     max-height: 800px;
 
+}
+
+div.screening-date-panel0 {
+	opacity: 1;
+    max-height: 800px;
+}
+
+button.screening-date-btn0 {
+	background-color: rgb(213, 160, 161);
 }
 
 .movie__info {

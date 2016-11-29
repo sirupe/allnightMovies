@@ -1,6 +1,5 @@
 package com.allnightMovies.model.data.movieInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;

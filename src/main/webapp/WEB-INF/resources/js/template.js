@@ -156,6 +156,17 @@ function searchMovieInfo() {
 	}
 }
 
+
+function managerMenuBtnClick() {
+	submit(
+		'/movie/mainService/getTemplate',
+		'managerMenu',
+		'managerMenu',
+		'managerMenu/managerMenu',
+		'managerMenu/managerMenu'
+	);
+}
+
 function setEventTemplate() {
 	var $form = $('.js_form');
 	
@@ -167,6 +178,7 @@ function setEventTemplate() {
 		 .on('click', '.js_myInfo', locationMyInfo)
 		 .on('click', '.js_logout', logout)
 		 .on('click', '.js_searchMovieBtn', searchMovieInfo)
+		 .on('click', '.js_managerMenuBtn', managerMenuBtnClick)
 }
 
 function initTemplate() {

@@ -485,51 +485,8 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-/*******연종. PWD찾기 SHIN*******/
-	public ModelAndView searchPwdID() throws Exception {
-		ModelAndView mav = this.getTemplate();
-		String searchPwdUserID = this.params.getSearchPwdUserID();
-		Integer result = this.dbService.searchPWD(searchPwdUserID);
-		
-		HttpSession session =  this.params.getSession();	
-		session.setAttribute("userId", searchPwdUserID);
-		
-		mav.addObject("result", result);
-		return mav;
-	}
-	public ModelAndView searchPwdsendEmail() throws Exception {
-		ModelAndView mav = this.getTemplate();
-		Random rand = new Random();
-		int randNum = rand.nextInt(900000) + 100000;
-		System.out.println("mainservice 인증번호> : " + randNum);
-		
-		HttpSession session = this.params.getSession();
-		String searchPwdUserID = (String)session.getAttribute("userId");
-		String userEmail = this.dbService.searchEmail(searchPwdUserID);
-		HttpSession sessionRandNum = this.params.getSession();
-		sessionRandNum.setAttribute("randNum", randNum);
-		new SendEmail(String.valueOf(randNum), userEmail); 
-		return mav;
-	}
-	public ModelAndView checkPwdConfirmNum() throws Exception {
-		this.params.setDirectory("searchPwd");
-		this.params.setPage("searchPwdChangePwd");
-		this.params.setContentCSS("searchPwd/searchPwd");
-		this.params.setContentjs("searchPwd/searchPwd");
-		return this.getTemplate();	
-	}
-	public ModelAndView updatePWD() throws Exception {
-		HttpSession session = this.params.getSession();
-		String searchPwdUserID = (String)session.getAttribute("userId");
-		String searchPwdNewPwd = this.params.getSearchPwdNewPwd();
-		this.dbService.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
-		this.params.setDirectory("searchPwd");
-		this.params.setPage("searchPwdChangeCompleted");
-		return this.logout();
-	}
-//------------------------------------------------------------------------
 	
-	/*******ID찾기(회원정보) 수진*******/	
+	/*******ID찾기(회원정보) 수진*******/	 //TODO 수진
 	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -1080,7 +1037,49 @@ public class MainService implements Action {
 		
 		return mav;
 	}
-
+	/*******연종. PWD찾기 SHIN*******/ //TODO 연종
+	public ModelAndView searchPwdID() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		String searchPwdUserID = this.params.getSearchPwdUserID();
+		Integer result = this.dbService.searchPWD(searchPwdUserID);
+		
+		HttpSession session =  this.params.getSession();	
+		session.setAttribute("userId", searchPwdUserID);
+		
+		mav.addObject("result", result);
+		return mav;
+	}
+	public ModelAndView searchPwdsendEmail() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		Random rand = new Random();
+		int randNum = rand.nextInt(900000) + 100000;
+		System.out.println("mainservice 인증번호> : " + randNum);
+		
+		HttpSession session = this.params.getSession();
+		String searchPwdUserID = (String)session.getAttribute("userId");
+		String userEmail = this.dbService.searchEmail(searchPwdUserID);
+		HttpSession sessionRandNum = this.params.getSession();
+		sessionRandNum.setAttribute("randNum", randNum);
+		new SendEmail(String.valueOf(randNum), userEmail); 
+		return mav;
+	}
+	public ModelAndView checkPwdConfirmNum() throws Exception {
+		this.params.setDirectory("searchPwd");
+		this.params.setPage("searchPwdChangePwd");
+		this.params.setContentCSS("searchPwd/searchPwd");
+		this.params.setContentjs("searchPwd/searchPwd");
+		return this.getTemplate();	
+	}
+	public ModelAndView updatePWD() throws Exception {
+		HttpSession session = this.params.getSession();
+		String searchPwdUserID = (String)session.getAttribute("userId");
+		String searchPwdNewPwd = this.params.getSearchPwdNewPwd();
+		this.dbService.updateNewPwd(searchPwdUserID, searchPwdNewPwd);
+		this.params.setDirectory("searchPwd");
+		this.params.setPage("searchPwdChangeCompleted");
+		return this.logout();
+	}
+//------------------------------------------------------------------------
 	
 
 /*******연종. MyINFO SHIN*******/	//TODO

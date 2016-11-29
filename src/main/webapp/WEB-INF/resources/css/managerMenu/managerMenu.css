@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+.manager {
+    width: 1000px;
+    display: flex;
+}
+
+.manager__menu__member {
+    text-align: center;
+    padding: 25px 40px;
+    font-size: 21px;
+    background: whitesmoke;
+    color: darkseagreen;
+}
+
+.manager__menu__member:hover {
+    background-color: #5e5e5e;
+    color: #dfffdf;
+}

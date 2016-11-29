@@ -30,7 +30,7 @@ public class AllnightMoviesApplication {
 				registry.addInterceptor(new LoginCookieAddInterceptor()).addPathPatterns("/movie/mainService/login");
 				registry.addInterceptor(new LogoutInterceptor()).addPathPatterns("/movie/mainService/logout");
 				registry.addInterceptor(new LoginRequiredPageInterceptor()).addPathPatterns("/movie/mainService/ticketing","/movie/mainService/questionBoardWriteForm", "/movie/mainService/viewMyInfo");
-				registry.addInterceptor(new ManagerCheckInterceptor()).addPathPatterns("/*");
+				registry.addInterceptor(new ManagerCheckInterceptor()).addPathPatterns("/**");
 			}
 		};
 	}

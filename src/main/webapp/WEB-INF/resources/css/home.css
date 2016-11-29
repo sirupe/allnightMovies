@@ -175,9 +175,7 @@ body {
 .content__sub-menus {
     display: flex;
 }
-.content__body {
-	padding: 10px;
-}
+
 .header__login__text a:visited {
     color: #e8d5d7;
     font-weight: bold;
@@ -278,6 +276,7 @@ body {
     background-color: #b79fa1;
 	min-width: 160px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 9999;
 }
 
 .dropdown__sub-menu a{

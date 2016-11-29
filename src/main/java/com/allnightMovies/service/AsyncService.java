@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
@@ -129,7 +128,6 @@ public class AsyncService implements AsyncAction {
 	
 	// 로그인
 	public AsyncResult<String> login() throws Exception {
-		System.out.println("async login()");
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		String result = null;
 		boolean resultBool = true;
@@ -142,6 +140,8 @@ public class AsyncService implements AsyncAction {
 				if(session.getAttribute("requestURL") != null) {
 					result = session.getAttribute("requestURL").toString();
 					session.removeAttribute("requestURL");
+				} else {
+					result = "/";
 				}
 			} else {
 				result = "비밀번호가 일치하지 않습니다.";
@@ -304,6 +304,7 @@ public class AsyncService implements AsyncAction {
       asyncResult.setData(searchPwdResult);
       return asyncResult;
    }
+   
    /**수진 이메일 인증번호 생성하여 보내기**/
    //이메일
    @SuppressWarnings("rawtypes")
@@ -481,13 +482,5 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 		
 	}
-	
-	/**********************수진. 관리자(공지사항)**************************/
-	
-
-	
-	
-	
-
 }
    

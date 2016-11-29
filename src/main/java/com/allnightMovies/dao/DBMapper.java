@@ -16,6 +16,7 @@ import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
+import com.allnightMovies.model.data.movieInfo.MovieStillCut;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
@@ -56,6 +57,9 @@ public interface DBMapper {
 /** ji. ticketing confirmation 예매내역 **/
 	public List<UserSelectTicketingInfo> reservationSeatInfo(String userID);
 	public MovieEndTimeDTO getMovieEndTime(String ticketNum);
+	
+/** ji. cancel ticket 예매취소 **/
+	public void cancelTicket(String ticketNum, String userID);
 	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
@@ -123,6 +127,13 @@ public interface DBMapper {
 	public List<MovieCurrentFilmDTO> getNewFilmDTO();
 	public List<CinemaNoticeBoardDTO> getMainNoticeDTO();
 	
+/** shin. reviewBoard**/	
 	public MovieBasicInfo getMovieBasicInfo(String movieTitle);
 	public List<MovieReviewBoard> getReviewBoard(String movieTitle);
+	public List<MovieReviewBoard> getReviewBoardList(Integer blockStartNum, Integer blockEndNum, String movieTitle);
+	public MovieReviewBoard insertReview(Integer score, String contents, String userID, String movieTitle);
+	public MovieReviewBoard deleteReview(Integer reviewNo);
+/** shin.  stillcut**/
+	public List<MovieStillCut> getStillcut(String movieTitle);
+
 }

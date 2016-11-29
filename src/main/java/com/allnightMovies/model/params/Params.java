@@ -79,6 +79,9 @@ public class Params {
 	private String cardExpiryDateMonth;
 	private String cardExpiryDateYear;
 	private String cardOwnerBirth;
+	
+// 예매취소
+	private String ticketNum;
 
 // 공지사항 게시판
 	private int noticeUserClickPage;/*삭제예정*/
@@ -113,4 +116,11 @@ public class Params {
 	
 //영화 상세보기
 	private String movieInfoTitle;
+	private int movieInfoReviewPage;
+	
+//리뷰 등록
+	private int reviewScore;
+	private String reviewContents;
+	private String deleteReviewID;
+	private int reviewNo;
 }

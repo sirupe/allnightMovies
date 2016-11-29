@@ -21,6 +21,7 @@ import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
+import com.allnightMovies.model.data.movieInfo.MovieStillCut;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
@@ -153,7 +154,12 @@ public class DBService {
 		return dbMapper.getMovieEndTime(ticketNum);
 	}
 	
-/** jung. 상영시간표 **/ //TODO 수진
+/** ji. cancel ticket 예매취소 **/
+	public void cancelTicket(String ticketNum, String userID) {
+		dbMapper.cancelTicket(ticketNum, userID);
+	}
+
+	/** jung. 상영시간표 **/ //TODO 수진
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
 	}
@@ -310,5 +316,16 @@ public class DBService {
 	public List<MovieReviewBoard> getReviewBoard(String movieTitle) {
 		return dbMapper.getReviewBoard(movieTitle);
 	}
-	
+	public List<MovieReviewBoard> getReviewBoardList(Integer blockStartNum, Integer blockEndNum, String movieTitle) {
+		return dbMapper.getReviewBoardList(blockStartNum, blockEndNum, movieTitle);
+	}
+	public MovieReviewBoard insertReview(Integer score, String contents, String userID, String movieTitle ) {
+		return dbMapper.insertReview(score, contents, userID, movieTitle);
+	}
+	public MovieReviewBoard deleteReview(Integer reviewNo) {
+		return dbMapper.deleteReview(reviewNo);
+	}
+	public List<MovieStillCut> getStillcut(String movieTitle) {
+		return dbMapper.getStillcut(movieTitle);
+	}
 }

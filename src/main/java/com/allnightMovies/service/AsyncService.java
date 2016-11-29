@@ -10,15 +10,19 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
+import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
+import com.allnightMovies.model.data.movieInfo.MovieReviewBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.utility.Paging;
+import com.allnightMovies.utility.Paging2;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 
@@ -303,6 +307,7 @@ public class AsyncService implements AsyncAction {
       asyncResult.setData(searchPwdResult);
       return asyncResult;
    }
+   
    /**수진 이메일 인증번호 생성하여 보내기**/
    //이메일
    @SuppressWarnings("rawtypes")
@@ -490,6 +495,5 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 		
 	}
-
 }
    

@@ -101,4 +101,11 @@ public class Params {
 	
 //영화 상세보기
 	private String movieInfoTitle;
+	private int movieInfoReviewPage;
+	
+//리뷰 등록
+	private int reviewScore;
+	private String reviewContents;
+	private String deleteReviewID;
+	private int reviewNo;
 }

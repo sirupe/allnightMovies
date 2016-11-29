@@ -9,5 +9,5 @@ public class MovieReviewBoard {
 	private String writeDate;
 	private String movieTitle;
 	private int reviewEvaluate;
-
+	private int reviewNo;
 }

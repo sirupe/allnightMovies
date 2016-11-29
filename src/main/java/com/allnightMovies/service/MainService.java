@@ -10,12 +10,14 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
+import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
@@ -28,10 +30,12 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
+import com.allnightMovies.model.data.movieInfo.MovieReviewBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO;
 import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO;
+import com.allnightMovies.model.data.movieInfo.MovieStillCut;
 import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
@@ -1126,7 +1130,6 @@ public class MainService implements Action {
 		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
 		//사용자가 검색한 단어 저장 
 		String searchWord = this.params.getNoticeSearachWord();
-		System.out.println("2. searchWord 저장 " + searchWord);
 		//페이징처리를 위한 과정 
 		int noticePage = this.params.getNoticePage();
 		int totalList = this.dbService.searchBoardCount("%"+searchWord+"%");
@@ -1144,11 +1147,10 @@ public class MainService implements Action {
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/searchNotice");
-		
 		return mav;
 	}
-//영화상세정보
-	public ModelAndView movieDetailInfo() throws Exception {
+/*************SHIN _ 영화상세정보***********/
+	public ModelAndView movieDetailInfo() throws Exception {//TODO
 		ModelAndView mav = this.getTemplate();
 		String movieTitle = this.params.getMovieInfoTitle();
 		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
@@ -1169,12 +1171,11 @@ public class MainService implements Action {
 			reviewResult = false;
 		}
 		
-//		System.out.println("상영날짜        >>    " + movieReleadeDate);
-//		System.out.println("오늘날짜        >>    " + currentTime);
-//		System.out.println("reviewResult   >>  " + reviewResult );
-//		System.out.println("userCheck >> "  + user);
-//		System.out.println("MAIN movieDetailInfo >>  "+ movieTitle);
+	
+		List<MovieStillCut> movieStillCutDTO = this.dbService.getStillcut(movieTitle);
 		
+		mav.addObject("movieStillCutDTO", movieStillCutDTO);
+		mav.addObject("movieStillCutCount", movieStillCutDTO.size());
 		mav.addObject("reviewResult", reviewResult);
 		mav.addObject("movieBasicInfo", movieBasicInfo);
 		mav.addObject("directory", "movie");
@@ -1183,21 +1184,112 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "movie/movieBasicInfo");
 		return mav;
 	}
-	public ModelAndView getReviewBoard() {
+	
+	public ModelAndView getReviewBoard() throws Exception {
 		ModelAndView mav = new ModelAndView("movie/include/reviewBoard");
-		
+		MovieReviewBoardDTO movieReviewBoardDTO = new MovieReviewBoardDTO();
 		String movieTitle = this.params.getMovieInfoTitle();
-		
 		HttpSession session = this.params.getSession();
 		String user = (String)session.getAttribute("userID");
 		
 		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
-		System.out.println("MovieReviewBoard  평점갯수" + reviewBoardDTO.size());
+		this.params.setMovieInfoReviewPage(1);
+		int reviewPage = this.params.getMovieInfoReviewPage();
+		Paging2 paging = new Paging2();
+		paging.makePaging(reviewBoardDTO.size(), reviewPage, 5, 5);
 		
-		mav.addObject("reviewBoardDTO", reviewBoardDTO);
+		movieReviewBoardDTO.setBlockStartNum(paging.getStartPageList());
+		movieReviewBoardDTO.setBlockEndNum(paging.getEndPageList());
+		movieReviewBoardDTO.setMovieTitle("%"+movieTitle+"%");
+		
+		List<MovieReviewBoard> reviewBoardListDTO = this.dbService.getReviewBoardList(movieReviewBoardDTO.getBlockStartNum(), movieReviewBoardDTO.getBlockEndNum(), movieReviewBoardDTO.getMovieTitle());
+		
+		mav.addObject("reviewBoardListDTO", reviewBoardListDTO);
 		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
+		mav.addObject("paging", paging);
 		mav.addObject("userCheck", user);
+		return mav;
+	}
+	//TODO   페이징 리뷰
+	public ModelAndView getReviewBoardPage() throws Exception {
+		ModelAndView mav = new ModelAndView("movie/include/reviewBoard");
+		String movieTitle = this.params.getMovieInfoTitle();
+		HttpSession session = this.params.getSession();
+		String user = (String)session.getAttribute("userID");
 		
+		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
+		
+		System.out.println(movieTitle);
+		int reviewPage = this.params.getMovieInfoReviewPage();
+		Paging2 paging = new Paging2();
+		paging.makePaging(reviewBoardDTO.size(), reviewPage, 5, 5);
+		List<MovieReviewBoard> reviewBoardListDTO = this.dbService.getReviewBoardList(paging.getStartPageList(), paging.getEndPageList(), "%"+movieTitle+"%");
+		
+		mav.addObject("reviewBoardListDTO", reviewBoardListDTO);
+		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
+		mav.addObject("paging", paging);
+		mav.addObject("userCheck", user);
+		return mav;
+	}
+	
+	public ModelAndView insertReviewBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("movie/include/reviewBoard");
+		MovieReviewBoard movieReviewBoard = new MovieReviewBoard();
+		
+		HttpSession session = this.params.getSession();
+		String userID = (String)session.getAttribute("userID");
+		Integer reviewEvaluate = this.params.getReviewScore();
+		String reviewContents = this.params.getReviewContents();
+		String movieTitle = this.params.getMovieInfoTitle();
+		
+		movieReviewBoard.setReviewContents(reviewContents);
+		movieReviewBoard.setReviewWriter(userID);
+		movieReviewBoard.setMovieTitle(movieTitle);
+		movieReviewBoard.setReviewEvaluate(reviewEvaluate);
+		
+		this.dbService.insertReview(movieReviewBoard.getReviewEvaluate(),
+				movieReviewBoard.getReviewContents(),
+				movieReviewBoard.getReviewWriter(),
+				movieReviewBoard.getMovieTitle());
+		
+		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
+		
+		this.params.setMovieInfoReviewPage(1);
+		int reviewPage = this.params.getMovieInfoReviewPage();
+		Paging2 paging = new Paging2();
+		paging.makePaging(reviewBoardDTO.size(), reviewPage, 5, 5);
+		
+		List<MovieReviewBoard> reviewBoardListDTO = this.dbService.getReviewBoardList(paging.getStartPageList(), paging.getEndPageList(), "%"+movieTitle+"%");
+		
+		mav.addObject("reviewBoardListDTO", reviewBoardListDTO);
+		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
+		mav.addObject("paging", paging);
+		mav.addObject("userCheck", userID);
+		return mav;
+	}
+	
+	
+	public ModelAndView deleteReviewBoard() throws Exception {
+		ModelAndView mav = new ModelAndView("movie/include/reviewBoard");
+		HttpSession session = this.params.getSession();
+		String userID = (String)session.getAttribute("userID");
+		
+		String movieTitle = this.params.getMovieInfoTitle();
+		Integer reviewNo = this.params.getReviewNo();
+		
+		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
+		
+		Paging2 paging = new Paging2();
+		paging.makePaging(reviewBoardDTO.size(), 1, 5, 5);
+		
+		if (userID.equals(this.params.getDeleteReviewID())) {
+			this.dbService.deleteReview(reviewNo);
+		}
+		List<MovieReviewBoard> reviewBoardListDTO = this.dbService.getReviewBoardList(paging.getStartPageList(), paging.getEndPageList(), movieTitle);
+		mav.addObject("reviewBoardListDTO", reviewBoardListDTO);
+		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
+		mav.addObject("paging", paging);
+		mav.addObject("userCheck", userID);
 		return mav;
 	}
 }

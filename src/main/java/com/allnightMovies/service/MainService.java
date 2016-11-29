@@ -11,14 +11,12 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
-import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
@@ -29,6 +27,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfoCast;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
 import com.allnightMovies.model.data.movieInfo.MovieReviewBoardDTO;
@@ -449,6 +448,40 @@ public class MainService implements Action {
 		
 		this.dbService.cancelTicket(this.params.getTicketNum(), (String) session.getAttribute("userID"));
 		
+		return mav;
+	}
+	
+/***** 은정. 영화검색 
+ * @throws Exception *****/	
+	public ModelAndView searchMovieInfo() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		System.out.println(this.params.getSearchWord());
+		List<MovieBasicInfo> movieList = this.dbService.searchMovieInfo("%" + this.params.getSearchWord() + "%");
+		for(int i = 0, size = movieList.size(); i < size; i++) {
+			MovieBasicInfo basicInfo = movieList.get(i);
+			
+			String[] castSplitArr = basicInfo.getMovieCast().split(",");
+			
+			List<MovieBasicInfoCast> castList = new ArrayList<MovieBasicInfoCast>();
+			
+			for(String cast : castSplitArr) {
+				String[] castResult = cast.split("\\(");
+				
+				MovieBasicInfoCast castInfo = new MovieBasicInfoCast();
+				castInfo.setCast(castResult[0]);
+				try {
+					castInfo.setAct("(" + castResult[1]);
+				} catch(java.lang.ArrayIndexOutOfBoundsException e) {
+					
+				}
+				
+				castList.add(castInfo);
+			}
+			basicInfo.setMovieCastList(castList);
+			basicInfo.setMovieAgeLimitText(basicInfo.getMovieAgeLimit() == 0 ? "전체관람가" : basicInfo.getMovieAgeLimit() + "세 관람가");
+		}
+		mav.addObject("movieList" , movieList);
+		mav.addObject("searchWord",this.params.getSearchWord());
 		return mav;
 	}
 	

@@ -19,8 +19,8 @@
 		</c:forEach>
 	</ul>
 	<div class="header__menus__search">
-		<input type="text" class="header__menus__search__text" placeholder="영화 정보 검색"/>
-		<button type="button" class="header__menus__search__button">
+		<input class="js_searchMovieText header__menus__search__text" type="text" placeholder="영화 정보 검색" name="searchWord"/>
+		<button class="js_searchMovieBtn header__menus__search__button" type="button">
 			검색
 		</button>
 	</div>

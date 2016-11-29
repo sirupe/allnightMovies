@@ -145,6 +145,17 @@ function emailRegexCheck(email) {
 	return regex.test(email);
 }
 
+function searchMovieInfo() {
+	var searchWord = $('.js_searchMovieText').val();
+
+	if(searchWord.length < 2) {
+		alert('검색어는 2자 이상 입력해주세요.');
+	} else {
+		$('.js_hiddenParam').val(searchWord);
+		submit('/movie/mainService/searchMovieInfo', 'include/section', 'searchMovieInfo', 'searchMovieInfo', 'searchMovieInfo');
+	}
+}
+
 function setEventTemplate() {
 	var $form = $('.js_form');
 	
@@ -155,6 +166,7 @@ function setEventTemplate() {
 		 .on('click', '.js_searchID', locationSearchID)
 		 .on('click', '.js_myInfo', locationMyInfo)
 		 .on('click', '.js_logout', logout)
+		 .on('click', '.js_searchMovieBtn', searchMovieInfo)
 }
 
 function initTemplate() {

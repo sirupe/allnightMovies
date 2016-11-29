@@ -53,13 +53,16 @@ public interface DBMapper {
 	public List<String> reservationSeatInfo(CinemaSeatReserveInfo seatReserveInfo);
 	public List<CinemaSeatDTO> getTheaterSeatInfo(CinemaSeatReserveInfo reserveInfo);
 	public Integer getTheaterSeatColCnt(String theater);
-	
-/** ji. ticketing confirmation 예매내역 **/
+
+	/** ji. ticketing confirmation 예매내역 **/
 	public List<UserSelectTicketingInfo> reservationSeatInfo(String userID);
 	public MovieEndTimeDTO getMovieEndTime(String ticketNum);
 	
 /** ji. cancel ticket 예매취소 **/
 	public void cancelTicket(String ticketNum, String userID);
+
+/** ji. search movie info  **/	
+	public List<MovieBasicInfo> searchMovieInfo(String searchWord);
 	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;

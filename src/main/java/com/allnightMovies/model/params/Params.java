@@ -122,4 +122,7 @@ public class Params {
 	private String reviewContents;
 	private String deleteReviewID;
 	private int reviewNo;
+	
+//메인 검색
+	private String searchWord;
 }

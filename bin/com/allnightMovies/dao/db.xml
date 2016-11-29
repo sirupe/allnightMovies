@@ -254,6 +254,29 @@
 		WHERE USER_TICKET_NUMBER=#{param1} AND USER_ID=#{param2}
 	</delete>
 
+<!-- JI. SEARCH MOVIE INFO : 영화정보검색 -->
+	<select id="searchMovieInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.movieInfo.MovieBasicInfo">
+		SELECT 
+		    MOVIE_AGE_LIMIT MOVIEAGELIMIT,
+		    MOVIE_AUTHOR MOVIEAUTHOR,
+		    MOVIE_CAST MOVIECAST,
+		    MOVIE_DIRECTOR MOVIEDIRECTOR,
+		    MOVIE_GENRE MOVIEGENRE,
+		    MOVIE_INTRO MOVIEINTRO,
+		    MOVIE_POSTER MOVIEPOSTER,
+		    MOVIE_RELEASE_DATE MOVIERELEASEDATE,
+		    MOVIE_RUNTIME MOVIERUNTIME,
+		    MOVIE_TITLE MOVIETITLE
+		FROM MOVIE_BASIC_INFO 
+		WHERE
+		    MOVIE_TITLE LIKE #{searchWord} OR
+ 		    MOVIE_DIRECTOR LIKE #{searchWord} OR
+		    MOVIE_AUTHOR LIKE #{searchWord} OR
+		    MOVIE_GENRE LIKE #{searchWord} OR
+		    MOVIE_CAST LIKE #{searchWord} OR
+		    MOVIE_INTRO LIKE #{searchWord}
+		ORDER BY MOVIE_TITLE, MOVIE_INTRO, MOVIE_CAST
+	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>

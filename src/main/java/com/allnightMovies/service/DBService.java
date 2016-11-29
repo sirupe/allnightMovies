@@ -159,7 +159,12 @@ public class DBService {
 		dbMapper.cancelTicket(ticketNum, userID);
 	}
 
-	/** jung. 상영시간표 **/ //TODO 수진
+/** ji. search movie info 영화 검색 **/
+	public List<MovieBasicInfo> searchMovieInfo(String searchWord) {
+		return dbMapper.searchMovieInfo(searchWord);
+	}
+	
+/** jung. 상영시간표 **/ //TODO 수진
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
 	}

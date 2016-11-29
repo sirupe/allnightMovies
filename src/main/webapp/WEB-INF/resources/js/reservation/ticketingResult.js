@@ -16,7 +16,7 @@ function setPayingResultEvents() {
 	var $container = $('.js_ticketingResultContainer');
 	$container.on('click', '.js_popMoviePayingCancel', popMoviePayingCancel)
 			  .on('click', '.js_locationMain', locationMain)
-			  .on('click', '.js_ticketingInfo' locationTicketInfo)
+			  .on('click', '.js_ticketingInfo', locationTicketInfo)
 }
 
 function initPayingResult() {	

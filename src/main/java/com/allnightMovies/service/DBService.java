@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.allnightMovies.dao.DBMapper;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
@@ -25,9 +24,11 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
 
@@ -135,16 +136,21 @@ public class DBService {
 		return dbMapper.userTicketingInfoInsert(ticketingInfo);
 	}
 	
-	public List<String> reservationSeatInfo(CinemaSeatReserveInfo seatReserveInfo) {
-		return dbMapper.reservationSeatInfo(seatReserveInfo);
-	}
-	
 	public List<CinemaSeatDTO> getTheaterSeatInfo(CinemaSeatReserveInfo reserveInfo) {
 		return dbMapper.getTheaterSeatInfo(reserveInfo);
 	}
 	
 	public Integer getTheaterSeatColCnt(String theater) {
 		return dbMapper.getTheaterSeatColCnt(theater);
+	}
+	
+/** ji. ticketing confirmation 예매확인 **/
+	public List<UserSelectTicketingInfo> reservationSeatInfo(String userID) {
+		return dbMapper.reservationSeatInfo(userID);
+	}
+	
+	public MovieEndTimeDTO getMovieEndTime(String ticketNum) {
+		return dbMapper.getMovieEndTime(ticketNum);
 	}
 	
 /** jung. 상영시간표 **/ //TODO 수진
@@ -205,7 +211,19 @@ public class DBService {
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum) throws Exception {
 		return dbMapper.completeDeleteQuestionBoard(completeDeleteQuestionBoardNum);
 	}
+
+/**JUNG 고객센터 자주묻는질문 관리자페이지 **/
+	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception {
+		return dbMapper.managementWriteBoard(question, asked);
+	}
 	
+	public CinemaFrequentlyBoardDTO managementFrequentlyBoardCount(String no) throws Exception {
+		return dbMapper.managementFrequentlyBoardCount(no);
+	}
+	
+	public CinemaFrequentlyBoardDTO managementUpdateFormComplete(String question, String asked, String no) throws Exception {
+		return dbMapper.managementUpdateFormComplete(question, asked, no);
+	}
 	
 /** shin. SEARCH PWD **/ //TODO 연종
 	public Integer searchPWD(String searchPwdUserID)  {

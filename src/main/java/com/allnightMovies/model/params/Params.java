@@ -70,6 +70,7 @@ public class Params {
 	private String seatArr;
 	private int calendarMonth;
 	private int calendarYear;
+	private String screeningDateType;
 	
 // 결제
 	private String cardType;
@@ -91,6 +92,13 @@ public class Params {
 	private String serviceCenterSearchWord;
 	private String noticeSearachWord;
 	private String updateQuestionBoardNum; //문의사항 게시글번호
+	
+// 고객센터 (관리자)->자주묻는게시판
+	private String question;
+	private String asked;
+	private String no;
+	
+	
 	
 // 문의 사항 게시판
 	private String insertTextArea; //내용

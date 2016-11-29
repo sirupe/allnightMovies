@@ -19,9 +19,11 @@ import com.allnightMovies.model.data.movieInfo.MovieShowTimesMap;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
+import com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
 
@@ -51,6 +53,10 @@ public interface DBMapper {
 	public List<CinemaSeatDTO> getTheaterSeatInfo(CinemaSeatReserveInfo reserveInfo);
 	public Integer getTheaterSeatColCnt(String theater);
 	
+/** ji. ticketing confirmation 예매내역 **/
+	public List<UserSelectTicketingInfo> reservationSeatInfo(String userID);
+	public MovieEndTimeDTO getMovieEndTime(String ticketNum);
+	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	
@@ -78,6 +84,12 @@ public interface DBMapper {
 	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception;
 	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception;
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum);
+	
+/**jung 고객센터 관리자**/
+	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception;
+	public CinemaFrequentlyBoardDTO managementFrequentlyBoardCount(String no);
+	public CinemaFrequentlyBoardDTO managementUpdateFormComplete(String question, String asked, String no) throws Exception;
+	
 	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);

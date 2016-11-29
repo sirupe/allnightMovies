@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<div class="div__serviceCenter_form js_serviceCenter point">
 		<label class="servieCenterTitle">고객센터</label>
@@ -21,14 +22,9 @@
 				<div class="div__serviceCenter_Container_Tab" >
 					<div class="div__serviceCenter_Content js_serviceContentTab">
 						<jsp:include page="../service/include/serviceFrequenty.jsp" />
-					</div>
 					
-			<%-- <c:if></c:if> 관리자 계정이 2일때 들어오게 할꺼얏.--%>
-					<div>
-						<button class="button_managerWriteBtn js_button_FrequentlyInsertBtn" type="button">글등록하기</button>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>

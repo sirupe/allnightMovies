@@ -10,11 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -134,10 +134,11 @@ public class AsyncService implements AsyncAction {
 		String result = null;
 		boolean resultBool = true;
 		System.out.println(this.params.getRequest().getRequestURL());
-		if(userLoginInfo.getUserStates() == 1) {
+		if(userLoginInfo.getUserStates() != 0) {
 			if(this.params.getUserPWD().equals(userLoginInfo.getUserPWD())) {
 				HttpSession session = this.params.getSession();
 				session.setAttribute("userID", userLoginInfo.getUserID());
+				session.setAttribute("userStatus", userLoginInfo.getUserStates());
 				if(session.getAttribute("requestURL") != null) {
 					result = session.getAttribute("requestURL").toString();
 					session.removeAttribute("requestURL");
@@ -480,6 +481,13 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 		
 	}
+	
+	/**********************수진. 관리자(공지사항)**************************/
+	
+
+	
+	
+	
 
 }
    

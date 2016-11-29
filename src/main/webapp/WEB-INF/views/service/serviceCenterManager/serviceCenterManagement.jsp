@@ -2,25 +2,25 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="questionBoardWriteForm js_questionBoardWriteContainer font">
-		<div class="questionBoard-content">
-			<label class="questionBoard_content">문의 등록하기</label>
+<div class="managementQuestionBoardWriteForm js_managementQuestionBoardWriteContainer font">
+		<div class="managementQuestion-content">
+			<label class="managementQuestion_content">문의 등록하기</label>
 		</div>
-		<div class="questionBoard">
-			<div class="questionBoard-title">
-				<label class="boardtitle js_boardTitle">제목</label>
-				<input class="boardwriteBoard js_boardContent" type="text" value="fds">
+		<div class="managementQuestionBoard">
+			<div class="managementQuestionBoard-title">
+				<label class="managementQuestiontitle js_managementQuestionButton_confirmTitle">제목</label>
+				<input class="managementQuestionwriteBoard js_managementQuestionContent" type="text" value="인터넷 예매분을 전화로 취소할 수 있나요?">
 			</div>
 			
-			<div class="questionBoard-sub">
-				<div class="questionBoard_subject">
-					<label class="boardSub">내용</label>
-					<textarea class="boardTextarea js_boardTextArea" rows="" cols="">dd</textarea>
+			<div class="managementQuestion-sub">
+				<div class="managementQuestion_subject">
+					<label class="managementQuestionSub">내용</label>
+					<textarea class="managementQuestionTextarea js_managementQuestionButton_confirmTextArea" rows="" cols="">인터넷 예매취소는 인터넷, 상담원을 통한 전화 취소 둘다 가능합니다</textarea>
 				</div>
 			</div>
-			<div class="questionbutton">
-				<button class="questionButton_cancel js_questionButtonCancel">취소</button>
-				<button class="questionButton_confirm js_questionButtonConfirm" type="button">확인</button>
+			<div class="managementQuestionbutton">
+				<button class="managementQuestionButton_cancel js_managementQuestionButtonCancel">취소</button>
+				<button class="managementQuestionButton_confirm js_managementQuestionButtonConfirm" type="button">확인</button>
 			</div>
 		
 		</div>

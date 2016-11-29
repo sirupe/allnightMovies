@@ -128,7 +128,6 @@ public class AsyncService implements AsyncAction {
 	
 	// 로그인
 	public AsyncResult<String> login() throws Exception {
-		System.out.println("async login()");
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		String result = null;
 		boolean resultBool = true;
@@ -140,6 +139,8 @@ public class AsyncService implements AsyncAction {
 				if(session.getAttribute("requestURL") != null) {
 					result = session.getAttribute("requestURL").toString();
 					session.removeAttribute("requestURL");
+				} else {
+					result = "/";
 				}
 			} else {
 				result = "비밀번호가 일치하지 않습니다.";

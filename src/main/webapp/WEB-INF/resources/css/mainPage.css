@@ -30,14 +30,15 @@ a:hover {
 	100% { left: -400%; }
 }
 .slider { 
-	/* background-color:#001428; */
-	overflow: hidden; 
+    overflow: hidden;
+    width: 1000px;
+    height: 529px;
+    margin: auto;
 }
 .slider figure img {
 	width: 20%;
 	float: left; 
     height: 530px;
-    margin-top: 90px;
 }
 .slider figure {
 	position: relative;

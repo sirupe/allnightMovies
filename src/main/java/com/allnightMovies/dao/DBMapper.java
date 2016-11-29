@@ -57,6 +57,9 @@ public interface DBMapper {
 	public List<UserSelectTicketingInfo> reservationSeatInfo(String userID);
 	public MovieEndTimeDTO getMovieEndTime(String ticketNum);
 	
+/** ji. cancel ticket 예매취소 **/
+	public void cancelTicket(String ticketNum, String userID);
+	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	

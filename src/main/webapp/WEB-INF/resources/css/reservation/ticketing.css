@@ -27,6 +27,9 @@
 	display: flex;
 }
 
+.ticketing {
+	margin : 20px;
+}
 
 /* calendar */
 .calendar {

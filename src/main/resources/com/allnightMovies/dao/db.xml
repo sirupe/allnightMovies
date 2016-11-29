@@ -233,7 +233,7 @@
 		        MOVIE_SCREENING_DATE,
 	            MOVIE_SCREENING_DATE_TYPE
 		    ORDER BY MOVIE_SCREENING_DATE DESC)
-		WHERE USER_ID='test3' AND MOVIE_SCREENING_DATE_TYPE > SYSDATE
+		WHERE USER_ID=#{userID} AND MOVIE_SCREENING_DATE_TYPE > SYSDATE
 	</select>
 
 	<!-- TICKET CONFIRMATION 영화 상영 종료시간 구하기 -->
@@ -247,6 +247,13 @@
 		) USING(MOVIE_TITLE)
 		WHERE USER_TICKET_NUMBER=#{ticketNum}
 	</select>
+	
+	<!-- CANCEL TICKET : 예매취소 -->
+	<delete id="cancelTicket" parameterType="java.lang.String">
+		DELETE FROM USER_TICKETING_INFO
+		WHERE USER_TICKET_NUMBER=#{param1} AND USER_ID=#{param2}
+	</delete>
+
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>

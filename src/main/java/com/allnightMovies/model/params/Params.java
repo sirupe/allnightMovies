@@ -79,6 +79,9 @@ public class Params {
 	private String cardExpiryDateMonth;
 	private String cardExpiryDateYear;
 	private String cardOwnerBirth;
+	
+// 예매취소
+	private String ticketNum;
 
 // 공지사항 게시판
 	private int noticeUserClickPage;/*삭제예정*/

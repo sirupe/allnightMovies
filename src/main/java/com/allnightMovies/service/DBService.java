@@ -153,7 +153,12 @@ public class DBService {
 		return dbMapper.getMovieEndTime(ticketNum);
 	}
 	
-/** jung. 상영시간표 **/ //TODO 수진
+/** ji. cancel ticket 예매취소 **/
+	public void cancelTicket(String ticketNum, String userID) {
+		dbMapper.cancelTicket(ticketNum, userID);
+	}
+
+	/** jung. 상영시간표 **/ //TODO 수진
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
 	}

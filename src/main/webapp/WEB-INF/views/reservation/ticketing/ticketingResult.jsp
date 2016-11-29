@@ -8,7 +8,7 @@
 	<div class="ticketing-result__btns">
 		<c:choose>
 			<c:when test="${resultBool }">
-				<button class="ticketing-result__success-btn" type="button">
+				<button class="js_ticketingInfo ticketing-result__success-btn" type="button">
 					예매내역 확인
 				</button>
 				<button class="js_locationMain ticketing-result__success-btn" type="button">

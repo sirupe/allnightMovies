@@ -1,4 +1,3 @@
-var screeningDate;
 var movieTitle;
 var movieTime;
 var $personCnt;

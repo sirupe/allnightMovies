@@ -39,7 +39,6 @@ import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
-import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
@@ -98,7 +97,7 @@ public class MainService implements Action {
 		return mav;
 	}
 
-	// 로그인
+/*	// 로그인
 	public ModelAndView login() throws Exception {
 		UserPersonalLoginInfoDTO userLoginInfo = this.dbService.login(this.params);
 		if(userLoginInfo.getUserStates() == 1) {
@@ -112,7 +111,7 @@ public class MainService implements Action {
 		}
 		
 		return this.getTemplate();
-	}
+	}*/
 	
 	// 로그아웃
 	public ModelAndView logout() throws Exception {
@@ -436,6 +435,16 @@ public class MainService implements Action {
 		
 		
 		mav.addObject("ticketingInfo", sendTicketingInfo);
+		return mav;
+	}
+	
+	public ModelAndView ticketingCancel() {
+		ModelAndView mav = new ModelAndView("myInfo/ticketConfirmation/cancelTicketResult");
+		System.out.println("ticketingCancel : 티켓번호 : " + this.params.getTicketNum());
+		HttpSession session =  this.params.getSession();
+		
+		this.dbService.cancelTicket(this.params.getTicketNum(), (String) session.getAttribute("userID"));
+		
 		return mav;
 	}
 	
@@ -941,7 +950,7 @@ public class MainService implements Action {
 
    
 
-/*******연종. MyINFO SHIN*******/	
+/*******연종. MyINFO SHIN*******/	//TODO
 	public ModelAndView viewMyInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		HttpSession session = this.params.getSession();

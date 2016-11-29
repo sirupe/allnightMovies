@@ -251,7 +251,7 @@ function activePwdInput() {
 //문의사항 글등록하기
 function insertQuestionBoard() {
 	
-	var
+	var isResult         = true;
 		$insertTitle    = $('.js_boardContent');
 	    $insertTextArea = $('.js_boardTextArea');
 	    $insertboardPwd = $('.js_boardWriteBoardPwd');
@@ -269,17 +269,25 @@ function insertQuestionBoard() {
 	    		'insertboardPWd' : insertboardPWd
 	    };
 		    cbf    = function(mav) {
-	    			var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
-	    			$questionBoardViewchange.html(mav);
+		    	if(isResult) {
+		    		alert('글등록!');
+		    		var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
+		    		$questionBoardViewchange.html(mav);
+		    	} else {
+		    		alert('실패');
+		    	}
 		    };
 		  
 	    //일단 기본적으로 비었을때
 	    if(insertTitle == '' && insertTextArea == '') {
 	    	alert('모두입력해주세요!');
+	    	isResult    = false;
 	    }else if(insertPwdcheck == true && insertboardPWd == '') {
 	    	alert('비밀번호 입력 해주세요');
+	    	isResult    = false;
 	    } else {
 	    	$.post(url, params, cbf);
+	    	isResult    = true;
 	    }
 }
 
@@ -315,7 +323,6 @@ function completeUpdateQuestionBoard() {
 	
 	userClickNum = $('.js_boardViewNo').attr('data-userClickNum');
 	
-	console.log(userClickNum);
 	var isResult         = true;
 	 
 		$insertTitle     =  $('.js_UpdateboardContent'); //제목
@@ -347,8 +354,7 @@ function completeUpdateQuestionBoard() {
 	    cbf    = function(mav) {
 	    	if(isResult) {
 	    		alert('글수정 성공');
-	    		var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
-	    		$questionBoardViewchange.html(mav);
+	    		$('.js_frequentlyBoardContainer').html(mav);
 	    	} else {
 	    		alert('실패');
 	    	}
@@ -366,6 +372,7 @@ function completeUpdateQuestionBoard() {
 	    }
 }
 
+//문의사항 삭제
 function deleteQuestionBoard() {
 	userClickNum = $('.js_boardViewNo').attr('data-userClickNum');
 	console.log(userClickNum);
@@ -448,9 +455,7 @@ function managementFreQuentlyInsertBoard() {
 
 //수정하는 폼으로 가기
 function managementFreQuentlyUpdateBoard() {
-		var no      = $(this).attr('data-message');
-	
-		console.log(no);
+	var no      = $(this).attr('data-clickManageNum');
 		
 	url    = '/movie/mainService/managementUpdateBoard',
 	params = { 'no' : no},
@@ -495,20 +500,37 @@ function managementFreQuentlyUpdateComplete() {
 		}
 }
 
-//function managementFreQuentlyDeleteComplete() {
-//	var no = $(this).attr('data-updateFormNum');
-//	
-//	url		= '/movie/mainService/managementDeleteBoardComplete',
-//	params	= {'no' : no},
-//	cnf		= function(mav) {
-//				$('.js_frequentlyBoardContainer').html(mav);
-//			};
-//			if(confirm('정말 삭제하시겠습니까?') == true) {
-//				$.post(url, params, cbf);
-//			} else {
-//				return;
-//			}
-//}
+function managementFreQuentlyDeleteComplete() {
+	var 
+		no = $(this).attr('data-clickManageNum');
+	
+	url		= '/movie/mainService/managementDeleteBoardComplete',
+	params	= {'no' : no},
+	cnf		= function(mav) {
+			alert('삭제성공');
+				$('.js_frequentlyBoardContainer').html(mav);
+			};
+			if(confirm('정말 삭제하시겠습니까?') == true) {
+				$.post(url, params, cbf);
+			} else {
+				return;
+			}
+}
+/*****************관리자 문의사항************************/
+//문의사항 게시판 답글달기
+function managementReplyWriteForm() {
+	var userQuestionTitle = $(this).attr('.data-replyBoardTitle');
+	
+	console.log(userQuestionTitle);
+	
+	
+	url    = '/movie/mainService/managementReplyBoardForm',
+	params = {'userQuestionTitle' : userQuestionTitle},
+	cbf    = function(mav) {
+			 $('.js_frequentlyBoardContainer').html(mav);
+	};
+	$.post(url, cbf);
+}
 
 /************************시작***************************/
 function setServiceCenter() {
@@ -559,7 +581,9 @@ function setServiceCenter() {
 		.on('click','.js_managementQuestionButtonCancel',frequentlyBoardTab)//글등록폼에서 취소버튼
 		.on('click', '.js_Updatebtn',managementFreQuentlyUpdateBoard) //수정폼으로가기
 		.on('click', '.js_managementQuestionUpdateButtonConfirm',managementFreQuentlyUpdateComplete)
-		//.on('.click', '.js_Deletebtn',managementFreQuentlyDeleteComplete)
+		.on('click', '.js_Deletebtn', managementFreQuentlyDeleteComplete) //글삭제
+		.on('click','.js_ReplyQuestionBtn', managementReplyWriteForm) //답글폼으로가기
+		
 		
 		
 }

@@ -89,7 +89,7 @@ public interface DBMapper {
 	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception;
 	public CinemaFrequentlyBoardDTO managementFrequentlyBoardCount(String no);
 	public CinemaFrequentlyBoardDTO managementUpdateFormComplete(String question, String asked, String no) throws Exception;
-	
+	public Integer managementDeleteFormComplete(String no);
 	
 /** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);

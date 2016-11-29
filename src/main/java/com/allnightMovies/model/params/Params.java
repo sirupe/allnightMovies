@@ -98,6 +98,8 @@ public class Params {
 	private String asked;
 	private String no;
 	
+	private String userQuestionTitle;
+	
 	
 	
 // 문의 사항 게시판

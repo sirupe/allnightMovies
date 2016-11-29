@@ -225,6 +225,10 @@ public class DBService {
 		return dbMapper.managementUpdateFormComplete(question, asked, no);
 	}
 	
+	public Integer managementDeleteFormComplete(String no) throws Exception {
+		return dbMapper.managementDeleteFormComplete(no);
+	}
+	
 /** shin. SEARCH PWD **/ //TODO 연종
 	public Integer searchPWD(String searchPwdUserID)  {
 		return dbMapper.searchPWD(searchPwdUserID);

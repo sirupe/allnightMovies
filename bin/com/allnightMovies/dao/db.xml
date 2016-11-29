@@ -460,6 +460,13 @@
 				ASKED = #{param2} 
 			WHERE NO = #{param3}
 	</select>
+	
+<!-- 관리자(자주묻는게시판 삭제) -->
+	<select id="managementDeleteFormComplete" parameterType="java.lang.String" >
+		 DELETE 
+		 		CINEMA_FREQUENTLY_BOARD 
+		 	WHERE NO = #{param1}
+	</select>
 
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">

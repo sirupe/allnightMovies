@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="reCheckFormContainer">
+
 	<label class="reCheckFormContainer_label">글등록시 입력한 비밀번호를 입력해 주세요. :)</label>
 	<div class="QuestionBoardReCheckPWd_content">
 		<label class = "QuestionBoardReCheckPWd_label">비밀번호 : </label>

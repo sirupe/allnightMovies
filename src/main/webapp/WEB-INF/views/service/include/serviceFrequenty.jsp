@@ -21,10 +21,12 @@
 							<div class="serviceCenterFrequenty__subject js_sub">Q. ${boardPage.getQUESTION() }</div>	
 							<div class="serviceCenterFrequenty__contents js_con">${boardPage.getASKED() }
 							<input class="js_Number" type="hidden" data-message="${boardPage.getNO()}">
+							<c:if test="${userStatus == 2 }">
 								<div class="serviceCenterFrequenty__buttons">
-									<button class="serviceCenterFrequenty__Updatebutton js_Updatebtn" data-message="${boardPage.getNO()}" type="button">수정하기</button>
-									<button class="serviceCenterFrequenty__Canelbutton js_Deletebtn" type="button">삭제하기</button>
+									<button class="serviceCenterFrequenty__Updatebutton js_Updatebtn" data-clickManageNum="${boardPage.getNO()}" type="button">수정하기</button>
+									<button class="serviceCenterFrequenty__Canelbutton js_Deletebtn" data-clickManageNum="${boardPage.getNO()}" type="button">삭제하기</button>
 								</div>
+							</c:if>	
 							</div>
 						</li>
 					</c:forEach>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<input class="js_myInfoHidden" type="hidden" data-ticketing="${ticketing }"/>
 <div class="div-myinfo js_myInfoContainer">
 	<div class="div-myinfo__title">
 	   <span class="js_myInfoTitleClick tab-myinfo__title"><a>내정보</a></span>

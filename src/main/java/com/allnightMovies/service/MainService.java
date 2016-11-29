@@ -1053,6 +1053,7 @@ public class MainService implements Action {
 		String myInfoID = (String)session.getAttribute("userID");
 		UserPersonalInfoDTO myInfoDTO = this.dbService.selectMyInfo(myInfoID);
 		mav.addObject("myInfoList", myInfoDTO);
+		mav.addObject("ticketing", this.params.getParams());
 		return mav;
 	}
 	public ModelAndView myInfoChagePwdResult() throws Exception {

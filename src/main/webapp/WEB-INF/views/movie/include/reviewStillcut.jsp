@@ -7,14 +7,22 @@
 <div class="stillCut">
 
 	<c:forEach items="${ movieStillCutDTO}" var="stillCut" varStatus="status">
-		<div class="row-padding w3-section">
-			<div class="w3-col s4">
-				<img class="demo w3-opacity w3-hover-opacity-off" src="/resources/img/stillcut/${stillCut.movieCut}" onclick="currentDiv(${status.count})"/>
-			</div>
-	    </div>
-		<div class="mainImg">
-			<img class="mySlides" src="/resources/img/stillcut/${stillCut.movieCut}" >
-		</div>
-	 
+		<c:choose>
+			<c:when test="${movieStillCutCount}">
+				<div class="row-padding w3-section">
+					<div class="w3-col s4">
+						<img class="demo w3-opacity w3-hover-opacity-off" src="/resources/img/stillcut/${stillCut.movieCut}" onclick="currentDiv(${status.count})"/>
+					</div>
+			    </div>
+				<div class="mainImg">
+					<img class="mySlides" src="/resources/img/stillcut/${stillCut.movieCut}" >
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="row-padding w3-section">
+					!스틸컷 정보가 없습니다.
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:forEach>
 </div>

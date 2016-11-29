@@ -10,7 +10,7 @@ function setEvent() {
 	
 	$container
 		.on('click', '.js_tab_review', tabReview)
-		.on('click', '.js_tab_stillcut', tabStillcut)
+		/*.on('click', '.js_tab_stillcut', tabStillcut)*/
 		.on('click', '.js_firstPage', locationFirstPage)
 		.on('click', '.js_prePage', locationPrePage)
 		.on('click', '.js_currentPage', locationCurrentPage)
@@ -85,7 +85,7 @@ function tabReview() {
 	$.post(url,params, cbf);
 }
 
-function tabStillcut() {
+/*function tabStillcut() {
 	var $movieInfoTitle = $('.js_basicInfomovieTitle'),
 		movieInfoTitle = $movieInfoTitle.attr('data-movie-info-title'),
 		
@@ -96,7 +96,7 @@ function tabStillcut() {
 			  }; 
 			  
 	$.post(url,params, cbf);
-}
+}*/
 
 /*******************페이징*******************/
 /*처음PAGE*/

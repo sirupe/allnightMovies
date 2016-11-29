@@ -696,13 +696,53 @@
 	   FROM MOVIE_BASIC_INFO
 	   WHERE MOVIE_TITLE = #{movieTitle}
 	</select>
+	
 	<select id="getReviewBoard" resultType="com.allnightMovies.model.data.movieInfo.MovieReviewBoard" parameterType="java.lang.String">
 		SELECT REVIEW_EVALUATE  				 AS reviewEvaluate,  
 		       REVIEW_CONTENTS 				 	 AS reviewContents,   
 		       USER_ID		   					 AS reviewWriter,    
-		       TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate       
+		       TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate,
+		       NO								 AS reviewNo    
 		FROM MOVIE_REVIEW_BOARD                         
 		WHERE MOVIE_TITLE = #{movieTitle}
 	</select>
 	
+	<select id="getReviewBoardList" resultType="com.allnightMovies.model.data.movieInfo.MovieReviewBoard" parameterType="com.allnightMovies.model.data.movieInfo.MovieReviewBoardDTO">
+		SELECT * FROM (
+	       SELECT REVIEW_EVALUATE  	 AS reviewEvaluate,  
+			       REVIEW_CONTENTS 	 AS reviewContents,   
+			       USER_ID		   	 AS reviewWriter,    
+			       writeDate,
+			       NO                AS reviewNo,
+	           	   ROWNUM RNUM
+			   FROM (
+			          SELECT REVIEW_EVALUATE, REVIEW_CONTENTS, USER_ID,  TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, NO
+			          FROM MOVIE_REVIEW_BOARD
+			          WHERE MOVIE_TITLE LIKE #{param3}
+			          ORDER BY WRITE_DATE DESC
+	      			 )
+	   		 )
+	    WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="insertReview" parameterType="com.allnightMovies.model.data.movieInfo.MovieReviewBoard">
+		INSERT INTO 
+		MOVIE_REVIEW_BOARD (
+								REVIEW_EVALUATE,
+					  			REVIEW_CONTENTS, 
+								USER_ID, 
+					  			WRITE_DATE,
+					 			MOVIE_TITLE,
+					 			NO
+				 			)
+		VALUES (#{param1}, #{param2}, #{param3}, SYSDATE, #{param4}, MOVIE_REVIEW_SEQ.NEXTVAL)
+	</select>
+	<select id="deleteReview" parameterType="java.lang.Integer">
+		DELETE MOVIE_REVIEW_BOARD	
+		WHERE NO = #{reviewNo} 
+	</select>
+	<select id="getStillcut" resultType="com.allnightMovies.model.data.movieInfo.MovieStillCut" parameterType="java.lang.String">
+		SELECT MOVIE_CUT AS movieCut
+		FROM MOVIE_STEEL_CUT 
+		WHERE MOVIE_TITLE = #{movieTitle}
+	</select>
 </mapper>

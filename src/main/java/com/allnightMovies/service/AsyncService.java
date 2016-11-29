@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
@@ -305,6 +304,7 @@ public class AsyncService implements AsyncAction {
       asyncResult.setData(searchPwdResult);
       return asyncResult;
    }
+   
    /**수진 이메일 인증번호 생성하여 보내기**/
    //이메일
    @SuppressWarnings("rawtypes")
@@ -482,13 +482,5 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 		
 	}
-	
-	/**********************수진. 관리자(공지사항)**************************/
-	
-
-	
-	
-	
-
 }
    

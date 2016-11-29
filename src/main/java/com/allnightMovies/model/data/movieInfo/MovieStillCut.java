@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MovieSteelCut {
+public class MovieStillCut {
 	private String movieTitle;
 	private String movieCut;
 }

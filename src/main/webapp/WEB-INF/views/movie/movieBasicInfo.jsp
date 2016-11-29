@@ -51,7 +51,7 @@
 		
 		<!-- label 화면에 표시되는 탭 제목-->
 		<label for="tab-intro">작품소개</label>
-		<label for="tab-stillCut">스틸컷</label>
+		<label class="js_tab_stillcut"for="tab-stillCut">스틸컷</label>
 		<label class="js_tab_review" for="tab-review">평점/리뷰</label>
 		
 		<!-- 탭 내용 : 탭 제목을 선택했을 때 표시되는 본문 -->

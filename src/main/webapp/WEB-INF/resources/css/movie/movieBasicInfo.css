@@ -3,7 +3,7 @@
 	width: 870px;
 	margin: 50px 0px 30px 40px; 
 	display: inline-flex;
-	font-size: 16px;
+	font-size: 18px;
 }
 .movieBasicInfo-intro__title {
 	display: inline-table;
@@ -94,7 +94,7 @@
 .tab-intro_content__intro {
 	display: block;
     padding: 20px;
-    font-size: 18px;
+    font-size: 19px;
     height: 300px;
 
 }
@@ -111,6 +111,9 @@
     display: flex;
  	margin: 30px;
     text-align: center;
+}
+.reviewBoardList {
+	height: 250px;
 }
 .reviewBoardFont {
     font-size: 20px;
@@ -133,14 +136,30 @@
     border: none;
     resize: none;
     margin-left: 20px;
-    font-size: 16px;
+    font-size: 17px;
     font-family: 'Jeju Gothic', serif;
 }
 .reviewBoardBtn {
-    padding: 15px 40px 15px 40px;
+    width: 120px;
+    height: 58px;
+    padding: 3px;
+    font-size: 22px;
+    color: #090808;
+    box-sizing: content-box;
+    cursor: pointer;
     font-family: 'Jeju Gothic', serif;
-    font-size: 20px;
+    background: rgb(238, 234, 234);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
 }
+.reviewBoardBtn:hover {
+    color: #fcf3f3;
+    background: rgba(107, 78, 79, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
 .review-StarImg {
 	width: 30px;
 	height: 30px;
@@ -152,13 +171,56 @@
 	cursor: pointer;
 }
 /***********리뷰리스트******************/
+.reviewBoard-list {
+    display: flex;
+    font-size: 16px;
+    margin-left: 50px;
+}
+.reviewBoard-list__score {
+	font-size: 19px;
+}
+.reviewBoard-list__userinfo {
+    font-size: 16px;
+    width: 100px;
+    text-align: center;
+}
 
-
-
-
-
-
-
+.reviewBoard-list__buttom {
+	text-align: center;
+    padding: 20px;
+    font-size: 18px;
+}
+.paging_current {
+	color: tomato;
+	font-size: 19px;
+}
+.bold:hover {
+	color: gray;
+	font-size: 19px;
+	font-weight: bold;
+}
+.deleteBtn {
+    width: 50px;
+    height: 20px;
+    padding: 3px;
+    font-size: 15px;
+    color: #fcf3f3;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #b79fa1;
+    border-radius: 6px;
+    font-family: 'Jeju Gothic', serif;
+    background: rgba(206, 159, 161, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+}
+.deleteBtn:hover {
+    color: #fcf3f3;
+    background: rgba(107, 78, 79, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
 
 /***********리뷰*******************/
 .star-input>.input,

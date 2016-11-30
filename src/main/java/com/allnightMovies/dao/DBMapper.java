@@ -11,6 +11,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -157,5 +158,8 @@ public interface DBMapper {
 	public CinemaNoticeBoardDTO insertNoticeBoard(String title, String content, int important);
 	public CinemaNoticeBoardDTO updateNoticeBoard(String title, String content, int important, int no);
 	public Integer deleteNoticeBoard(Integer noticeNO);
+	
+/*  shin.  관리자 영화상세정보*/
+	public MovieBasicInfoDTO updateMovieInfo(MovieBasicInfoDTO movieBasicInfoDTO);
 
 }

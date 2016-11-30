@@ -15,27 +15,27 @@
 
 	<div class="screeningsPlanned-posters">
 	
-		<c:forEach begin="1" end="${filmNum }" varStatus="filmNum" items="${ScreeningsPlannedDTO}" var="ScreeningsPlannedDTO" > 
+		<c:forEach begin="0" end="${filmNum}" varStatus="filmNum" items="${ScreeningsPlannedDTO}" var="ScreeningsPlannedDTO" > 
 			<c:choose>
 				<c:when test="${filmNum.count % 3 != 0}">
 					<span class="screeningsPlanned-posters__info">
 						<span class="screeningsPlanned-posters__image" style="background-image: url('/../resources/img/poster/${ScreeningsPlannedDTO.moviePoster }');">
-							<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${ScreeningsPlannedDTO.movieTitle}">상세보기</a>
+							<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${ScreeningsPlannedDTO.movieTitle}&movieNO=${ScreeningsPlannedDTO.no}">상세보기</a>
 						</span>
 						<span class="screeningsPlanned-posters__title">
-							<label class="ageLimit${ScreeningsPlannedDTO.movieAgeLimit }">${ScreeningsPlannedDTO.movieAgeLimit }</label>
-							<label class="screeningsPlanned-posters__movietitle">${ScreeningsPlannedDTO.movieTitle }</label>
+							<label class="ageLimit${ScreeningsPlannedDTO.movieAgeLimit}">${ScreeningsPlannedDTO.movieAgeLimit}</label>
+							<label class="screeningsPlanned-posters__movietitle">${ScreeningsPlannedDTO.movieTitle}</label>
 						</span>
 					</span>
 				</c:when>
 				<c:otherwise>
 					<span class="screeningsPlanned-posters__info">
 						<span class="screeningsPlanned-posters__image" style="background-image: url('/../resources/img/poster/${ScreeningsPlannedDTO.moviePoster }');">
-							<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${ScreeningsPlannedDTO.movieTitle}">상세보기</a>
+							<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${ScreeningsPlannedDTO.movieTitle}&movieNO=${ScreeningsPlannedDTO.no}">상세보기</a>
 						</span>
 						<span class="screeningsPlanned-posters__title">
-							<label class="ageLimit${ScreeningsPlannedDTO.movieAgeLimit }">${ScreeningsPlannedDTO.movieAgeLimit }</label>
-							<label class="screeningsPlanned-posters__movietitle">${ScreeningsPlannedDTO.movieTitle }</label>
+							<label class="ageLimit${ScreeningsPlannedDTO.movieAgeLimit}">${ScreeningsPlannedDTO.movieAgeLimit}</label>
+							<label class="screeningsPlanned-posters__movietitle">${ScreeningsPlannedDTO.movieTitle}</label>
 						</span>
 					</span>
 				</c:otherwise>

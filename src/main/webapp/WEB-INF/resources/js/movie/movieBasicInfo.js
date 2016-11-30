@@ -26,14 +26,16 @@ function setEvent() {
 		.on('click', '.js_reviewInsertBtn', reviewInsert)
 		.on('click', '.js_deleteBtn', reviewDelete)
 		.on('click', '.js_movieModifyBtn', managerMovieModifyForm)
+		.on('click', '.js_movieIntroModifyBtn', managerMovieModifyForm)
 }
-
 
 function managerMovieModifyForm() {
 	var $movieTitle = $('.js_basicInfomovieTitle'),
-		movieTitle = $movieTitle.attr('data-movie-info-title');
+		movieTitle  = $movieTitle.attr('data-movie-info-title'),
+		$movieNO    = $('.js_movieModifyBtn'),
+		movieNO     = $movieNO.data('movieNo');
 	
-		url	    = '/movie/mainService/managerMovieModifyForm?movieInfoTitle=' + movieTitle;
+		url	    = '/movie/mainService/managerMovieModifyForm?movieInfoTitle=' + movieTitle + '&movieNO='+ movieNO ;
 	
 	submit(url);
 }

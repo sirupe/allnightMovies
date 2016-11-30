@@ -7,4 +7,5 @@ public class MovieScreeningsPlannedDTO {
 	private String movieTitle;
 	private String moviePoster;
 	private String movieAgeLimit;
+	private int no;
 }

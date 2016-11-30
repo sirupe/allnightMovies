@@ -19,6 +19,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaWriteBoardPwdCheckDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -669,6 +670,36 @@ public class AsyncService implements AsyncAction {
 		this.dbService.deleteNoticeBoard(noticeNO);
 		
 		asyncResult.setData("/movie/mainService/notice?noticePage=" + noticePage + "&noticeNo=" + noticeNO);
+		return asyncResult;
+	}
+	
+	public AsyncResult<String> managerUpdateMovieInfo() throws Exception { 
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		MovieBasicInfoDTO movieBasicInfoDTO = new MovieBasicInfoDTO();
+		
+		
+		Integer movieNO 		  = this.params.getMovieNO();
+		String movieTitle 	 	  = this.params.getManagerMovieTitle();
+		String movieGenre 	 	  = this.params.getManagerMovieGenre();
+		String movieDirector 	  = this.params.getManagerMovieDirector();
+		String movieAuthor  	  = this.params.getManagerMovieAuthor();
+		String movieCast 	 	  = this.params.getManagerMovieCast();
+		String movieReleaseDate   = this.params.getManagerMovieReleaseDate();
+		Integer movieAgeLimitText = this.params.getManagerMovieAge();
+		Integer movieRuntime 	  = this.params.getManagerMovieRuntime();
+		
+		movieBasicInfoDTO.setMovieTitle(movieTitle);
+		movieBasicInfoDTO.setMovieGenre(movieGenre);
+		movieBasicInfoDTO.setMovieDirector(movieDirector);
+		movieBasicInfoDTO.setMovieAuthor(movieAuthor);
+		movieBasicInfoDTO.setMovieCast(movieCast);
+		movieBasicInfoDTO.setMovieReleaseDate(movieReleaseDate);
+		movieBasicInfoDTO.setMovieAgeLimitText(movieAgeLimitText);
+		movieBasicInfoDTO.setMovieRuntime(movieRuntime);
+		
+		this.dbService.updateMovieInfo(movieBasicInfoDTO);
+		
+		asyncResult.setData("/movie/mainService/movieDetailInfo?movieInfoTitle=" + movieTitle + "&movieNO"+ movieNO);
 		return asyncResult;
 	}
 	

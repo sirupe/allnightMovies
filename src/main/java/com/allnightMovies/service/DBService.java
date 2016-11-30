@@ -16,6 +16,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
 import com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo;
@@ -377,5 +378,8 @@ public class DBService {
 	}
 	public Integer deleteNoticeBoard(Integer noticeNO) {
 		return dbMapper.deleteNoticeBoard(noticeNO);
+	}
+	public MovieBasicInfoDTO updateMovieInfo(MovieBasicInfoDTO movieBasicInfoDTO) {
+		return dbMapper.updateMovieInfo(movieBasicInfoDTO);
 	}
 }

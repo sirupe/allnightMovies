@@ -12,7 +12,13 @@
 			<button class="header__logon__top__buttons__logout js_logout" type="button">
 				로그아웃
 			</button>
-			
+			<c:if test="${isManager }">
+				<div class="manager-menu-btn">
+					<button class="js_managerMenuBtn" type="button">
+						관리자 메뉴
+					</button>
+				</div>
+			</c:if>
 		</div>
 	</div>
 </div>

@@ -128,4 +128,6 @@ public class Params {
 	private Integer managerNoticePage;
 	private Integer managerNoticeNo;
 	
+//메인 검색
+	private String searchWord;
 }

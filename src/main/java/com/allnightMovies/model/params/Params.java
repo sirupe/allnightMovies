@@ -4,6 +4,8 @@ package com.allnightMovies.model.params;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,7 @@ import lombok.Setter;
 public class Params {
 	private HttpServletRequest request;
 	private HttpSession session;
+	private MultipartHttpServletRequest multiReq;
 	
 	private String main;
 	private String sub;

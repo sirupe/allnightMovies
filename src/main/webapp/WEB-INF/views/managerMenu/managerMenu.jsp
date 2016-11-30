@@ -14,6 +14,6 @@
 		</div>
 	</div>
 	<div class="js_managerBody manager__body">
-		<jsp:include page="./managerMemberMenu.jsp"></jsp:include>
+		<jsp:include page="./managerReserveMenu.jsp"></jsp:include>
 	</div>
 </div>

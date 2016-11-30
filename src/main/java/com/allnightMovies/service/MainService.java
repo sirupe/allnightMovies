@@ -1,5 +1,8 @@
  package com.allnightMovies.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -46,6 +50,7 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
+import com.allnightMovies.utility.FileUpload;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.Paging2;
@@ -67,6 +72,7 @@ public class MainService implements Action {
 //	MovieMapper movieMapper;
 	@Autowired
 	DBService dbService;
+
 	
 	// 여기서 온갖것들을 실행시켜주면 된다.movieTime
 	// ModelAndView 객체에 view 단에서 찍어내야 하는 페이지들도 올려두고 ...
@@ -256,6 +262,7 @@ public class MainService implements Action {
 		
 	public ModelAndView calendar() {
 		MovieScreeningDateInfo screeningDate = this.dbService.getMaxScreeningDate();
+		screeningDate.setCalendarMonth(this.params.getCalendarMonth());
 		screeningDate.setScreeningDate();
 		ModelAndView mav = new ModelAndView("reservation/ticketing/calendar");
 		mav.addObject("cal", new MonthCalendar(this.params.getCalendarYear(), this.params.getCalendarMonth()));
@@ -493,7 +500,7 @@ public class MainService implements Action {
 	/** 회원정보관리 : 탈퇴시키기 **/
 	public ModelAndView managerWithdrawal() {
 		this.dbService.managerWithdrawalMember(this.params.getUserID());
-		ModelAndView mav = new ModelAndView("/managerMenu/managerMemberMenu");
+		ModelAndView mav = new ModelAndView("managerMenu/managerMemberMenu");
 		List<ManagerMemberInquiryDTO> members = this.dbService.getMemberInfo();
 		
 		mav.addObject("memberList", members);
@@ -502,7 +509,7 @@ public class MainService implements Action {
 	/** 회원정보관리 : 탈퇴 복구 **/
 	public ModelAndView managerRestore() {
 		this.dbService.managerRestoreMember(this.params.getUserID());
-		ModelAndView mav = new ModelAndView("/managerMenu/managerMemberMenu");
+		ModelAndView mav = new ModelAndView("managerMenu/managerMemberMenu");
 		List<ManagerMemberInquiryDTO> members = this.dbService.getMemberInfo();
 		
 		mav.addObject("memberList", members);
@@ -510,14 +517,58 @@ public class MainService implements Action {
 	}
 	/** 회원정보관리 : 정보검색 **/
 	public ModelAndView searchMemberInfo() {
-		ModelAndView mav = new ModelAndView();
-		System.out.println("id : " + this.params.getUserID() + " " + (this.params.getUserID().equals("")));
-		System.out.println("pwd : " + this.params.getUserPWD() + " " + (this.params.getUserPWD() == null));
-		System.out.println("birth : " + this.params.getUserBirth() + " " + (this.params.getUserBirth().equals("")));
+		ModelAndView mav = new ModelAndView("managerMenu/managerMemberMenu");
+		String userID = "%" + (this.params.getUserID() == null ? "" : this.params.getUserID()) + "%";
+		String userName = "%" + (this.params.getUserName() == null ? "" : this.params.getUserName()) + "%";
+		String userBirth = "%" + (this.params.getUserBirth() == null ? "" : this.params.getUserBirth()) + "%";
+		System.out.println(userName);
+		List<ManagerMemberInquiryDTO> searchUserList = this.dbService.searchMemberInfo(userID, userName, userBirth);
+
+		mav.addObject("memberList", searchUserList);
 		
 		return mav;
 	}
-/*******ID찾기(회원정보) 수진*******/
+	
+	
+	
+	
+	
+	
+	public ModelAndView file() throws IOException {
+		return new ModelAndView("fileUpload");
+	}
+	
+	
+	
+	public ModelAndView fileUploadTest() throws Exception {
+		String defaultDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img";
+		MultipartFile file = this.params.getMultiReq().getFile("file");
+		String fileName = file.getOriginalFilename();
+		
+		try {
+			byte[] b = file.getBytes();
+			File saveFile = new File(defaultDir + System.currentTimeMillis() + fileName);
+			FileOutputStream fos = new FileOutputStream(saveFile);
+			fos.write(b);
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return this.getTemplate();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/*******ID찾기(회원정보) 수진*******/	 //TODO 수진
+
 	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();

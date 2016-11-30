@@ -70,6 +70,7 @@ public interface DBMapper {
 	public List<ManagerMemberInquiryDTO> getMemberInfo();
 	public void managerWithdrawalMember(String userID);
 	public void managerRestoreMember(String userID);
+	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth);
 	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;

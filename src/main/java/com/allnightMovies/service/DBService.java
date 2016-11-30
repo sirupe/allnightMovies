@@ -177,6 +177,10 @@ public class DBService {
 	public void managerRestoreMember(String userID) {
 		dbMapper.managerRestoreMember(userID);
 	}
+	/** ji. manager menu 메니저 유저 검색 **/	
+	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth) {
+		return dbMapper.searchMemberInfo(userID, userName, userBirth);
+	}
 	
 /** jung. 상영시간표 **/ //TODO 수진
 	public List<MovieShowTimesMap> showtimes() throws Exception {

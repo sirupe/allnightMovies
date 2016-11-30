@@ -75,6 +75,8 @@ function ticketingDateClick() {
 	var year = $('.js_calendarYear').text(),
 		month = $('.js_calendarMonth').text(),
 		date = $screeningDate.text().trim();
+	
+	date = date < 10 ? '0' + date : date;
 	screeningDate = year + '.' + month + '.' + date;
 //	#ffd5e3
 	if(movieTitle == undefined) {

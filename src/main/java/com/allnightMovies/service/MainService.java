@@ -50,7 +50,6 @@ import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo;
 import com.allnightMovies.model.data.userInfo.UserTicketingInfo;
 import com.allnightMovies.model.params.Params;
-import com.allnightMovies.utility.FileUpload;
 import com.allnightMovies.utility.MonthCalendar;
 import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.Paging2;
@@ -1424,8 +1423,6 @@ public class MainService implements Action {
 			countResult = false;
 		}
 		
-		System.out.println("제발아멘"  + movieBasicInfo.getNo());
-		
 		mav.addObject("movieStillCutDTO", movieStillCutDTO);
 		mav.addObject("movieStillCutCount", countResult);
 		mav.addObject("reviewResult", reviewResult);
@@ -1552,8 +1549,6 @@ public class MainService implements Action {
 	public ModelAndView managerMovieModifyForm() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String movieTitle = this.params.getMovieInfoTitle();
-		
-		System.out.println("managerMovieInfoModifyForm 실행");
 		
 		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
 		

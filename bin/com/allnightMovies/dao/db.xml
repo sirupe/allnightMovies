@@ -760,7 +760,7 @@
 			         ORDER BY IMPORTANT DESC, writeDate DESC, NO DESC
 			      )
 			)    
-		WHERE RNUM <![CDATA[<]]>= 10
+		WHERE RNUM <![CDATA[<]]> = 10
 	</select>
 <!-- 영화  상세정보보기 -->
 	<select id="getMovieBasicInfo" resultType="com.allnightMovies.model.data.movieInfo.MovieBasicInfo" parameterType="java.lang.String">
@@ -864,16 +864,16 @@
 	
 	<select id="updateMovieInfo" parameterType="com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO">
 		UPDATE MOVIE_BASIC_INFO
-		SET MOVIE_TITLE        = #{movieTitle}
-			MOVIE_INTRO		   = #{movieIntro}
-		    MOVIE_RELEASE_DATE = #{movieReleaseDate}
-		    MOVIE_DIRECTOR 	   = #{movieDirector}
-		    MOVIE_AUTHOR 	   = #{movieAuthor}
-		    MOVIE_GENRE 	   = #{movieGenre}
-		    MOVIE_CAST         = #{movieCast}
-		    MOVIE_AGE_LIMIT    = #{movieAgeLimitText}
+		SET MOVIE_TITLE        = #{movieTitle},
+			MOVIE_INTRO		   = #{movieIntro},
+		    MOVIE_RELEASE_DATE = #{movieReleaseDate},
+		    MOVIE_DIRECTOR 	   = #{movieDirector},
+		    MOVIE_AUTHOR 	   = #{movieAuthor},
+		    MOVIE_GENRE 	   = #{movieGenre},
+		    MOVIE_CAST         = #{movieCast},
+		    MOVIE_AGE_LIMIT    = #{movieAgeLimitText},
 		    MOVIE_RUNTIME 	   = #{movieRuntime}
-		WHERE NO 	   = #{no}
+		WHERE NO 	   		   = #{no}
 	</select>
 	
 	

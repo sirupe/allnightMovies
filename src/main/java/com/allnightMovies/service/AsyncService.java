@@ -573,8 +573,28 @@ public class AsyncService implements AsyncAction {
 		movieBasicInfoDTO.setMovieReleaseDate(movieReleaseDate);
 		movieBasicInfoDTO.setMovieAgeLimitText(movieAgeLimitText);
 		movieBasicInfoDTO.setMovieRuntime(movieRuntime);
+		movieBasicInfoDTO.setNo(movieNO);
 		
-		this.dbService.updateMovieInfo(movieBasicInfoDTO);
+		System.out.println(movieTitle);
+		System.out.println(movieGenre);
+		System.out.println(movieDirector);
+		System.out.println(movieAuthor);
+		
+		
+		System.out.println(movieReleaseDate);
+		System.out.println(movieAgeLimitText);
+		System.out.println(movieRuntime);
+		
+		this.dbService.updateMovieInfo(movieBasicInfoDTO.getMovieTitle(),
+										movieBasicInfoDTO.getMovieIntro(),
+										movieBasicInfoDTO.getMovieReleaseDate(),
+										movieBasicInfoDTO.getMovieDirector(),
+										movieBasicInfoDTO.getMovieAuthor(),
+										movieBasicInfoDTO.getMovieGenre(),
+										movieBasicInfoDTO.getMovieCast(),
+										movieBasicInfoDTO.getMovieAgeLimitText(),
+										movieBasicInfoDTO.getMovieRuntime(),
+										movieBasicInfoDTO.getNo());
 		
 		asyncResult.setData("/movie/mainService/movieDetailInfo?movieInfoTitle=" + movieTitle + "&movieNO"+ movieNO);
 		return asyncResult;

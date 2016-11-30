@@ -211,14 +211,16 @@ body {
 }
 
 .header__logon__top__welcome-text {
-	margin: 22px -10px 0px 0px;
+	margin: 22px 0px;
 	font-size: 17px;
 	font-family: 'Jeju Gothic', serif;
     color: #e5e5e5;
     font-weight: 100;
 }
 .header__logon__top__buttons {
-	display: flex;
+	width: 300px;
+	text-align: right;
+    padding-right: 7px;
 }
 
 .header__logon__top__buttons__logout,
@@ -233,7 +235,7 @@ body {
     text-overflow: clip;
     background: rgba(117, 123, 148, 0.62);
     box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
-    margin: 15px -15px 10px 20px;
+	margin: 11px 2px;
 }
 .header__logon__top__buttons__logout:hover,
 .header__logon__top__buttons__myinfo:hover {

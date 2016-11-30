@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script async="async" type="text/javascript" src="/resources/js/notice/noticeManager.js"></script>
 
 <div class="js_noticeBoard">
 
@@ -32,13 +31,11 @@
 					</div>
 				</c:forEach>
 			</div>
-			
-			<c:if test="${checkManager}">
-				<div>
-					<button class="insertNoticeBtn js_insertNoticeBtn font" type="button">글등록</button>
+			<c:if test="${isManager}">
+				<div class="div-insertNotice">
+					<button class="insertNoticeBtn js_insertNoticeBtn" type="button">글쓰기</button>
 				</div>
 			</c:if>
-			
 		</c:otherwise>
 	</c:choose>
 	

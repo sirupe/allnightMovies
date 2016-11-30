@@ -528,7 +528,7 @@
 			FROM (
 				SELECT *
 				FROM MOVIE_BASIC_INFO 
-				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1;
 				ORDER BY MOVIE_TITLE ASC
 			    )
 			)   
@@ -543,7 +543,7 @@
 			FROM (
 				SELECT *
 				FROM MOVIE_BASIC_INFO 
-				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1;
 				ORDER BY REVIEW_EVALUATE DESC
 			    )
 			)   
@@ -558,7 +558,7 @@
 			FROM (
 				SELECT *
 				FROM MOVIE_BASIC_INFO 
-				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1;
 				ORDER BY MOVIE_TITLE ASC
 			    )
 			)  
@@ -574,7 +574,7 @@
 			FROM (
 				SELECT *
 				FROM MOVIE_BASIC_INFO 
-				WHERE MOVIE_RELEASE_DATE <![CDATA[>]]> SYSDATE 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[>]]> SYSDATE AND STATUS = 1;
 				ORDER BY MOVIE_TITLE ASC
 			    )
 			)   
@@ -597,7 +597,7 @@
 			FROM (
 			         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
 			         FROM CINEMA_NOTICE_BOARD 
-			         ORDER BY IMPORTANT DESC, writeDate DESC
+			         ORDER BY IMPORTANT DESC, writeDate DESC, NO DESC
 			      )
 			)    
 		WHERE RNUM BETWEEN #{param1} AND #{param2}
@@ -606,7 +606,8 @@
 	<select id="getNoticeBoardContent" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.Integer">
 		SELECT TITLE title, 
 			   TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') writeDate,  
-			   CONTENT content
+			   CONTENT content,
+			   IMPORTANT important
 		FROM CINEMA_NOTICE_BOARD
 		WHERE NO = #{noticeNo}
 	</select>
@@ -629,7 +630,7 @@
 		         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
 		         FROM CINEMA_NOTICE_BOARD 
 		         WHERE TITLE LIKE #{param3} OR CONTENT LIKE #{param3}
-		         ORDER BY IMPORTANT DESC, writeDate DESC
+		         ORDER BY IMPORTANT DESC, writeDate DESC, NO DESC
 		      )
 		)    
 		WHERE RNUM BETWEEN #{param1} AND #{param2}
@@ -639,7 +640,7 @@
 
 	<select id="getCinemaIntroImg" resultType="com.allnightMovies.model.data.theater.CinemaIntroduceDTO">
 		SELECT CINEMA_INTRO_IMAGE cinemaIntroImg
-		FROM CINEMA_INTRODUCE
+		FROM CINEMA_INTRODUCE 
 	</select>
 	
 <!-- MAIN PAGE -->	
@@ -658,7 +659,7 @@
 				FROM (
 					SELECT *
 					FROM MOVIE_BASIC_INFO 
-					WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE 
+					WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1;
 					ORDER BY MOVIE_TITLE ASC
 				    )
 				) 
@@ -675,12 +676,12 @@
 			FROM (
 			         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
 			         FROM CINEMA_NOTICE_BOARD 
-			         ORDER BY IMPORTANT DESC, writeDate DESC
+			         ORDER BY IMPORTANT DESC, writeDate DESC, NO DESC
 			      )
 			)    
 		WHERE RNUM <![CDATA[<]]>= 10
 	</select>
-<!-- 상세정보보기 -->
+<!-- 영화  상세정보보기 -->
 	<select id="getMovieBasicInfo" resultType="com.allnightMovies.model.data.movieInfo.MovieBasicInfo" parameterType="java.lang.String">
 		SELECT MOVIE_TITLE 			movieTitle,
     		   MOVIE_RELEASE_DATE   movieReleaseDate,
@@ -704,7 +705,7 @@
 		       TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate,
 		       NO								 AS reviewNo    
 		FROM MOVIE_REVIEW_BOARD                         
-		WHERE MOVIE_TITLE = #{movieTitle}
+		WHERE MOVIE_TITLE = #{movieTitle} AND STATUS = 1
 	</select>
 	
 	<select id="getReviewBoardList" resultType="com.allnightMovies.model.data.movieInfo.MovieReviewBoard" parameterType="com.allnightMovies.model.data.movieInfo.MovieReviewBoardDTO">
@@ -718,7 +719,7 @@
 			   FROM (
 			          SELECT REVIEW_EVALUATE, REVIEW_CONTENTS, USER_ID,  TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, NO
 			          FROM MOVIE_REVIEW_BOARD
-			          WHERE MOVIE_TITLE LIKE #{param3}
+			          WHERE MOVIE_TITLE LIKE #{param3} AND STATUS = 1
 			          ORDER BY WRITE_DATE DESC
 	      			 )
 	   		 )
@@ -737,7 +738,8 @@
 		VALUES (#{param1}, #{param2}, #{param3}, SYSDATE, #{param4}, MOVIE_REVIEW_SEQ.NEXTVAL)
 	</select>
 	<select id="deleteReview" parameterType="java.lang.Integer">
-		DELETE MOVIE_REVIEW_BOARD	
+		UPDATE MOVIE_REVIEW_BOARD
+		SET STATUS = 0
 		WHERE NO = #{reviewNo} 
 	</select>
 	<select id="getStillcut" resultType="com.allnightMovies.model.data.movieInfo.MovieStillCut" parameterType="java.lang.String">
@@ -745,4 +747,37 @@
 		FROM MOVIE_STEEL_CUT 
 		WHERE MOVIE_TITLE = #{movieTitle}
 	</select>
+	
+<!-- 관리자 / 공지사항 -->
+	<select id="insertNoticeBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
+		INSERT INTO CINEMA_NOTICE_BOARD (
+				NO,
+				TITLE, 
+				WRITE_DATE, 
+				CONTENT, 
+				IMPORTANT
+		) VALUES (
+				NOTICE_BOARD_SEQ.NEXTVAL, 
+				#{param1}, 
+				SYSDATE,
+				#{param2}, 
+				#{param3}
+		)
+	</select>
+	<select id="updateNoticeBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
+		UPDATE CINEMA_NOTICE_BOARD
+		SET TITLE = #{param1}, CONTENT = #{param2}, IMPORTANT = #{param3}
+		WHERE NO = #{param4}
+	</select>
+	<select id="deleteNoticeBoard" parameterType="java.lang.Integer">
+		DELETE CINEMA_NOTICE_BOARD
+		WHERE NO = #{noticeNO}
+	</select>
+<!-- 관리자 영화삭제 -->	
+	<select id="deleteMovieFilm" parameterType="java.lang.String">
+		UPDATE MOVIE_BASIC_INFO
+		SET STATUS = 0
+		WHERE = #{movieTitle}
+	</select>
+	
 </mapper>

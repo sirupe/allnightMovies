@@ -324,4 +324,14 @@ public class DBService {
 	public List<MovieStillCut> getStillcut(String movieTitle) {
 		return dbMapper.getStillcut(movieTitle);
 	}
+/* shin 관리자 공지사항 등록*/
+	public CinemaNoticeBoardDTO insertNoticeBoard(String title, String content, int important) {
+		return dbMapper.insertNoticeBoard(title, content, important);
+	}
+	public CinemaNoticeBoardDTO updateNoticeBoard(String title, String content, int important, int no) {
+		return dbMapper.updateNoticeBoard(title, content, important, no);
+	}
+	public Integer deleteNoticeBoard(Integer noticeNO) {
+		return dbMapper.deleteNoticeBoard(noticeNO);
+	}
 }

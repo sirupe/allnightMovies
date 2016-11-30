@@ -71,6 +71,7 @@
     margin-left: 4px;
     padding: 6px 15px;
     font-size: 15px;
+    font-family: 'Jeju Gothic', serif;
 }
 .insertNoticeBtn:hover,
 .searchbutton:hover {
@@ -122,4 +123,7 @@ a{
 .bold:hover {
 	color: #a8a8a8;
 	font-weight: bold;
+}
+.div-insertNotice {
+	margin-top: 30px;
 }

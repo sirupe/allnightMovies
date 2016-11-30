@@ -1,7 +1,8 @@
+
 function init() {
 	setEvent();
 }
-init()
+init();
 
 function setEvent() {
 	var $container = $('.js_noticeContainer'),
@@ -19,7 +20,7 @@ function setEvent() {
 		.on('click', '.js_currentPageSearch', locationCurrentPageSearch)
 		.on('click', '.js_nextPageSearch', locationNextPageSearch)
 		.on('click', '.js_lastPageSearch', locationLastPageSearch)
-		
+		.on('click', '.js_insertNoticeBtn', locationInsertNoticeBtn)
 		
 	$Boardcontainer
 		.on('click', '.js_noticeBoardBtn', locationNoticeBoard)
@@ -138,7 +139,6 @@ function locationFirstPageSearch() {
 				  
 	$.post(url, params, cbf);
 }
-//TODO
 /*이전PAGE*/
 function locationPrePageSearch() {
 	var $searchWord  = $('.js_searchInput'),
@@ -206,3 +206,7 @@ function locationLastPageSearch() {
 	$.post(url, params, cbf);
 }
 
+function locationInsertNoticeBtn() {
+	var url	    = '/movie/mainService/managerInsertNoticeForm';
+	submit(url);
+}

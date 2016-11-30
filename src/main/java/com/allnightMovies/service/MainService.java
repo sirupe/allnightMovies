@@ -11,14 +11,12 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
-import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.MenuList;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
@@ -1031,6 +1029,7 @@ public class MainService implements Action {
 		String myInfoID = (String)session.getAttribute("userID");
 		UserPersonalInfoDTO myInfoDTO = this.dbService.selectMyInfo(myInfoID);
 		mav.addObject("myInfoList", myInfoDTO);
+		mav.addObject("ticketing", this.params.getParams());
 		return mav;
 	}
 	public ModelAndView myInfoChagePwdResult() throws Exception {
@@ -1054,9 +1053,6 @@ public class MainService implements Action {
 		this.params.setContentjs("myInfo/changePwd");
 		return this.logout();	
 	}	
-	
-
-
 	
 //------------------------------------------------------------------------
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
@@ -1136,18 +1132,9 @@ public class MainService implements Action {
 	}
 //-----------------------------------------------------------------------
 /*******연종. SERVICE notice.jsp 공지사항*******/
-	//TODO 관리자페이지 작업중
 	//1. 처음 공지사항 을눌렀을때  리스트를 뿌려줌 
 	public ModelAndView notice() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		
-		HttpSession session = this.params.getSession();
-		Integer userStatus = (Integer) session.getAttribute("userStatus");
-		boolean checkManager = false;
-		if(userStatus == 2) {
-			checkManager = true;
-			System.out.println("관리자 접속");
-		}
 		
 		int totalList = this.dbService.getNoticeBoardCount();
 		this.params.setNoticePage(1);
@@ -1155,7 +1142,7 @@ public class MainService implements Action {
 		
 		Paging2 paging = new Paging2();
 		paging.makePaging(totalList, noticePage, 10, 10);
-		
+		System.out.println("notice()");
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
@@ -1163,7 +1150,6 @@ public class MainService implements Action {
 		mav.addObject("page", "notice/notice");
 		mav.addObject("contentCSS", "service/notice/notice");
 		mav.addObject("contentjs", "service/notice/notice");
-		mav.addObject("checkManager", checkManager);
 		return mav;
 	}
 	
@@ -1281,9 +1267,40 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-//TODO	
+	public ModelAndView managerInsertNoticeForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("directory", "service/notice/manager");
+		mav.addObject("page", "insertNotice");
+		mav.addObject("contentCSS", "service/notice/managerNotice");
+		mav.addObject("contentjs", "service/notice/managerNotice");
+		return mav;
+	}
 	
-/*************SHIN _ 영화상세정보***********/
+	public ModelAndView managerUpdateNoticeForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		Integer noticePage = this.params.getManagerNoticePage();
+		Integer noticeNo = this.params.getManagerNoticeNo();
+		
+		CinemaNoticeBoardDTO noticeDTO = this.dbService.getNoticeBoardContent(noticeNo);
+		String content = noticeDTO.getContent();
+		String title = noticeDTO.getTitle();
+		String writeDate = noticeDTO.getWriteDate();
+		Integer important = noticeDTO.getImportant();
+		
+		mav.addObject("directory", "service/notice/manager");
+		mav.addObject("page", "updateNotice");
+		mav.addObject("contentCSS", "service/notice/managerNotice");
+		mav.addObject("contentjs", "service/notice/managerModify");
+		mav.addObject("title", title);
+		mav.addObject("content", content);
+		mav.addObject("writeDate", writeDate);
+		mav.addObject("noticePage", noticePage);
+		mav.addObject("noticeNo", noticeNo);
+		mav.addObject("important", important);
+		return mav;
+	}
+	
+/*************SHIN _ 영화상세정보***********/ //TODO
 	public ModelAndView movieDetailInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String movieTitle = this.params.getMovieInfoTitle();
@@ -1419,14 +1436,74 @@ public class MainService implements Action {
 		Paging2 paging = new Paging2();
 		paging.makePaging(reviewBoardDTO.size(), 1, 5, 5);
 		
-		if (userID.equals(this.params.getDeleteReviewID())) {
+		if(userID.equals(this.params.getDeleteReviewID())) {
 			this.dbService.deleteReview(reviewNo);
 		}
+		if(userID.equals("AllnightMovies")) {
+			this.dbService.deleteReview(reviewNo);
+		}
+		
+		System.out.println("관리자  >> " + userID.equals("AllnightMovies"));
 		List<MovieReviewBoard> reviewBoardListDTO = this.dbService.getReviewBoardList(paging.getStartPageList(), paging.getEndPageList(), movieTitle);
 		mav.addObject("reviewBoardListDTO", reviewBoardListDTO);
 		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
 		mav.addObject("paging", paging);
 		mav.addObject("userCheck", userID);
+		return mav;
+	}
+	
+	public ModelAndView managerMovieModifyForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		String movieTitle = this.params.getMovieInfoTitle();
+		
+		System.out.println("managerMovieInfoModifyForm 실행");
+		System.out.println("movieTitle" + movieTitle);
+		
+		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
+		
+		boolean reviewResult = true;
+		String movieReleadeDate = movieBasicInfo.getMovieReleaseDate();
+		Date currentTime = new Date ();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		boolean countResult = true;
+		
+		try {
+			date = format.parse(movieReleadeDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int compare = date.compareTo(currentTime);
+		if(compare >= 0){
+			reviewResult = false;
+		}
+		
+		List<MovieStillCut> movieStillCutDTO = this.dbService.getStillcut(movieTitle);
+		if(movieStillCutDTO.size() == 0) {
+			countResult = false;
+		}
+		
+		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
+		
+		System.out.println(movieTitle);
+		int reviewPage = this.params.getMovieInfoReviewPage();
+		Paging2 paging = new Paging2();
+		paging.makePaging(reviewBoardDTO.size(), reviewPage, 5, 5);
+		List<MovieReviewBoard> reviewBoardListDTO = this.dbService.getReviewBoardList(paging.getStartPageList(), paging.getEndPageList(), "%"+movieTitle+"%");
+		
+		mav.addObject("reviewBoardListDTO", reviewBoardListDTO);
+		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
+		mav.addObject("paging", paging);
+		
+		mav.addObject("movieStillCutDTO", movieStillCutDTO);
+		mav.addObject("movieStillCutCount", countResult);
+		mav.addObject("reviewResult", reviewResult);
+		mav.addObject("movieBasicInfo", movieBasicInfo);
+		
+		mav.addObject("directory", "movie/manager");
+		mav.addObject("page", "managerMovieInfo");
+		mav.addObject("contentCSS", "movie/managerMovieInfo");
+		mav.addObject("contentjs", "movie/managerMovieInfo");
 		return mav;
 	}
 }

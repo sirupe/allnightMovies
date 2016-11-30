@@ -1,3 +1,11 @@
+$(document).ready(function() {
+    $('.js_reviewText').on('keyup', function() {
+        if($(this).val().length > 120) {
+            $(this).val($(this).val().substring(0, 120));
+            alert('글자수는 최대 120자입니다.');
+        } 
+    });
+});
 
 function init() {
 	setEvent();
@@ -10,7 +18,6 @@ function setEvent() {
 	
 	$container
 		.on('click', '.js_tab_review', tabReview)
-		/*.on('click', '.js_tab_stillcut', tabStillcut)*/
 		.on('click', '.js_firstPage', locationFirstPage)
 		.on('click', '.js_prePage', locationPrePage)
 		.on('click', '.js_currentPage', locationCurrentPage)
@@ -18,9 +25,18 @@ function setEvent() {
 		.on('click', '.js_lastPage', locationLastPage)
 		.on('click', '.js_reviewInsertBtn', reviewInsert)
 		.on('click', '.js_deleteBtn', reviewDelete)
-		
+		.on('click', '.js_movieModifyBtn', managerMovieModifyForm)
 }
 
+
+function managerMovieModifyForm() {
+	var $movieTitle = $('.js_basicInfomovieTitle'),
+		movieTitle = $movieTitle.attr('data-movie-info-title');
+	
+		url	    = '/movie/mainService/managerMovieModifyForm?movieInfoTitle=' + movieTitle;
+	
+	submit(url);
+}
 
 /*******************글 삭제 *******************/
 function reviewDelete() {
@@ -84,19 +100,6 @@ function tabReview() {
 			  
 	$.post(url,params, cbf);
 }
-
-/*function tabStillcut() {
-	var $movieInfoTitle = $('.js_basicInfomovieTitle'),
-		movieInfoTitle = $movieInfoTitle.attr('data-movie-info-title'),
-		
-		url = '/movie/mainService/getStillcut',  
-		params = { 'movieInfoTitle' : movieInfoTitle }
-		cbf	= function(mav) {
-				$('.js_stillCutContainer').html(mav);
-			  }; 
-			  
-	$.post(url,params, cbf);
-}*/
 
 /*******************페이징*******************/
 /*처음PAGE*/
@@ -186,15 +189,6 @@ function locationLastPage() {
 }
 
 /*************reviewBoard.js**************/
-
-$(document).ready(function() {
-    $('.js_reviewText').on('keyup', function() {
-        if($(this).val().length > 120) {
-            $(this).val($(this).val().substring(0, 120));
-            alert('글자수는 최대 120자입니다.');
-        } 
-    });
-});
 
 var $star = $(".star-input");
 var checkStarScore = 0;

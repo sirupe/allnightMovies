@@ -9,7 +9,7 @@ function popMoviePayingCancel() {
 }
 
 function locationTicketInfo() {
-	location.href='/movie/mainService/viewMyInfo';
+	locationMyInfo('ticketing');
 }
 
 function setPayingResultEvents() {
@@ -20,6 +20,7 @@ function setPayingResultEvents() {
 }
 
 function initPayingResult() {	
+	console.log('initPayingResult 로딩');
 	setPayingResultEvents();
 }
 initPayingResult();

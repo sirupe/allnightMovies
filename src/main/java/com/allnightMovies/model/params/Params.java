@@ -105,6 +105,18 @@ public class Params {
 	private String asked;
 	private String no;
 	
+	private String userQuestionTitle;
+	
+	//답글달기
+	private String replyTitle;
+	private String replyContent;
+	private Integer replyPwd;
+	private String replyNo;
+	private String replyDepth;
+	private String replyStep;
+	private boolean replytPwdcheck;
+	
+
 // 문의 사항 게시판
 	private String insertTextArea; //내용
 	private String insertTitle; //제목
@@ -148,4 +160,11 @@ public class Params {
 	
 //메인 검색
 	private String searchWord;
+
+//파일업로드시 사용
+	private String locationPath;
+	private String saveFilePath;
+	
+//메인 페이징
+	private Integer mainPaing;
 }

@@ -70,6 +70,8 @@ public interface DBMapper {
 	public List<ManagerMemberInquiryDTO> getMemberInfo();
 	public void managerWithdrawalMember(String userID);
 	public void managerRestoreMember(String userID);
+	public Integer userInfoTotCount();
+	public ArrayList<ManagerMemberInquiryDTO> userInfoTotList(int userInfoListStartPage, int userInfoEndPage);
 	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth);
 	
 /** jung. 상영시간표 **/
@@ -94,19 +96,24 @@ public interface DBMapper {
 	
 /**고객센터 문의사항게시판 **/
 	public Integer questionBoardCount() throws Exception;
-	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception;
-	public CinemaQuestionBoardDTO questionBoardList(Integer no) throws Exception;
-	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception;
+	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum);
+	public CinemaQuestionBoardDTO questionBoardList(Integer no);
+	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO);
 	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception;
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum);
+	public Integer completeDeleteReplyQuestionBoard(String completeDeleteQuestionBoardNum);
 	
 /**jung 고객센터 관리자**/
 	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception;
 	public CinemaFrequentlyBoardDTO managementFrequentlyBoardCount(String no);
 	public CinemaFrequentlyBoardDTO managementUpdateFormComplete(String question, String asked, String no) throws Exception;
+	public Integer managementDeleteFormComplete(String no);
 	
+/**jung 고객센터 문의사항 관리자 **/
+	public CinemaQuestionBoardDTO insertReplyBoard(String title, String content, String user_id, int writePwd, int isPwd, String  replyNo,  String replyStep, String replyDepth) throws Exception;
+	public CinemaQuestionBoardDTO updateDepth(String replyNo, String replyStep) throws Exception;
 	
-/** shin. Search PWD **/
+	/** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);
 	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd);

@@ -177,6 +177,13 @@ public class DBService {
 	public void managerRestoreMember(String userID) {
 		dbMapper.managerRestoreMember(userID);
 	}
+	/** ji manager menu paging **/
+	public Integer userInfoTotCount() {
+		return dbMapper.userInfoTotCount();
+	}
+	public ArrayList<ManagerMemberInquiryDTO> userInfoTotList(int userInfoListStartPage, int userInfoEndPage) {
+		return dbMapper.userInfoTotList(userInfoListStartPage, userInfoEndPage);
+	}
 	/** ji. manager menu 메니저 유저 검색 **/	
 	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth) {
 		return dbMapper.searchMemberInfo(userID, userName, userBirth);
@@ -240,6 +247,10 @@ public class DBService {
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum) throws Exception {
 		return dbMapper.completeDeleteQuestionBoard(completeDeleteQuestionBoardNum);
 	}
+	
+	public Integer completeDeleteReplyQuestionBoard(String completeDeleteQuestionBoardNum) throws Exception {
+		return dbMapper.completeDeleteReplyQuestionBoard(completeDeleteQuestionBoardNum);
+	}
 
 /**JUNG 고객센터 자주묻는질문 관리자페이지 **/
 	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception {
@@ -254,6 +265,17 @@ public class DBService {
 		return dbMapper.managementUpdateFormComplete(question, asked, no);
 	}
 	
+	public Integer managementDeleteFormComplete(String no) throws Exception {
+		return dbMapper.managementDeleteFormComplete(no);
+	}
+	
+/** JUNG 고객센터 문의사항 관리자페이지 **/
+	public CinemaQuestionBoardDTO insertReplyBoard(String title, String content, String user_id, int writePwd, int isPwd, String  replyNo, String replyStep, String replyDepth) throws Exception {
+		return dbMapper.insertReplyBoard(title, content, user_id, writePwd, isPwd, replyNo, replyStep, replyDepth);
+	}
+	public CinemaQuestionBoardDTO updateDepth(String replyNo, String replyStep) throws Exception {
+		return dbMapper.updateDepth(replyNo, replyStep);
+	}
 /** shin. SEARCH PWD **/ //TODO 연종
 	public Integer searchPWD(String searchPwdUserID)  {
 		return dbMapper.searchPWD(searchPwdUserID);

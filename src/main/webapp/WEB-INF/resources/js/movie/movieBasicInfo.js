@@ -1,11 +1,3 @@
-$(document).ready(function() {
-    $('.js_reviewText').on('keyup', function() {
-        if($(this).val().length > 120) {
-            $(this).val($(this).val().substring(0, 120));
-            alert('글자수는 최대 120자입니다.');
-        } 
-    });
-});
 
 function init() {
 	setEvent();

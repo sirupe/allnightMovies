@@ -33,7 +33,9 @@ function modifyComplete(e) {
 		$movieDate 		= $('.js_basicInfoDate'),
 		$movieRuntime   = $('.js_basicInfoRuntime'),
 		$movieIntro		= $('.js_basicInfoMovieIntro'),
+		$movieNO    	= $('.js_modifyCompleteBtn'),
 		
+		movieNO     	= $movieNO.data('movieNo');
 		movieTitle 		 = $movieTitle.val(), 	
 		movieGenre 		 = $movieGenre.val(), 	
 		movieDirector 	 = $movieDirector.val(), 	
@@ -52,8 +54,9 @@ function modifyComplete(e) {
 				'managerMovieAuthor' : movieAuthor,
 				'managerMovieCast' : movieCast,
 				'managerMovieAge' : movieAge,
-				'managerMovieDate' : movieReleaseDate,
-				'managerMovieRuntime' : movieRuntime
+				'managerMovieReleaseDate' : movieReleaseDate,
+				'managerMovieRuntime' : movieRuntime,
+				'movieNO' : movieNO
 			  },
 			  
 	cbf	   = function(updateResult){

@@ -1,7 +1,6 @@
 package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaWriteBoardPwdCheckDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;

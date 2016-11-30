@@ -54,3 +54,12 @@
 	background: #ff9b9f;
 }
 
+.file-upload {
+	
+	width: 1000px;
+}
+
+.file-upload-container{
+	width: 1000px;
+	height: 1000px;
+}

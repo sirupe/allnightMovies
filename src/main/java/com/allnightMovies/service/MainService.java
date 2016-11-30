@@ -1171,6 +1171,11 @@ public class MainService implements Action {
 	}
 
 	
+	public ModelAndView managerStillCutModify() {
+		System.out.println("managerStillCutModify : 여기");
+		return new ModelAndView("movie/include/managerModifyStilcut");
+	}
+	
 	/*******연종. PWD찾기 SHIN*******/ //TODO 연종
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();

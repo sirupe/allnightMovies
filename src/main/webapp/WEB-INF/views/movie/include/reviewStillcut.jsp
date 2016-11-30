@@ -4,10 +4,10 @@
 <link rel="stylesheet" href="/resources/css/movie/stillCut.css">
 <script async="async" type="text/javascript" src="/resources/js/movie/stillcut.js"></script>
 
-<div class="stillCut">
+<div class="js_stilcutContainer stillCut">
 	<c:if test="${isManager}">
 		<div class="fileUpload">
-			<button class="fileUploadBtn js_fileUpload font" type="button">파일업로드</button>
+			<button class="fileUploadBtn js_stillcutBtn font" type="button">파일업로드</button>
 		</div>
 	</c:if>
 	<c:forEach items="${ movieStillCutDTO}" var="stillCut" varStatus="status">
@@ -19,7 +19,7 @@
 					</div>
 			    </div>
 				<div class="mainImg">
-					<img class="mySlides" src="/resources/img/stillcut/${stillCut.movieCut}" >
+					<img class="js_imageSlide mySlides" src="/resources/img/stillcut/${stillCut.movieCut}" data-stillcut-image="${stillCut.movieCut}">
 				</div>
 			</c:when>
 			<c:otherwise>

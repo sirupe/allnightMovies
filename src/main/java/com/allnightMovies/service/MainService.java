@@ -568,6 +568,7 @@ public class MainService implements Action {
 	
 	
 /*******ID찾기(회원정보) 수진*******/	 //TODO 수진
+
 	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -659,7 +660,6 @@ public class MainService implements Action {
 	}
 	
 	//자주묻는페이지 가져오기
-	
 	public ModelAndView serviceCenterFreQuentlyBoard() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
 		
@@ -684,27 +684,6 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-	
-////자주묻는페이지 페이지 전환
-//	public ModelAndView serviceCentergetBoardCount() throws Exception {
-//		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
-//
-//		int totBoardList = this.dbService.serviceCentergetBoardCount();
-//		int page = this.params.getPageboard();
-//		List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
-//		System.out.println(MovieFrequentlyBoardDTO.get(0) + " :전환 번호");
-//		
-//		Paging boardPaging = new Paging(totBoardList, 7,page, 4);
-//		boardPaging.setBoardPaging();
-//		
-//		mav.addObject("MovieFrequentlyBoardDTO", MovieFrequentlyBoardDTO);
-//		mav.addObject("boardPage", this.dbService.serviceCentergetBoard(boardPaging.getStartPageNum(), boardPaging.getEndPageNum()));
-//		mav.addObject("pageCount",boardPaging.getTotalPageCount());
-//		mav.addObject("pageGroup",boardPaging);
-//		mav.addObject("checkPage", page);
-//		return mav;
-//	}
-//	
 	/***검색 후 리스트 뿌려주기**/
 	public ModelAndView getUserSearchList() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/serviceFrequenty");
@@ -1090,11 +1069,10 @@ public class MainService implements Action {
 	public ModelAndView managementDeleteBoardComplete() throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
-		
-		
-		
 		return mav;
 	}
+
+	
 	/*******연종. PWD찾기 SHIN*******/ //TODO 연종
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -1139,8 +1117,7 @@ public class MainService implements Action {
 	}
 //------------------------------------------------------------------------
 	
-
-/*******연종. MyINFO SHIN*******/	//TODO
+/*******연종. MyINFO SHIN*******/	
 	public ModelAndView viewMyInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		HttpSession session = this.params.getSession();
@@ -1171,9 +1148,6 @@ public class MainService implements Action {
 		this.params.setContentjs("myInfo/changePwd");
 		return this.logout();	
 	}	
-	
-
-
 	
 //------------------------------------------------------------------------
 /*******연종. MOVIE CURRENT FIRM 현재상영작*******/	
@@ -1254,13 +1228,14 @@ public class MainService implements Action {
 	//1. 처음 공지사항 을눌렀을때  리스트를 뿌려줌 
 	public ModelAndView notice() throws Exception {
 		ModelAndView mav = this.getTemplate();
+		
 		int totalList = this.dbService.getNoticeBoardCount();
 		this.params.setNoticePage(1);
 		int noticePage = this.params.getNoticePage();
 		
 		Paging2 paging = new Paging2();
 		paging.makePaging(totalList, noticePage, 10, 10);
-		
+		System.out.println("notice()");
 		List<CinemaNoticeBoardDTO> noticeDTO = this.dbService.getCinemaNoticeBoardDTO(paging.getStartPageList(), paging.getEndPageList());
 		mav.addObject("noticeDTO", noticeDTO);
 		mav.addObject("paging", paging);
@@ -1270,6 +1245,7 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "service/notice/notice");
 		return mav;
 	}
+	
 	//2. 비동기로 사용자가 클릭한 page 를 가지고 계산한 paging 처리
 	public ModelAndView noticeBoard() throws Exception {
 		ModelAndView mav = new ModelAndView("service/notice/noticeBoard");
@@ -1383,8 +1359,42 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "service/notice/searchNotice");
 		return mav;
 	}
-/*************SHIN _ 영화상세정보***********/
-	public ModelAndView movieDetailInfo() throws Exception {//TODO
+	
+	public ModelAndView managerInsertNoticeForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		mav.addObject("directory", "service/notice/manager");
+		mav.addObject("page", "insertNotice");
+		mav.addObject("contentCSS", "service/notice/managerNotice");
+		mav.addObject("contentjs", "service/notice/managerNotice");
+		return mav;
+	}
+	
+	public ModelAndView managerUpdateNoticeForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		Integer noticePage = this.params.getManagerNoticePage();
+		Integer noticeNo = this.params.getManagerNoticeNo();
+		
+		CinemaNoticeBoardDTO noticeDTO = this.dbService.getNoticeBoardContent(noticeNo);
+		String content = noticeDTO.getContent();
+		String title = noticeDTO.getTitle();
+		String writeDate = noticeDTO.getWriteDate();
+		Integer important = noticeDTO.getImportant();
+		
+		mav.addObject("directory", "service/notice/manager");
+		mav.addObject("page", "updateNotice");
+		mav.addObject("contentCSS", "service/notice/managerNotice");
+		mav.addObject("contentjs", "service/notice/managerModify");
+		mav.addObject("title", title);
+		mav.addObject("content", content);
+		mav.addObject("writeDate", writeDate);
+		mav.addObject("noticePage", noticePage);
+		mav.addObject("noticeNo", noticeNo);
+		mav.addObject("important", important);
+		return mav;
+	}
+	
+/*************SHIN _ 영화상세정보***********/ //TODO
+	public ModelAndView movieDetailInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
 		String movieTitle = this.params.getMovieInfoTitle();
 		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
@@ -1394,6 +1404,7 @@ public class MainService implements Action {
 		Date currentTime = new Date ();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
+		boolean countResult = true;
 		
 		try {
 			date = format.parse(movieReleadeDate);
@@ -1405,11 +1416,13 @@ public class MainService implements Action {
 			reviewResult = false;
 		}
 		
-	
 		List<MovieStillCut> movieStillCutDTO = this.dbService.getStillcut(movieTitle);
+		if(movieStillCutDTO.size() == 0) {
+			countResult = false;
+		}
 		
 		mav.addObject("movieStillCutDTO", movieStillCutDTO);
-		mav.addObject("movieStillCutCount", movieStillCutDTO.size());
+		mav.addObject("movieStillCutCount", countResult);
 		mav.addObject("reviewResult", reviewResult);
 		mav.addObject("movieBasicInfo", movieBasicInfo);
 		mav.addObject("directory", "movie");
@@ -1444,7 +1457,7 @@ public class MainService implements Action {
 		mav.addObject("userCheck", user);
 		return mav;
 	}
-	//TODO   페이징 리뷰
+	
 	public ModelAndView getReviewBoardPage() throws Exception {
 		ModelAndView mav = new ModelAndView("movie/include/reviewBoard");
 		String movieTitle = this.params.getMovieInfoTitle();
@@ -1515,14 +1528,74 @@ public class MainService implements Action {
 		Paging2 paging = new Paging2();
 		paging.makePaging(reviewBoardDTO.size(), 1, 5, 5);
 		
-		if (userID.equals(this.params.getDeleteReviewID())) {
+		if(userID.equals(this.params.getDeleteReviewID())) {
 			this.dbService.deleteReview(reviewNo);
 		}
+		if(userID.equals("AllnightMovies")) {
+			this.dbService.deleteReview(reviewNo);
+		}
+		
+		System.out.println("관리자  >> " + userID.equals("AllnightMovies"));
 		List<MovieReviewBoard> reviewBoardListDTO = this.dbService.getReviewBoardList(paging.getStartPageList(), paging.getEndPageList(), movieTitle);
 		mav.addObject("reviewBoardListDTO", reviewBoardListDTO);
 		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
 		mav.addObject("paging", paging);
 		mav.addObject("userCheck", userID);
+		return mav;
+	}
+	
+	public ModelAndView managerMovieModifyForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		String movieTitle = this.params.getMovieInfoTitle();
+		
+		System.out.println("managerMovieInfoModifyForm 실행");
+		System.out.println("movieTitle" + movieTitle);
+		
+		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
+		
+		boolean reviewResult = true;
+		String movieReleadeDate = movieBasicInfo.getMovieReleaseDate();
+		Date currentTime = new Date ();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		boolean countResult = true;
+		
+		try {
+			date = format.parse(movieReleadeDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int compare = date.compareTo(currentTime);
+		if(compare >= 0){
+			reviewResult = false;
+		}
+		
+		List<MovieStillCut> movieStillCutDTO = this.dbService.getStillcut(movieTitle);
+		if(movieStillCutDTO.size() == 0) {
+			countResult = false;
+		}
+		
+		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
+		
+		System.out.println(movieTitle);
+		int reviewPage = this.params.getMovieInfoReviewPage();
+		Paging2 paging = new Paging2();
+		paging.makePaging(reviewBoardDTO.size(), reviewPage, 5, 5);
+		List<MovieReviewBoard> reviewBoardListDTO = this.dbService.getReviewBoardList(paging.getStartPageList(), paging.getEndPageList(), "%"+movieTitle+"%");
+		
+		mav.addObject("reviewBoardListDTO", reviewBoardListDTO);
+		mav.addObject("reviewBoardCount", reviewBoardDTO.size());
+		mav.addObject("paging", paging);
+		
+		mav.addObject("movieStillCutDTO", movieStillCutDTO);
+		mav.addObject("movieStillCutCount", countResult);
+		mav.addObject("reviewResult", reviewResult);
+		mav.addObject("movieBasicInfo", movieBasicInfo);
+		
+		mav.addObject("directory", "movie/manager");
+		mav.addObject("page", "managerMovieInfo");
+		mav.addObject("contentCSS", "movie/managerMovieInfo");
+		mav.addObject("contentjs", "movie/managerMovieInfo");
 		return mav;
 	}
 }

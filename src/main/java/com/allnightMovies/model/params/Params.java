@@ -105,8 +105,6 @@ public class Params {
 	private String asked;
 	private String no;
 	
-	
-	
 // 문의 사항 게시판
 	private String insertTextArea; //내용
 	private String insertTitle; //제목
@@ -116,15 +114,22 @@ public class Params {
 	private String insertUser_id;
 	private String insertWriteDate;
 	
-//영화 상세보기
+//연종. 영화 상세보기-------------------------------------------------------
 	private String movieInfoTitle;
 	private int movieInfoReviewPage;
 	
-//리뷰 등록
+//연종. 리뷰 등록-------------------------------------------------------
 	private int reviewScore;
 	private String reviewContents;
 	private String deleteReviewID;
 	private int reviewNo;
+	
+// 연종. 관리자 공지사항등록 -------------------------------------------------------
+	private String managerNoticeTitle;
+	private String managerNoticeContents;
+	private boolean managerNoticeImportant;
+	private Integer managerNoticePage;
+	private Integer managerNoticeNo;
 	
 //메인 검색
 	private String searchWord;

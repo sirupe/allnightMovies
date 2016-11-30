@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -430,7 +431,7 @@ public class AsyncService implements AsyncAction {
    }
    
    //자주묻는게시판 전환
-   public AsyncResult pagingBoard() throws Exception {
+   public AsyncResult<String> pagingBoard() throws Exception {
       
       //페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
          
@@ -482,5 +483,71 @@ public class AsyncService implements AsyncAction {
 		return asyncResult;
 		
 	}
+/* 연종. 관리자 공지사항 등록*/
+	public AsyncResult<String> managerInsertNotice() throws Exception { 
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		CinemaNoticeBoardDTO cinemaNoticeBoardDTO = new CinemaNoticeBoardDTO();
+		Integer noticeImportant = 0;
+		
+		String noticeTitle = this.params.getManagerNoticeTitle();
+		String noticeContents = this.params.getManagerNoticeContents();
+		boolean isNoticeImportant = this.params.isManagerNoticeImportant();
+		
+		if(isNoticeImportant) {
+			noticeImportant = 1;
+		}
+		cinemaNoticeBoardDTO.setContent(noticeContents);
+		cinemaNoticeBoardDTO.setImportant(noticeImportant);
+		cinemaNoticeBoardDTO.setTitle(noticeTitle);
+		
+		System.out.println("noticeTitle  >>  " + cinemaNoticeBoardDTO.getTitle());
+		System.out.println("noticeContents  >>  " + cinemaNoticeBoardDTO.getContent());
+		System.out.println("isNoticeImportant  >>  " + cinemaNoticeBoardDTO.getImportant());
+		
+		this.dbService.insertNoticeBoard(cinemaNoticeBoardDTO.getTitle(),
+										 cinemaNoticeBoardDTO.getContent(),
+										 cinemaNoticeBoardDTO.getImportant());
+		
+		System.out.println("noticeImportant  >>  " + noticeImportant);
+		asyncResult.setData("/movie/mainService/notice");
+		return asyncResult;
+	}
+	
+	public AsyncResult<String> managerUpdatetNotice() throws Exception { 
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		CinemaNoticeBoardDTO cinemaNoticeBoardDTO = new CinemaNoticeBoardDTO();
+		Integer noticeImportant = 0;
+		Integer noticePage = this.params.getManagerNoticePage();
+		Integer noticeNO = this.params.getManagerNoticeNo();
+		
+		String noticeTitle = this.params.getManagerNoticeTitle();
+		String noticeContents = this.params.getManagerNoticeContents();
+		boolean isNoticeImportant = this.params.isManagerNoticeImportant();
+		
+		if(isNoticeImportant) {
+			noticeImportant = 1;
+		}
+		cinemaNoticeBoardDTO.setContent(noticeContents);
+		cinemaNoticeBoardDTO.setImportant(noticeImportant);
+		cinemaNoticeBoardDTO.setTitle(noticeTitle);
+		cinemaNoticeBoardDTO.setNo(noticeNO);
+		
+		this.dbService.updateNoticeBoard(cinemaNoticeBoardDTO.getTitle(),  cinemaNoticeBoardDTO.getContent(),
+											cinemaNoticeBoardDTO.getImportant(), cinemaNoticeBoardDTO.getNo());
+		asyncResult.setData("/movie/mainService/notice?noticePage=" + noticePage + "&noticeNo=" + noticeNO);
+		return asyncResult;
+	}
+	
+	public AsyncResult<String> managerDeleteNotice() throws Exception { 
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		Integer noticePage = this.params.getManagerNoticePage();
+		Integer noticeNO = this.params.getManagerNoticeNo();
+		
+		this.dbService.deleteNoticeBoard(noticeNO);
+		
+		asyncResult.setData("/movie/mainService/notice?noticePage=" + noticePage + "&noticeNo=" + noticeNO);
+		return asyncResult;
+	}
+	
 }
    

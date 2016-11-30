@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="js_noticeBoard">
 
 	<c:choose>
@@ -9,6 +10,7 @@
 				 검색 결과가 없습니다. 다른 조건으로 검색해 주세요.
 			</div>
 		</c:when>
+		
 		<c:otherwise>
 			<div class="noticeBoard-content">
 				<c:forEach items="${noticeDTO}" var="noticeDTO">
@@ -29,9 +31,15 @@
 					</div>
 				</c:forEach>
 			</div>
+			<c:if test="${isManager}">
+				<div class="div-insertNotice">
+					<button class="insertNoticeBtn js_insertNoticeBtn" type="button">글쓰기</button>
+				</div>
+			</c:if>
 		</c:otherwise>
 	</c:choose>
 	
+	<!-- 페이징 -->
 	<div class="notice-list__buttom font">
 		<c:if test="${paging.startPageBlock != 1}">
 			<label class="js_firstPage${search} paging bold" data-firstPage="${paging.startPageNum}"  >◀</label>

@@ -1,24 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="movieBasicInfo js_movieBasicInfoContainer">
+<link rel="stylesheet" href="/resources/css/movie/movieBasicInfo.css">
 
-	<div class="intro_managerModeButtons">
-		<c:if test="${isManager}">
-			<button class="intro_managerModeBtn js_movieModifyBtn" type="button">수정하기</button>
-			<button class="intro_managerModeBtn js_movieDeleteBtn" type="button">영화삭제</button>
-		</c:if>
+<div class="movieBasicInfo js_managerMovieInfoContainer">
+	<div class="modifyComplete">
+		<button class="modifyCompleteBtn js_modifyCompleteBtn" type="button">수정완료</button>	
 	</div>
-	
 	<!-- 작품소개/ 스틸컷/ 평점리뷰 -->
 	<div class="movieBasicInfo-intro">
 		<img class="moviePoster" src="/resources/img/poster/${movieBasicInfo.moviePoster}"></img>
 		<span class="span-movieBasicInfo-intro">
-			<label class="intro__lable__title js_basicInfomovieTitle" data-movie-info-title="${movieBasicInfo.movieTitle}">${movieBasicInfo.movieTitle}</label><br><br>
-			<label class="intro__label">개요&nbsp;:&nbsp;${movieBasicInfo.movieGenre}</label><br><br>
-			<label class="intro__label">감독&nbsp;:&nbsp;${movieBasicInfo.movieDirector}&nbsp;|&nbsp;저자&nbsp;:&nbsp;${movieBasicInfo.movieAuthor}</label><br><br>
-			<label class="intro__label">출연&nbsp;:&nbsp;${movieBasicInfo.movieCast}</label><br><br>
-			<label class="intro__label">등급&nbsp;:&nbsp;${movieBasicInfo.movieAgeLimitText}&nbsp;관람가</label><br><br>
+			제목&nbsp;:&nbsp;<input class="intro__input js_basicInfomovieTitle font" name="movieTitle" value="${movieBasicInfo.movieTitle}" type="text"><br><br>
+			개요&nbsp;:&nbsp;<input class="intro__input font" name="movieGenre" value="${movieBasicInfo.movieGenre}" type="text"/><br><br>
+			감독&nbsp;:&nbsp;<input class="intro__input font" name="movieDirector" value="${movieBasicInfo.movieDirector}" type="text"/>
+			&nbsp;저자&nbsp;:&nbsp;<input class="intro__input font" name="movieAuthor" value="${movieBasicInfo.movieAuthor}" type="text"><br><br>
+			출연&nbsp;:&nbsp;<input class="intro__input font" name="movieCast" value="${movieBasicInfo.movieCast}" type="text"><br><br>
+			등급&nbsp;:&nbsp;<input class="intro__input font" name="movieAgeLimitText" value="${movieBasicInfo.movieAgeLimitText}" type="text">&nbsp;관람가<br><br>
+			
 			<c:if test="${reviewResult}">
 				<label class="intro__label">평점&nbsp;:&nbsp;
 				<c:choose>
@@ -62,25 +61,24 @@
 		
 		<!-- 탭 내용 : 탭 제목을 선택했을 때 표시되는 본문 -->
 		<div class="tab-intro_content">
-			<pre class="tab-intro_content__intro">${movieBasicInfo.movieIntro}</pre>
+			<textarea class="tab-intro_content__intro resize" cols="91px">${movieBasicInfo.movieIntro}</textarea>
 		</div>
 		
 		<!-- 스틸컷 사진 -->
 		<div class="tab-stillCut_content">
-			<jsp:include page="./include/reviewStillcut.jsp"></jsp:include> 
+			<jsp:include page="../include/reviewStillcut.jsp"></jsp:include> 
 		</div>
 		
 		<!-- 평점/리뷰 -->
 		<div class="tab-review_content">
 			<c:choose>
 				<c:when test="${reviewResult}">
-					<jsp:include page="./include/reviewBoard.jsp"></jsp:include> 
+					<jsp:include page="../include/reviewBoard.jsp"></jsp:include> 
 				</c:when>
 				<c:otherwise>
 					<span class="tab-intro_content__reviewfalse">!&nbsp;개봉전에는 평점을 등록할 수  없습니다.</span>
 				</c:otherwise>
 			</c:choose>
 		</div>
-		
 	</div>
 </div>

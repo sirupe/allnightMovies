@@ -12,7 +12,9 @@
 			</video>
 		</span>
 	</div>
+
 	<div class="screeningsPlanned-posters">
+	
 		<c:forEach begin="1" end="${filmNum }" varStatus="filmNum" items="${ScreeningsPlannedDTO}" var="ScreeningsPlannedDTO" > 
 			<c:choose>
 				<c:when test="${filmNum.count % 3 != 0}">

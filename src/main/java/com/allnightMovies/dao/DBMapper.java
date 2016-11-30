@@ -145,5 +145,10 @@ public interface DBMapper {
 	public MovieReviewBoard deleteReview(Integer reviewNo);
 /** shin.  stillcut**/
 	public List<MovieStillCut> getStillcut(String movieTitle);
+	
+/*  shin. 관리자 공지사항 등록*/
+	public CinemaNoticeBoardDTO insertNoticeBoard(String title, String content, int important);
+	public CinemaNoticeBoardDTO updateNoticeBoard(String title, String content, int important, int no);
+	public Integer deleteNoticeBoard(Integer noticeNO);
 
 }

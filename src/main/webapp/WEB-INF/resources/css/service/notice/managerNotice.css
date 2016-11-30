@@ -1,0 +1,93 @@
+@CHARSET "UTF-8";
+
+.insertNoticeForm {
+    margin: 50px 0px 50px 0px;
+}
+.insertNoticeForm-label {
+	font-size: 25px;
+    margin: 36px;
+}
+
+.insertNoticeForm-title {
+    margin-left: 20px;
+    
+}
+.insertNoticeForm-contents {
+    display: flex;
+}
+.insertNoticeForm__input {
+	width: 795px;
+    height: 30px;
+    font-size: 17px;
+    font-family: 'Jeju Gothic', serif;
+    margin-left: 31px;
+    margin-top: 30px;
+}
+.insertNoticeForm__textArea {
+	resize: none;
+    width: 720px;
+    height: 300px;
+    margin: 15px;
+    font-size: 16px;
+    font-family: 'Jeju Gothic', serif;
+}
+.noticeBoard-update__title {
+    width: 560px;
+    font-size: 20px;
+    margin-left: 20px;
+    border: none;
+    background-color: #d2e6cd;
+    font-family: 'Jeju Gothic', serif;
+}
+.noticeBoard-title {
+	background-color: #d2e6cd;
+    padding: 10px;
+}
+.noticeBoard-content__manager {
+    margin: 20px 0px 0px 80px;
+}
+.noticeBoard-content__label {
+	display: block;
+	font-size: 25px;
+	padding: 20px;
+}
+/*공통*/
+.insertNoticeForm__label {
+	font-size: 18px;
+	margin-left: 20px;
+}
+.padding {
+	padding: 20px;
+}
+
+.insertNoticeForm-buttons {
+    text-align: center;
+}
+
+.managerNoticeBoard__content {
+	width: 771px;
+	padding: 30px;
+	resize: none;
+    height: 300px;
+    font-size: 17px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+.noticeBoard__listButton,
+.noticeBoardView__buttons,
+.insertNoticeForm__button {
+	background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;	
+    margin-left: 4px;
+    padding: 6px 15px;
+    font-size: 15px;
+	font-family: 'Jeju Gothic', serif;
+}
+.noticeBoard__listButton:hover,
+.noticeBoardView__buttons:hover,
+.insertNoticeForm__button:hover {
+	background-color: #ead2b3;
+}

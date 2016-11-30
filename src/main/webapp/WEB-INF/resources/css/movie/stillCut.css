@@ -26,6 +26,7 @@
 	padding: 10px;
 }
 .demo {
+	 width: 140px;
     height: 100px;
     cursor: pointer;
 }

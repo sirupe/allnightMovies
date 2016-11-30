@@ -4,6 +4,8 @@ package com.allnightMovies.model.params;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +14,7 @@ import lombok.Setter;
 public class Params {
 	private HttpServletRequest request;
 	private HttpSession session;
+	private MultipartHttpServletRequest multiReq;
 	
 	private String main;
 	private String sub;
@@ -123,15 +126,22 @@ public class Params {
 	private String insertUser_id;
 	private String insertWriteDate;
 	
-//영화 상세보기
+//연종. 영화 상세보기-------------------------------------------------------
 	private String movieInfoTitle;
 	private int movieInfoReviewPage;
 	
-//리뷰 등록
+//연종. 리뷰 등록-------------------------------------------------------
 	private int reviewScore;
 	private String reviewContents;
 	private String deleteReviewID;
 	private int reviewNo;
+	
+// 연종. 관리자 공지사항등록 -------------------------------------------------------
+	private String managerNoticeTitle;
+	private String managerNoticeContents;
+	private boolean managerNoticeImportant;
+	private Integer managerNoticePage;
+	private Integer managerNoticeNo;
 	
 //메인 검색
 	private String searchWord;

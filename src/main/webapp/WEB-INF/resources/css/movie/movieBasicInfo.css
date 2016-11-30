@@ -1,4 +1,23 @@
 @CHARSET "UTF-8";
+/*manager*/
+.intro_managerModeButtons {
+    margin: 40px 0px 0px 40px;
+}
+.intro_managerModeBtn {
+    width: 100px;
+    height: 27px;
+    padding: 3px;
+    font-size: 18px;
+    color: #fcf3f3;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #b79fa1;
+    border-radius: 6px;
+    font-family: 'Jeju Gothic', serif;
+    background: rgba(206, 159, 161, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+}
+/****************************/
 .movieBasicInfo-intro {
 	width: 870px;
 	margin: 50px 0px 30px 40px; 
@@ -96,6 +115,7 @@
     padding: 20px;
     font-size: 19px;
     height: 300px;
+    font-family: 'Jeju Gothic', serif;
 
 }
 .tab-intro_content__reviewfalse {
@@ -213,6 +233,7 @@
     background: rgba(206, 159, 161, 0.81);
     box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
 }
+.intro_managerModeBtn:hover,
 .deleteBtn:hover {
     color: #fcf3f3;
     background: rgba(107, 78, 79, 0.81);

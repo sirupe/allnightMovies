@@ -61,6 +61,7 @@
 	justify-content: center;
 	padding: 35px;
 }
+.insertNoticeBtn,
 .searchbutton {
     background-color: #fdecd2;
     border: 1px solid #2a3034;
@@ -70,8 +71,9 @@
     margin-left: 4px;
     padding: 6px 15px;
     font-size: 15px;
+    font-family: 'Jeju Gothic', serif;
 }
-
+.insertNoticeBtn:hover,
 .searchbutton:hover {
 	background-color: #ead2b3;
 }
@@ -121,4 +123,7 @@ a{
 .bold:hover {
 	color: #a8a8a8;
 	font-weight: bold;
+}
+.div-insertNotice {
+	margin-top: 30px;
 }

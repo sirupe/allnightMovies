@@ -71,6 +71,7 @@ public interface DBMapper {
 	public void managerRestoreMember(String userID);
 	public Integer userInfoTotCount();
 	public ArrayList<ManagerMemberInquiryDTO> userInfoTotList(int userInfoListStartPage, int userInfoEndPage);
+	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth);
 	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
@@ -151,5 +152,10 @@ public interface DBMapper {
 	public MovieReviewBoard deleteReview(Integer reviewNo);
 /** shin.  stillcut**/
 	public List<MovieStillCut> getStillcut(String movieTitle);
+	
+/*  shin. 관리자 공지사항 등록*/
+	public CinemaNoticeBoardDTO insertNoticeBoard(String title, String content, int important);
+	public CinemaNoticeBoardDTO updateNoticeBoard(String title, String content, int important, int no);
+	public Integer deleteNoticeBoard(Integer noticeNO);
 
 }

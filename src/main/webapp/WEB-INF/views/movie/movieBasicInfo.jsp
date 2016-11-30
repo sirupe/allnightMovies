@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-
 <div class="movieBasicInfo js_movieBasicInfoContainer">
+
+	<div class="intro_managerModeButtons">
+		<c:if test="${isManager}">
+			<button class="intro_managerModeBtn js_movieModifyBtn" type="button">수정하기</button>
+			<button class="intro_managerModeBtn js_movieDeleteBtn" type="button">영화삭제</button>
+		</c:if>
+	</div>
+	
 	<!-- 작품소개/ 스틸컷/ 평점리뷰 -->
 	<div class="movieBasicInfo-intro">
 		<img class="moviePoster" src="/resources/img/poster/${movieBasicInfo.moviePoster}"></img>
@@ -56,11 +62,15 @@
 		
 		<!-- 탭 내용 : 탭 제목을 선택했을 때 표시되는 본문 -->
 		<div class="tab-intro_content">
-			<span class="tab-intro_content__intro">${movieBasicInfo.movieIntro}</span>
+			<pre class="tab-intro_content__intro">${movieBasicInfo.movieIntro}</pre>
 		</div>
+		
+		<!-- 스틸컷 사진 -->
 		<div class="tab-stillCut_content">
 			<jsp:include page="./include/reviewStillcut.jsp"></jsp:include> 
 		</div>
+		
+		<!-- 평점/리뷰 -->
 		<div class="tab-review_content">
 			<c:choose>
 				<c:when test="${reviewResult}">
@@ -71,5 +81,6 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
+		
 	</div>
 </div>

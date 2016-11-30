@@ -183,6 +183,10 @@ public class DBService {
 	public ArrayList<ManagerMemberInquiryDTO> userInfoTotList(int userInfoListStartPage, int userInfoEndPage) {
 		return dbMapper.userInfoTotList(userInfoListStartPage, userInfoEndPage);
 	}
+	/** ji. manager menu 메니저 유저 검색 **/	
+	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth) {
+		return dbMapper.searchMemberInfo(userID, userName, userBirth);
+	}
 	
 /** jung. 상영시간표 **/ //TODO 수진
 	public List<MovieShowTimesMap> showtimes() throws Exception {
@@ -363,5 +367,15 @@ public class DBService {
 	}
 	public List<MovieStillCut> getStillcut(String movieTitle) {
 		return dbMapper.getStillcut(movieTitle);
+	}
+/* shin 관리자 공지사항 등록*/
+	public CinemaNoticeBoardDTO insertNoticeBoard(String title, String content, int important) {
+		return dbMapper.insertNoticeBoard(title, content, important);
+	}
+	public CinemaNoticeBoardDTO updateNoticeBoard(String title, String content, int important, int no) {
+		return dbMapper.updateNoticeBoard(title, content, important, no);
+	}
+	public Integer deleteNoticeBoard(Integer noticeNO) {
+		return dbMapper.deleteNoticeBoard(noticeNO);
 	}
 }

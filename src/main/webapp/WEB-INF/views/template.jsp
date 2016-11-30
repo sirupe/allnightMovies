@@ -35,6 +35,7 @@
 					</c:choose> 
 				</section> 
 				<footer class="footer">
+		
 					<jsp:include page="./include/footer.jsp"></jsp:include>
 				</footer>
 			</div>

@@ -8,7 +8,7 @@ var $movieTitle;
 var $screeningDate;
 var $movieTime;
 
-document.write('<script src="/resources/js/reservation/paying.js"></script>');
+document.write('<script src="/resources/js/service/notice/managerNotice.js"></script>');
 
 function calendarPrevBtnClick() {
 	var thisMonth 	= $('.js_calendarMonth').text() - 1,
@@ -75,6 +75,8 @@ function ticketingDateClick() {
 	var year = $('.js_calendarYear').text(),
 		month = $('.js_calendarMonth').text(),
 		date = $screeningDate.text().trim();
+	
+	date = date < 10 ? '0' + date : date;
 	screeningDate = year + '.' + month + '.' + date;
 //	#ffd5e3
 	if(movieTitle == undefined) {

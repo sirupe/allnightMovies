@@ -34,7 +34,7 @@
 		<span class="member-management__status member-management__td user-label member-management__align-center">상태</span>
 		<span class="member-management__modify member-management__td user-label member-management__align-center">변경</span>
 	</div>
-	<c:forEach items="${userInfoPaging}" var="member">
+	<c:forEach items="${memberList}" var="member">
 		<div class="member-management__data member-management__tr">
 			<span class="member-management__id member-management__td member-management__align-center">${member.userID }</span>
 			<span class="member-management__name member-management__td member-management__align-center">${member.userName }</span>

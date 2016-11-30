@@ -277,6 +277,38 @@
 		    MOVIE_INTRO LIKE #{searchWord}
 		ORDER BY MOVIE_TITLE, MOVIE_INTRO, MOVIE_CAST
 	</select>
+<!-- JI. MANAGER MENU -->
+	<!-- JI. MANAGER MENU : 메니저메뉴 전체 회원정보 가져오기 -->
+	<select id="getMemberInfo" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
+		SELECT 
+			USER_ID USERID,
+		    USER_NAME USERNAME,
+		    USER_BIRTH USERBIRTH,
+		    USER_GENDER USERGENDER,
+		    USER_EMAIL USEREMAIL,
+		    TO_CHAR(USER_REGDATE, 'YYYY-MM-DD') USERREGDATE,
+		    CASE  
+		    WHEN USER_STATES = 1 THEN '정상'
+		    WHEN USER_STATES = 0 THEN '탈퇴' 
+		    END USERSTATUS
+		FROM USER_PERSONAL_INFO
+		WHERE USER_STATES != 2
+		ORDER BY USER_STATES DESC, USER_REGDATE
+	</select>
+	
+	<!-- JI. MANAGER MENU : 메니저메뉴 유저 탈퇴 -->
+	<update id="managerWithdrawalMember" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO
+		SET USER_STATES=0
+		WHERE USER_ID=#{userID}
+	</update>
+	
+	<!-- JI. MANAGER MENU : 메니저메뉴 유저 탈퇴 복구 -->
+	<update id="managerRestoreMember" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO
+		SET USER_STATES=1
+		WHERE USER_ID=#{userID}
+	</update>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>

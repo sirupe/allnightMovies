@@ -6,10 +6,11 @@
 
 .manager__menu__member {
     text-align: center;
-    padding: 25px 40px;
+    padding: 25px 23px;
     font-size: 21px;
     background: whitesmoke;
     color: darkseagreen;
+    cursor: pointer;
 }
 
 .manager__menu__member:hover {

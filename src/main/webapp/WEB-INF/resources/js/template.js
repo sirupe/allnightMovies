@@ -159,7 +159,7 @@ function searchMovieInfo() {
 
 function managerMenuBtnClick() {
 	submit(
-		'/movie/mainService/getTemplate',
+		'/movie/mainService/maganerMenu',
 		'managerMenu',
 		'managerMenu',
 		'managerMenu/managerMenu',

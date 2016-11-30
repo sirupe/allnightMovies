@@ -13,7 +13,7 @@
 			매 출 관 리
 		</div>
 	</div>
-	<div class="manager__body">
+	<div class="js_managerBody manager__body">
 		<jsp:include page="./managerMemberMenu.jsp"></jsp:include>
 	</div>
 </div>

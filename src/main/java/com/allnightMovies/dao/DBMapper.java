@@ -20,6 +20,7 @@ import com.allnightMovies.model.data.movieInfo.MovieStillCut;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO;
 import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
@@ -53,8 +54,8 @@ public interface DBMapper {
 	public List<String> reservationSeatInfo(CinemaSeatReserveInfo seatReserveInfo);
 	public List<CinemaSeatDTO> getTheaterSeatInfo(CinemaSeatReserveInfo reserveInfo);
 	public Integer getTheaterSeatColCnt(String theater);
-
-	/** ji. ticketing confirmation 예매내역 **/
+	
+/** ji. ticketing confirmation 예매내역 **/
 	public List<UserSelectTicketingInfo> reservationSeatInfo(String userID);
 	public MovieEndTimeDTO getMovieEndTime(String ticketNum);
 	
@@ -63,6 +64,11 @@ public interface DBMapper {
 
 /** ji. search movie info  **/	
 	public List<MovieBasicInfo> searchMovieInfo(String searchWord);
+	
+/** ji. manager menu **/
+	public List<ManagerMemberInquiryDTO> getMemberInfo();
+	public void managerWithdrawalMember(String userID);
+	public void managerRestoreMember(String userID);
 	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;

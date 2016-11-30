@@ -87,25 +87,28 @@ public class MainController {
 	
 	@RequestMapping(value="/movie/file", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public String menuCliecked(
+	public ModelAndView menuCliecked(
 			Params params, 
 			MultipartHttpServletRequest multiReq) throws Throwable {
 
-		String defaultDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/";
-		MultipartFile file = multiReq.getFile("file");
-		String fileName = file.getOriginalFilename();
+		String defaultDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/" + params.getSaveFilePath() + "/";
+		
+		List<MultipartFile> files = multiReq.getFiles("file");
 		
 		try {
-			byte[] b = file.getBytes();
-			File saveFile = new File(defaultDir + System.currentTimeMillis() + fileName);
-			FileOutputStream fos = new FileOutputStream(saveFile);
-			fos.write(b);
-			fos.close();
+			for(MultipartFile file : files) {
+				String fileName = file.getOriginalFilename();
+				byte[] b = file.getBytes();
+				File saveFile = new File(defaultDir + System.currentTimeMillis() + fileName);
+				FileOutputStream fos = new FileOutputStream(saveFile);
+				fos.write(b);
+				fos.close();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return fileName;
+		return new ModelAndView(params.getLocationPath());
 	}
 	
 // 이러한 방식의 controller 사용도 가능.

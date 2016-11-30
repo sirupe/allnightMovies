@@ -160,6 +160,10 @@ public class Params {
 	
 //메인 검색
 	private String searchWord;
+
+//파일업로드시 사용
+	private String locationPath;
+	private String saveFilePath;
 	
 //메인 페이징
 	private Integer mainPaing;

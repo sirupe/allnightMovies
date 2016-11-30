@@ -7,6 +7,7 @@
 	<div class="member-management__find">
 		<div class="member-management__find__id-div">
 			<span class="member-management__find__label">아이디</span>
+
 			<input class="js_searchUserID member-management__find__input" type="text"/>
 		</div>
 		<div class="member-management__find__name-div">
@@ -58,4 +59,22 @@
 			</span>
 		</div>
 	</c:forEach>
+	
+	<div class="mainCurrentPaingNumber">
+		<c:if test="${infoMainBoardPage.isPreButton() }"><span class = "js_mainPaingPagePreButton" data-userInfoMainPrePage="${infoMainBoardPage.viewStartPageNum -1 }" >◀</span></c:if>
+			<c:forEach begin="${infoMainBoardPage.viewStartPageNum }" end="${infoMainBoardPage.viewEndPageNum }" var="page"> 
+				<span>
+					<c:choose>
+						<c:when test="${checkPage == page }">
+							<label class="mainCurrentPaingNumber--active js_mainCurrentPaingNumber">${page }</label>
+						</c:when>
+						<c:otherwise>
+							<label class="js_mainPagingNumber">${page }</label>
+						</c:otherwise>
+					</c:choose>
+				</span>
+			</c:forEach>
+		<c:if test="${infoMainBoardPage.isNextButton() }"><span class="js_mainPaingNextButton" data-userInfoMainNextPage="${infoMainBoardPage.viewEndPageNum + 1 }">▶</span></c:if>
+		
+	</div>
 </div>

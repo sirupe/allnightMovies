@@ -24,21 +24,27 @@
 	<c:forEach items="${questionBoardPage }" var="questionBoardPage">	
 		<div class="questionBoard_middle">
 			<span class="no">
-				<label class="js_questionBoard_no">${questionBoardPage.getNo() }</label>
+				<label class="js_questionBoard_no">${questionBoardPage.no }</label>
 			</span>
 			<c:choose>
-				<c:when test="${ questionBoardPage.getIsPwd() == 1}">
+				<c:when test="${ questionBoardPage.isPwd == 1}">
 					<span class="title">
-						<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
-								<img src="/resources/img/lock.png" >${questionBoardPage.getTitle()}</label>
+
+						<c:if test="${questionBoardPage.replyStep == 1}">
+							<span class="question__tab">&nbsp;&nbsp;&nbsp;</span>
+						</c:if>
+						<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.no }">
+								<img src="/resources/img/lock.png" >${questionBoardPage.title}</label>
 					</span>
-					
 				</c:when>
 				<c:otherwise>
-					<span class="title">
-						<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.getNo() }">
-							${questionBoardPage.getTitle()}</label>
-					</span>
+					<div class="title">
+						<c:if test="${questionBoardPage.replyStep == 1}">
+							<span class="question__tab">&nbsp;&nbsp;&nbsp;</span>
+						</c:if>
+						<label class="js_questionBoard_title" data-questionBoardPageNum="${questionBoardPage.no }">
+							${questionBoardPage.title}</label>
+					</div>
 				</c:otherwise>
 				
 			</c:choose>
@@ -69,7 +75,8 @@
 				</span>
 			</c:forEach>
 		<c:if test="${questionBoardGroup.isNextButton() }"><span data-QuestionnextPage="${questionBoardGroup.viewEndPageNum +1 }" class="js_questionNextButton">▶</span></c:if>
-	</div> 	
+	</div> 
+
 		<button class="serviceCenter_QuestionWrite js_QuestionWriteForm" type="button">글쓰기</button>
 </div>
 

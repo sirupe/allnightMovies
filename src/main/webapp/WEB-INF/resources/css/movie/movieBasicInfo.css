@@ -1,11 +1,12 @@
 @CHARSET "UTF-8";
 /*manager*/
 .intro_managerModeButtons {
-    margin: 40px 0px 0px 40px;
+    margin: -65px 0px 0px -259px;
 }
 .intro_managerModeBtn {
     width: 100px;
     height: 27px;
+    margin-top: 10px;
     padding: 3px;
     font-size: 18px;
     color: #fcf3f3;
@@ -32,6 +33,7 @@
 .span-movieBasicInfo-intro {
 	margin-top: 20px;
 	margin-left: 30px;
+    width: 600px;
 }
 .moviePoster {
 	width: 230px;

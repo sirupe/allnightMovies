@@ -9,6 +9,10 @@ function setEventManagerMemberMenu() {
 		.on('click', '.js_managerWithdrawal', managerWithdrawal)
 		.on('click', '.js_managerRestore', managerRestore)
 		.on('click', '.js_searchMemberInfoBtn', searchMemberInfo)
+		
+		.on('click', '.js_mainPagingNumber', mainPaging)
+		.on('click', '.js_mainPaingNextButton', nextMainPaging)
+		.on('click', '.js_mainPaingPagePreButton',preMainPaging)
 }	
 
 function managerWithdrawal() {
@@ -53,3 +57,45 @@ function searchMemberInfo() {
 	
 	$.post(url, params, cbf);
 }
+
+
+function mainPaging() {
+	var mainPage = $(this).text();
+	
+	console.log(mainPage);
+		url		= '/movie/mainService/managePaging',
+		params	= {'mainPaing' : mainPage},
+		cbf		= function(result) {
+					$('.js_managerBody').html(result);
+		}
+	$.post(url, params, cbf);
+}
+
+function nextMainPaging() {
+	var $mainPageUserClickNum = $('.js_mainPaingNextButton');
+		mainPageUserClickNum  = $mainPageUserClickNum.attr('data-userInfoMainNextPage');
+		
+		console.log(mainPageUserClickNum);
+		
+		url		= '/movie/mainService/managePaging',
+		params	= {'mainPaing' : mainPageUserClickNum},
+		cbf		= function(result) {
+					$('.js_managerBody').html(result);
+		}
+	$.post(url, params, cbf);	
+}
+
+function preMainPaging() {
+	var $mainPageUserClickNum = $('.js_mainPaingPagePreButton');
+	mainPageUserClickNum  = $mainPageUserClickNum.attr('data-userInfoMainPrePage');
+	
+	console.log(mainPageUserClickNum);
+	
+	url		= '/movie/mainService/managePaging',
+	params	= {'mainPaing' : mainPageUserClickNum},
+	cbf		= function(result) {
+				$('.js_managerBody').html(result);
+	}
+	$.post(url, params, cbf);	
+}
+

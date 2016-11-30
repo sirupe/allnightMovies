@@ -17,3 +17,20 @@
     background-color: #5e5e5e;
     color: #dfffdf;
 }
+
+.mainCurrentPaingNumber--active {
+	color:orange;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+label.js_mainPagingNumber {
+    cursor: pointer;
+}
+
+.mainCurrentPaingNumber {
+    text-align: center;
+    margin-top: 32px;
+    letter-spacing: 9px;
+    cursor: pointer;
+}

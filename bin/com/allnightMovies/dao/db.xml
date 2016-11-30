@@ -309,6 +309,37 @@
 		SET USER_STATES=1
 		WHERE USER_ID=#{userID}
 	</update>
+	<!-- MANAGER PAGING : 관리자메뉴 페이징(회원 총 수 구하기)-->
+	<select id="userInfoTotCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM USER_PERSONAL_INFO WHERE USER_STATES != 2
+	</select>
+	<!-- MANAGER PAGING : 관리자메뉴 페이징(회원 페이징 구하기) -->
+	<select id="userInfoTotList" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
+		SELECT 
+			USER_ID USERID,
+			USER_NAME USERNAME,
+			USER_BIRTH USERBIRTH,
+			USER_GENDER USERGENDER,
+			USER_EMAIL USEREMAIL,
+			TO_CHAR(USER_REGDATE, 'YYYY-MM-DD') USERREGDATE,
+			CASE  
+			WHEN USER_STATES = 1 THEN '정상'
+			WHEN USER_STATES = 0 THEN '탈퇴' 
+			END USERSTATUS,
+			RNUM
+		FROM USER_PERSONAL_INFO 
+		JOIN (
+			SELECT
+			ROWNUM RNUM,
+			USER_ID
+			FROM USER_PERSONAL_INFO
+			WHERE USER_STATES != 2
+			ORDER BY USER_STATES DESC, USER_REGDATE
+		) USING(USER_ID)
+		WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	
 	
 	<!-- JI. MANAGER MENU : 매니저메뉴 유저 검색 -->
 	<select id="searchMemberInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
@@ -450,11 +481,33 @@
 
 	 <select id="questionBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 			SELECT * FROM (
-      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
+      				SELECT NO, 
+      					   TITLE, 
+      					   WRITE_DATE, 
+      					   USER_ID, 
+      					   CONTENT, 
+      					   WRITEPWD, 
+      					   ISPWD, 
+      					   REPLYNO, 
+      					   REPLYSTEP, 
+      					   REPLYDEPTH, 
+      					   WRITESTATUS, 
+      					   ROWNUM RNUM 
       				FROM (
-              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD
+              			 SELECT NO, 
+              			 		TITLE, 
+              			 		TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, 
+              			 		USER_ID, 
+              			 		CONTENT, 
+              			 		WRITEPWD, 
+              			 		ISPWD, 
+              			 		REPLYNO, 
+              			 		REPLYSTEP, 
+              			 		REPLYDEPTH,
+              			 		WRITESTATUS
               			 FROM CINEMA_ASKED_BOARD 
-               			 ORDER BY NO DESC
+              			  WHERE WRITESTATUS = 1
+               			 ORDER BY REPLYNO DESC, REPLYSTEP ASC
            			 )		
      			 )    
       			WHERE RNUM BETWEEN #{param1} and #{param2}
@@ -463,14 +516,38 @@
 <!-- 수진 . 문의사항게시판 전체 뽑아오기 -->	
 	<select id="questionBoardList" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 					SELECT * FROM (
-      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
-      				FROM (
-              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD
+		      				SELECT 
+		      				NO, 
+		      				TITLE, 
+		      				CONTENT, 
+		      				USER_ID, 
+		      				WRITE_DATE, 
+		      				WRITEPWD, 
+		      				ISPWD, 
+		      				REPLYNO, 
+		      				REPLYSTEP, 
+		      				REPLYDEPTH,
+		      				WRITESTATUS,
+	      					ROWNUM RNUM 
+	      				FROM (
+	              			 SELECT 
+	              			 NO, 
+	              			 TITLE, 
+	              			 TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, 
+	              			 USER_ID, 
+	              			 CONTENT, 
+	              			 WRITEPWD, 
+	              			 ISPWD,
+	              			 REPLYNO, 
+	              			 REPLYSTEP, 
+	              			 REPLYDEPTH,
+	              			 WRITESTATUS
               			 FROM CINEMA_ASKED_BOARD 
-               			 ORDER BY NO DESC
-           			 )		
-     			 )    
-      			WHERE NO = #{param1}
+						 WHERE WRITESTATUS = 1
+               			  ORDER BY REPLYNO DESC, REPLYSTEP ASC
+	           			 )		
+	     			 )    
+	      			WHERE NO = #{param1}
 	</select>
 
 <!-- 수진 . 문의사항 글등록 -->
@@ -482,7 +559,11 @@
 		    USER_ID,
 		    WRITE_DATE,
 		    WRITEPWD,
-		    ISPWD
+		    ISPWD,
+		    REPLYNO,
+		    REPLYSTEP,
+		    REPLYDEPTH,
+		    WRITESTATUS
    		 ) VALUES (
        		ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
        		#{title},
@@ -490,7 +571,11 @@
        		#{user_Id},
        		SYSDATE,
        		#{writePwd},
-       		#{isPwd}
+       		#{isPwd},
+       		ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+       		0,
+       		0,
+       		1
        	)
 
 	</select>
@@ -506,12 +591,23 @@
 			WHERE NO = #{param5}
 	</select>
 
-<!-- 수진 . 문의사항게시판 삭제 -->
+<!-- 수진 . 문의사항게시판 삭제 (보류시키기)-->
 	<select id="completeDeleteQuestionBoard" parameterType="java.lang.String"  >
-		DELETE 
+<!-- 		DELETE 
 			FROM CINEMA_ASKED_BOARD
-		WHERE NO = #{param1}
+		WHERE NO = #{param1} -->
+		  UPDATE 
+		  	CINEMA_ASKED_BOARD 
+		  		SET WRITESTATUS = 0 
+		  		WHERE NO = #{param1}
 	</select> 
+	<!-- 문의사항 답글 삭제 -> 보류시키기 -->
+	<select id="completeDeleteReplyQuestionBoard" parameterType="java.lang.String"  >
+		UPDATE 
+			CINEMA_ASKED_BOARD 
+				SET WRITESTATUS = 0  
+				WHERE REPLYNO = #{param1}
+	</select>
 	
 
 <!-- 수진. 관리자(고객센터) 자주묻는게시판-->
@@ -543,7 +639,55 @@
 				ASKED = #{param2} 
 			WHERE NO = #{param3}
 	</select>
-
+	
+<!-- 관리자(자주묻는게시판 삭제) -->
+	<select id="managementDeleteFormComplete" parameterType="java.lang.String" >
+		 DELETE 
+		 		CINEMA_FREQUENTLY_BOARD 
+		 	WHERE NO = #{param1}
+	</select>
+	
+<!-- 문의사항 답글달기 -->
+	<select id="updateDepth" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		UPDATE 
+			CINEMA_ASKED_BOARD 
+			SET REPLYSTEP = REPLYSTEP + 1
+			WHERE REPLYNO = #{param1} AND REPLYSTEP > #{param2}
+	</select>
+	
+	
+	<select id="insertReplyBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		INSERT INTO 
+		CINEMA_ASKED_BOARD (
+			NO,
+			TITLE,
+			CONTENT,
+			USER_ID, 
+			WRITE_DATE, 
+			WRITEPWD, 
+			ISPWD, 
+			REPLYNO, 
+			REPLYSTEP, 
+			REPLYDEPTH,
+			WRITESTATUS
+		) VALUES(
+			ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+			#{param1},
+			#{param2},
+			#{param3},
+			SYSDATE,
+			#{param4},
+			#{param5},
+			#{param6},
+			#{param7},
+			#{param8},
+			1
+			)
+			
+			
+		
+		
+	</select>
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(*) 
@@ -578,19 +722,19 @@
    
    <select id="selectUserPWD" resultType="java.lang.String" parameterType="java.lang.String">
       SELECT USER_PWD
-      FROM USER_PERSONAL_INFO
+      	FROM USER_PERSONAL_INFO
       WHERE USER_ID = #{myInfoID}
    </select>
 
 	<select id="updateWithdraw" resultType="java.lang.String" parameterType="java.lang.String">
 		UPDATE USER_PERSONAL_INFO 
-		SET USER_STATES = 0
+			SET USER_STATES = 0
 		WHERE USER_ID = #{myInfoID}
 	</select>
 	
 	<select id="updateEmailAddr" resultType="java.lang.String" parameterType="java.lang.String">
 		UPDATE USER_PERSONAL_INFO 
-		SET USER_EMAIL = #{param1}
+			SET USER_EMAIL = #{param1}
 		WHERE USER_ID = #{param2}
 	</select>
 
@@ -600,6 +744,7 @@
 			SELECT MOVIE_TITLE  movieTitle,
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
                    ROWNUM RNUM
 			FROM (
 				SELECT *
@@ -615,6 +760,7 @@
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
                    REVIEW_EVALUATE score,
+                   NO no,
                    ROWNUM RNUM
 			FROM (
 				SELECT *
@@ -630,6 +776,7 @@
 			SELECT MOVIE_TITLE  movieTitle,
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
                    ROWNUM RNUM
 			FROM (
 				SELECT *
@@ -646,6 +793,7 @@
 			SELECT MOVIE_TITLE  movieTitle,
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
                    ROWNUM RNUM
 			FROM (
 				SELECT *
@@ -731,6 +879,7 @@
 	                   MOVIE_POSTER moviePoster,
 	                   MOVIE_RELEASE_DATE,
 	                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+	                   NO no,
 	                   ROWNUM RNUM
 				FROM (
 					SELECT *
@@ -769,7 +918,8 @@
 			   MOVIE_RUNTIME		movieRuntime,
 			   MOVIE_INTRO			movieIntro,
 			   MOVIE_POSTER			moviePoster,
-			   REVIEW_EVALUATE		reviewEvaluate
+			   REVIEW_EVALUATE		reviewEvaluate,
+			   NO                   no
 	   FROM MOVIE_BASIC_INFO
 	   WHERE MOVIE_TITLE = #{movieTitle}
 	</select>
@@ -853,9 +1003,22 @@
 	<select id="deleteMovieFilm" parameterType="java.lang.String">
 		UPDATE MOVIE_BASIC_INFO
 		SET STATUS = 0
-		WHERE = #{movieTitle}
+		WHERE = #{no}
 	</select>
 	
+	<select id="updateMovieInfo" parameterType="com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO">
+		UPDATE MOVIE_BASIC_INFO
+		SET MOVIE_TITLE        = #{movieTitle}
+			MOVIE_INTRO		   = #{movieIntro}
+		    MOVIE_RELEASE_DATE = #{movieReleaseDate}
+		    MOVIE_DIRECTOR 	   = #{movieDirector}
+		    MOVIE_AUTHOR 	   = #{movieAuthor}
+		    MOVIE_GENRE 	   = #{movieGenre}
+		    MOVIE_CAST         = #{movieCast}
+		    MOVIE_AGE_LIMIT    = #{movieAgeLimitText}
+		    MOVIE_RUNTIME 	   = #{movieRuntime}
+		WHERE NO 	   = #{no}
+	</select>
 	
 	
 </mapper>

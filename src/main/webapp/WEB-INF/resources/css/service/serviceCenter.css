@@ -97,15 +97,22 @@ ul.serviceCenter_Tab li {
 }
 .serviceCenter_QuestionWrite,
 .serviceCenter_Searchbutton {
-    background-color: #fdecd2;
-    border: 1px solid #2a3034;
+display: inline-block;
+    box-sizing: content-box;
     cursor: pointer;
+    padding: 8px 15px;
+    margin-left: 19px;
+    border: 1px solid #d4b2b3;
     border-radius: 3px;
-    outline: none;	
-    margin-left: 4px;
-    padding: 6px 15px;
-    font-size: 15px;
+    font: normal medium/normal Arial, Helvetica, sans-serif;
+    color: rgba(255,255,255,0.9);
+    text-overflow: clip;
+    background: #d18a8d;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgb(96, 31, 31);
+    transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
     font-family: 'Jeju Gothic', serif;
+    width: 45px;
 }
 .div__serviceCenter__Container {
 	display: inline-block;
@@ -199,7 +206,7 @@ label.js_questionBoard_title {
     font-size: 22px;
 }
 
-/**************글등록창 ******/
+/**************사용자글등록창 ******/
 .questionBoard-pwd {
     padding-top: 50px;
 }
@@ -292,7 +299,8 @@ textarea.boardTextarea {
 .serviceCenter_Searchbutton:hover,
 .questionButton_cancel:hover,
 .questionButton_confirm:hover {
-	background-color: #ecd9ff;
+	
+background: #ff9b9f;
 }
 
 ul,li {
@@ -606,6 +614,9 @@ label.UpdateboardViewSub {
 	font-size: 20px;
 }
 
+.js_managementQuestionButtonCancel {
+	
+}
 
 
 
@@ -671,6 +682,21 @@ textarea.managementQuestionUpdateTextarea {
 	margin-right: 30px;
 }
 
+.managementQuestionButton_cancel,
+.managementQuestionButton_confirm {
+		background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 4px;
+    padding: 8px 25px;
+    font-size: 18px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+
+
 .managementQuestionButton_cancel:hover,
 .managementQuestionButton_confirm:hover {
 	background-color: #ecd9ff;
@@ -688,9 +714,6 @@ textarea.managementQuestionUpdateTextarea {
 .managementQuestion_content {
 	font-size: 20px;
 }
-
-
-
 
 .questionBoard-info {
     margin-top: 14px;
@@ -737,7 +760,7 @@ textarea.managementQuestionTextarea {
     justify-content: center;
 }
 
-..serviceCenterFrequenty__buttons {
+.serviceCenterFrequenty__buttons {
     display: inline;
     margin-left: 97px;
 }
@@ -751,7 +774,7 @@ textarea.managementQuestionTextarea {
     font-size: 14px;
     font-family: 'Jeju Gothic', serif;
 }
-
+.
 
 
 .managementQuestionButton_cancel:hover,
@@ -782,3 +805,152 @@ textarea.managementQuestionTextarea {
 .serviceCenterFrequenty__Canelbutton:hover {
 	background-color: #ecd9ff;
 }
+
+/*********문의사항답글달기***************/
+.serviceCenter_QuestionReplyWrite {
+    background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;	
+    margin-left: 4px;
+    padding: 6px 15px;
+    font-size: 15px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+.ReplyQuestionBoard-content {
+   	margin: 10px 0px 15px 0px;
+}
+
+.ReplyQuestionBoard-pwd {
+    padding-top: 13px;
+}
+
+.ReplyBoardPwd {
+    width: 150px;
+    font-size: 22px;
+    margin-right: 9px;
+}
+
+
+input.ReplyBoardwriteBoardPwd.js_ReplyBoardWriteBoardPwd {
+    width: 179px;
+    height: 27px;
+}
+
+.ReplyQuestionBoardWriteForm.js_ReplyQuestionBoardWriteContainer.font {
+    margin: 19px;
+}
+
+/* 
+label.questionBoardWrite_title {
+	font-size:30px;
+} */
+
+.questionBoard-info {
+    margin-top: 14px;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+label.questionBoardView_content {
+	font-size: 23px;
+}
+
+.ReplyQuestionBoard_content {
+	font-size: 20px;
+}
+.ReplyQuestionBoard-content {
+   	margin: 10px 0px 15px 0px;
+}
+
+.ReplyQuestionBoard {
+    width: 620px;
+    font-size: 18px;
+    height: 25px;
+    font-family: 'Jeju Gothic', serif;
+    margin-bottom: 10px;
+}
+.ReplyBoardwriteBoard {
+    width: 445px;
+    font-size: 18px;
+    height: 28px;
+    font-family: 'Jeju Gothic', serif;
+    margin-bottom: 10px;
+}
+
+
+textarea.boardViewTextarea {
+	border:none;
+    width: 700px;
+    height: 320px;
+    font-size: 18px;
+    resize: none;
+    font-family: 'Jeju Gothic', serif;
+    margin: 1px 0px 10px 5px;
+}
+
+
+.ReplyQuestionBoard_subject {
+    display: flex;
+}
+
+
+textarea.ReplyBoardTextarea {
+    width: 700px;
+    height: 320px;
+    font-size: 18px;
+    resize: none;
+    font-family: 'Jeju Gothic', serif;
+    margin: 1px 0px 10px 5px;
+}
+
+.ReplyBoardtitle,
+.ReplyBoardSub{
+	font-size: 20px;
+	margin-right: 47px;
+}
+
+.ReplyBoardSub {
+    display: inline-table;
+    font-size: 17px;
+    margin-right: 49px;
+}
+
+
+.ReplyBoardPwd {
+	width: 150px;
+	font-size: 22px;
+}
+.ReplyQuestionButton_cancel,
+.ReplyQuestionButton_confirm {
+	background-color: #fdecd2;
+    border: 1px solid #2a3034;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 4px;
+    padding: 8px 25px;
+    font-size: 18px;
+    font-family: 'Jeju Gothic', serif;
+}
+.ReplyQuestionButton_cancel {
+	margin-right: 30px;
+}
+
+.serviceCenter_QuestionWrite:hover,
+.serviceCenter_Searchbutton:hover,
+.questionButton_cancel:hover,
+.questionButton_confirm:hover {
+	background: #ff9b9f;
+}
+
+
+.ReplyQuestionbutton {
+	padding-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

@@ -105,6 +105,18 @@ public class Params {
 	private String asked;
 	private String no;
 	
+	private String userQuestionTitle;
+	
+	//답글달기
+	private String replyTitle;
+	private String replyContent;
+	private Integer replyPwd;
+	private String replyNo;
+	private String replyDepth;
+	private String replyStep;
+	private boolean replytPwdcheck;
+	
+
 // 문의 사항 게시판
 	private String insertTextArea; //내용
 	private String insertTitle; //제목
@@ -116,6 +128,7 @@ public class Params {
 	
 //연종. 영화 상세보기-------------------------------------------------------
 	private String movieInfoTitle;
+	private int movieNO;
 	private int movieInfoReviewPage;
 	
 //연종. 리뷰 등록-------------------------------------------------------
@@ -130,6 +143,20 @@ public class Params {
 	private boolean managerNoticeImportant;
 	private Integer managerNoticePage;
 	private Integer managerNoticeNo;
+
+// 연종. 관리자 공지사항등록 -------------------------------------------
+	
+	private String managerMovieTitle;
+	private String managerMovieGenre;
+	private String managerMovieDirector;
+	private String managerMovieAuthor;
+	private String managerMovieCast;
+	private String managerMovieReleaseDate;
+	private String managerMovieIntro;
+	
+	private Integer managerMovieAge;
+	private Integer managerMovieRuntime;
+	
 	
 //메인 검색
 	private String searchWord;
@@ -137,4 +164,7 @@ public class Params {
 //파일업로드시 사용
 	private String locationPath;
 	private String saveFilePath;
+	
+//메인 페이징
+	private Integer mainPaing;
 }

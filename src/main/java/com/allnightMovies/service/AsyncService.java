@@ -1,6 +1,7 @@
 package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -10,11 +11,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaWriteBoardPwdCheckDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
 import com.allnightMovies.model.params.Params;
@@ -407,7 +412,7 @@ public class AsyncService implements AsyncAction {
       
       return async;
    }
-   //마지막 버튼 눌렀을때
+   //수진. 마지막 버튼 눌렀을때
    public AsyncResult<String> emailSendMessage() throws Exception {
       AsyncResult<String> asyncResult = new AsyncResult<String>();
       
@@ -430,6 +435,10 @@ public class AsyncService implements AsyncAction {
       return asyncResult;
    }
    
+   //수진. 자주묻는게시판 전환
+//   public AsyncResult pagingBoard() throws Exception {
+//	   
+//   }
    //자주묻는게시판 전환
    public AsyncResult<String> pagingBoard() throws Exception {
       
@@ -454,35 +463,150 @@ public class AsyncService implements AsyncAction {
    
    /*******수진. 문의사항 글등록 *******/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public AsyncResult<String> InsertAskWriteBoard() throws Exception {
-		AsyncResult asyncResult = new AsyncResult<String>();
+	public AsyncResult<Boolean> InsertAskWriteBoard() throws Exception {
 		
 		String title     = this.params.getInsertTitle();
 		String content   = this.params.getInsertTextArea();
-		int writePwd     = this.params.getInsertboardPWd() == null ? null : this.params.getInsertboardPWd();
+		Integer writePwd     = this.params.getInsertboardPWd() == null ? null : this.params.getInsertboardPWd();
 		int isPwd        = this.params.isInsertPwdcheck() == true ? 1 : 0;
 		
 		//1은 비밀글 등록 // 2면 일반글등록
 		boolean isResult = true;
-		String result  = "";
 		
 		HttpSession session = this.params.getSession();
 		String user_Id = (String)session.getAttribute("userID");
-		System.out.println("로그인한 유저아이디 (어싱크 글등록.) InsertAskWriteBoard : " + user_Id);
 
 		if(title == "" && content == "") {
 			isResult = false;
 		}
-		if(isPwd == 1 && writePwd == 0) {
+		if(isPwd == 1 && writePwd == null) {
 			isResult = false;
 		}
 		if(isResult) {
-			result = "/movie/mainService/InsertAskWriteBoard";
+			isResult = true;
 		}
-		asyncResult.setData(result);
+		AsyncResult<Boolean> asyncResult = new AsyncResult<Boolean>();
+		asyncResult.setData(isResult);
 		return asyncResult;
 		
 	}
+	
+	//수진. 문의사항 글 등록시 입력한 비밀번호 체크
+	public AsyncResult<Boolean> insertPwdCheck() throws Exception {
+		ModelAndView mav = new ModelAndView("/service/include/confirmBoardCheck");
+		Integer questionBoardNum = this.params.getQuestionBoardNum();
+		Integer userInsertPwd   = this.params.getUserInsertPwd(); //비번체크확인   
+		
+		System.out.println(questionBoardNum + " : 비번확인글 선택한 번호");
+		
+		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
+		int getUserPwd = questionBoardList.getWritePwd();
+
+		boolean isResult = true;
+		if(userInsertPwd == null) {
+			isResult = false;
+		}
+		if(userInsertPwd != getUserPwd) {
+			isResult = false;
+		}
+//		if(questionBoardNum.intValue() < 0 || questionBoardNum.length() > 5) {
+//			isResult = false;
+//		}
+		if(isResult) {
+			isResult = true;
+		}
+		
+		AsyncResult<Boolean> asyncResult = new AsyncResult<Boolean>();
+		asyncResult.setData(isResult);
+		return asyncResult;
+		
+	}
+	
+	//수진 문의사항 수정
+		public AsyncResult<Boolean> completeUPdateWriteBoard() throws Exception {
+		
+		String no            = this.params.getUpdateQuestionBoardNum();
+		String title         = this.params.getInsertTitle();
+		String content       = this.params.getInsertTextArea();
+
+		Integer writePwd         = this.params.getInsertboardPWd() == null ? null : this.params.getInsertboardPWd();
+		int isPwd            = this.params.isInsertPwdcheck() == true ? 1 : 0;
+		
+		System.out.println();
+
+		HttpSession session = this.params.getSession();
+		String LoginUserID = (String)session.getAttribute("userID");
+		
+		System.out.println("_______수정완료________");
+		System.out.println("수정 사항번호 : " + no);
+		System.out.println("제목 : " + title);
+		System.out.println("내용 : " + content);
+		System.out.println("비밀번호 : " + writePwd);
+		System.out.println("여부 : " + isPwd);
+		//System.out.println(user_Id);
+		//System.out.println(write_date);
+		
+		boolean isResult = true;
+		
+		if(title =="" && content == "") {
+			isResult = false;
+		}
+		if(writePwd == null && isPwd == 1) {
+			isResult = false;
+		}
+		AsyncResult<Boolean> asyncResult = new AsyncResult<Boolean>();
+		asyncResult.setData(isResult);
+		return asyncResult;
+	}
+	
+	/*********************수진.관리자 문의사항페이지*****************************/
+		public AsyncResult<Boolean> managementUpdateBoardComplete() throws Exception {
+			
+			String question = this.params.getQuestion();
+			String asked    = this.params.getAsked();
+			String no       = this.params.getNo();
+			
+			System.out.println("관리자가 수정한 제목 : "  + question);
+			System.out.println("관리자가 수정한 내용: "   + asked);
+			System.out.println("관리가자 수정할 번호 : "  + no);
+			
+			//db업데이트 쿼리문
+			boolean isResult = true;
+			if(question == "" && asked == "") {
+				isResult = false;
+			}
+			if(isResult) {
+				isResult = true;
+			}
+			AsyncResult<Boolean> asyncResult = new AsyncResult<Boolean>();
+			asyncResult.setData(isResult);
+			return asyncResult;
+		}
+		
+		//관리자 답글 달기
+		
+		public AsyncResult<Boolean> managementReplyBoardFormComplete() throws Exception {
+			
+			Integer writePwd  = this.params.getReplyPwd() == null ? null : this.params.getReplyPwd();
+			int isPwd     = this.params.isReplytPwdcheck() == true ? 1 : 0;
+			
+			
+			
+			String title = this.params.getReplyTitle();
+			String content = this.params.getReplyContent();
+			
+			boolean isResult = true;
+			
+			if(title =="" && content == "") {
+				isResult = false;
+			}
+			if(writePwd == null && isPwd == 1) {
+				isResult = false;
+			}
+			AsyncResult<Boolean> asyncResult = new AsyncResult<Boolean>();
+			asyncResult.setData(isResult);
+			return asyncResult;
+		}
 /* 연종. 관리자 공지사항 등록*/
 	public AsyncResult<String> managerInsertNotice() throws Exception { 
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
@@ -546,6 +670,36 @@ public class AsyncService implements AsyncAction {
 		this.dbService.deleteNoticeBoard(noticeNO);
 		
 		asyncResult.setData("/movie/mainService/notice?noticePage=" + noticePage + "&noticeNo=" + noticeNO);
+		return asyncResult;
+	}
+	
+	public AsyncResult<String> managerUpdateMovieInfo() throws Exception { 
+		AsyncResult<String> asyncResult = new AsyncResult<String>();
+		MovieBasicInfoDTO movieBasicInfoDTO = new MovieBasicInfoDTO();
+		
+		
+		Integer movieNO 		  = this.params.getMovieNO();
+		String movieTitle 	 	  = this.params.getManagerMovieTitle();
+		String movieGenre 	 	  = this.params.getManagerMovieGenre();
+		String movieDirector 	  = this.params.getManagerMovieDirector();
+		String movieAuthor  	  = this.params.getManagerMovieAuthor();
+		String movieCast 	 	  = this.params.getManagerMovieCast();
+		String movieReleaseDate   = this.params.getManagerMovieReleaseDate();
+		Integer movieAgeLimitText = this.params.getManagerMovieAge();
+		Integer movieRuntime 	  = this.params.getManagerMovieRuntime();
+		
+		movieBasicInfoDTO.setMovieTitle(movieTitle);
+		movieBasicInfoDTO.setMovieGenre(movieGenre);
+		movieBasicInfoDTO.setMovieDirector(movieDirector);
+		movieBasicInfoDTO.setMovieAuthor(movieAuthor);
+		movieBasicInfoDTO.setMovieCast(movieCast);
+		movieBasicInfoDTO.setMovieReleaseDate(movieReleaseDate);
+		movieBasicInfoDTO.setMovieAgeLimitText(movieAgeLimitText);
+		movieBasicInfoDTO.setMovieRuntime(movieRuntime);
+		
+		this.dbService.updateMovieInfo(movieBasicInfoDTO);
+		
+		asyncResult.setData("/movie/mainService/movieDetailInfo?movieInfoTitle=" + movieTitle + "&movieNO"+ movieNO);
 		return asyncResult;
 	}
 	

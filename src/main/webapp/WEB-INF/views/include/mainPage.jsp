@@ -17,7 +17,7 @@
 		<c:forEach begin="0" end="4" step="1" items="${NewFilmDTO}" var="NewFilmDTO">
 			<span class="mainCurrnetFilm font">
 				<span class="mainFilmImg" style="background-image: url('/../resources/img/poster/${NewFilmDTO.moviePoster}');">
-					<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${NewFilmDTO.movieTitle}">상세보기</a>
+					<a class="hiddenText" href="/movie/mainService/movieDetailInfo?movieInfoTitle=${NewFilmDTO.movieTitle}&movieNO=${NewFilmDTO.no}">상세보기</a>
 				</span>
 				<span class="mainFilmImg__title">
 					<label class="ageLimit${NewFilmDTO.movieAgeLimit }">${NewFilmDTO.movieAgeLimit }</label>

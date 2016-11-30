@@ -14,12 +14,12 @@
 			
 			<div class="questionBoard-sub">
 				<div class="questionBoard_subject">
-					<label class="boardSub">내용</label>
-					<textarea class="boardTextarea js_boardTextArea" rows="" cols="">dd</textarea>
+					<label class="boardSub">내용</label>;
+					<textarea class="boardTextarea js_boardTextArea" >dd</textarea>
 				</div>
 				<div class="questionBoard-pwd">
 					<label class="boardPwd">비밀번호</label>
-					<input class="boardwriteBoardPwd js_boardWriteBoardPwd" type="password" readonly>
+					<input class="boardwriteBoardPwd js_boardWriteBoardPwd" type="password" style="ime-mode:disabled;" maxlength = 4 onkeyPress="passWordCheck(this)"  readonly>
 				</div>
 			</div>
 			<div class="questionbutton">

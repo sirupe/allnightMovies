@@ -67,13 +67,13 @@ function logout() {
 	$.post(url, cbf);
 }
 /*shin myInfo*/
-function locationMyInfo() {
+function locationMyInfo(params) {
 	var url  = '/movie/mainService/viewMyInfo';
 		dir  = 'myInfo';
 		page = 'myInfo';
 		js   = 'myInfo/myInfo';
 		css  = 'myInfo/myInfo';
-	submit(url, dir, page, js, css);
+	submit(url, dir, page, js, css, params);
 }
 
 /**아이디 찾기**/
@@ -104,7 +104,7 @@ function locationMenus(method, action, directory, page) {
 	});
 }
 	
-function submit(action, directory, page, js, css) {
+function submit(action, directory, page, js, css, params) {
 	$(document).ready(function() {
 		$('form').attr({'method' : 'POST'});
 		$('form').attr({'action' : action});
@@ -112,6 +112,7 @@ function submit(action, directory, page, js, css) {
 		$('#hidden-page').val(page);
 		$('#hidden-js').val(js);
 		$('#hidden-css').val(css);
+		$('.js_hiddenParam').val(params);
 		$('form').submit();
 	});
 }

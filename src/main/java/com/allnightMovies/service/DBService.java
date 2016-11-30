@@ -235,6 +235,13 @@ public class DBService {
 		return dbMapper.managementDeleteFormComplete(no);
 	}
 	
+/** JUNG 고객센터 문의사항 관리자페이지 **/
+	public CinemaQuestionBoardDTO insertReplyBoard(String title, String content, String user_id, int writePwd, int isPwd, String replyNo, String replyStep, String replyDepth) throws Exception {
+		return dbMapper.insertReplyBoard(title, content, user_id, writePwd, isPwd, replyNo, replyStep, replyDepth);
+	}
+	public CinemaQuestionBoardDTO updateDepth(String replyNo, String replyStep) throws Exception {
+		return dbMapper.updateDepth(replyNo, replyStep);
+	}
 /** shin. SEARCH PWD **/ //TODO 연종
 	public Integer searchPWD(String searchPwdUserID)  {
 		return dbMapper.searchPWD(searchPwdUserID);

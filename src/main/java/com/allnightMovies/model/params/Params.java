@@ -33,6 +33,7 @@ public class Params {
 	private String  userEmail;
 	private String  userBirth;
 	private Integer confirmNum;
+	private String 	params;
 // 유저회원가입------------------------------------------------------------------------------
 	private int    userStates;
 	private String keepLogin;	// 로그인 유지 체크여부
@@ -103,8 +104,16 @@ public class Params {
 	
 	private String userQuestionTitle;
 	
+	//답글달기
+	private String replyTitle;
+	private String replyContent;
+	private Integer replyPwd;
+	private String replyNo;
+	private String replyDepth;
+	private String replyStep;
+	private boolean replytPwdcheck;
 	
-	
+
 // 문의 사항 게시판
 	private String insertTextArea; //내용
 	private String insertTitle; //제목

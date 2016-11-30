@@ -18,12 +18,12 @@
 				<label class="boardViewtitle">제목</label>
 				<c:choose>
 					<c:when test="${questionBoardList.getIsPwd() == 1 }">
-						<input class="boardViewwriteBoard" type="text" value="${questionBoardList.getTitle() }" readonly>
+						<input class="boardViewwriteBoard js_questionViewBoardTitle" type="text" value="${questionBoardList.getTitle() }" readonly>
 						<input class="boardViewcheck" type="checkbox" checked disabled ><label>비밀글</label>
 					</c:when>
 					
 					<c:otherwise>
-						<input class="boardViewwriteBoard" type="text" value="${questionBoardList.getTitle() }" readonly>
+						<input class="boardViewwriteBoard js_questionViewBoardTitle" type="text" value="${questionBoardList.getTitle() }" readonly>
 						<input class="boardViewcheck" type="checkbox" disabled ><label>비밀글</label>
 					</c:otherwise>
 				</c:choose>
@@ -45,16 +45,25 @@
 			</div>
 			
 			<c:choose>
-				<c:when test="${isUserRight == loginUserId }">
+				<c:when test="${isUserConfirm}">
 					<div class="serviceCenter_viewForm">
 						<button class="serviceCenter_QuestionWrite js_QuestionWriteUpdateBtn" type="button">수정하기</button>
 						<button class="serviceCenter_QuestionWrite js_QuestionWriteDeleteBtn" type="button">삭제하기</button>
 						<button class="serviceCenter_QuestionWrite js_QuestionList" type="button">글목록</button>
 					</div>
 				</c:when>
-				<c:when test="${userStatus == 2 }">
+				<c:when test="${isUserConfirm}">
+					<div class="serviceCenter_viewForm">
+						<button class="serviceCenter_QuestionWrite js_QuestionWriteUpdateBtn" type="button">수정하기</button>
+						<button class="serviceCenter_QuestionWrite js_QuestionWriteDeleteBtn" type="button">삭제하기</button>
+						<button class="serviceCenter_QuestionWrite js_QuestionList" type="button">글목록</button>
+					</div>
+				</c:when>
+				
+				
+				<c:when test="${isManager }">
 					<div>
-						<button class="serviceCenter_QuestionReplyWrite js_ReplyQuestionBtn" data-replyBoardTitle="${ questionBoardList.getTitle()}" type="button">답글달기</button>
+						<button class="serviceCenter_QuestionReplyWrite js_ReplyQuestionBtn" type="button">답글달기</button>
 					</div>
 				</c:when>
 				

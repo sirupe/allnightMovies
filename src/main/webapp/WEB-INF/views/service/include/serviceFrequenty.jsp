@@ -58,7 +58,7 @@
 		</c:if>
 	</div>
 	
-	<c:if test="${userStatus == 2}">
+	<c:if test="${isManager}">
 		<div>
 			<button class="button_managerWriteBtn js_button_FrequentlyInsertBtn" type="button">글등록하기</button>
 		</div>

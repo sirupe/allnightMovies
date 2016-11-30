@@ -374,11 +374,11 @@
 
 	 <select id="questionBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 			SELECT * FROM (
-      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
+      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, REPLYNO, REPLYSTEP, REPLYDEPTH, ROWNUM RNUM 
       				FROM (
-              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD
+              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD, REPLYNO, REPLYSTEP, REPLYDEPTH
               			 FROM CINEMA_ASKED_BOARD 
-               			 ORDER BY NO DESC
+               			ORDER BY REPLYNO DESC, REPLYSTEP ASC
            			 )		
      			 )    
       			WHERE RNUM BETWEEN #{param1} and #{param2}
@@ -387,9 +387,9 @@
 <!-- 수진 . 문의사항게시판 전체 뽑아오기 -->	
 	<select id="questionBoardList" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
 					SELECT * FROM (
-      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, ROWNUM RNUM 
+      				SELECT NO, TITLE, CONTENT, USER_ID, WRITE_DATE, WRITEPWD, ISPWD, REPLYNO, REPLYSTEP, REPLYDEPTH ,ROWNUM RNUM 
       				FROM (
-              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD
+              			 SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, USER_ID, CONTENT, WRITEPWD, ISPWD,REPLYNO, REPLYSTEP, REPLYDEPTH
               			 FROM CINEMA_ASKED_BOARD 
                			 ORDER BY NO DESC
            			 )		
@@ -406,7 +406,10 @@
 		    USER_ID,
 		    WRITE_DATE,
 		    WRITEPWD,
-		    ISPWD
+		    ISPWD,
+		    REPLYNO,
+		    REPLYSTEP,
+		    REPLYDEPTH
    		 ) VALUES (
        		ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
        		#{title},
@@ -414,7 +417,10 @@
        		#{user_Id},
        		SYSDATE,
        		#{writePwd},
-       		#{isPwd}
+       		#{isPwd},
+       		ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+       		0,
+       		0
        	)
 
 	</select>
@@ -474,7 +480,46 @@
 		 		CINEMA_FREQUENTLY_BOARD 
 		 	WHERE NO = #{param1}
 	</select>
-
+	
+<!-- 문의사항 답글달기 -->
+	<select id="updateDepth" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		UPDATE 
+			CINEMA_ASKED_BOARD 
+			SET REPLYSTEP = REPLYSTEP + 1
+			WHERE REPLYNO = #{param1} AND REPLYSTEP > #{param2}
+	</select>
+	
+	
+	<select id="insertReplyBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		INSERT INTO 
+		CINEMA_ASKED_BOARD (
+			NO,
+			TITLE,
+			CONTENT,
+			USER_ID, 
+			WRITE_DATE, 
+			WRITEPWD, 
+			ISPWD, 
+			REPLYNO, 
+			REPLYSTEP, 
+			REPLYDEPTH
+		) VALUES(
+			ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+			#{param1},
+			#{param2},
+			#{param3},
+			SYSDATE,
+			#{param4},
+			#{param5},
+			#{param6},
+			#{param7},
+			#{param8}
+			)
+			
+			
+		
+		
+	</select>
 <!-- /* SHIN. SEARCH PWD */ -->	
 	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(*) 

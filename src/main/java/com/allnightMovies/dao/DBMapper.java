@@ -95,7 +95,11 @@ public interface DBMapper {
 	public CinemaFrequentlyBoardDTO managementUpdateFormComplete(String question, String asked, String no) throws Exception;
 	public Integer managementDeleteFormComplete(String no);
 	
-/** shin. Search PWD **/
+/**jung 고객센터 문의사항 관리자 **/
+	public CinemaQuestionBoardDTO insertReplyBoard(String title, String content, String user_id, int writePwd, int isPwd, String replyNo, String replyStep, String replyDepth) throws Exception;
+	public CinemaQuestionBoardDTO updateDepth(String replyNo, String replyStep) throws Exception;
+	
+	/** shin. Search PWD **/
 	public Integer searchPWD(String searchPwdUserID);
 	public String searchEmail(String searchPwdUserID);
 	public Params updateNewPwd(String searchPwdUserID, String searchPwdNewPwd);

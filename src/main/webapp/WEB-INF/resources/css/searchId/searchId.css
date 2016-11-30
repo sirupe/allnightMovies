@@ -7,61 +7,61 @@
 /* 회원정보 아이디 찾기 */
 .div__searchId_form,
 .div__searchId_Email_form {
-width: 700px;
-height: 250px;
-display: flex;
-flex-direction: column;
-line-height: 40px;
-padding: 20px;
-background-color: #F0F0F0;
-margin-top: 20px;
-margin-bottom: 40px;
+	width: 700px;
+	height: 250px;
+	display: flex;
+	flex-direction: column;
+	line-height: 40px;
+	padding: 20px;
+	background-color: #F0F0F0;
+	margin-top: 20px;
+	margin-bottom: 40px;
 }
 
 .div__searchId_form_title,
 .div__searchId_Email_form__title {
-background-color: #383838;
-color: white;
-padding-left: 20px;
-font-family: 'Jeju Gothic', serif;
+	background-color: #383838;
+	color: white;
+	padding-left: 20px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .div__searchId__content,
 .div__searchId_Email__content {
-display: flex;
-align-items: center;
-justify-content: flex-start;
-flex-direction: column;
-flex-basis: 270px;
-border: 1px solid gray;
-font-size: 12px;
-line-height: 1.5em;
-background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	flex-basis: 270px;
+	border: 1px solid gray;
+	font-size: 12px;
+	line-height: 1.5em;
+	background-color: white;
 }
 
 .label__searchId__name__result,
 .label__searchId_Email__name__result {
-margin-top: 29px;
-margin-bottom: 2px;
-font-size: 15px;
-font-family: 'Jeju Gothic', serif;
+	margin-top: 29px;
+	margin-bottom: 2px;
+	font-size: 15px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .label__searchId__id__result,
 .label__searchId_Email__id__result {
-padding-bottom: 33px;
-font-family: 'Jeju Gothic', serif;
-padding-top: 50px;
-font-size: 21px;
-color: #1c4f50;
-font-weight: bolder;
+	padding-bottom: 33px;
+	font-family: 'Jeju Gothic', serif;
+	padding-top: 50px;
+	font-size: 21px;
+	color: #1c4f50;
+	font-weight: bolder;
 }
 
 /*buttons*/
 
 .span_button_search-ConfirmId_Button,
 .span_button_search-ConfirmId_email_Button {
-font-family: 'Jeju Gothic', serif;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .button__searchId__next,
@@ -70,26 +70,26 @@ font-family: 'Jeju Gothic', serif;
 .button__searchId-ComfirmId-searchPWd,
 .button__searchId-ConfirmId_email-searchPWd,
 .button__searchId-ConfirmId_email-main {
--webkit-box-sizing: content-box;
--moz-box-sizing: content-box;
-box-sizing: content-box;
-cursor: pointer;
-padding: 6px 20px;
-border: 1px solid #018dc4;
--webkit-border-radius: 3px;
-border-radius: 3px;
-font: normal medium/normal Arial, Helvetica, sans-serif;
-color: rgba(255,255,255,0.9);
--o-text-overflow: clip;
-text-overflow: clip;
-background: #0A1F33;
--webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) ;
-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) ;
-text-shadow: -1px -1px 0 rgba(15,73,168,0.66) ;
--webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
--moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
--o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	cursor: pointer;
+	padding: 6px 20px;
+	border: 1px solid #018dc4;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	font: normal medium/normal Arial, Helvetica, sans-serif;
+	color: rgba(255,255,255,0.9);
+	-o-text-overflow: clip;
+	text-overflow: clip;
+	background: #0A1F33;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) ;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) ;
+	text-shadow: -1px -1px 0 rgba(15,73,168,0.66) ;
+	-webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
 }
 
 
@@ -104,44 +104,50 @@ transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
 .button__searchId-ComfirmId-searchPWd:hover
 .emailConfirmNumber_SendCheck:hover,
 .button__searchId-ConfirmId_email-main:hover {
-border: 1px solid #007cad;
-background: #12385b;
--webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
--webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
--moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
--o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	/* border: 1px solid #007cad;
+	background: #12385b;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1); */
+	background: #ff9b9f;
 }
 
 
 .searchID-form,
 .user-find-result {
-width: 420px;
-height: 460px;
-border-bottom: 1px solid;
-/* background-color: bisque; */
-border-top: 1px solid;
-border-left: 1px solid;
-border-right: 1px solid;
+	width: 420px;
+	height: 460px;
+	border-bottom: 1px solid;
+	/* background-color: bisque; */
+	border-top: 1px solid;
+	border-left: 1px solid;
+	border-right: 1px solid;
+    margin-top: 24px;
+    margin-bottom: 20px;
 }
 
 
 .searchID-form_name_bar {
-color: aliceblue;
-line-height: 45px;
-background-color: black;
-height: 45px;
-font-size: 16px;	
-padding-right:50px;
-font-family: 'Jeju Gothic', serif;
+	color: aliceblue;
+    line-height: 45px;
+    /* background-color: black; */
+    height: 45px;
+    font-size: 16px;
+    padding-right: 50px;
+    PADDING-LEFT: 12PX;
+    font-family: 'Jeju Gothic', serif;
+    background-color: rgb(202, 147, 129);
 }
 
 .searchID-form_title,
 .searchID-form_content__title_email {
-background-color: #ceb2c6;
-line-height: 45px;
-font-family: 'Jeju Gothic', serif;
+	/* background-color: #ceb2c6; */
+	line-height: 45px;
+	font-family: 'Jeju Gothic', serif;
+	border-bottom: 1px solid
 }
 
  
@@ -153,156 +159,165 @@ font-family: 'Jeju Gothic', serif;
 
 /* 아이디 찾기 폼 */
 .searchID-form_content {
-padding-left: 10px;
-padding-top: 10px;
-width: 400px;
+	padding-left: 10px;
+	padding-top: 10px;
+	width: 400px;
 
 }
 
 .searchID-form_content__name {
-display: flex;
-/* background-color: aliceblue; */
-padding-left: 10px;
-line-height: 40px;
-font-family: 'Jeju Gothic', serif;
+	display: flex;
+	/* background-color: aliceblue; */
+	padding-left: 10px;
+	line-height: 40px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__name_label {
-display: flex;
-width: 75px;
-font-family: 'Jeju Gothic', serif;
+	display: flex;
+	width: 75px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__name_input {
-padding: 6px 2px 2px;
-width: 130px;
-font-family: 'Jeju Gothic', serif;
+	padding: 6px 2px 2px;
+	width: 130px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__birth {
-display: flex;
-/* background-color: burlywood; */
-padding-left: 10px;
-line-height: 40px;
-padding-bottom: 12px;
-font-family: 'Jeju Gothic', serif;
+	display: flex;
+	/* background-color: burlywood; */
+	padding-left: 10px;
+	line-height: 40px;
+	padding-bottom: 12px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__birth_label {
-display: flex;
-width: 75px;
-font-family: 'Jeju Gothic', serif;
+	display: flex;
+	width: 75px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__gender {
-display: flex;
-/* background-color: cadetblue; */
-padding-left: 10px;
-line-height: 30px;
-font-family: 'Jeju Gothic', serif;
+	display: flex;
+	/* background-color: cadetblue; */
+	padding-left: 10px;
+	line-height: 30px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__gender_label {
-width: 75px;
-font-family: 'Jeju Gothic', serif;
+	width: 75px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .button__emailConfirmNumber_check,
 .button__userSearchId_check,
 .emailConfirmNumber_SendCheck {
-box-sizing: content-box;
-cursor: pointer;
-padding: 6px 13px;
-border: 1px solid #018dc4;
-border-radius: 9px;
-font: normal medium/normal "Trebuchet MS", Helvetica, sans-serif;
-	color: rgba(255,255,255,0.9);
-/* text-overflow: clip; */
-background: #444444;
-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
-text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 7px 15px;
+    border: 1px solid #d4b2b3;
+    border-radius: 3px;
+    font: normal medium/normal Arial, Helvetica, sans-serif;
+    color: rgba(255,255,255,0.9);
+    text-overflow: clip;
+    background: #d18a8d;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgb(96, 31, 31);
+    transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+    font-family: 'Jeju Gothic', serif;
+    width: 69px;
+    margin-left: 5px;
 }
 
 .searchID-form_content__email {
-padding-top: 15px;
+	padding-top: 15px;
 }
 
 
 .searchID-form_content__title__email {
-display: flex;
-/* background-color: cornsilk; */
-padding-left: 10px;
-padding-bottom: 11px;
-line-height: 40px;
-font-family: 'Jeju Gothic', serif;
+	display: flex;
+	/* background-color: cornsilk; */
+	padding-left: 10px;
+	padding-bottom: 11px;
+	line-height: 40px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__email_label {
-display: flex;
-width: 75px;
-font-family: 'Jeju Gothic', serif;
+	display: flex;
+	width: 75px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__email_inputbox {
-padding: 6px 1px 2px;
-width: 188px;
-font-family: 'Nanum Gothic', serif;
+    padding: 6px 1px 2px;
+    width: 217px;
+    font-family: 'Nanum Gothic', serif;
+    line-height: 20px;
 }
 
 .searchID-form_content__emailConfirmNumber {
-display: flex;
-/* background-color: aliceblue; */
-padding-left: 10px;
-line-height: 40px;
-font-family: 'Nanum Gothic', serif;
+	display: flex;
+	/* background-color: aliceblue; */
+	padding-left: 10px;
+	line-height: 40px;
+	font-family: 'Nanum Gothic', serif;
 }
 
 .searchID-form_content__emailConfirmNumber__label {
-display: flex;
-width: 75px;
-font-family: 'Jeju Gothic', serif;
+	display: flex;
+	width: 75px;
+	font-family: 'Jeju Gothic', serif;
 }
 
 .user-find-info-content__email__option {
-width: 100px;
-height: 28px;
-padding-left: 2px;
+	width: 100px;
+	height: 28px;
+	padding-left: 2px;
 }
 
 .searchID-form_content__email_input {
-padding-right: 2px;
-font-family: 'Nanum Gothic', serif;
+	padding-right: 2px;
+	font-family: 'Nanum Gothic', serif;
 }
 
 .button__emailConfirmNumber_send {
-box-sizing: content-box;
-cursor: pointer;
-/* padding: 10px 20px; */
-padding: 6px 6px;
-border: 1px solid #018dc4;
-border-radius: 9px;
-font: normal medium/normal "Trebuchet MS", Helvetica, sans-serif;
-color: rgba(255,255,255,0.9);
-/* text-overflow: clip; */
-background: #444444;
-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
-text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
+	    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 8px 9px;
+    border: 1px solid #d4b2b3;
+    border-radius: 3px;
+    font: normal medium/normal Arial, Helvetica, sans-serif;
+    color: rgba(255,255,255,0.9);
+    text-overflow: clip;
+    background: #d18a8d;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgb(96, 31, 31);
+    transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+    font-family: 'Jeju Gothic', serif;
+    width: 111px;
 }
 
 .emailConfirmNumber_check,
 .userSearchId_check {
-padding-top:15px;
-display: flex;
-align-items: center;
-justify-content: center;
+	padding-top:15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .searchID-form_content__emailConfirmNumber__input_box {
-height: 18px;
-width: 130px;
-padding-top: 4px;
-padding-right: 2px;
-font-family: 'Nanum Gothic', serif;
+	height: 18px;
+	width: 130px;
+	padding-top: 4px;
+	padding-right: 2px;
+	font-family: 'Nanum Gothic', serif;
 }
 
 .userConfirmNumberCheck_Email_resultText {

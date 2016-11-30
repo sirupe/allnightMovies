@@ -1,5 +1,7 @@
  package com.allnightMovies.service;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +18,7 @@ import javax.swing.plaf.synth.SynthSeparatorUI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.AsyncResult;
@@ -28,6 +31,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
+import com.allnightMovies.model.data.cinemaInfo.CinemaWriteBoardPwdCheckDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.data.movieInfo.MovieReviewBoard;
@@ -690,7 +694,6 @@ public class MainService implements Action {
 		int totQuestionBoardCount = this.dbService.questionBoardCount();
 		Paging questionBoardPaging = new Paging(totQuestionBoardCount,7, 1, 4);
 		questionBoardPaging.setBoardPaging();
-		
 		HttpSession session = this.params.getSession();
 		String LoginUserID = (String)session.getAttribute("userID");
 		Integer userStatus     = (Integer) session.getAttribute("userStatus");
@@ -754,6 +757,14 @@ public class MainService implements Action {
 		Integer userStatus     = (Integer) session.getAttribute("userStatus");
 		String isUserRight = questionBoardList.getUser_Id();
 		
+		System.out.println(questionBoardList.getReplyStep() + "step답글 달린거겠지?");
+		
+		
+		boolean isUserConfirm = false;
+		if(isUserRight.equals(LoginUserID)) {
+			isUserConfirm=true;
+		}
+		
 		String result = "";
 		if(questionBoardList.getIsPwd() == 1 && userStatus != 2) {
 			result = "/service/include/reCheckPwdWriteForm";
@@ -770,41 +781,35 @@ public class MainService implements Action {
 		mav.addObject("questionBoardList", questionBoardList);
 		mav.addObject("loginUserId", LoginUserID);
 		mav.addObject("isUserRight", isUserRight);
+		mav.addObject("isUserConfirm", isUserConfirm);
 		return mav;
 	}
 	
 ///*******수진. 문의사항 글등록 *******/
+	
 	public ModelAndView InsertAskWriteBoard() throws Exception {
 
-		String title     = this.params.getInsertTitle();
-		String content   = this.params.getInsertTextArea();
-		int writePwd     = this.params.getInsertboardPWd() == null ? 0 : this.params.getInsertboardPWd();
-		int isPwd        = this.params.isInsertPwdcheck() == true ? 1 : 0;
-		
-		//1은 비밀글 등록 // 0면 일반글등록
-		boolean isResult = true;
+		String title         = this.params.getInsertTitle();
+		String content       = this.params.getInsertTextArea();
+		Integer writePwd     = this.params.getInsertboardPWd() == null ? 0 : this.params.getInsertboardPWd();
+		int isPwd            = this.params.isInsertPwdcheck() == true ? 1 : 0;
 		
 		HttpSession session = this.params.getSession();
 		String user_Id = (String)session.getAttribute("userID");
  
-		if(title == "" && content == "") {
-			isResult = false;
-		}
-		if(isPwd == 1 && writePwd == 0) {
-			isResult = false;
-		}
+
 		CinemaQuestionBoardDTO cinemaQuestionBoardDTO = new CinemaQuestionBoardDTO();
-			if(isResult) {
+
 				cinemaQuestionBoardDTO.setTitle(title);
 				cinemaQuestionBoardDTO.setContent(content);
 				cinemaQuestionBoardDTO.setUser_Id(user_Id);
 				cinemaQuestionBoardDTO.setWritePwd(writePwd);
 				cinemaQuestionBoardDTO.setIsPwd(isPwd);
-			}
+			
 		this.dbService.InsertAskWriteBoard(cinemaQuestionBoardDTO);
 		ModelAndView mav = this.questionBoard();
 
-		mav.addObject("isResult", isResult);
+		//mav.addObject("isResult", isResult);
 		mav.addObject("loginUserId",user_Id);
 		return mav;
 		
@@ -877,22 +882,15 @@ public class MainService implements Action {
 	
 	//게시글 삭제
 	public ModelAndView completeDeleteQuestionBoard() throws Exception {
-		ModelAndView mav = this.questionBoard();
-		
-		int totQuestionBoardCount = this.dbService.questionBoardCount();
-		Paging questionBoardPaging = new Paging(totQuestionBoardCount,7, 1, 4);
-		questionBoardPaging.setBoardPaging();
-		
+
 		HttpSession session = this.params.getSession();
 		String user_Id = (String)session.getAttribute("userID");
 		
 		String completeDeleteQuestionBoardNum = this.params.getUpdateQuestionBoardNum();
 		
 		this.dbService.completeDeleteQuestionBoard(completeDeleteQuestionBoardNum);
+		ModelAndView mav = this.questionBoard();
 		
-		mav.addObject("questionBoardPage", this.dbService.questionBoard(questionBoardPaging.getStartPageNum(), questionBoardPaging.getEndPageNum()));
-		mav.addObject("questionBoardPageCount", questionBoardPaging.getTotalPageCount());
-		mav.addObject("questionBoardGroup", questionBoardPaging);
 		mav.addObject("loginUserId",user_Id);
 		return mav;
 	}
@@ -901,10 +899,6 @@ public class MainService implements Action {
 	public ModelAndView reCheckPwdWriteForm() throws Exception {
 		ModelAndView mav = new ModelAndView("service/include/reCheckPwdWriteForm");
 		
-		
-		
-		Integer questionBoardNum = this.params.getQuestionBoardNum();
-		
 		this.params.setDirectory("service");
 		this.params.setPage("service/include/reCheckPwdWriteForm");
 		mav.addObject("contentCSS", "service/service/serviceCenter");
@@ -912,40 +906,57 @@ public class MainService implements Action {
 		return mav;
 	}
 	
-	//비밀글 비번 확인 후 보여주기	
-	public ModelAndView confirmPWdQuestionBoard() throws Exception {
+//	//비밀글 비번 확인 후 보여주기	
+//	public ModelAndView confirmPWdQuestionBoard() throws Exception {
+//		ModelAndView mav = new ModelAndView("/service/include/confirmBoardCheck");
+//		Integer questionBoardNum = this.params.getQuestionBoardNum();
+//		Integer userInsertPwd   = this.params.getUserInsertPwd(); //비번체크확인   
+//		
+//		System.out.println(questionBoardNum + " : 비번확인글 선택한 번호");
+//		
+//		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
+//		int getUserPwd = questionBoardList.getWritePwd();
+//
+//		boolean isResult = true;
+//		if(userInsertPwd == null) {
+//			isResult = false;
+//		}
+//		if(userInsertPwd != getUserPwd) {
+//			isResult = false;
+//		}
+//
+//		if(isResult) {
+//			isResult = true;
+//		}
+//		HttpSession session = this.params.getSession();
+//		String LoginUserID = (String)session.getAttribute("userID");
+//		
+//		String isUserRight = questionBoardList.getUser_Id();
+//		
+//		mav.addObject("contentCSS", "service/service/questionBoard");
+//		mav.addObject("contentjs", "service/service/questionBoard");
+//		mav.addObject("questionBoardList", questionBoardList);
+//		mav.addObject("loginUserId", LoginUserID);
+//		mav.addObject("isUserRight", isUserRight);
+//		return mav;
+//	}
+//	
+
+	
+	public ModelAndView insertPwdCheck() throws Exception {
 		ModelAndView mav = new ModelAndView("/service/include/confirmBoardCheck");
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
 		Integer userInsertPwd   = this.params.getUserInsertPwd(); //비번체크확인   
 		
-		System.out.println(questionBoardNum + " : 비번확인글 선택한 번호");
 		
 		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
-		int getUserPwd = questionBoardList.getWritePwd();
-
-		boolean isResult = true;
-		if(userInsertPwd == null) {
-			isResult = false;
-		}
-		if(userInsertPwd != getUserPwd) {
-			isResult = false;
-		}
-
-		if(isResult) {
-			isResult = true;
-		}
-		HttpSession session = this.params.getSession();
-		String LoginUserID = (String)session.getAttribute("userID");
 		
-		String isUserRight = questionBoardList.getUser_Id();
-		
-		mav.addObject("contentCSS", "service/service/questionBoard");
-		mav.addObject("contentjs", "service/service/questionBoard");
 		mav.addObject("questionBoardList", questionBoardList);
-		mav.addObject("loginUserId", LoginUserID);
-		mav.addObject("isUserRight", isUserRight);
+		// 글내용 추가
 		return mav;
+		
 	}
+	
 	
 	
 /*******수진<관리자> .고객센터 자주묻는게시판 폼 열기**********/
@@ -995,17 +1006,12 @@ public class MainService implements Action {
 		System.out.println("관리자가 수정한 제목 : "  + question);
 		System.out.println("관리자가 수정한 내용: "   + asked);
 		System.out.println("관리가자 수정할 번호 : "  + no);
-		//db업데이트 쿼리문
-		boolean isResult = true;
-		if(question == "" && asked == "") {
-			isResult = false;
-		}
+
 		CinemaFrequentlyBoardDTO completeBoardForm = new CinemaFrequentlyBoardDTO();
-		if(isResult) {
+
 			completeBoardForm.setQUESTION(question);
 			completeBoardForm.setASKED(asked);
 			completeBoardForm.setNO(no);
-		}
 		this.dbService.managementUpdateFormComplete(question, asked, no);
 		ModelAndView mav = this.serviceCenterFreQuentlyBoard();
 		return mav;
@@ -1025,6 +1031,57 @@ public class MainService implements Action {
 	//문의사항 답글폼으로가기
 	public ModelAndView managementReplyBoardForm() throws Exception {
 		ModelAndView mav = new ModelAndView("/service/serviceCenterManager/serviceCenterReplyWriteForm");
+			String userQuestionTitle = this.params.getUserQuestionTitle();
+			Integer questionBoardNum = this.params.getQuestionBoardNum();
+			System.out.println(questionBoardNum +" : 사용자의 글번호");
+			System.out.println(userQuestionTitle + " : 사용자가 쓴 제목 가져오기");
+			
+			CinemaQuestionBoardDTO CinemaQuestionBoardDTO = this.dbService.questionBoardList(questionBoardNum);
+			String no 		  = CinemaQuestionBoardDTO.getNo();
+			String title 	  = CinemaQuestionBoardDTO.getTitle();
+			String content    = CinemaQuestionBoardDTO.getContent();
+			String user_id    = CinemaQuestionBoardDTO.getUser_Id();
+			int writepwd      = CinemaQuestionBoardDTO.getWritePwd();
+			int setPwd 		  = CinemaQuestionBoardDTO.getIsPwd();
+			String replyNo    = CinemaQuestionBoardDTO.getReplyNo();
+			String replyStep  = CinemaQuestionBoardDTO.getReplyStep();
+			String replyDepth = CinemaQuestionBoardDTO.getReplyDepth();
+//			
+			System.out.println(setPwd + " :비밀글이냐");
+//			
+			mav.addObject("no", no);
+			mav.addObject("title", title);
+			mav.addObject("content", content);
+			mav.addObject("user_id", user_id);
+			mav.addObject("writepwd", writepwd);
+			mav.addObject("setPwd", setPwd);
+			mav.addObject("replyNo", replyNo);
+			mav.addObject("replyStep", replyStep);
+			mav.addObject("replyDepth", replyDepth);
+			return mav;
+	}
+	
+	public ModelAndView managementReplyBoardFormComplete() throws Exception {
+		
+		Integer writePwd  = this.params.getReplyPwd() == null ? 0 : this.params.getReplyPwd();
+		int isPwd     = this.params.isReplytPwdcheck() == true ? 1 : 0;
+		
+		System.out.println(writePwd + ": qlalfqjsgh");
+		HttpSession session = this.params.getSession();
+		String user_id = (String)session.getAttribute("userID");
+		
+		System.out.println(user_id + " : 누구");
+		String title = this.params.getReplyTitle();
+		String content = this.params.getReplyContent();
+		String replyNo = this.params.getReplyNo();
+		String replyDepth = this.params.getReplyDepth();
+		String replyStep = this.params.getReplyStep();
+
+		
+		this.dbService.insertReplyBoard(title, content, user_id, writePwd, isPwd, replyNo, replyStep, replyDepth);
+		this.dbService.updateDepth(replyNo, replyStep);
+		
+		ModelAndView mav = this.questionBoard();
 		return mav;
 	}
 
@@ -1035,6 +1092,7 @@ public class MainService implements Action {
 		String myInfoID = (String)session.getAttribute("userID");
 		UserPersonalInfoDTO myInfoDTO = this.dbService.selectMyInfo(myInfoID);
 		mav.addObject("myInfoList", myInfoDTO);
+		mav.addObject("ticketing", this.params.getParams());
 		return mav;
 	}
 	public ModelAndView myInfoChagePwdResult() throws Exception {

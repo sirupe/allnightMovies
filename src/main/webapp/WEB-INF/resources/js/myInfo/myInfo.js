@@ -1,9 +1,11 @@
+init();
+
+
+
 function init() {
 	setEvent();
 	$('.js_myInfoTitle').css({'background-color' : '#CA9381'});
 }
-
-init();
 
 function setEvent() {
 	var $container = $('.js_myInfoContainer');
@@ -17,6 +19,9 @@ function setEvent() {
 		$('.js_myInfoTitle').css({'background-color' : '#CA9381'});
 }
 
+if($('.js_myInfoHidden').data('ticketing') == 'ticketing') {
+	$('.js_reserveInfoTitleClick').click();
+}
 function changeEmailInfoForm() {
 	var url    = '/movie/mainService/getTemplate';
 		dir    = 'myInfo';				 	  
@@ -64,3 +69,4 @@ function reserveInfoTitleClick() {
 	
 	$.post(url, cbf);
 }
+

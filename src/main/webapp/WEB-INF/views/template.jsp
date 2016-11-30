@@ -11,6 +11,7 @@
 			<input type="hidden" name="contentjs" id="hidden-js"/>
 			<input type="hidden" name="directory" id="hidden-dir"/>
 			<input type="hidden" name="page" id="hidden-page"/>
+			<input class="js_hiddenParam" type="hidden" name="params"/> 
 			
 			<div class="container">
 				<header class="header">

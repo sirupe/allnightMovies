@@ -1,0 +1,95 @@
+@CHARSET "UTF-8";
+.member-reservation {
+    margin: 16px;
+}
+
+.member-reservation__find {
+    display: flex;
+    font-size: 19px;
+}
+.member-reservation__find input, .member-reservation__find select {
+    padding-left: 4px;
+    height: 25px;
+    box-sizing: content-box;
+    border: 1px solid #b7b7b7;
+    border-radius: 3px;
+    font-family: 'Jeju Gothic', serif;
+    color: #0A1F33;
+    text-overflow: clip;
+    background: rgba(255, 255, 255, 0.63);
+    box-shadow: 2px 2px 2px 0 rgba(12,102,137,0.2) inset;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.66);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    margin-right: 14px;
+    margin-left: 4px;
+    font-size: 15px;
+}
+
+.member-reservation__find__movie-title select {
+    width: 155px;
+}
+
+.member-reservation__find__btn button {
+    font-family: 'Jeju Gothic', serif;
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 7px 13px 7px 13px;
+    border: 2px solid #8d5353;
+    border-radius: 9px;
+    color: #fcf3f3;
+    text-overflow: clip;
+    background: rgba(193, 94, 94, 0.86);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgb(147, 158, 160);
+    transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+    font-size: 16px;
+}
+
+.member-reservation__find__btn` button:hover {
+    background-color: rgba(226, 92, 92, 0.86);
+}
+
+.member-reservation__contents__title {
+    font-size: 20px;
+}
+
+.member-reservation__contents {
+    display: table;
+    text-align: center;
+}
+.member-reservation__tr {
+    display: table-row;
+}
+.member-reservation__td {
+	display: table-cell;
+    height: 28px;
+}
+
+.member-reservation__ticket-num {
+    width: 143px;
+}
+
+.member-reservation__ticketing-date {
+    width: 150px;
+}
+
+.member-reservation__user-id {
+    width: 69px;
+}
+
+.member-reservation__movie-title {
+    width: 179px;
+}
+
+.member-reservation__theater {
+    width: 56px;
+}
+
+.member-reservation__ticket-count {
+    width: 64px;
+}
+
+.member-reservation__seat {
+    width: 104px;
+}

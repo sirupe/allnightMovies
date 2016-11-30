@@ -309,6 +309,27 @@
 		SET USER_STATES=1
 		WHERE USER_ID=#{userID}
 	</update>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 유저 검색 -->
+	<select id="searchMemberInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
+		SELECT 
+		    USER_ID USERID,
+		    USER_NAME USERNAME,
+		    USER_BIRTH USERBIRTH,
+		    USER_GENDER USERGENDER,
+		    USER_EMAIL USEREMAIL,
+		    TO_CHAR(USER_REGDATE, 'YYYY-MM-DD') USERREGDATE,
+		    CASE  
+		    WHEN USER_STATES = 1 THEN '정상'
+		    WHEN USER_STATES = 0 THEN '탈퇴' 
+		    END USERSTATUS
+		FROM USER_PERSONAL_INFO
+		WHERE
+			USER_STATES != 2 AND
+			USER_ID LIKE #{param1} AND
+		    USER_NAME LIKE #{param2} AND
+		    USER_BIRTH LIKE #{param3}
+	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>

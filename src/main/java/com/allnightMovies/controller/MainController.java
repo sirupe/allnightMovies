@@ -1,5 +1,8 @@
 package com.allnightMovies.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -77,6 +82,30 @@ public class MainController {
 		ModelAndView mav = action.execute(params);
 		
 		return mav;
+	}
+	
+	
+	@RequestMapping(value="/movie/file", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public String menuCliecked(
+			Params params, 
+			MultipartHttpServletRequest multiReq) throws Throwable {
+
+		String defaultDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/";
+		MultipartFile file = multiReq.getFile("file");
+		String fileName = file.getOriginalFilename();
+		
+		try {
+			byte[] b = file.getBytes();
+			File saveFile = new File(defaultDir + System.currentTimeMillis() + fileName);
+			FileOutputStream fos = new FileOutputStream(saveFile);
+			fos.write(b);
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return fileName;
 	}
 	
 // 이러한 방식의 controller 사용도 가능.

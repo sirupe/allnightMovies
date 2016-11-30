@@ -1113,7 +1113,7 @@ public class MainService implements Action {
 		return mav;
 	}
 	public ModelAndView sortScore() throws Exception{
-		ModelAndView mav = new ModelAndView("movie/currentFilmSort");
+		ModelAndView mav = new ModelAndView("movie/include/currentFilmSort");
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.sortScore();
 		Integer filmNum = currentFilmDTO.size();
 		mav.addObject("directory", "movie");
@@ -1126,7 +1126,7 @@ public class MainService implements Action {
 	}
 	//TODO 현재 가나다순 정렬 중임 
 	public ModelAndView sortTicketing() throws Exception{
-		ModelAndView mav = new ModelAndView("movie/currentFilmSort");
+		ModelAndView mav = new ModelAndView("movie/include/currentFilmSort");
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.sortTicketing();
 		Integer filmNum = currentFilmDTO.size();
 		mav.addObject("directory", "movie");
@@ -1142,6 +1142,7 @@ public class MainService implements Action {
 		ModelAndView mav = this.getTemplate();
 		List<MovieScreeningsPlannedDTO> screeningsPlannedDTO = this.dbService.getPlannedFilmDTO();
 		Integer filmNum = screeningsPlannedDTO.size();
+		
 		mav.addObject("directory", "movie");
 		mav.addObject("page", "screeningsPlanned");
 		mav.addObject("contentCSS", "movie/screeningsPlanned");
@@ -1355,6 +1356,8 @@ public class MainService implements Action {
 		Date date = null;
 		boolean countResult = true;
 		
+		
+		
 		try {
 			date = format.parse(movieReleadeDate);
 		} catch (ParseException e) {
@@ -1369,6 +1372,8 @@ public class MainService implements Action {
 		if(movieStillCutDTO.size() == 0) {
 			countResult = false;
 		}
+		
+		System.out.println("제발아멘"  + movieBasicInfo.getNo());
 		
 		mav.addObject("movieStillCutDTO", movieStillCutDTO);
 		mav.addObject("movieStillCutCount", countResult);
@@ -1498,7 +1503,6 @@ public class MainService implements Action {
 		String movieTitle = this.params.getMovieInfoTitle();
 		
 		System.out.println("managerMovieInfoModifyForm 실행");
-		System.out.println("movieTitle" + movieTitle);
 		
 		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
 		
@@ -1526,7 +1530,6 @@ public class MainService implements Action {
 		
 		List<MovieReviewBoard> reviewBoardDTO =  this.dbService.getReviewBoard(movieTitle);
 		
-		System.out.println(movieTitle);
 		int reviewPage = this.params.getMovieInfoReviewPage();
 		Paging2 paging = new Paging2();
 		paging.makePaging(reviewBoardDTO.size(), reviewPage, 5, 5);

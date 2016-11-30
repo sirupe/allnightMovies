@@ -2,13 +2,7 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="movieBasicInfo js_movieBasicInfoContainer">
-
-	<div class="intro_managerModeButtons">
-		<c:if test="${isManager}">
-			<button class="intro_managerModeBtn js_movieModifyBtn" type="button">수정하기</button>
-			<button class="intro_managerModeBtn js_movieDeleteBtn" type="button">영화삭제</button>
-		</c:if>
-	</div>
+<script async="async" type="text/javascript" src="/resources/js/movie/managerMovieInfo"></script>
 	
 	<!-- 작품소개/ 스틸컷/ 평점리뷰 -->
 	<div class="movieBasicInfo-intro">
@@ -43,8 +37,16 @@
 					</c:otherwise>
 				</c:choose>
 				&nbsp;&nbsp;${movieBasicInfo.reviewEvaluate}&nbsp;점
-				</label>
+				</label><br><br>
+				<label class="intro__label">상영시간&nbsp;:&nbsp;${movieBasicInfo.movieRuntime}분</label><br><br>
+				<label class="intro__label">개봉일&nbsp;:&nbsp;${movieBasicInfo.movieReleaseDate}</label><br><br>
 			</c:if>
+		<c:if test="${isManager}">
+			<div class="intro_managerModeButtons">
+			<button class="intro_managerModeBtn js_movieModifyBtn" data-movie-no="${movieBasicInfo.no}" type="button">기본정보수정</button>
+			<button class="intro_managerModeBtn js_movieDeleteBtn" data-movie-no="${movieBasicInfo.no}" type="button">영화추가</button>
+			</div>
+		</c:if>
 		</span> 
 	</div>
 	
@@ -62,7 +64,7 @@
 		
 		<!-- 탭 내용 : 탭 제목을 선택했을 때 표시되는 본문 -->
 		<div class="tab-intro_content">
-			<pre class="tab-intro_content__intro">${movieBasicInfo.movieIntro}</pre>
+			<pre class="tab-intro_content__intro js_movieIntro">${movieBasicInfo.movieIntro}</pre>
 		</div>
 		
 		<!-- 스틸컷 사진 -->

@@ -6,6 +6,14 @@
 	resize: none;
 	color: #5f5f5f;
 }
+.intro__input__date {
+	width: 200px;
+    font-size: 17px;
+}
+.intro__input__runtime {
+	width: 100px;
+}
+
 
 /*파일 업로드*/
 .fileUpload {
@@ -14,18 +22,22 @@
 }
 
 /*공통*/
+.intro__input {
+	width: 91%;
+}
+.intro__input__width {
+	width: 40%;
+}
 
 .font {
 	font-family: 'Jeju Gothic', serif;
 	font-size: 18px;
 }
-.intro__input {
-}
 
 
 .modifyCompleteBtn {
-    width: 100px;
-    height: 30px;
+ 	width: 100px;
+    height: 27px;
     padding: 3px;
     font-size: 18px;
     color: #fcf3f3;

@@ -579,6 +579,7 @@
 			SELECT MOVIE_TITLE  movieTitle,
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
                    ROWNUM RNUM
 			FROM (
 				SELECT *
@@ -594,6 +595,7 @@
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
                    REVIEW_EVALUATE score,
+                   NO no,
                    ROWNUM RNUM
 			FROM (
 				SELECT *
@@ -609,6 +611,7 @@
 			SELECT MOVIE_TITLE  movieTitle,
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
                    ROWNUM RNUM
 			FROM (
 				SELECT *
@@ -625,6 +628,7 @@
 			SELECT MOVIE_TITLE  movieTitle,
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
                    ROWNUM RNUM
 			FROM (
 				SELECT *
@@ -710,6 +714,7 @@
 	                   MOVIE_POSTER moviePoster,
 	                   MOVIE_RELEASE_DATE,
 	                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+	                   NO no,
 	                   ROWNUM RNUM
 				FROM (
 					SELECT *
@@ -748,7 +753,8 @@
 			   MOVIE_RUNTIME		movieRuntime,
 			   MOVIE_INTRO			movieIntro,
 			   MOVIE_POSTER			moviePoster,
-			   REVIEW_EVALUATE		reviewEvaluate
+			   REVIEW_EVALUATE		reviewEvaluate,
+			   NO                   no
 	   FROM MOVIE_BASIC_INFO
 	   WHERE MOVIE_TITLE = #{movieTitle}
 	</select>
@@ -832,9 +838,22 @@
 	<select id="deleteMovieFilm" parameterType="java.lang.String">
 		UPDATE MOVIE_BASIC_INFO
 		SET STATUS = 0
-		WHERE = #{movieTitle}
+		WHERE = #{no}
 	</select>
 	
+	<select id="updateMovieInfo" parameterType="com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO">
+		UPDATE MOVIE_BASIC_INFO
+		SET MOVIE_TITLE        = #{movieTitle}
+			MOVIE_INTRO		   = #{movieIntro}
+		    MOVIE_RELEASE_DATE = #{movieReleaseDate}
+		    MOVIE_DIRECTOR 	   = #{movieDirector}
+		    MOVIE_AUTHOR 	   = #{movieAuthor}
+		    MOVIE_GENRE 	   = #{movieGenre}
+		    MOVIE_CAST         = #{movieCast}
+		    MOVIE_AGE_LIMIT    = #{movieAgeLimitText}
+		    MOVIE_RUNTIME 	   = #{movieRuntime}
+		WHERE NO 	   = #{no}
+	</select>
 	
 	
 </mapper>

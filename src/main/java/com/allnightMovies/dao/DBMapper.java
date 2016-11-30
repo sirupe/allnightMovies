@@ -20,6 +20,7 @@ import com.allnightMovies.model.data.movieInfo.MovieStillCut;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO;
 import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
@@ -60,6 +61,16 @@ public interface DBMapper {
 	
 /** ji. cancel ticket 예매취소 **/
 	public void cancelTicket(String ticketNum, String userID);
+
+/** ji. search movie info  **/	
+	public List<MovieBasicInfo> searchMovieInfo(String searchWord);
+	
+/** ji. manager menu **/
+	public List<ManagerMemberInquiryDTO> getMemberInfo();
+	public void managerWithdrawalMember(String userID);
+	public void managerRestoreMember(String userID);
+	public Integer userInfoTotCount();
+	public ArrayList<ManagerMemberInquiryDTO> userInfoTotList(int userInfoListStartPage, int userInfoEndPage);
 	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
@@ -83,11 +94,12 @@ public interface DBMapper {
 	
 /**고객센터 문의사항게시판 **/
 	public Integer questionBoardCount() throws Exception;
-	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum) throws Exception;
-	public CinemaQuestionBoardDTO questionBoardList(Integer no) throws Exception;
-	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO) throws Exception;
+	public ArrayList<CinemaQuestionBoardDTO> questionBoard(int startPageNum, int endPageNum);
+	public CinemaQuestionBoardDTO questionBoardList(Integer no);
+	public Integer InsertAskWriteBoard(CinemaQuestionBoardDTO cinemaQuestionBoardDTO);
 	public CinemaQuestionBoardDTO completeUPdateWriteBoard(String title, String content, int writePwd, int isPwd, String no) throws Exception;
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum);
+	public Integer completeDeleteReplyQuestionBoard(String completeDeleteQuestionBoardNum);
 	
 /**jung 고객센터 관리자**/
 	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception;
@@ -96,7 +108,7 @@ public interface DBMapper {
 	public Integer managementDeleteFormComplete(String no);
 	
 /**jung 고객센터 문의사항 관리자 **/
-	public CinemaQuestionBoardDTO insertReplyBoard(String title, String content, String user_id, int writePwd, int isPwd, String replyNo, String replyStep, String replyDepth) throws Exception;
+	public CinemaQuestionBoardDTO insertReplyBoard(String title, String content, String user_id, int writePwd, int isPwd, String  replyNo,  String replyStep, String replyDepth) throws Exception;
 	public CinemaQuestionBoardDTO updateDepth(String replyNo, String replyStep) throws Exception;
 	
 	/** shin. Search PWD **/

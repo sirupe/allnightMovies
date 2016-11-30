@@ -20,6 +20,8 @@ public class CinemaQuestionBoardDTO {
 	private String replyDepth; //글 들여쓰기
 	private String replyStep; //글정렬
 	
+	private String  writeStatus;
+	
 	
 	
 

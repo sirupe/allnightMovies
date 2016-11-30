@@ -17,14 +17,12 @@
 				<div class="ReplyQuestionBoard-sub">
 					<div class="ReplyQuestionBoard_subject">
 						<label class="ReplyBoardSub">내용</label>
-						<textarea class="ReplyBoardTextarea js_ReplyBoardTextArea" rows="" cols="">
-						안녕하세요 AllnightMovies 입니다. 이곳에 찾아주신 모든 고객분들께 감사드립니다.
-						
+						<textarea class="ReplyBoardTextarea js_ReplyBoardTextArea" rows="" cols="">안녕하세요 AllnightMovies 입니다. 이곳에 찾아주신 모든 고객분들께 감사드립니다.
 						</textarea>
 					</div>
 					<div class="ReplyQuestionBoard-pwd">
 						<label class="ReplyBoardPwd">비밀번호</label>
-						<input class="ReplyBoardwriteBoardPwd js_ReplyBoardWriteBoardPwd" type="password" >
+						<input class="ReplyBoardwriteBoardPwd js_ReplyBoardWriteBoardPwd" value="${writepwd }" type="password" >
 					</div>
 				</div>
 			</c:when>
@@ -32,17 +30,19 @@
 			<c:otherwise>
 				<div class="ReplyQuestionBoard-title">
 					<label class="ReplyBoardtitle js_ReplyBoardTitle">제목</label>
-					<input class="ReplyBoardwriteBoard js_ReplyBoardContent" type="text" value="[답글]:${ title }">
+					<input class="ReplyBoardwriteBoard js_ReplyBoardContent" type="text" value="[답글]: AllnightMovies입니다."readonly>
 					<input class="ReplyBoardcheck js_ReplyBoardCheck"  type="checkbox"><label>비밀글</label>
 				</div>
 				<div class="ReplyQuestionBoard-sub">
 					<div class="ReplyQuestionBoard_subject">
 						<label class="ReplyBoardSub">내용</label>
-						<textarea class="ReplyBoardTextarea js_ReplyBoardTextArea" rows="" cols="">dd</textarea>
+						<textarea class="ReplyBoardTextarea js_ReplyBoardTextArea" rows="" cols="">
+						안녕하세요 AllnightMovies 입니다. 이곳에 찾아주신 모든 고객분들께 감사드립니다.
+						</textarea>
 					</div>
 					<div class="ReplyQuestionBoard-pwd">
 						<label class="ReplyBoardPwd">비밀번호</label>
-						<input class="ReplyBoardwriteBoardPwd js_ReplyBoardWriteBoardPwd" type="password" readonly>
+						<input class="ReplyBoardwriteBoardPwd js_ReplyBoardWriteBoardPwd"  value="${writePwd }" type="password" readonly>
 					</div>
 				</div>
 			</c:otherwise>

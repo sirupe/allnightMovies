@@ -1,5 +1,7 @@
 package com.allnightMovies.model.data.movieInfo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,6 +19,7 @@ public class MovieBasicInfo {
 	private String movieGenre;
 	private String moviePoster;
 	private String movieAgeLimitText;
+	private List<MovieBasicInfoCast> movieCastList;
 	private int reviewEvaluate;
 	private int movieAgeLimit;
 	private int movieRuntime;

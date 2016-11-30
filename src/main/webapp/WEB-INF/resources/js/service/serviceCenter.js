@@ -434,7 +434,7 @@ function deleteQuestionBoard() {
 				alert('삭제 성공!');
 				var $questionBoardViewchange = $('.js_frequentlyBoardContainer');
 				$questionBoardViewchange.html(mav);
-	}
+	};
 		if(confirm('정말 삭제하시겠습니까?') == true) {
 			$.post(url, params, cbf);
 		} else {

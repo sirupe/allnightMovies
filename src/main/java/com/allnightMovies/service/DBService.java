@@ -25,6 +25,7 @@ import com.allnightMovies.model.data.movieInfo.MovieStillCut;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
+import com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO;
 import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
@@ -159,7 +160,31 @@ public class DBService {
 		dbMapper.cancelTicket(ticketNum, userID);
 	}
 
-	/** jung. 상영시간표 **/ //TODO 수진
+/** ji. search movie info 영화 검색 **/
+	public List<MovieBasicInfo> searchMovieInfo(String searchWord) {
+		return dbMapper.searchMovieInfo(searchWord);
+	}
+/** ji. manager menu 메니저메뉴 **/
+	public List<ManagerMemberInquiryDTO> getMemberInfo() {
+		return dbMapper.getMemberInfo();
+	}
+	/** ji. manager menu 메니저 회원탈퇴 **/	
+	public void managerWithdrawalMember(String userID) {
+		dbMapper.managerWithdrawalMember(userID);
+	}
+	/** ji. manager menu 메니저 탈퇴복구 **/	
+	public void managerRestoreMember(String userID) {
+		dbMapper.managerRestoreMember(userID);
+	}
+	/** ji manager menu paging **/
+	public Integer userInfoTotCount() {
+		return dbMapper.userInfoTotCount();
+	}
+	public ArrayList<ManagerMemberInquiryDTO> userInfoTotList(int userInfoListStartPage, int userInfoEndPage) {
+		return dbMapper.userInfoTotList(userInfoListStartPage, userInfoEndPage);
+	}
+	
+/** jung. 상영시간표 **/ //TODO 수진
 	public List<MovieShowTimesMap> showtimes() throws Exception {
 		return dbMapper.showtimes();
 	}
@@ -217,6 +242,10 @@ public class DBService {
 	public Integer completeDeleteQuestionBoard(String completeDeleteQuestionBoardNum) throws Exception {
 		return dbMapper.completeDeleteQuestionBoard(completeDeleteQuestionBoardNum);
 	}
+	
+	public Integer completeDeleteReplyQuestionBoard(String completeDeleteQuestionBoardNum) throws Exception {
+		return dbMapper.completeDeleteReplyQuestionBoard(completeDeleteQuestionBoardNum);
+	}
 
 /**JUNG 고객센터 자주묻는질문 관리자페이지 **/
 	public CinemaFrequentlyBoardDTO managementWriteBoard(String question, String asked) throws Exception {
@@ -236,7 +265,7 @@ public class DBService {
 	}
 	
 /** JUNG 고객센터 문의사항 관리자페이지 **/
-	public CinemaQuestionBoardDTO insertReplyBoard(String title, String content, String user_id, int writePwd, int isPwd, String replyNo, String replyStep, String replyDepth) throws Exception {
+	public CinemaQuestionBoardDTO insertReplyBoard(String title, String content, String user_id, int writePwd, int isPwd, String  replyNo, String replyStep, String replyDepth) throws Exception {
 		return dbMapper.insertReplyBoard(title, content, user_id, writePwd, isPwd, replyNo, replyStep, replyDepth);
 	}
 	public CinemaQuestionBoardDTO updateDepth(String replyNo, String replyStep) throws Exception {

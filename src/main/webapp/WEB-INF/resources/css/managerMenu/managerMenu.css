@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+.manager {
+    width: 1000px;
+    display: flex;
+}
+
+.manager__menu__member {
+    text-align: center;
+    padding: 25px 23px;
+    font-size: 21px;
+    background: whitesmoke;
+    color: darkseagreen;
+    cursor: pointer;
+}
+
+.manager__menu__member:hover {
+    background-color: #5e5e5e;
+    color: #dfffdf;
+}
+
+.mainCurrentPaingNumber--active {
+	color:orange;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+label.js_mainPagingNumber {
+    cursor: pointer;
+}
+
+.mainCurrentPaingNumber {
+    text-align: center;
+    margin-top: 32px;
+    letter-spacing: 9px;
+    cursor: pointer;
+}

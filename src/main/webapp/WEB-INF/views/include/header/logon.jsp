@@ -13,7 +13,11 @@
 				로그아웃
 			</button>
 			<c:if test="${isManager }">
-				이사람은 매니져다.
+				<div class="manager-menu-btn">
+					<button class="js_managerMenuBtn" type="button">
+						관리자 메뉴
+					</button>
+				</div>
 			</c:if>
 			
 		</div>

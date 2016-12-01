@@ -812,7 +812,8 @@ function setServiceCenter() {
 		.on('click', '.js_Deletebtn', managementFreQuentlyDeleteComplete) //글삭제
 		.on('click', '.js_ReplyQuestionBtn', managementReplyWriteForm) //답글폼으로가기
 		.on('click', '.js_ReplyBoardCheck',activePwdInputManager)
-		.on('click', '.js_ReplyQuestionButtonConfirm',managementReplyWriteComplete )
+		.on('click', '.js_ReplyQuestionButtonConfirm',managementReplyWriteComplete)
+		.on('click', '.js_ReplyQuestionButtonCancel',questionBoardTab)
 }
 
 function initServiceCenter() {

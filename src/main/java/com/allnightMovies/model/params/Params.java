@@ -46,6 +46,9 @@ public class Params {
 	private String searchPwdConfirmNum;
 	private String searchPwdNewPwd;
 	
+	private String searchIdConfirmNum; //아이디 이메일인증번호(사용자가 입력한 번호)
+	private String searchIdConfirmNumCheck; //아이디이메일 저장된 인증번호
+	
 // 아이디 찾기
 	private String searchIdUserName;
 	private String searchIdUserBirth;
@@ -173,4 +176,8 @@ public class Params {
 	private String ticketNumPost;
 	private String ticketNumBack;
 	private String ticketNums;
+	private String theaters;
+	private String movieTitles;
+	private String dateTimes;
+	private String prices;
 }

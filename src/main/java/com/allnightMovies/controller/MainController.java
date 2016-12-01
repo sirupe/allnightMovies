@@ -87,7 +87,7 @@ public class MainController {
 	
 	@RequestMapping(value="/movie/file", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public ModelAndView menuCliecked(
+	public ModelAndView fileUpload(
 			Params params, 
 			MultipartHttpServletRequest multiReq) throws Throwable {
 
@@ -103,11 +103,19 @@ public class MainController {
 				FileOutputStream fos = new FileOutputStream(saveFile);
 				fos.write(b);
 				fos.close();
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		return new ModelAndView(params.getLocationPath());
 	}
 	

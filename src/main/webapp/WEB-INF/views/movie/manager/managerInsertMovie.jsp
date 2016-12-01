@@ -3,8 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="movieInsertContainer js_movieInsertContainer">
 	<label class="movieInsert-label">영화등록</label>
-	<div class="movieBasicInfo-intro">
-		<input class="fileupload font" type="file" name="moviePoster">
+	<div class="movieBasicInfo-intro font">
+		포스터&nbsp;:&nbsp;<input class="fileupload" type="file" name="moviePoster"><br>
+		스틸컷&nbsp;:&nbsp;<input class="fileupload" type="file" name="movieStillcut"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input class="fileupload" type="file" name="movieStillcut"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input class="fileupload" type="file" name="movieStillcut"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input class="fileupload" type="file" name="movieStillcut"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input class="fileupload" type="file" name="movieStillcut"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		
 		<div class="span-movieBasicInfo-intro font">
 			제목&nbsp;:&nbsp;<input class="js_movieInsertTitle input__import font" value="${movieBasicInfo.movieTitle}" type="text" placeholder="최대 30자 입력가능" maxlength="30"><br><br>
 			개요&nbsp;:&nbsp;<input class="js_movieInsertGenre font" value="${movieBasicInfo.movieGenre}" type="text" placeholder="최대 30자 입력가능" maxlength="30"/><br><br>

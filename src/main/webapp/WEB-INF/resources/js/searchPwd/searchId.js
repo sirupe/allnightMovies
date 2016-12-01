@@ -15,8 +15,9 @@ $(function() {
 
 /*************시작***************/
 function setSearchIDStart() {
-	var $container = $('.js_userFindIdcontainer');
-	
+	var $container      = $('.js_userFindIdcontainer');
+		$emailContainer = $('.js_locationSearchPwdEmail'); 
+		
 		$container.on('click','.js_confirmIdCheck',confirmIdCheck)
 					.on('keyup','.js_userFindIdBirth',userFindIdBirth)
 					.on('click','.js_emailCheck_send',emailCheck_send)
@@ -29,9 +30,10 @@ function setSearchIDStart() {
 //					.on('click','.js_locationSearchPwdEmail', locationSearchPwd)
 //					.on('click','.js_locationSearchPwdEmail',locationSearchID)
 					
-					.on('click', '.js_searchIdBack', locationSearchID)
+	 $emailContainer.on('click', '.js_searchIdBack', locationSearchID)
 					.on('click', '.js_searchPwdBack', locationSearchPwd)
 					.on('click', '.js_locationMain',locationMain)
+					
 }
 
 function setSearchID() {
@@ -39,6 +41,11 @@ function setSearchID() {
 }
 
 setSearchID();
+
+
+function locationMain() {
+	alert('');
+}
 
 //전체 다검사하기.
 function allCheck() {
@@ -80,14 +87,14 @@ function searchIdcheckConfirm() {
 		searchIdUserBirth   = $searchIdUserBirth.val();
 		searchIdUserGender  = $searchIdUserGender.val();
 		
-	if(searchIDUserName == '' || 
-			searchIdUserBirth == '' || 
-			searchIdUserGender == '') {
-		isResult = false;
-		resultMsg = '<label style="color:red;">모두 입력해주세요.<label>';
-	} 
-	$resultText.html(resultMsg);
-	return isResult;
+		if(searchIDUserName == '' || 
+				searchIdUserBirth == '' || 
+				searchIdUserGender == '') {
+			isResult = false;
+			resultMsg = '<label style="color:red;">모두 입력해주세요.<label>';
+		} 
+		$resultText.html(resultMsg);
+		return isResult;
 }
 
 
@@ -99,13 +106,13 @@ function userFindIdBirth() {
 	    userBirthDay = new Date(birth);
 	    resultMsg    = '<label style="color: green;">사용가능합니다.</label>';
 	    $resultText  = $('.js_insertConfirm');
-	    
-	if(userBirthDay > new Date() || userBirthDay == '') {
-		isBirthMsg = false;
-		resultMsg = '<label style="color: red;">날짜 형식이 맞지 않습니다.</label>';
-	}
-	$resultText.html(resultMsg);
-	return isBirthMsg;
+		    
+		if(userBirthDay > new Date() || userBirthDay == '') {
+			isBirthMsg = false;
+			resultMsg = '<label style="color: red;">날짜 형식이 맞지 않습니다.</label>';
+		}
+		$resultText.html(resultMsg);
+		return isBirthMsg;
 }
 
 //이메일로 아이디 찾기
@@ -188,7 +195,6 @@ function confirmNumber_Check() {
 					isResult = false;
 					$('.js_emailCheck_send').attr("disabled", false);
 					$searchIdUserEmail.removeAttr('readonly'); //사용자이메일readonly풀기
-					
 					$('.js_userFindIdEmail').val('');//이메일칸지우기
 					$('.js_insertConfirmNumber').html('');//위에 경고메세지 지우기
 					$('.js_insertConfirmEmail').html('');
@@ -196,7 +202,6 @@ function confirmNumber_Check() {
 					
 					resultMsg = '<label style="color:red;">인증번호가 일치하지 않습니다. 다시받아주세요</label>';
 					$insertConfirmEmail.html(resultMsg);
-					
 				}
 		};
 		if(insertConfirmNumResult != '') {
@@ -240,7 +245,7 @@ function email_resultCheck() {
 		
 	if(userFindIdConfirmNumber != '' && userFindIdEmail != '') {
 		$.post(url, params, cbf);
-		resultMsg = '<label style="color: green;">보내는둥..</label>';
+		resultMsg = '<label style="color: green;">보내는중..</label>';
 		isResult = true;
 	} else {
 		resultMsg = '<label style="color: red;">모두 확인 부탁드립니다.</label>';

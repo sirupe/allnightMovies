@@ -570,6 +570,7 @@ public class MainService implements Action {
 
 	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
+		
 		ModelAndView mav = this.getTemplate();
 		boolean userInfoResult = false;
 		String searchIdUserName = this.params.getSearchIdUserName();
@@ -593,6 +594,12 @@ public class MainService implements Action {
 		//세션저장//
 		List<Params> userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		Integer result = this.dbService.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
+		
+		
+		this.params.setDirectory("searchId");
+		this.params.setPage("searchId");
+		this.params.setContentCSS("searchId/searchId");
+		this.params.setContentjs("searchId/searchId");
 		
 		mav.addObject("searchIdUserName", searchIdUserName);
 		mav.addObject("userSearchId", userSearchId);

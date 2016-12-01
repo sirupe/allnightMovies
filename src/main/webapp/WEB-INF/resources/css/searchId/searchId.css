@@ -144,10 +144,10 @@
 
 .searchID-form_title,
 .searchID-form_content__title_email {
-	/* background-color: #ceb2c6; */
-	line-height: 45px;
-	font-family: 'Jeju Gothic', serif;
-	border-bottom: 1px solid
+    line-height: 45px;
+    height: 45px;
+    font-family: 'Jeju Gothic', serif;
+    border-bottom: 1px solid;
 }
 
  

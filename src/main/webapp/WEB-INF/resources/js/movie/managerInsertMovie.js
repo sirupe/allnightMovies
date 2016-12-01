@@ -20,6 +20,7 @@ function setEvent() {
 		.on('keyup', '.js_movieInsertAutohor', checkLength)
 		.on('keyup', '.js_movieInsertCast', checkLength)
 		
+		
 }
 
 function checkNull() {

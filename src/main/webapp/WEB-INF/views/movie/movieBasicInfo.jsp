@@ -41,15 +41,14 @@
 				<label class="intro__label">상영시간&nbsp;:&nbsp;${movieBasicInfo.movieRuntime}분</label><br><br>
 				<label class="intro__label">개봉일&nbsp;:&nbsp;${movieBasicInfo.movieReleaseDate}</label><br><br>
 			</c:if>
-		<c:if test="${isManager}">
-			<div class="intro_managerModeButtons">
-			<button class="intro_managerModeBtn js_movieModifyBtn" data-movie-no="${movieBasicInfo.no}" type="button">기본정보수정</button>
-			<button class="intro_managerModeBtn js_movieInsertBtn" data-movie-no="${movieBasicInfo.no}" type="button">영화추가</button>
-			</div>
-		</c:if>
 		</span> 
 	</div>
-	
+	<div class="intro_managerModeButtons">
+		<c:if test="${isManager}">
+			<button class="intro_managerModeBtn js_movieModifyBtn" data-movie-no="${movieBasicInfo.no}" type="button">기본정보수정</button>
+			<button class="intro_managerModeBtn js_movieInsertBtn" data-movie-no="${movieBasicInfo.no}" type="button">영화추가</button>
+		</c:if>
+	</div>
 	<!-- 작품소개/ 스틸컷/ 평점리뷰 -->
 	<div class="movieBasicInfo-detail">
 		<!-- input -->

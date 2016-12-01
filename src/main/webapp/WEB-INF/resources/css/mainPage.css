@@ -73,6 +73,10 @@ a:hover {
     text-align: center;
     font-size: 20px;
 }
+.movieInsertBtn {
+	
+}
+
 .mainFilmImg:hover {
     box-shadow: 1px 1px 1px 120px rgba(50, 50, 50, 0.77) inset;
 }
@@ -182,3 +186,40 @@ a:hover {
 	width: 16px;
 	height: 16px;
 }
+.movieInsertBtn {
+    display: flex;
+    margin-left: 940px;
+    padding: 5px 15px 5px 15px;
+    color: #fcf3f3;
+	box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #b79fa1;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: 100;
+    font-family: 'Jeju Gothic', serif;
+    text-overflow: clip;
+    background: rgba(206, 159, 161, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+}
+.movieInsertBtn:hover {
+    color: #fcf3f3;
+    background: rgba(107, 78, 79, 0.81);
+    -webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+.movieInsertBtn:active{
+	border: 1px solid #575757;
+  	-webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2) inset;
+  	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2) inset;
+ 	 text-shadow: none;
+ 	 -webkit-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+ 	 -moz-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+ 	 -o-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+ 	 transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+

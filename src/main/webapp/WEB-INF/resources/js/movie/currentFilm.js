@@ -12,6 +12,13 @@ function setEvent() {
 		.on('click', '.js_currentFilmSortReservation', sortReservation)
 		.on('click', '.js_currentFilmSortScore', sortScore)
 		.on('click', '.js_video', currentFilmStartBtn)
+		.on('click', '.js_insertMovie', insertMovie)
+}
+/*관리자 영화 등록 버튼*/
+function insertMovie() {
+	var url = '/movie/mainService/managerMovieInsertForm';
+	
+	submit(url);
 }
 
 /*비디오 실행 버튼*/

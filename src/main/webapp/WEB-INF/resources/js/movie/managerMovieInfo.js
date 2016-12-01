@@ -10,8 +10,7 @@ function init() {
 init();
 
 function setEvent() {
-	var $container = $('.js_managerMovieInfoContainer'),
-		$filmContainer = $('.js_currentFilmContainer');
+	var $container = $('.js_managerMovieInfoContainer');
 	
 	$container
 		.on('click', '.js_modifyCompleteBtn', modifyComplete)
@@ -24,15 +23,7 @@ function setEvent() {
 		.on('keyup', '.js_basicInfoMovieAutohor', checkLength)
 		.on('keyup', '.js_basicInfoMovieCast', checkLength)
 		
-	$filmContainer
-		.on('click', '.js_insertMovie', insertMovie)
 		
-}
-
-function insertMovie() {
-	var url = '/movie/mainService/managerMovieInsertForm';
-	
-	submit(url);
 }
 
 function modifyComplete(e) {
@@ -87,12 +78,12 @@ function modifyComplete(e) {
 
 function modifyReset() {
 	var $movieTitle = $('.js_basicInfoMovieTitle'),
-		movieTitle = $movieTitle.val();
-		$this  = $('.'),
+		movieTitle = $movieTitle.val(),
+		$this  = $('.js_modifyResetBtn'),
 		data   = $this.data(),
-		movieNO = data.noticePage,
+		movieNo = data.movieNo;
 	
-		url	    = '/movie/mainService/movieDetailInfo?movieInfoTitle=' + movieTitle + "&movieNO=" + movieNO;
+		url	    = '/movie/mainService/movieDetailInfo?movieInfoTitle=' + movieTitle + "&movieNO=" + movieNo;
 
 	submit(url);
 }

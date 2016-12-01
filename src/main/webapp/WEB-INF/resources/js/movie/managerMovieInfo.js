@@ -26,6 +26,13 @@ function setEvent() {
 		
 }
 
+function checkLength() {
+	if ($(this).val().length > $(this).attr('maxlength')) {
+		alert('제한길이 초과');
+		$(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+	}
+}
+
 function modifyComplete(e) {
 	
 	e.preventDefault();
@@ -52,29 +59,37 @@ function modifyComplete(e) {
         movieReleaseDate = $movieDate.val(),
         movieRuntime     = $movieRuntime.val(),
 		movieIntro       = $movieIntro.val();
-	
-	url	   = '/movie/async/asyncService/managerUpdateMovieInfo',
-	params = {
-				'managerMovieTitle' : movieTitle,
-				'managerMovieGenre' : movieGenre,
-				'managerMovieDirector' : movieDirector,
-				'managerMovieAuthor' : movieAuthor,
-				'managerMovieCast' : movieCast,
-				'managerMovieAge' : movieAge,
-				'managerMovieReleaseDate' : movieReleaseDate,
-				'managerMovieRuntime' : movieRuntime,
-				'movieNO' : movieNO,
-				'managerMovieIntro' : movieIntro
-			  },
-			  
-	cbf	   = function(updateResult){
-				location.href=updateResult.data;
-				alert('수정 완료');
-			};
+
+		
+		if(movieNO != '' && movieTitle != '' && movieGenre != '' && movieAuthor != '' && movieDirector != '' &&
+				movieCast != '' && movieAge != '' && movieReleaseDate != '' && movieRuntime != '' && movieIntro != '') {
 			
-	
-	$.post(url, params, cbf);
+			
+			url	   = '/movie/async/asyncService/managerUpdateMovieInfo',
+				params = {
+						'managerMovieTitle' : movieTitle,
+						'managerMovieGenre' : movieGenre,
+						'managerMovieDirector' : movieDirector,
+						'managerMovieAuthor' : movieAuthor,
+						'managerMovieCast' : movieCast,
+						'managerMovieAge' : movieAge,
+						'managerMovieReleaseDate' : movieReleaseDate,
+						'managerMovieRuntime' : movieRuntime,
+						'movieNO' : movieNO,
+						'managerMovieIntro' : movieIntro
+				},
+				
+				cbf	   = function(updateResult){
+					location.href=updateResult.data;
+					alert('수정 완료');
+				};
+				
+				
+				$.post(url, params, cbf);
+			}
+			
 }
+		
 
 function modifyReset() {
 	var $movieTitle = $('.js_basicInfoMovieTitle'),
@@ -88,9 +103,3 @@ function modifyReset() {
 	submit(url);
 }
 
-function checkLength() {
-	if ($(this).val().length > $(this).attr('maxlength')) {
-        alert('제한길이 초과');
-        $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
-    }
-}

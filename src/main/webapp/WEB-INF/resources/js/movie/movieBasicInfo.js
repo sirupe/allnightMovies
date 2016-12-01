@@ -20,7 +20,8 @@ function setEvent() {
 		.on('click', '.js_movieModifyBtn', managerMovieModifyForm)
 		.on('click', '.js_movieIntroModifyBtn', managerMovieModifyForm)
 		.on('keyup', '.js_reviewText', reviewText)
-//		.on('click', '.js_movieInsertBtn', managerMovieInsertForm)
+		.on('click', '.js_movieInsertBtn', managerMovieInsertForm)
+		
 }
 
 function reviewText() {
@@ -30,14 +31,14 @@ function reviewText() {
     }
 }
 
-/*function managerMovieInsertForm() {
+function managerMovieInsertForm() {
 	var url = '/movie/mainService/managerMovieInsertForm';
 	
 	submit(url)
 		.on('click', '.js_stillcutBtn', stillcutBtnClick)
 }
 
-function stillcutBtnClick() {
+/*function stillcutBtnClick() {
 	var url = '/movie/mainService/managerStillCutModify',
 		$imageNames = $('.js_imageSlide');
 		params = {

@@ -16,7 +16,7 @@ public class LoginRequiredPageInterceptor extends HandlerInterceptorAdapter {
 	
 			System.out.println("ajax??" + ajaxCall);
 			if(session.getAttribute("userID") == null) {
-				if(ajaxCall.equals("true")) {
+				if(ajaxCall != null && ajaxCall.equals("true")) {
 					response.sendError(500);
 					return false;
 				} else {

@@ -15,8 +15,8 @@
 			
 			<div class="div__serviceCenter__Container js_container">
 				<ul class="serviceCenter_Tab">
-					<li><label class="js_frequentlyBoard">자주하는질문</label></li>
-					<li><label class="js_QuestionBoard">문의게시판</label></li>
+					<li><label class="js_frequentlyBoard service-tab-menu">자주하는질문</label></li>
+					<li><label class="js_QuestionBoard service-tab-menu">문의게시판</label></li>
 				</ul>
 					
 				<div class="div__serviceCenter_Container_Tab" >

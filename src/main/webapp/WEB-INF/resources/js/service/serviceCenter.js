@@ -234,7 +234,23 @@ function questionViewBoard() {
 				
 				$questionBoardViewchange.html(mav);
 	};
-		$.post(url, params, cbf);
+		
+	$.ajax(
+		{
+			url : url,
+			type : 'POST',
+			data : params,
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("AJAX", "true");
+			},
+			error:function(xhr, textStatus, error) {
+				if(xhr.status == "500") {
+					location.href='/movie/mainService/loginPage';
+				}
+			},
+			success : cbf
+		}
+	);
 }
 
 
@@ -282,15 +298,21 @@ function insertQuestionBoard() {
 	    		'insertPwdcheck' : insertPwdcheck,
 	    		'insertTitle'    : insertTitle,
 	    		'insertTextArea' : insertTextArea,
-	    		'insertboardPWd' : insertboardPWd
+	    		'insertboardPWd' : insertboardPWd,
+	    		beforeSend : function(xmlHttpRequest) {
+	    			xmlHttpRequest.setRequestHeader("AJAX", "true")
+	    		}
 	    };
 		    cbf    = function(result) {
-		    	console.log(result.mav);
 		    	
-		    	if(result.data) {
+		    	if(result.success) {
 		    		$.post(url2, params2, cbf2);
 		    	} else {
-		    		alert('모두 입력 바랍니다.');
+		    		if(result.data == 'async') {
+		    			alert('모두 입력 바랍니다.');
+		    		} else {
+		    			$('.js_templateBody').html(result);
+		    		}
 		    	}
 		    };
 		    
@@ -352,7 +374,23 @@ function updateQuestionBoard() {
 			
 			$questionBoardViewchange.html(mav);
 	    };
-	    $.post(url,params, cbf);
+
+	    $.ajax(
+    		{
+    			url : url,
+    			type : 'POST',
+    			data : params,
+    			beforeSend : function(xmlHttpRequest) {
+    				xmlHttpRequest.setRequestHeader("AJAX", "true");
+    			},
+    			error:function(xhr, textStatus, error) {
+    				if(xhr.status == "500") {
+    					location.href='/movie/mainService/loginPage';
+    				}
+    			},
+    			success : cbf
+    		}
+    	);
 }
 
 
@@ -442,13 +480,28 @@ function completeUpdateQuestionBoard() {
 	    }else if(insertPwdcheck == true && insertboardPWd == '') {
 	    	alert('비밀번호 입력 해주세요');
 	    	isResult = false;
-	    }  else if(insertPwdLength < 0 || insertPwdLength > 6 ) {
+	    }  else if(insertPwdLength < 0 || insertPwdLength > 6 ) {									여긴데
 	    	alert('숫자 4글자로 입력해주세요!');
 	    	$('.js_boardWriteBoardPwd').val('');
 	    	isResult = false; 
 	    } else {
 	    	isResult = true;
-	    	$.post(url, params, cbf);
+	    	$.ajax(
+    			{
+    				url : url,
+    				type : 'POST',
+    				data : params,
+    				beforeSend : function(xmlHttpRequest) {
+    					xmlHttpRequest.setRequestHeader("AJAX", "true");
+    				},
+    				error:function(xhr, textStatus, error) {
+    					if(xhr.status == "500") {
+    						location.href='/movie/mainService/loginPage';
+    					}
+    				},
+    				success : cbf
+    			}
+    		);
 	    }
 }
 

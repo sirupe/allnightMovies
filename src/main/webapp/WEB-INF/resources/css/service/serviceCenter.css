@@ -12,6 +12,15 @@
 }
 
 
+.service-tab-menu {
+    display: inline-block;
+    padding: 0px 93px;
+    cursor: pointer;
+}
+
+ul.serviceCenter_Tab {
+    padding: 0px 6px;
+}
 .div__serviceCenter_form.js_serviceCenter.point {
     MARGIN-TOP: 23px;
     width: 900px;
@@ -30,6 +39,7 @@
 /*자주하는 질문*/
 .container__serviceCenterFrequenty_content {
 	margin: 30px 0px 20px 0px;
+	padding: 0px;
 } 
 .container__serviceCenterFrequenty {
 	height: 500px;
@@ -53,7 +63,7 @@
 }
 ul.serviceCenter_Tab li {
 	margin-bottom: -21px;
-    margin-left: -40px;
+    margin-left: -5px;
     border: 1px solid #d6dfd5;
     display: inline-block;
     background-color: #e8f2e6;
@@ -70,7 +80,6 @@ ul.serviceCenter_Tab li {
     justify-content: center;
     align-items: center;
     letter-spacing: 36px;
-    margin-top: 138px;
 }
 
 .js_service_List .js_sub {
@@ -86,7 +95,7 @@ ul.serviceCenter_Tab li {
 .serviceCenter_search {
 	display: flex;
     align-items: center;
-	margin: 5px 0px 20px 0px;
+    margin: 22px 0px 20px 0px;
 }
 .search-icon {
 	width: 26px;
@@ -166,11 +175,11 @@ label.js_questionBoard_title {
 }
 
 .questionBoard_list {
-	height: 400px;
+	height: 300px;
 }
 
 .questionBoard_sub {
-    padding: 8px;
+    padding: 27px 0px;
     font-size: 15px;
     color: #ff6a6a;
     text-align: center;

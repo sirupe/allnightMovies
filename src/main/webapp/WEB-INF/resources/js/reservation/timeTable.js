@@ -40,6 +40,15 @@ function movie_date() {
 		
 }
 
+function screeningPlannedAdd() {
+	submit(
+		'/movie/mainService/managerScreeningPlannedModify',
+		'reservation/managerMovieScreeningPlanned',
+		'movieScreeningPlannedModify',
+		'reservation/movieScreeningPlannedModify',
+		'reservation/movieScreeningPlannedModify'
+	);
+}
 
 function setShowTimes() {
 	var $container = $('.js_showtimeTableConatainer');
@@ -47,8 +56,9 @@ function setShowTimes() {
 		showTime = $showTime;
 		console.log(showTime);
 	
-		$container.on('click', '.js_showClickTimeTable' ,movie_date)
-
+		$container
+			.on('click', '.js_showClickTimeTable' ,movie_date)
+			.on('click', '.js_screeningPlannedAdd', screeningPlannedAdd)	
 }
 
 function initShowTimes() {

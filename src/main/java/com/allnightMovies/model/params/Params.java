@@ -176,4 +176,8 @@ public class Params {
 	private String ticketNumPost;
 	private String ticketNumBack;
 	private String ticketNums;
+	private String theaters;
+	private String movieTitles;
+	private String dateTimes;
+	private String prices;
 }

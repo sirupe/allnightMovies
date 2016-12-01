@@ -189,14 +189,17 @@ public class DBService {
 	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth) {
 		return dbMapper.searchMemberInfo(userID, userName, userBirth);
 	}
-	public List<ManagerUserReserveDTO> managerReservationInfo() {
-		return dbMapper.managerReservationInfo();
+	public List<ManagerUserReserveDTO> managerReservationInfo(ManagerUserReserveDTO dto) {
+		return dbMapper.managerReservationInfo(dto);
 	}
 	public List<String> managerGetMovieTitle() {
 		return dbMapper.managerGetMovieTitle();
 	}
 	public List<Integer> managerGetTheaterCnt() {
 		return dbMapper.managerGetTheaterCnt();
+	}
+	public void managerTicketCancel(String ticketNum) {
+		dbMapper.managerTicketCancel(ticketNum);
 	}
 	
 /** jung. 상영시간표 **/ //TODO 수진

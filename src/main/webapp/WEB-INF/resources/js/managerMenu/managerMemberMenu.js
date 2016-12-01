@@ -9,7 +9,6 @@ function setEventManagerMemberMenu() {
 		.on('click', '.js_managerWithdrawal', managerWithdrawal)
 		.on('click', '.js_managerRestore', managerRestore)
 		.on('click', '.js_searchMemberInfoBtn', searchMemberInfo)
-		
 		.on('click', '.js_mainPagingNumber', mainPaging)
 		.on('click', '.js_mainPaingNextButton', nextMainPaging)
 		.on('click', '.js_mainPaingPagePreButton',preMainPaging)

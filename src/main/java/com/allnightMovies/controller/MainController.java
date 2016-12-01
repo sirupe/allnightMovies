@@ -95,7 +95,7 @@ public class MainController {
 		String stilcutDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/stillcut/";
 		
 		List<MultipartFile> files = multiReq.getFiles("file");
-		
+		  
 		try {
 //			for(MultipartFile file : files) {
 //				String fileName = file.getOriginalFilename();

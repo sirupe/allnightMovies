@@ -167,4 +167,11 @@ public class Params {
 	
 //메인 페이징
 	private Integer mainPaing;
+	
+//매니저 메뉴
+	private String searchDate;
+	private String searchTheater;
+	private String ticketNumPost;
+	private String ticketNumBack;
+	private String ticketNums;
 }

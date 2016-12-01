@@ -341,43 +341,7 @@
 		WHERE RNUM BETWEEN #{param1} AND #{param2}
 	</select>
 	
-	<select id="managerReservationInfo" resultType="com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO">
-		SELECT
-			USER_TICKET_NUMBER userTicketNumber,
-			TO_CHAR(USER_TICKETING_DATE, 'YYYY.MM.DD HH24:MI') userTicketingDate,
-			USER_ID userID,
-			MOVIE_TITLE movieTitle,
-			THEATER,
-			USER_TICKET_COUNT userTicketCount,
-            TICKETPRICE,
-		    theaterSeat
-		FROM (
-			SELECT 
-		        LISTAGG(THEATER_SEAT, ',') WITHIN GROUP(ORDER BY USER_TICKET_NUMBER) THEATERSEAT,
-		        USER_TICKET_NUMBER,
-		        USER_ID,
-		        USER_TOTAL_PRICE TICKETPRICE,
-		        USER_TICKET_COUNT,
-		        USER_TICKETING_DATE,
-		        THEATER,
-		        MOVIE_TITLE,
-		        MOVIE_SCREENING_DATE,
-	            MOVIE_SCREENING_DATE_TYPE
-		    FROM USER_TICKETING_INFO
-		    GROUP BY 
-		        USER_TICKET_NUMBER, 
-		        USER_ID,
-		        USER_TOTAL_PRICE,
-		        USER_TICKET_COUNT,
-		        USER_TICKETING_DATE,
-		        THEATER,
-		        MOVIE_TITLE,
-		        MOVIE_SCREENING_DATE,
-	            MOVIE_SCREENING_DATE_TYPE
-			    ORDER BY MOVIE_SCREENING_DATE DESC)
-            ORDER BY userTicketingDate DESC
 	
-	</select>
 	
 	<!-- JI. MANAGER MENU : 매니저메뉴 유저 검색 -->
 	<select id="searchMemberInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
@@ -412,6 +376,68 @@
 		FROM CINEMA_THEATER_SEAT_INFO
 		ORDER BY THEATER
 	</select>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 예매정보 -->
+	<select id="managerReservationInfo" resultType="com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO" parameterType="com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO">
+		SELECT
+			USER_TICKET_NUMBER userTicketNumber,
+			TO_CHAR(USER_TICKETING_DATE, 'YYYY.MM.DD HH24:MI') userTicketingDate,
+			USER_ID userID,
+			MOVIE_TITLE movieTitle,
+			THEATER,
+			USER_TICKET_COUNT userTicketCount,
+            TICKETPRICE,
+		    theaterSeat
+		FROM (
+			SELECT 
+		        LISTAGG(THEATER_SEAT, ',') WITHIN GROUP(ORDER BY USER_TICKET_NUMBER) THEATERSEAT,
+		        USER_TICKET_NUMBER,
+		        USER_ID,
+		        USER_TOTAL_PRICE TICKETPRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    FROM USER_TICKETING_INFO
+		    GROUP BY 
+		        USER_TICKET_NUMBER, 
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+			    ORDER BY MOVIE_SCREENING_DATE DESC)
+			WHERE
+        		USER_TICKET_NUMBER LIKE #{userTicketNumber} 
+        		<if test="movieTitle != null">
+        			<if test="movieTitle != ''">
+        				AND MOVIE_TITLE=#{movieTitle}
+        			</if>
+        		</if>
+        		<if test="theater != null">
+        			<if test="theater != ''">
+        				AND THEATER=#{theater}
+        			</if>
+        		</if>
+        		<if test="userTicketingDate != null">
+        			<if test="userTicketingDate != ''">
+        				AND USER_TICKETING_DATE LIKE TO_DATE(#{userTicketingDate},'YYYY.MM.DD')
+        			</if>
+        		</if>
+            ORDER BY userTicketingDate DESC
+	
+	</select>
+	
+	<delete id="managerTicketCancel" parameterType="java.lang.String">
+		DELETE FROM USER_TICKETING_INFO
+		WHERE USER_TICKET_NUMBER=#{param1} 
+	</delete>
+	
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
 		<result column="screening_time"	property="screening_time"/>

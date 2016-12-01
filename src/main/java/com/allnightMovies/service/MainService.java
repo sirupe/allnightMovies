@@ -1,8 +1,5 @@
  package com.allnightMovies.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -58,8 +55,6 @@ import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -563,13 +558,52 @@ public class MainService implements Action {
 	public ModelAndView managerReserveMenu() {
 		ModelAndView mav = new ModelAndView("managerMenu/managerReserveMenu");
 		
-		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo();
+		ManagerUserReserveDTO reserveDto = new ManagerUserReserveDTO();
+		reserveDto.setUserTicketNumber("%%");
+		
+		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo(reserveDto);
 		List<String> movieList = this.dbService.managerGetMovieTitle();
 		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		int totPrice = 0;
+		for(ManagerUserReserveDTO dto : reserveList) {
+			totPrice += dto.getTicketPrice();
+		}
 		mav.addObject("reserveList", reserveList);
 		mav.addObject("movieTitleList", movieList);
 		mav.addObject("theaterList", theaterList);
+		mav.addObject("totPrice", totPrice);
 		return mav;
+	}
+	
+	public ModelAndView searchReserveInfo() {
+		ModelAndView mav = new ModelAndView("managerMenu/managerReserveMenu");
+		ManagerUserReserveDTO dto = new ManagerUserReserveDTO();
+		String ticketNum = this.params.getTicketNumPost() + this.params.getTicketNumBack();
+		dto	.setUserTicketingDate(this.params.getSearchDate())
+			.setMovieTitle(this.params.getManagerMovieTitle())
+			.setTheater(this.params.getSearchTheater())
+			.setUserTicketNumber("%" + (ticketNum == null ? "" : ticketNum) + "%");
+		
+		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo(dto);
+		List<String> movieList = this.dbService.managerGetMovieTitle();
+		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		int totPrice = 0;
+		for(ManagerUserReserveDTO reserveDto : reserveList) {
+			totPrice += reserveDto.getTicketPrice();
+		}
+		mav.addObject("reserveList", reserveList);
+		mav.addObject("movieTitleList", movieList);
+		mav.addObject("theaterList", theaterList);
+		mav.addObject("totPrice", totPrice);
+		return mav;
+	}
+	
+	public ModelAndView managetTicketCancel() {
+		String[] ticketNumArr = this.params.getTicketNums().split(",");
+		for(String ticketNum : ticketNumArr) {
+			this.dbService.managerTicketCancel(ticketNum);			
+		}
+		return this.managerReserveMenu();
 	}
 	
 /*******ID찾기(회원정보) 수진*******/	 //TODO 수진

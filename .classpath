@@ -55,6 +55,16 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="C:/Users/은정/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.7/87b0c1c6bce3b1b251ba72464483e46cffaa1b5b/log4j-api-2.7-sources.jar" kind="lib" path="C:/Users/은정/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.7/8de00e382a817981b737be84cb8def687d392963/log4j-api-2.7.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/은정/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.7/5dc93d7040d2c19b84335b139c16c93473c5899/log4j-core-2.7-sources.jar" kind="lib" path="C:/Users/은정/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.7/a3f2b4e64c61a7fc1ed8f1e5ba371933404ed98a/log4j-core-2.7.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="C:/Users/은정/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-tomcat/1.4.1.RELEASE/39b5ca1f9430a0437032555e8221ff09c75317e2/spring-boot-starter-tomcat-1.4.1.RELEASE-sources.jar" kind="lib" path="C:/Users/은정/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-tomcat/1.4.1.RELEASE/4a9f51ff0941d90f631608bd17dfb67684d99a5b/spring-boot-starter-tomcat-1.4.1.RELEASE.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>

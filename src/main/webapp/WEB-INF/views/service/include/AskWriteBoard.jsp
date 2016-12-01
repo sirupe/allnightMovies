@@ -8,14 +8,14 @@
 		<div class="questionBoard">
 			<div class="questionBoard-title">
 				<label class="boardtitle js_boardTitle">제목</label>
-				<input class="boardwriteBoard js_boardContent" type="text" value="fds">
+				<input class="boardwriteBoard js_boardContent" type="text" value="">
 				<input class="boardcheck js_boardCheck"  type="checkbox"><label>비밀글</label>
 			</div>
 			
 			<div class="questionBoard-sub">
 				<div class="questionBoard_subject">
-					<label class="boardSub">내용</label>;
-					<textarea class="boardTextarea js_boardTextArea" >dd</textarea>
+					<label class="boardSub">내용</label>
+					<textarea class="boardTextarea js_boardTextArea" ></textarea>
 				</div>
 				<div class="questionBoard-pwd">
 					<label class="boardPwd">비밀번호</label>

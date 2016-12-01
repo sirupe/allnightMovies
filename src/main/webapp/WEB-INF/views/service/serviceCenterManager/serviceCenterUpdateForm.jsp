@@ -15,7 +15,7 @@
 			<div class="managementQuestionUpdate-sub">
 				<div class="managementQuestionUpdate_subject">
 					<label class="managementQuestionUpdateSub">내용</label>
-					<textarea class="managementQuestionUpdateTextarea js_managementQuestionUpdateButton_confirmTextArea" rows="" cols="">"${cinemaFrequentlyBoardDTO.getASKED() }</textarea>
+					<textarea class="managementQuestionUpdateTextarea js_managementQuestionUpdateButton_confirmTextArea">"${cinemaFrequentlyBoardDTO.getASKED() }</textarea>
 				</div>
 			</div>
 			<div class="managementQuestionUpdatebutton">

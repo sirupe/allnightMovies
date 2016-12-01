@@ -12,33 +12,61 @@
 		<div class="questionUpdateBoard-content">
 			<label class="questionUpdateBoardView_content">문의 내용</label>
 		</div>
+		
 		<div class="questionUpdateBoard">
-			<div class="questionUpdateBoardView-title">
-				<label class="UpdateboardViewtitle">제목</label>
-					<input class="UpdateboardViewwriteBoard js_UpdateboardContent" type="text" value="${questionBoardList.getTitle() }" >
-					<input class="UPdateboardViewcheck js_UpdateboardCheck" type="checkbox" ><label>비밀글</label>
-			</div>
-			
-			<div class="questionUpdateBoardView-detail">
-				<label class="UpdateboardViewwriter">작성자</label>
-				<input class="UpdateboardwriteBoardViewinput js_UpdateboardUserId" value = "${questionBoardList.getUser_Id() }" type="text" readonly>
-				<label class="UpdateboardViewwriteDate">작성일</label>
-				<input class="UpdateboardwriteBoardViewinput js_UpdateboardWriteDate"  value="${questionBoardList.getWrite_date() }" type="text" readonly>
-			</div>
-		
-		
-			<div class="questionUpdateoardView-sub">
-				<div class="questionUpdateBoardView_subject">
-					<label class="UpdateboardViewSub">내용</label>
-					<textarea class="UpdateboardViewTextarea js_UpdateBoardTextArea" rows="" cols="" >${questionBoardList.getContent() }</textarea>
+		<c:choose>
+			<c:when test="${questionBoardList.getIsPwd() == 1 }">
+				<div class="questionUpdateBoardView-title">
+					<label class="UpdateboardViewtitle">제목</label>
+						<input class="UpdateboardViewwriteBoard js_UpdateboardContent" type="text" value="${questionBoardList.getTitle() }" >
+						<input class="UPdateboardViewcheck js_UpdateboardCheck" type="checkbox" checked ><label>비밀글</label>
 				</div>
+				<div class="questionUpdateBoardView-detail">
+					<label class="UpdateboardViewwriter">작성자</label>
+					<input class="UpdateboardwriteBoardViewinput js_UpdateboardUserId" value = "${questionBoardList.getUser_Id() }" type="text" readonly>
+					<label class="UpdateboardViewwriteDate">작성일</label>
+					<input class="UpdateboardwriteBoardViewinput js_UpdateboardWriteDate"  value="${questionBoardList.getWrite_date() }" type="text" readonly>
+				</div>
+		
+		
+				<div class="questionUpdateoardView-sub">
+					<div class="questionUpdateBoardView_subject">
+						<label class="UpdateboardViewSub">내용</label>
+						<textarea class="UpdateboardViewTextarea js_UpdateBoardTextArea">${questionBoardList.getContent() }</textarea>
+					</div>
+					<div class="questionUpdateBoard-pwd">
+						<label class="UpdateboardPwd">비밀번호</label>
+						<input class="UpdateboardwriteBoardPwd js_UpdateboardWriteBoardPwd" value="${questionBoardList.getWritePwd()}" type="password" style="ime-mode:disabled;" maxlength = 4 onkeyPress="UpdateFormPassWordCheck(this)" readonly>
+					</div>
+					
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="questionUpdateBoardView-title">
+					<label class="UpdateboardViewtitle">제목</label>
+						<input class="UpdateboardViewwriteBoard js_UpdateboardContent" type="text" value="${questionBoardList.getTitle() }" >
+						<input class="UPdateboardViewcheck js_UpdateboardCheck" type="checkbox" ><label>비밀글</label>
+				</div>
+				<div class="questionUpdateBoardView-detail">
+					<label class="UpdateboardViewwriter">작성자</label>
+					<input class="UpdateboardwriteBoardViewinput js_UpdateboardUserId" value = "${questionBoardList.getUser_Id() }" type="text" readonly>
+					<label class="UpdateboardViewwriteDate">작성일</label>
+					<input class="UpdateboardwriteBoardViewinput js_UpdateboardWriteDate"  value="${questionBoardList.getWrite_date() }" type="text" readonly>
+				</div>
+		
+		
+				<div class="questionUpdateoardView-sub">
+					<div class="questionUpdateBoardView_subject">
+						<label class="UpdateboardViewSub">내용</label>
+						<textarea class="UpdateboardViewTextarea js_UpdateBoardTextArea" rows="" cols="" >${questionBoardList.getContent() }</textarea>
+					</div>
 				<div class="questionUpdateBoard-pwd">
 					<label class="UpdateboardPwd">비밀번호</label>
-					<input class="UpdateboardwriteBoardPwd js_UpdateboardWriteBoardPwd" type="password" readonly>
+					<input class="UpdateboardwriteBoardPwd js_UpdateboardWriteBoardPwd" type="password" style="ime-mode:disabled;" maxlength = 4 onkeyPress="UpdateFormPassWordCheck(this)" readonly>
 				</div>
-				
 			</div>
-			
+			</c:otherwise>
+		</c:choose>
 					<div class="serviceCenter_viewForm">
 						<button class="serviceCenter_updateWriteBoardInsert js_QuestionUpdateBtn" type="button">등록하기</button>
 						<button class="serviceCenter_updateWriteBoardDelete js_QuestionDeleteBtn" type="button">삭제하기</button>

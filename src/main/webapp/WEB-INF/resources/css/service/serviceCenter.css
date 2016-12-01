@@ -175,11 +175,11 @@ label.js_questionBoard_title {
 }
 
 .questionBoard_list {
-	height: 400px;
+	height: 300px;
 }
 
 .questionBoard_sub {
-    padding: 8px;
+    padding: 27px 0px;
     font-size: 15px;
     color: #ff6a6a;
     text-align: center;

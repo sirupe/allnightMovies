@@ -114,6 +114,7 @@
 /*********************탭 내용부분*******************/
 .tab-intro_content__intro {
 	display: block;
+	width: 938px;
     padding: 20px;
     font-size: 19px;
     height: 300px;

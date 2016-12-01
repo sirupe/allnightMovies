@@ -1,7 +1,12 @@
+var status;
 function init() {
+	if(status == 1) {
+		status = 0;
+		return false;
+	}
+	status = 1;
 	setEvent();
 }
-
 init();
 
 function setEvent() {
@@ -56,7 +61,8 @@ function modifyComplete(e) {
 				'managerMovieAge' : movieAge,
 				'managerMovieReleaseDate' : movieReleaseDate,
 				'managerMovieRuntime' : movieRuntime,
-				'movieNO' : movieNO
+				'movieNO' : movieNO,
+				'managerMovieIntro' : movieIntro
 			  },
 			  
 	cbf	   = function(updateResult){

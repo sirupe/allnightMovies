@@ -87,26 +87,42 @@ public class MainController {
 	
 	@RequestMapping(value="/movie/file", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public ModelAndView menuCliecked(
+	public ModelAndView fileUpload(
 			Params params, 
 			MultipartHttpServletRequest multiReq) throws Throwable {
 
-		String defaultDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/" + params.getSaveFilePath() + "/";
+		String posterDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/poster/";
+		String stilcutDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/stillcut/";
 		
 		List<MultipartFile> files = multiReq.getFiles("file");
 		
 		try {
-			for(MultipartFile file : files) {
-				String fileName = file.getOriginalFilename();
-				byte[] b = file.getBytes();
-				File saveFile = new File(defaultDir + System.currentTimeMillis() + fileName);
+//			for(MultipartFile file : files) {
+//				String fileName = file.getOriginalFilename();
+//				byte[] b = file.getBytes();
+//				File saveFile = new File(posterDir + System.currentTimeMillis() + fileName);
+//				FileOutputStream fos = new FileOutputStream(saveFile);
+//				fos.write(b);
+//				fos.close();
+//			}
+			
+			for(int i = 0, size = files.size(); i < size; i++) {
+				String dir = i == 0 ? posterDir : stilcutDir;
+				
+				String fileName = files.get(i).getOriginalFilename();
+				byte[] b = files.get(i).getBytes();
+				File saveFile = new File(dir + System.currentTimeMillis() + fileName);
 				FileOutputStream fos = new FileOutputStream(saveFile);
 				fos.write(b);
 				fos.close();
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 		
 		return new ModelAndView(params.getLocationPath());
 	}

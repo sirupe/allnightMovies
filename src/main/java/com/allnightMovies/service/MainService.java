@@ -1,7 +1,4 @@
  package com.allnightMovies.service;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -43,6 +39,7 @@ import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO;
+import com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO;
 import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
@@ -556,31 +553,19 @@ public class MainService implements Action {
 		return mav;
 	}
 
-	public ModelAndView file() throws IOException {
-		return new ModelAndView("fileUpload");
-	}
-	
-	
-	
-	public ModelAndView fileUploadTest() throws Exception {
-		String defaultDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img";
-		MultipartFile file = this.params.getMultiReq().getFile("file");
-		String fileName = file.getOriginalFilename();
-		
-		try {
-			byte[] b = file.getBytes();
-			File saveFile = new File(defaultDir + System.currentTimeMillis() + fileName);
-			FileOutputStream fos = new FileOutputStream(saveFile);
-			fos.write(b);
-			fos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return this.getTemplate();
-	}
-	
 
+	public ModelAndView managerReserveMenu() {
+		ModelAndView mav = new ModelAndView("managerMenu/managerReserveMenu");
+		
+		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo();
+		List<String> movieList = this.dbService.managerGetMovieTitle();
+		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		mav.addObject("reserveList", reserveList);
+		mav.addObject("movieTitleList", movieList);
+		mav.addObject("theaterList", theaterList);
+		return mav;
+	}
+	
 /*******ID찾기(회원정보) 수진*******/	 //TODO 수진
 
 	@SuppressWarnings("unused")
@@ -1644,4 +1629,15 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "movie/managerMovieInfo");
 		return mav;
 	}
+	
+	public ModelAndView managerMovieInsertForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		System.out.println("1. managerMovieInsertForm  MAIN");
+		mav.addObject("directory", "movie/manager");
+		mav.addObject("page", "managerInsertMovie");
+		mav.addObject("contentCSS", "movie/managerInsertMovie");
+		mav.addObject("contentjs", "movie/managerInsertMovie");
+		return mav;
+	}
+	
 }

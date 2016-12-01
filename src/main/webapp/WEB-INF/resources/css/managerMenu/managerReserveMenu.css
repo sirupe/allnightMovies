@@ -5,7 +5,8 @@
 
 .member-reservation__find {
     display: flex;
-    font-size: 19px;
+    margin-bottom: 17px;
+    margin-left: 20px;
 }
 .member-reservation__find input, .member-reservation__find select {
     padding-left: 4px;
@@ -63,7 +64,10 @@
 }
 .member-reservation__td {
 	display: table-cell;
-    height: 28px;
+	height: 23px;
+    vertical-align: bottom;
+    padding: 0px 0px 9px 0px;
+    font-size: 14px;    
 }
 
 .member-reservation__ticket-num {
@@ -92,4 +96,14 @@
 
 .member-reservation__seat {
     width: 104px;
+}
+.member-reservation__th {
+    display: table-cell;
+    padding: 5px 0px;
+    background-color: #464545;
+    color: whitesmoke;
+    font-size: 17px;
+}
+.member-reservation__tr:NTH-CHILD(2n+1) {
+    background-color: #f0eeee;
 }

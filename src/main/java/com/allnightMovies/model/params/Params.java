@@ -163,7 +163,7 @@ public class Params {
 
 //파일업로드시 사용
 	private String locationPath;
-	private String saveFilePath;
+
 	
 //메인 페이징
 	private Integer mainPaing;

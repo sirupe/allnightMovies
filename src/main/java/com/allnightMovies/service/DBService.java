@@ -27,6 +27,7 @@ import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO;
+import com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO;
 import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
@@ -187,6 +188,15 @@ public class DBService {
 	/** ji. manager menu 메니저 유저 검색 **/	
 	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth) {
 		return dbMapper.searchMemberInfo(userID, userName, userBirth);
+	}
+	public List<ManagerUserReserveDTO> managerReservationInfo() {
+		return dbMapper.managerReservationInfo();
+	}
+	public List<String> managerGetMovieTitle() {
+		return dbMapper.managerGetMovieTitle();
+	}
+	public List<Integer> managerGetTheaterCnt() {
+		return dbMapper.managerGetTheaterCnt();
 	}
 	
 /** jung. 상영시간표 **/ //TODO 수진
@@ -379,9 +389,21 @@ public class DBService {
 	public Integer deleteNoticeBoard(Integer noticeNO) {
 		return dbMapper.deleteNoticeBoard(noticeNO);
 	}
-	public MovieBasicInfoDTO updateMovieInfo(String movieTitle, String movieIntro, String movieReleaseDate, String movieDirector,
-			String movieAuthor, String movieGenre, String movieCast, int movieAgeLimitText, int movieRuntime, int no) {
-		return dbMapper.updateMovieInfo(movieTitle, movieIntro, movieReleaseDate, movieDirector,
-				movieAuthor, movieGenre, movieCast, movieAgeLimitText, movieRuntime, no);
-	}
+//	public MovieBasicInfoDTO updateMovieInfo(
+//			String movieTitle, 
+//			String movieIntro, 
+//			String movieReleaseDate, 
+//			String movieDirector,
+//			String movieAuthor, 
+//			String movieGenre, 
+//			String movieCast, 
+//			int movieAgeLimitText, 
+//			int movieRuntime, 
+//			int no) {
+//		return dbMapper.updateMovieInfo(movieTitle, movieGenre, movieDirector, movieAuthor, movieCast, movieReleaseDate, movieIntro, movieAgeLimitText, movieRuntime, no);
+//	}
+	public void updateMovieInfo(MovieBasicInfoDTO dto) {
+		dbMapper.updateMovieInfo(dto);
+	};
+	
 }

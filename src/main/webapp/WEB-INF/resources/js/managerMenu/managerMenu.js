@@ -18,11 +18,23 @@ function setEvent() {
 function managerMemberMenu() {
 	menuClick($(this));
 	$chooseMenu = $(this);
+	
+	var url = '/movie/mainService/managePaging',
+	cbf = function(result) {
+		$('.js_managerBody').html(result);
+	}
+	$.post(url, cbf);
 }
 
 function managerReserveMenu() {
 	menuClick($(this));
 	$chooseMenu = $(this);
+	
+	var url = '/movie/mainService/managerReserveMenu',
+		cbf = function(result) {
+			$('.js_managerBody').html(result);
+		}
+	$.post(url, cbf);
 }
 
 function managerSalesMenu() {

@@ -9,8 +9,8 @@
 	<div class="movieBasicInfo-intro">
 		<img class="moviePoster" src="/resources/img/poster/${movieBasicInfo.moviePoster}"></img>
 		<div class="span-movieBasicInfo-intro">
-			제목&nbsp;:&nbsp;<input class="intro__input js_basicInfoMovieTitle font" value="${movieBasicInfo.movieTitle}" type="text"  maxlength="30"><br><br>
-			개요&nbsp;:&nbsp;<input class="intro__input js_basicInfoMovieGenre font" value="${movieBasicInfo.movieGenre}" type="text" maxlength="30"/><br><br>
+			제목&nbsp;:&nbsp;<input class="intro__input js_basicInfoMovieTitle font" value="${movieBasicInfo.movieTitle}" readonly="readonly" type="text"  maxlength="30"><br><br>
+			개요&nbsp;:&nbsp;<input class="intro__input js_basicInfoMovieGenre font" value="${movieBasicInfo.movieGenre}" type="text" maxlength="10"/><br><br>
 			감독&nbsp;:&nbsp;<input class="intro__input__width js_basicInfoMovieDirector font" value="${movieBasicInfo.movieDirector}" type="text" maxlength="15"/>
 			&nbsp;저자&nbsp;:&nbsp;<input class="intro__input__width js_basicInfoMovieAuthor font" value="${movieBasicInfo.movieAuthor}" type="text" maxlength="15"><br><br>
 			출연&nbsp;:&nbsp;<input class="intro__input font js_basicInfoMovieCast" value="${movieBasicInfo.movieCast}" type="text" maxlength="30"><br><br>

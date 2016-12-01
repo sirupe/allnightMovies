@@ -78,7 +78,7 @@ function locationMyInfo(params) {
 
 /**아이디 찾기**/
 function locationSearchID(e) {
-	var url  = '/movie/mainService/getTemplate';
+	var url  = '/movie/mainService/getTemplate'
 		dir  = 'searchId';
 		page = 'searchId';
 		js   = 'searchId/searchId';
@@ -173,12 +173,15 @@ function setEventTemplate() {
 	$form.on('click', '.js_logo', locationMain)
 		 .on('click', '.js_lobin-btn', locationLogon)
 		 .on('click', '.js_join', locationJoinTerms)
+		 .on('click', '.js_goMain', locationMain)
 		 .on('click', '.js_searchPWD', locationSearchPwd)
 		 .on('click', '.js_searchID', locationSearchID)
 		 .on('click', '.js_myInfo', locationMyInfo)
 		 .on('click', '.js_logout', logout)
 		 .on('click', '.js_searchMovieBtn', searchMovieInfo)
 		 .on('click', '.js_managerMenuBtn', managerMenuBtnClick)
+		 .on('click', '.js_searchIdBack',locationSearchID)
+		 .on('click', '.js_joinResult', locationMain)
 }
 
 function initTemplate() {

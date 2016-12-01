@@ -184,6 +184,13 @@ public class AsyncService implements AsyncAction {
       String myInfoID = (String)session.getAttribute("userID");
       String dbPresentPWD = this.dbService.selectUserPWD(myInfoID);
       
+      
+      System.out.println("바꿀 비밀번호 : " + newPWD + "," + newPWDcheck);
+      
+      System.out.println("현재비밀번호와 디비 비번 : " + presentPWD + ", " +dbPresentPWD);
+
+      System.out.println("디비현재비밀번호 : " + dbPresentPWD);
+      
       boolean isCheck = true;
       String resultStr = "false";
       
@@ -205,6 +212,7 @@ public class AsyncService implements AsyncAction {
       }
       
       if(isCheck) {
+    	  isCheck =  true;
          this.dbService.updateNewPwd(myInfoID, newPWD);
          resultStr = "/movie/mainService/myInfoChangePwdResult";
          //this.params.getSession().invalidate();
@@ -419,8 +427,6 @@ public class AsyncService implements AsyncAction {
       
       System.out.println(searchIdUserEmail + "메일");
       System.out.println(userConfirmNum + "인증");
-      HttpSession session = this.params.getSession();
-      Integer sessionSaveNum = (Integer) session.getAttribute("confirmNumRandom");
        
       boolean emailAllCheck = false;
       
@@ -433,22 +439,15 @@ public class AsyncService implements AsyncAction {
       return asyncResult;
    }
    
-   //수진. 자주묻는게시판 전환
-//   public AsyncResult pagingBoard() throws Exception {
-//	   
-//   }
    //자주묻는게시판 전환
    public AsyncResult<String> pagingBoard() throws Exception {
       
-      //페이지 번호를 누르면 그 페이지 번호를 가져와서 dto에 저장을 하고 여기에 집어넣어,
-         
       int totBoardList = this.dbService.serviceCentergetBoardCount();
       System.out.println("service글목록 갯수 : " + totBoardList);
       
       int page = this.params.getPageboard();
       System.out.println(page + "page");
       
-      List<CinemaFrequentlyBoardDTO> MovieFrequentlyBoardDTO = this.dbService.serviceCenter();
       Paging boardPaging = new Paging(totBoardList, 7,page, 5);
       boardPaging.setBoardPaging();
       
@@ -531,9 +530,6 @@ public class AsyncService implements AsyncAction {
 		int isPwd            = this.params.isInsertPwdcheck() == true ? 1 : 0;
 		
 		System.out.println();
-
-		HttpSession session = this.params.getSession();
-		String LoginUserID = (String)session.getAttribute("userID");
 		
 		System.out.println("_______수정완료________");
 		System.out.println("수정 사항번호 : " + no);

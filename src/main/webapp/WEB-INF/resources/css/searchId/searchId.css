@@ -151,10 +151,10 @@
 }
 
  
-.searchID-form_title:hover,
+/* .searchID-form_title:hover,
 .searchID-form_content__title_email:hover {
     background-color:#be92b1;
-}
+} */
 
 
 /* 아이디 찾기 폼 */
@@ -180,18 +180,19 @@
 }
 
 .searchID-form_content__name_input {
-	padding: 6px 2px 2px;
-	width: 130px;
-	font-family: 'Jeju Gothic', serif;
+    font-family: 'Jeju Gothic', serif;
+    height: 26px;
+    width: 138px;
 }
 
 .searchID-form_content__birth {
 	display: flex;
-	/* background-color: burlywood; */
-	padding-left: 10px;
-	line-height: 40px;
-	padding-bottom: 12px;
-	font-family: 'Jeju Gothic', serif;
+    /* background-color: burlywood; */
+    padding-left: 10px;
+    margin-top: 5px;
+    line-height: 40px;
+    padding-bottom: 9px;
+    font-family: 'Jeju Gothic', serif;
 }
 
 .searchID-form_content__birth_label {
@@ -235,7 +236,7 @@
 }
 
 .searchID-form_content__email {
-	padding-top: 15px;
+	margin-top: 15px;
 }
 
 
@@ -341,4 +342,18 @@
 
 .user-find-id-info__content__gender_option {
 	
+}
+
+
+select.searchID-form_content__gender_option.js_userFindgender {
+    width: 66px;
+    height: 34px;
+}
+
+input.js_userSearchIDBirth {
+	height: 27px;
+}
+
+.font {
+	 font-family: 'Nanum Gothic', serif;
 }

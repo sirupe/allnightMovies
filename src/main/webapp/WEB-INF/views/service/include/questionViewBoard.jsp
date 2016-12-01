@@ -52,13 +52,13 @@
 						<button class="serviceCenter_QuestionWrite js_QuestionList" type="button">글목록</button>
 					</div>
 				</c:when>
-				<c:when test="${isUserConfirm}">
+<%-- 				<c:when test="${isUserConfirm}">
 					<div class="serviceCenter_viewForm">
 						<button class="serviceCenter_QuestionWrite js_QuestionWriteUpdateBtn" type="button">수정하기</button>
 						<button class="serviceCenter_QuestionWrite js_QuestionWriteDeleteBtn" type="button">삭제하기</button>
 						<button class="serviceCenter_QuestionWrite js_QuestionList" type="button">글목록</button>
 					</div>
-				</c:when>
+				</c:when> --%>
 				
 				
 				<c:when test="${isManager }">

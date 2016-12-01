@@ -13,7 +13,7 @@
 				<label class="label__searchId__id__result">${userSearchId }입니다.</label>
 				<span class="span_button_search-ConfirmId_Button">
 					<button class="button__searchId-ComfirmId-main js_locationMain" type="button">메인으로</button>
-					<button class="button__searchId-ComfirmId-searchPWd js_locationSearchPwd" type="button">비밀번호 찾기</button>
+					<button class="button__searchId-ComfirmId-searchPWd js_searchPwdBack" type="button">비밀번호 찾기</button>
 				</span>	
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 				<label class="label__searchId__id__result">
 					회원정보를 찾을 수 없습니다. 다시 입력해주세요.
 				</label>
-				<button class="button__searchId__next" type="button" onclick="locationSearchID()">되돌아가기</button>
+				<button class="button__searchId__next js_searchIdBack" type="button">되돌아가기</button>
 			</div>
 		</div>
 	</c:otherwise>

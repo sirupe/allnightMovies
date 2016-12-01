@@ -1,5 +1,5 @@
 function locationMain() {
-	
+
 }
 
 function locationLogin() {
@@ -27,6 +27,8 @@ function locationLogin() {
 			alert('아이디와 패스워드 모두 입력해주세요.');
 		}
 }
+
+
 
 function setEvent() {
 	var $container = $('.js_loginContainer');

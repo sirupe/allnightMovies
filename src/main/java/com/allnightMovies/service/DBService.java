@@ -389,7 +389,21 @@ public class DBService {
 	public Integer deleteNoticeBoard(Integer noticeNO) {
 		return dbMapper.deleteNoticeBoard(noticeNO);
 	}
-	public MovieBasicInfoDTO updateMovieInfo(MovieBasicInfoDTO movieBasicInfoDTO) {
-		return dbMapper.updateMovieInfo(movieBasicInfoDTO);
-	}
+//	public MovieBasicInfoDTO updateMovieInfo(
+//			String movieTitle, 
+//			String movieIntro, 
+//			String movieReleaseDate, 
+//			String movieDirector,
+//			String movieAuthor, 
+//			String movieGenre, 
+//			String movieCast, 
+//			int movieAgeLimitText, 
+//			int movieRuntime, 
+//			int no) {
+//		return dbMapper.updateMovieInfo(movieTitle, movieGenre, movieDirector, movieAuthor, movieCast, movieReleaseDate, movieIntro, movieAgeLimitText, movieRuntime, no);
+//	}
+	public void updateMovieInfo(MovieBasicInfoDTO dto) {
+		dbMapper.updateMovieInfo(dto);
+	};
+	
 }

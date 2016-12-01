@@ -753,7 +753,7 @@ function setServiceCenter() {
 				.on('click', '.js_QuestionWriteForm', questionWriteForm) // 글쓰기폼이동
 				.on('click', '.js_questionBoard_title', questionViewBoard) //문의사항
 				.on('click', '.js_QuestionList', questionBoardTab) //목록으로
-				.on('click', '.js_questionButtonCancel',questionBoardTab) //목록으로(취소)
+				.on('click', '.js_questionButtonCancel',frequentlyBoardTab) //목록으로(취소)
 				.on('click', '.js_QuestionUpdateForm', questionBoardTab) //
 				.on('click', '.js_serviceCenter_button',searchQuestionBoard) //검색버튼
 				.on('click', '.js_preButtonSearch',searchPrePageBoard)

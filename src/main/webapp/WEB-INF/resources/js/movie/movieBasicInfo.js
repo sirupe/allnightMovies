@@ -1,11 +1,3 @@
-$(document).ready(function() {
-    $('.js_reviewText').on('keyup', function() {
-        if($(this).val().length > 120) {
-            $(this).val($(this).val().substring(0, 120));
-            alert('글자수는 최대 120자입니다.');
-        } 
-    });
-});
 
 function init() {
 	setEvent();
@@ -27,7 +19,32 @@ function setEvent() {
 		.on('click', '.js_deleteBtn', reviewDelete)
 		.on('click', '.js_movieModifyBtn', managerMovieModifyForm)
 		.on('click', '.js_movieIntroModifyBtn', managerMovieModifyForm)
+		.on('click', '.js_movieInsertBtn', managerMovieInsertForm)
 }
+
+function managerMovieInsertForm() {
+	var url = '/movie/mainService/managerMovieInsertForm';
+	
+	submit(url)
+		.on('click', '.js_stillcutBtn', stillcutBtnClick)
+}
+
+function stillcutBtnClick() {
+	var url = '/movie/mainService/managerStillCutModify',
+		$imageNames = $('.js_imageSlide');
+		params = {
+			'stillcutImage1' : $imageNames[0].dataset.stillcutImage,
+			'stillcutImage2' : $imageNames[1].dataset.stillcutImage,
+			'stillcutImage3' : $imageNames[2].dataset.stillcutImage,
+			'stillcutImage4' : $imageNames[3].dataset.stillcutImage,
+			'stillcutImage5' : $imageNames[4].dataset.stillcutImage
+		},
+		cbf = function(result) {
+			$('.js_stillcutContainer').html(result);
+		}
+	$.post(url, params, cbf);
+}
+
 
 function managerMovieModifyForm() {
 	var $movieTitle = $('.js_basicInfomovieTitle'),

@@ -44,7 +44,7 @@
 		<c:if test="${isManager}">
 			<div class="intro_managerModeButtons">
 			<button class="intro_managerModeBtn js_movieModifyBtn" data-movie-no="${movieBasicInfo.no}" type="button">기본정보수정</button>
-			<button class="intro_managerModeBtn js_movieDeleteBtn" data-movie-no="${movieBasicInfo.no}" type="button">영화추가</button>
+			<button class="intro_managerModeBtn js_movieInsertBtn" data-movie-no="${movieBasicInfo.no}" type="button">영화추가</button>
 			</div>
 		</c:if>
 		</span> 
@@ -63,26 +63,25 @@
 		<label class="js_tab_review" for="tab-review">평점/리뷰</label>
 		
 		<!-- 탭 내용 : 탭 제목을 선택했을 때 표시되는 본문 -->
-		<div class="tab-intro_content">
-			<pre class="tab-intro_content__intro js_movieIntro">${movieBasicInfo.movieIntro}</pre>
-		</div>
-		
-		<!-- 스틸컷 사진 -->
-		<div class="tab-stillCut_content">
-			<jsp:include page="./include/reviewStillcut.jsp"></jsp:include> 
-		</div>
-		
-		<!-- 평점/리뷰 -->
-		<div class="tab-review_content">
-			<c:choose>
-				<c:when test="${reviewResult}">
-					<jsp:include page="./include/reviewBoard.jsp"></jsp:include> 
-				</c:when>
-				<c:otherwise>
-					<span class="tab-intro_content__reviewfalse">!&nbsp;개봉전에는 평점을 등록할 수  없습니다.</span>
-				</c:otherwise>
-			</c:choose>
-		</div>
-		
+ 			<div class="tab-intro_content">
+				<pre class="tab-intro_content__intro js_movieIntro">${movieBasicInfo.movieIntro}</pre>
+			</div>
+			
+			<!-- 스틸컷 사진 -->
+			<div class="js_stillcutContainer tab-stillCut_content">
+				<jsp:include page="./include/reviewStillcut.jsp"></jsp:include> 
+			</div>
+			
+			<!-- 평점/리뷰 -->
+			<div class="tab-review_content">
+				<c:choose>
+					<c:when test="${reviewResult}">
+						<jsp:include page="./include/reviewBoard.jsp"></jsp:include> 
+					</c:when>
+					<c:otherwise>
+						<span class="tab-intro_content__reviewfalse">!&nbsp;개봉전에는 평점을 등록할 수  없습니다.</span>
+					</c:otherwise>
+				</c:choose>
+			</div>
 	</div>
 </div>

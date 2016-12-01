@@ -1,7 +1,12 @@
+var status;
 function init() {
+	if(status == 1) {
+		status = 0;
+		return false;
+	}
+	status = 1;
 	setEvent();
 }
-
 init();
 
 function setEvent() {
@@ -33,7 +38,9 @@ function modifyComplete(e) {
 		$movieDate 		= $('.js_basicInfoDate'),
 		$movieRuntime   = $('.js_basicInfoRuntime'),
 		$movieIntro		= $('.js_basicInfoMovieIntro'),
+		$movieNO    	= $('.js_modifyCompleteBtn'),
 		
+		movieNO     	= $movieNO.data('movieNo');
 		movieTitle 		 = $movieTitle.val(), 	
 		movieGenre 		 = $movieGenre.val(), 	
 		movieDirector 	 = $movieDirector.val(), 	
@@ -52,8 +59,10 @@ function modifyComplete(e) {
 				'managerMovieAuthor' : movieAuthor,
 				'managerMovieCast' : movieCast,
 				'managerMovieAge' : movieAge,
-				'managerMovieDate' : movieReleaseDate,
-				'managerMovieRuntime' : movieRuntime
+				'managerMovieReleaseDate' : movieReleaseDate,
+				'managerMovieRuntime' : movieRuntime,
+				'movieNO' : movieNO,
+				'managerMovieIntro' : movieIntro
 			  },
 			  
 	cbf	   = function(updateResult){

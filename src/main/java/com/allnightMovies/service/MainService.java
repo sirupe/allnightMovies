@@ -59,6 +59,7 @@ import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -1153,6 +1154,11 @@ public class MainService implements Action {
 	}
 
 	
+	public ModelAndView managerStillCutModify() {
+		System.out.println("managerStillCutModify : 여기");
+		return new ModelAndView("movie/include/managerModifyStilcut");
+	}
+	
 	/*******연종. PWD찾기 SHIN*******/ //TODO 연종
 	public ModelAndView searchPwdID() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -1504,8 +1510,6 @@ public class MainService implements Action {
 			countResult = false;
 		}
 		
-		System.out.println("제발아멘"  + movieBasicInfo.getNo());
-		
 		mav.addObject("movieStillCutDTO", movieStillCutDTO);
 		mav.addObject("movieStillCutCount", countResult);
 		mav.addObject("reviewResult", reviewResult);
@@ -1633,8 +1637,6 @@ public class MainService implements Action {
 		ModelAndView mav = this.getTemplate();
 		String movieTitle = this.params.getMovieInfoTitle();
 		
-		System.out.println("managerMovieInfoModifyForm 실행");
-		
 		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
 		
 		boolean reviewResult = true;
@@ -1681,4 +1683,15 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "movie/managerMovieInfo");
 		return mav;
 	}
+	
+	public ModelAndView managerMovieInsertForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		System.out.println("1. managerMovieInsertForm  MAIN");
+		mav.addObject("directory", "movie/manager");
+		mav.addObject("page", "managerInsertMovie");
+		mav.addObject("contentCSS", "movie/managerInsertMovie");
+		mav.addObject("contentjs", "movie/managerInsertMovie");
+		return mav;
+	}
+	
 }

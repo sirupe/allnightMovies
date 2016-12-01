@@ -1,7 +1,6 @@
 package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
-import com.allnightMovies.model.data.cinemaInfo.CinemaWriteBoardPwdCheckDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
+import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
@@ -677,29 +675,19 @@ public class AsyncService implements AsyncAction {
 		AsyncResult<String> asyncResult = new AsyncResult<String>();
 		MovieBasicInfoDTO movieBasicInfoDTO = new MovieBasicInfoDTO();
 		
-		
-		Integer movieNO 		  = this.params.getMovieNO();
-		String movieTitle 	 	  = this.params.getManagerMovieTitle();
-		String movieGenre 	 	  = this.params.getManagerMovieGenre();
-		String movieDirector 	  = this.params.getManagerMovieDirector();
-		String movieAuthor  	  = this.params.getManagerMovieAuthor();
-		String movieCast 	 	  = this.params.getManagerMovieCast();
-		String movieReleaseDate   = this.params.getManagerMovieReleaseDate();
-		Integer movieAgeLimitText = this.params.getManagerMovieAge();
-		Integer movieRuntime 	  = this.params.getManagerMovieRuntime();
-		
-		movieBasicInfoDTO.setMovieTitle(movieTitle);
-		movieBasicInfoDTO.setMovieGenre(movieGenre);
-		movieBasicInfoDTO.setMovieDirector(movieDirector);
-		movieBasicInfoDTO.setMovieAuthor(movieAuthor);
-		movieBasicInfoDTO.setMovieCast(movieCast);
-		movieBasicInfoDTO.setMovieReleaseDate(movieReleaseDate);
-		movieBasicInfoDTO.setMovieAgeLimitText(movieAgeLimitText);
-		movieBasicInfoDTO.setMovieRuntime(movieRuntime);
+		movieBasicInfoDTO.setMovieTitle(		this.params.getManagerMovieTitle()      );
+		movieBasicInfoDTO.setMovieGenre(		this.params.getManagerMovieGenre()      );
+		movieBasicInfoDTO.setMovieDirector(		this.params.getManagerMovieDirector()   );
+		movieBasicInfoDTO.setMovieAuthor(		this.params.getManagerMovieAuthor()     );
+		movieBasicInfoDTO.setMovieCast(			this.params.getManagerMovieCast()       );
+		movieBasicInfoDTO.setMovieReleaseDate(	this.params.getManagerMovieReleaseDate());
+		movieBasicInfoDTO.setMovieAgeLimitText(	this.params.getManagerMovieAge()        );
+		movieBasicInfoDTO.setMovieRuntime(		this.params.getManagerMovieRuntime()    );
+		movieBasicInfoDTO.setNo(				this.params.getMovieNO()                );
+		movieBasicInfoDTO.setMovieIntro(		this.params.getManagerMovieIntro()      );
 		
 		this.dbService.updateMovieInfo(movieBasicInfoDTO);
-		
-		asyncResult.setData("/movie/mainService/movieDetailInfo?movieInfoTitle=" + movieTitle + "&movieNO"+ movieNO);
+		asyncResult.setData("/movie/mainService/movieDetailInfo?movieInfoTitle=" + this.params.getManagerMovieTitle() + "&movieNO"+ this.params.getMovieNO());
 		return asyncResult;
 	}
 	

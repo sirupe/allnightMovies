@@ -154,15 +154,17 @@ public interface DBMapper {
 	public List<MovieReviewBoard> getReviewBoardList(Integer blockStartNum, Integer blockEndNum, String movieTitle);
 	public MovieReviewBoard insertReview(Integer score, String contents, String userID, String movieTitle);
 	public MovieReviewBoard deleteReview(Integer reviewNo);
-/** shin.  stillcut**/
+/** shin.  STILLCUT**/
 	public List<MovieStillCut> getStillcut(String movieTitle);
 	
 /*  shin. 관리자 공지사항 등록*/
 	public CinemaNoticeBoardDTO insertNoticeBoard(String title, String content, int important);
 	public CinemaNoticeBoardDTO updateNoticeBoard(String title, String content, int important, int no);
 	public Integer deleteNoticeBoard(Integer noticeNO);
-	
 /*  shin.  관리자 영화상세정보*/
-	public MovieBasicInfoDTO updateMovieInfo(MovieBasicInfoDTO movieBasicInfoDTO);
-
+//
+//	public MovieBasicInfoDTO updateMovieInfo(String movieTitle, String movieGenre, String movieDirector,
+//			String movieAuthor, String movieCast, String movieReleaseDate, String movieIntro, int movieAgeLimitText,
+//			int movieRuntime, int no);
+	public void updateMovieInfo(MovieBasicInfoDTO dto);
 }

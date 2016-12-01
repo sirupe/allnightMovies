@@ -24,14 +24,7 @@ function setSearchIDStart() {
 					.on('click','.js_email_resultCheck',email_resultCheck)
 					.on('click','.js_locationMain', locationMain) // 홈으로
 					.on('click','.js_locationSearchPwd', locationSearchPwd) // 비밀번호찾기
-//					
-//					.on('click','.js_locationSearchPwdEmail', locationMain)
-//					.on('click','.js_locationSearchPwdEmail', locationSearchPwd)
-//					.on('click','.js_locationSearchPwdEmail',locationSearchID)
-					
-					.on('click', '.js_searchIdBack', locationSearchID)
-					.on('click', '.js_searchPwdBack', locationSearchPwd)
-					.on('click', '.js_locationMain',locationMain)
+
 }
 
 function setSearchID() {
@@ -109,16 +102,16 @@ function userFindIdBirth() {
 }
 
 //이메일로 아이디 찾기
-function user_id_find_checkemail() {
-	submit(
-			'POST',
-			'/movie/mainService/FindIdcheckEmail',
-			'searchId',
-			'searchIdEmailResult',
-			'searchId/searchId',
-			'searchId/searchId'
-	);
-}
+//function user_id_find_checkemail() {
+//	submit(
+//			'POST',
+//			'/movie/mainService/FindIdcheckEmail',
+//			'searchId',
+//			'searchIdEmailResult',
+//			'searchId/searchId',
+//			'searchId/searchId'
+//	);
+//}
 
 //이메일인증번호 보내기 누를때 - > 정합성검사/첫번째 버튼
 function emailCheck_send() {
@@ -145,7 +138,6 @@ function emailCheck_send() {
 					}
 			};
 			if(searchIdUserEmail != '' && emailRegexCheck(searchIdUserEmail)) {
-				//$('.js_insertConfirmEmail').val('');
 				resultMsg = '<label style="color: green;">인증번호가 전송되었습니다 :) 확인 부탁드립니다.</label>';
 				$('.js_userFindIdEmail').attr({'readonly' : true});
 				$('.js_emailCheck_send').attr("disabled", true);
@@ -229,12 +221,19 @@ function email_resultCheck() {
 				'searchIdUserEmail'      : userFindIdEmail, //사용자이메일
 				'searchIdUserConfirmNum' : userFindIdConfirmNumber //인증번호칸
 				};
-		cbf    = function(emailAllCheck) {
-					if(emailAllCheck) {
+		cbf    = function(result) {
+					if(result.success) {
 						location.href='/movie/mainService/searchIDEmailResult';
 					} else {
 						resultMsg = '<label style="color: red;">모두 입력 바랍니다.</label>';
 						$insertConfirmEmail.html(resultMsg);
+						
+						
+						
+						$('.js_insertConfirmNumber').val('');
+						$('.js_userFindIdEmail').val('');//이메일칸지우기
+						$('.js_emailCheck_send').attr("disabled", false);
+						$searchIdUserEmail.removeAttr('readonly'); //사용자이메일readonly풀기
 					}
 				};
 		

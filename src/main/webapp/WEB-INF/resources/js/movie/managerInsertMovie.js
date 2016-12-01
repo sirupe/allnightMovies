@@ -13,7 +13,7 @@ function setEvent() {
 	var $container = $('.js_movieInsertContainer');
 	
 	$container
-		.on('click', '.js_movieInsertBtn', movieInsert)
+		.on('click', '.js_movieInsertBtn', checkNull)
 		.on('keyup', '.js_movieInsertTitle', checkLength)
 		.on('keyup', '.js_movieInsertGenre', checkLength)
 		.on('keyup', '.js_movieInsertDirector', checkLength)
@@ -22,39 +22,46 @@ function setEvent() {
 		
 }
 
-function movieInsert() {
-	var $movieTitle    = $('.js_movieInsertTitle'),
-		$movieGenre    = $('.js_movieInsertGenre'),
-		$movieDirector = $('.js_movieInsertDirector'),
-		$movieAutohor  = $('.js_movieInsertAutohor'),
-		$movieCast     = $('.js_movieInsertCast'),
-		$movieDate     = $('.js_movieInsertDate'),
-		$movieIntro    = $('.js_movieInsertIntro'),
+function checkNull() {
+	var $title    = $('.js_movieInsertTitle'),
+		$genre    = $('.js_movieInsertGenre'),
+		$director = $('.js_movieInsertDirector'),
+		$author   = $('.js_movieInsertAutohor'),
+		$cast     = $('.js_movieInsertCast'),
+		$runTime  = $('.js_movieInsertRuntime'),
+		$date     = $('.js_movieInsertDate'),
+		$intro    = $('.js_movieInsertIntro'),
+		$poster   = $('.main_fileupload'),
 		
-		movieTitle 	   = $movieTitle.val(),
-		movieGenre 	   = $movieGenre.val(),
-	    movieDirector  = $movieDirector.val(),
-        movieAutohor   = $$movieAutohor.val(),
-        movieCast 	   = $movieCast.val(),
-        movieDate 	   = $movieDate.val(),
-        movieIntro     = $movieIntro.val();
-	
-	url = '',
-	params = {
-				'' : movieTitle,
-				'' : movieGenre,
-				'' : movieDirector,
-				'' : movieAutohor,
-				'' : movieCast,
-				'' : movieDate,
-				'' : movieIntro
-			},
-	cbf = function(mav) {
+		title     = $title.val(),
+		genre     = $genre.val(),    
+		director  = $director.val(),
+		author    = $author.val(),
+		cast      = $cast.val(),
+		runtime   = $runTime.val(),
+		date      = $date.val(),
+		intro     = $intro.val(),
+		poster    = $poster.val();
+		
+		if(title != '' && genre != '' && director != '' && author != '' && cast != '' &&
+				runtime != '' && date != '' && intro != '' && poster != '') {
 			
+			var url = '/movie/file';
+				$('form').attr({'enctype' : 'multipart/form-data'});
+				
+				submit(url);
+			alert('등록완료');
 			
-		  }
+		} else {
+			alert('필수 입력사항들을 확인해주세요');
+			return false;
+		}
+}
+
+function checkLength() {
+	if ($(this).val().length > $(this).attr('maxlength')) {
+        alert('제한길이 초과');
+        $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+    }
 	
-	
-        
-        
 }

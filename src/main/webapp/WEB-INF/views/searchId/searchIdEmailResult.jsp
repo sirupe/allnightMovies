@@ -2,7 +2,8 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="/resources/css/searchId/searchId.css">
-<script async="async" type="text/javascript" src="/resources/js/searchId/searchId.js"></script>
+
+<div class="js_searchIDEmailContainer">
 
 <c:choose>
 	<c:when test="${userEmailIDCount >= 1}">
@@ -14,7 +15,7 @@
 				<label class="label__searchId_Email__name__result">회원님의 아이디는 </label>
 				<label class="label__searchId_Email__id__result">${userEmail }입니다.</label>
 				<span class="span_button_search-ConfirmId_email_Button">
-					<button class="button__searchId-ConfirmId_email-main js_locationMain" type="button">메인으로</button>
+					<button class="button__searchId-ConfirmId_email-main js_searchEmailLocationMain" type="button">메인으로</button>
 					<button class="button__searchId-ConfirmId_email-searchPWd js_searchPwdBack" type="button">비밀번호 찾기</button>
 				</span>	
 			</div>
@@ -35,3 +36,4 @@
 		</div>
 	</c:otherwise>
 </c:choose>
+</div>

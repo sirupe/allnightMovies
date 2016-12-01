@@ -54,7 +54,6 @@ import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
 
-
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
 // 메인 컨트롤러에서는 별도의 생성 없이 사용 가능.
@@ -557,21 +556,57 @@ public class MainService implements Action {
 	public ModelAndView managerReserveMenu() {
 		ModelAndView mav = new ModelAndView("managerMenu/managerReserveMenu");
 		
-		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo();
+		ManagerUserReserveDTO reserveDto = new ManagerUserReserveDTO();
+		reserveDto.setUserTicketNumber("%%");
+		
+		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo(reserveDto);
 		List<String> movieList = this.dbService.managerGetMovieTitle();
 		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		int totPrice = 0;
+		for(ManagerUserReserveDTO dto : reserveList) {
+			totPrice += dto.getTicketPrice();
+		}
 		mav.addObject("reserveList", reserveList);
 		mav.addObject("movieTitleList", movieList);
 		mav.addObject("theaterList", theaterList);
+		mav.addObject("totPrice", totPrice);
 		return mav;
 	}
 	
+	public ModelAndView searchReserveInfo() {
+		ModelAndView mav = new ModelAndView("managerMenu/managerReserveMenu");
+		ManagerUserReserveDTO dto = new ManagerUserReserveDTO();
+		String ticketNum = this.params.getTicketNumPost() + this.params.getTicketNumBack();
+		dto	.setUserTicketingDate(this.params.getSearchDate())
+			.setMovieTitle(this.params.getManagerMovieTitle())
+			.setTheater(this.params.getSearchTheater())
+			.setUserTicketNumber("%" + (ticketNum == null ? "" : ticketNum) + "%");
+		
+		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo(dto);
+		List<String> movieList = this.dbService.managerGetMovieTitle();
+		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		int totPrice = 0;
+		for(ManagerUserReserveDTO reserveDto : reserveList) {
+			totPrice += reserveDto.getTicketPrice();
+		}
+		mav.addObject("reserveList", reserveList);
+		mav.addObject("movieTitleList", movieList);
+		mav.addObject("theaterList", theaterList);
+		mav.addObject("totPrice", totPrice);
+		return mav;
+	}
+	
+	public ModelAndView managetTicketCancel() {
+		String[] ticketNumArr = this.params.getTicketNums().split(",");
+		for(String ticketNum : ticketNumArr) {
+			this.dbService.managerTicketCancel(ticketNum);			
+		}
+		return this.managerReserveMenu();
+	}
+	
 /*******ID찾기(회원정보) 수진*******/	 //TODO 수진
-
-	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
 		
-		ModelAndView mav = this.getTemplate();
 		boolean userInfoResult = false;
 		String searchIdUserName = this.params.getSearchIdUserName();
 		String searchIdUserBirth = this.params.getSearchIdUserBirth();
@@ -601,6 +636,7 @@ public class MainService implements Action {
 		this.params.setContentCSS("searchId/searchId");
 		this.params.setContentjs("searchId/searchId");
 		
+		ModelAndView mav = this.getTemplate();
 		mav.addObject("searchIdUserName", searchIdUserName);
 		mav.addObject("userSearchId", userSearchId);
 		mav.addObject("result", result);
@@ -612,7 +648,7 @@ public class MainService implements Action {
 		this.params.setDirectory("searchId");
 		this.params.setPage("searchIdEmailResult");
 		this.params.setContentCSS("searchId/searchId");
-		this.params.setContentjs("searchId/searchId");
+		this.params.setContentjs("searchId/searchIDEmailResult");
 		
 		String searchIdUserEmail = (String) this.params.getSession().getAttribute("searchIdUserEmail");
 		//db보내기
@@ -980,12 +1016,9 @@ public class MainService implements Action {
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
 		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
 		
-		System.out.println(questionBoardList.getWritePwd() + " : 게시글 쓴 글의 비밀번호");
-		
 		mav.addObject("questionBoardList", questionBoardList);
 		return mav;
 	}
-	
 /*******수진<관리자> .고객센터 자주묻는게시판 폼 열기**********/
 	public ModelAndView managementServiceCenterWriteForm() throws Exception {
 		ModelAndView mav = new ModelAndView("/service/serviceCenterManager/serviceCenterManagement");
@@ -1436,17 +1469,16 @@ public class MainService implements Action {
 /*************SHIN _ 영화상세정보***********/ //TODO
 	public ModelAndView movieDetailInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
+		
 		String movieTitle = this.params.getMovieInfoTitle();
 		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
-		
 		boolean reviewResult = true;
+		
 		String movieReleadeDate = movieBasicInfo.getMovieReleaseDate();
 		Date currentTime = new Date ();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		boolean countResult = true;
-		
-		
 		
 		try {
 			date = format.parse(movieReleadeDate);
@@ -1639,7 +1671,6 @@ public class MainService implements Action {
 	
 	public ModelAndView managerMovieInsertForm() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		System.out.println("1. managerMovieInsertForm  MAIN");
 		mav.addObject("directory", "movie/manager");
 		mav.addObject("page", "managerInsertMovie");
 		mav.addObject("contentCSS", "movie/managerInsertMovie");

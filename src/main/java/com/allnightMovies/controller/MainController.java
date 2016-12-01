@@ -3,6 +3,7 @@ package com.allnightMovies.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +25,10 @@ import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
+import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.service.DBService;
-
 
 @RestController
 public class MainController {
@@ -87,45 +88,96 @@ public class MainController {
 	
 	@RequestMapping(value="/movie/file", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
+	
 	public ModelAndView fileUpload(
 			Params params, 
 			MultipartHttpServletRequest multiReq) throws Throwable {
 
 		String posterDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/poster/";
 		String stilcutDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img/stillcut/";
+
+		MovieBasicInfo movieBasicInfo = new MovieBasicInfo();
 		
+		String movieTitle 		= params.getManagerMovieTitle();
+		String movieGenre 		= params.getManagerMovieGenre(); 
+		String movieDirector 	= params.getManagerMovieDirector();
+		String movieAuthor  	= params.getManagerMovieAuthor();
+		String movieCast  		= params.getManagerMovieCast();
+		String movieReleaseDate = params.getManagerMovieReleaseDate();
+		String movieIntro  		= params.getManagerMovieIntro();
+		Integer movieAge  		= params.getManagerMovieAge();
+		Integer movieRuntime  	= params.getManagerMovieRuntime();
 		List<MultipartFile> files = multiReq.getFiles("file");
-		
+
 		try {
-//			for(MultipartFile file : files) {
-//				String fileName = file.getOriginalFilename();
-//				byte[] b = file.getBytes();
-//				File saveFile = new File(posterDir + System.currentTimeMillis() + fileName);
-//				FileOutputStream fos = new FileOutputStream(saveFile);
-//				fos.write(b);
-//				fos.close();
-//			}
-			
+			   
 			for(int i = 0, size = files.size(); i < size; i++) {
 				String dir = i == 0 ? posterDir : stilcutDir;
 				
 				String fileName = files.get(i).getOriginalFilename();
 				byte[] b = files.get(i).getBytes();
-				File saveFile = new File(dir + System.currentTimeMillis() + fileName);
+				String saveFileName = System.currentTimeMillis() + fileName;
+				File saveFile = new File(dir + saveFileName);
 				FileOutputStream fos = new FileOutputStream(saveFile);
 				fos.write(b);
 				fos.close();
 				
-			}
+				//1. 영화 정보  movieBasicInfo
+				movieBasicInfo.setMovieTitle(movieTitle);
+				movieBasicInfo.setMovieDirector(movieDirector);
+				movieBasicInfo.setMovieAuthor(movieAuthor);
+				movieBasicInfo.setMovieCast(movieCast);
+				movieBasicInfo.setMovieIntro(movieIntro);
+				movieBasicInfo.setMovieReleaseDate(movieReleaseDate);
+				movieBasicInfo.setMovieGenre(movieGenre);
+				movieBasicInfo.setMovieAgeLimit(movieAge);
+				movieBasicInfo.setMovieRuntime(movieRuntime);
+				
+				System.out.println(movieTitle 		);
+				System.out.println(movieGenre 		);
+				System.out.println(movieDirector 	);
+				System.out.println(movieAuthor  	);
+				System.out.println(movieCast  		);
+				System.out.println(movieReleaseDate );
+				System.out.println(movieIntro  		);
+				System.out.println(movieAge			);
+				System.out.println(movieRuntime		);
+				System.out.println(fileName			);
+				
+				
+				if (i != 0) {
+//					stillcutImgs.add(fileName);
+					this.service.insertStillcut(saveFileName, movieTitle);
+				} else {
+					movieBasicInfo.setMoviePoster(saveFileName);
+					this.service.insertNewMovie(movieBasicInfo);
+				}
+				Integer movieNO = this.service.getMovieNO(movieTitle);
+				String requestUrl = URLEncoder.encode(movieTitle, "UTF-8");
+				params.setLocationPath("/movie/mainService/movieDetailInfo?movieInfoTitle="+ requestUrl +"&movieNO=" + movieNO);
+			}                         
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		
-		
-		
-		return new ModelAndView(params.getLocationPath());
+		System.out.println("결과 경로 >> " + params.getLocationPath());
+		return  new ModelAndView("redirect:" + params.getLocationPath());
 	}
+	
+//	public String redirect() {
+//	"redirect:/" + params.getLocationPath();
+//		 return "redirect:/url.do";
+//		 // return new ModelAndView("redirect:url.do");
+	
+//	for(MultipartFile file : files) {
+//	String fileName = file.getOriginalFilename();
+//	byte[] b = file.getBytes();
+//	File saveFile = new File(posterDir + System.currentTimeMillis() + fileName);
+//	FileOutputStream fos = new FileOutputStream(saveFile);
+//	fos.write(b);
+//	fos.close();
+//}	
+	
 	
 // 이러한 방식의 controller 사용도 가능.
 //	@RequestMapping(value="/")

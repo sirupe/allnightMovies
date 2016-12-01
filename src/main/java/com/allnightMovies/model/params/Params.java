@@ -46,6 +46,9 @@ public class Params {
 	private String searchPwdConfirmNum;
 	private String searchPwdNewPwd;
 	
+	private String searchIdConfirmNum; //아이디 이메일인증번호(사용자가 입력한 번호)
+	private String searchIdConfirmNumCheck; //아이디이메일 저장된 인증번호
+	
 // 아이디 찾기
 	private String searchIdUserName;
 	private String searchIdUserBirth;
@@ -144,7 +147,7 @@ public class Params {
 	private Integer managerNoticePage;
 	private Integer managerNoticeNo;
 
-// 연종. 관리자 공지사항등록 -------------------------------------------
+// 연종. 관리자 영화수정/등록 -------------------------------------------
 	
 	private String managerMovieTitle;
 	private String managerMovieGenre;
@@ -153,18 +156,24 @@ public class Params {
 	private String managerMovieCast;
 	private String managerMovieReleaseDate;
 	private String managerMovieIntro;
-	
 	private Integer managerMovieAge;
 	private Integer managerMovieRuntime;
-	
 	
 //메인 검색
 	private String searchWord;
 
 //파일업로드시 사용
 	private String locationPath;
+	private String fileUpload;
 
 	
 //메인 페이징
 	private Integer mainPaing;
+	
+//매니저 메뉴
+	private String searchDate;
+	private String searchTheater;
+	private String ticketNumPost;
+	private String ticketNumBack;
+	private String ticketNums;
 }

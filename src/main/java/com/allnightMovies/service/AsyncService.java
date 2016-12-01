@@ -377,6 +377,7 @@ public class AsyncService implements AsyncAction {
       String result = "입력하신 인증번호와 일치합니다.";
       int searchIdUserConfirmNum = this.params.getSearchIdUserConfirmNum();
       System.out.println(searchIdUserConfirmNum + " : 사용자가 입력한 인증번혼"); // 인증번호 보낼때 그 인증번호 불러와서 비교하기..!
+      
       //세션에 집어넣기
       HttpSession session = this.params.getSession();
       Integer sessionSaveNum = (Integer) session.getAttribute("confirmNumRandom");
@@ -397,7 +398,7 @@ public class AsyncService implements AsyncAction {
          bool = true;
          result = "인증번호 일치합니다.";
          System.out.println(result + " : 결과");
-         session.setAttribute("confirmNumRandom", 0);
+         //session.setAttribute("confirmNumRandom", 0);
       }
       
       AsyncResult<String> async = new AsyncResult<String>();
@@ -422,19 +423,27 @@ public class AsyncService implements AsyncAction {
    public AsyncResult<String> emailSendMessage() throws Exception {
       AsyncResult<String> asyncResult = new AsyncResult<String>();
       
+      HttpSession session = this.params.getSession();
       String searchIdUserEmail = this.params.getSearchIdUserEmail();
-      Integer userConfirmNum = this.params.getSearchIdUserConfirmNum();
+      int userConfirmNum = this.params.getSearchIdUserConfirmNum();
       
-      System.out.println(searchIdUserEmail + "메일");
-      System.out.println(userConfirmNum + "인증");
+      int sessionSaveNum = (int) session.getAttribute("confirmNumRandom");
+      
+      System.out.println(sessionSaveNum    + "    : 저장된 인증번호");
+      System.out.println(searchIdUserEmail + "    : 메일");
+      System.out.println(userConfirmNum    + "    : 내가쓴 인증번호");
        
-      boolean emailAllCheck = false;
+      boolean emailAllCheck = true;
+
+      System.out.println(sessionSaveNum == userConfirmNum);
       
-      if(searchIdUserEmail == "" && userConfirmNum == null) {
-         emailAllCheck = false;
-      } else {
-         emailAllCheck = true;
-      }
+//      System.out.println(userConfirmNum == 0 || sessionSaveNum == null);
+
+      if(sessionSaveNum != userConfirmNum) {
+    	  emailAllCheck = false;
+      } 
+      
+      System.out.println(emailAllCheck + " :결과값");
       asyncResult.setSuccess(emailAllCheck);
       return asyncResult;
    }

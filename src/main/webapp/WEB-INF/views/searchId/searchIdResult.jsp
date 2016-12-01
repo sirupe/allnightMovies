@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <c:choose>
 	<c:when test="${result >= 1}">
 		<div class="div__searchId_form js_userFindIdcontainer">
@@ -20,7 +19,7 @@
 	</c:when>
 	
 	<c:otherwise>
-		<div class="div__searchId_form">
+		<div class="js_searchIDEmailContainer div__searchId_form">
 			<div class="div__searchId_form_title">
 				아이디 찾기
 			</div>

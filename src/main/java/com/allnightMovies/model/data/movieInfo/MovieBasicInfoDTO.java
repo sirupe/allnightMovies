@@ -13,7 +13,6 @@ public class MovieBasicInfoDTO {
 	private String movieReleaseDate;
 	private String movieIntro;
 	private int movieAgeLimitText;
-	
 	private int movieRuntime;
 	private int no;
 

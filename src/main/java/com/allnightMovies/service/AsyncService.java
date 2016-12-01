@@ -11,11 +11,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.AsyncAction;
 import com.allnightMovies.model.data.AsyncResult;
-import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.movieInfo.ManagerScreeningPlannedUpdateDTO;
@@ -414,6 +412,7 @@ public class AsyncService implements AsyncAction {
       String result = "입력하신 인증번호와 일치합니다.";
       int searchIdUserConfirmNum = this.params.getSearchIdUserConfirmNum();
       System.out.println(searchIdUserConfirmNum + " : 사용자가 입력한 인증번혼"); // 인증번호 보낼때 그 인증번호 불러와서 비교하기..!
+      
       //세션에 집어넣기
       HttpSession session = this.params.getSession();
       Integer sessionSaveNum = (Integer) session.getAttribute("confirmNumRandom");
@@ -434,7 +433,7 @@ public class AsyncService implements AsyncAction {
          bool = true;
          result = "인증번호 일치합니다.";
          System.out.println(result + " : 결과");
-         session.setAttribute("confirmNumRandom", 0);
+         //session.setAttribute("confirmNumRandom", 0);
       }
       
       AsyncResult<String> async = new AsyncResult<String>();
@@ -459,19 +458,20 @@ public class AsyncService implements AsyncAction {
    public AsyncResult<String> emailSendMessage() throws Exception {
       AsyncResult<String> asyncResult = new AsyncResult<String>();
       
-      String searchIdUserEmail = this.params.getSearchIdUserEmail();
-      Integer userConfirmNum = this.params.getSearchIdUserConfirmNum();
+      HttpSession session = this.params.getSession();
+      int userConfirmNum = this.params.getSearchIdUserConfirmNum();
       
-      System.out.println(searchIdUserEmail + "메일");
-      System.out.println(userConfirmNum + "인증");
-       
-      boolean emailAllCheck = false;
+      int sessionSaveNum = (int) session.getAttribute("confirmNumRandom");
+
+      boolean emailAllCheck = true;
+
+      System.out.println(sessionSaveNum == userConfirmNum);
+
+
+      if(sessionSaveNum != userConfirmNum) {
+    	  emailAllCheck = false;
+      } 
       
-      if(searchIdUserEmail == "" && userConfirmNum == null) {
-         emailAllCheck = false;
-      } else {
-         emailAllCheck = true;
-      }
       asyncResult.setSuccess(emailAllCheck);
       return asyncResult;
    }
@@ -496,7 +496,6 @@ public class AsyncService implements AsyncAction {
    }
    
    /*******수진. 문의사항 글등록 *******/
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AsyncResult<Boolean> InsertAskWriteBoard() throws Exception {
 		
 		String title     = this.params.getInsertTitle();
@@ -507,8 +506,8 @@ public class AsyncService implements AsyncAction {
 		//1은 비밀글 등록 // 2면 일반글등록
 		boolean isResult = true;
 		
-		HttpSession session = this.params.getSession();
-		String user_Id = (String)session.getAttribute("userID");
+		//HttpSession session = this.params.getSession();
+		//String user_Id = (String)session.getAttribute("userID");
 
 		if(title == "" && content == "") {
 			isResult = false;
@@ -527,7 +526,7 @@ public class AsyncService implements AsyncAction {
 	
 	//수진. 문의사항 글 등록시 입력한 비밀번호 체크
 	public AsyncResult<Boolean> insertPwdCheck() throws Exception {
-		ModelAndView mav = new ModelAndView("/service/include/confirmBoardCheck");
+		//ModelAndView mav = new ModelAndView("/service/include/confirmBoardCheck");
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
 		Integer userInsertPwd   = this.params.getUserInsertPwd(); //비번체크확인   
 		
@@ -543,9 +542,6 @@ public class AsyncService implements AsyncAction {
 		if(userInsertPwd != getUserPwd) {
 			isResult = false;
 		}
-//		if(questionBoardNum.intValue() < 0 || questionBoardNum.length() > 5) {
-//			isResult = false;
-//		}
 		if(isResult) {
 			isResult = true;
 		}
@@ -553,7 +549,6 @@ public class AsyncService implements AsyncAction {
 		AsyncResult<Boolean> asyncResult = new AsyncResult<Boolean>();
 		asyncResult.setData(isResult);
 		return asyncResult;
-		
 	}
 	
 	//수진 문의사항 수정
@@ -574,9 +569,6 @@ public class AsyncService implements AsyncAction {
 		System.out.println("내용 : " + content);
 		System.out.println("비밀번호 : " + writePwd);
 		System.out.println("여부 : " + isPwd);
-		//System.out.println(user_Id);
-		//System.out.println(write_date);
-		
 		boolean isResult = true;
 		
 		if(title =="" && content == "") {

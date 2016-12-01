@@ -615,9 +615,8 @@ public class MainService implements Action {
 	}
 	
 /*******ID찾기(회원정보) 수진*******/	 //TODO 수진
-	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
-		ModelAndView mav = this.getTemplate();
+		
 		boolean userInfoResult = false;
 		String searchIdUserName = this.params.getSearchIdUserName();
 		String searchIdUserBirth = this.params.getSearchIdUserBirth();
@@ -641,6 +640,13 @@ public class MainService implements Action {
 		List<Params> userSearchId = this.dbService.searchId(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		Integer result = this.dbService.searchIdCount(searchIdUserName, searchIdUserBirth, searchIdUserGender);
 		
+		
+		this.params.setDirectory("searchId");
+		this.params.setPage("searchIdResult");
+		this.params.setContentCSS("searchId/searchId");
+		this.params.setContentjs("searchId/searchId");
+		
+		ModelAndView mav = this.getTemplate();
 		mav.addObject("searchIdUserName", searchIdUserName);
 		mav.addObject("userSearchId", userSearchId);
 		mav.addObject("result", result);
@@ -652,7 +658,7 @@ public class MainService implements Action {
 		this.params.setDirectory("searchId");
 		this.params.setPage("searchIdEmailResult");
 		this.params.setContentCSS("searchId/searchId");
-		this.params.setContentjs("searchId/searchId");
+		this.params.setContentjs("searchId/searchIDEmailResult");
 		
 		String searchIdUserEmail = (String) this.params.getSession().getAttribute("searchIdUserEmail");
 		//db보내기
@@ -858,6 +864,7 @@ public class MainService implements Action {
 		mav.addObject("contentCSS", "service/serviceCenter");
 		mav.addObject("contentjs", "service/service/questionBoard");
 		mav.addObject("LoginUserID", LoginUserID);
+		mav.addObject("userStatus", userStatus);
 		
 		return mav;
 	}

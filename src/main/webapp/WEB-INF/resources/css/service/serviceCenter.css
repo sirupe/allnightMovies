@@ -10,16 +10,19 @@
     height: 699px;
     width: 885px;
 }
+
+
+.div__serviceCenter_form.js_serviceCenter.point {
+    MARGIN-TOP: 23px;
+    width: 900px;
 }
-.div__serviceCenter_form {
-	margin: 25px 0px 0px 10px;
-	width: 900px;
-}
+
 .servieCenterTitle {
-	font-size: 25px;
+	font-size: 29px;
 }
+
 .div__serviceCenter__intro {
-    padding: 20px;
+    padding: 8px;
     font-size: 20px;
     margin: 20px 0px 0px 20px;
 }

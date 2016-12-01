@@ -79,7 +79,7 @@
 									인증번호
 							</div>
 							<div class="searchID-form_content__emailConfirmNumber__input">
-								<input type="text"  class="searchID-form_content__emailConfirmNumber__input_box js_userFindIdConfirmNumber" readonly>
+								<input type="text"  class="searchID-form_content__emailConfirmNumber__input_box js_userFindIdConfirmNumber" style="ime-mode:disabled;"  onkeyPress="passWordIdCheck(this)" readonly>
 								<Button class="button__emailConfirmNumber_check js_confirmNumber_Check js_emailConfirmNumberCheck" type="button" disabled>인증확인</Button>
 								
 							</div>

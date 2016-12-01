@@ -76,8 +76,9 @@
 			</c:forEach>
 		<c:if test="${questionBoardGroup.isNextButton() }"><span data-QuestionnextPage="${questionBoardGroup.viewEndPageNum +1 }" class="js_questionNextButton">▶</span></c:if>
 	</div> 
-
+	<c:if test="${userStatus == 1 }">
 		<button class="serviceCenter_QuestionWrite js_QuestionWriteForm" type="button">글쓰기</button>
+	</c:if>
 </div>
 
 

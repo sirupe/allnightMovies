@@ -8,4 +8,5 @@ import lombok.Setter;
 public class MovieStillCut {
 	private String movieTitle;
 	private String movieCut;
+//	private List<String>movieStillCut;
 }

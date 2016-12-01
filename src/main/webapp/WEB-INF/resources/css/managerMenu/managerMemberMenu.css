@@ -6,6 +6,7 @@
 }
 .member-management__find {
     display: flex;
+    margin-bottom: 10px;
 }
 
 .member-management__find__label {

@@ -9,11 +9,11 @@
 		<div class="js_managerReserveMenu manager__menu__member">
 			예 매 관 리
 		</div>
-		<div class="js_managerSalesMenu manager__menu__member">
+<!-- 		<div class="js_managerSalesMenu manager__menu__member">
 			매 출 관 리
-		</div>
+		</div> -->
 	</div>
 	<div class="js_managerBody manager__body">
-		<jsp:include page="./managerReserveMenu.jsp"></jsp:include>
+		<jsp:include page="./managerMemberMenu.jsp"></jsp:include>
 	</div>
 </div>

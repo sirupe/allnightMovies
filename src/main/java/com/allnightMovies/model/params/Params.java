@@ -144,7 +144,7 @@ public class Params {
 	private Integer managerNoticePage;
 	private Integer managerNoticeNo;
 
-// 연종. 관리자 공지사항등록 -------------------------------------------
+// 연종. 관리자 영화수정/등록 -------------------------------------------
 	
 	private String managerMovieTitle;
 	private String managerMovieGenre;
@@ -153,17 +153,16 @@ public class Params {
 	private String managerMovieCast;
 	private String managerMovieReleaseDate;
 	private String managerMovieIntro;
-	
 	private Integer managerMovieAge;
 	private Integer managerMovieRuntime;
-	
 	
 //메인 검색
 	private String searchWord;
 
 //파일업로드시 사용
 	private String locationPath;
-	private String saveFilePath;
+	private String fileUpload;
+
 	
 //메인 페이징
 	private Integer mainPaing;

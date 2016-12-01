@@ -1,8 +1,5 @@
  package com.allnightMovies.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -44,6 +40,7 @@ import com.allnightMovies.model.data.movieInfo.MovieshowTableDTO;
 import com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo;
 import com.allnightMovies.model.data.theater.CinemaIntroduceDTO;
 import com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO;
+import com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO;
 import com.allnightMovies.model.data.userInfo.MovieEndTimeDTO;
 import com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
@@ -57,8 +54,6 @@ import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -512,7 +507,6 @@ public class MainService implements Action {
 	public ModelAndView managePaging() {
 		
 		ModelAndView mav = new ModelAndView("/managerMenu/managerMemberMenu");
-		List<ManagerMemberInquiryDTO> members = this.dbService.getMemberInfo();
 		int page = this.params.getMainPaing() == null ? 1 : this.params.getMainPaing();
 		int userInfoCount = this.dbService.userInfoTotCount();
 		
@@ -524,7 +518,6 @@ public class MainService implements Action {
 		mav.addObject("infoMainBoardPage", mainPaging);
 		mav.addObject("userInfoCount", userInfoCount);
 		mav.addObject("checkPage", page);
-//		mav.addObject("memberList", members);	
 		return mav;
 	}
 	
@@ -560,33 +553,20 @@ public class MainService implements Action {
 		return mav;
 	}
 
-	public ModelAndView file() throws IOException {
-		return new ModelAndView("fileUpload");
-	}
-	
-	
-	
-	public ModelAndView fileUploadTest() throws Exception {
-		String defaultDir = "C:/workspace/allnightMovies/src/main/webapp/WEB-INF/resources/img";
-		MultipartFile file = this.params.getMultiReq().getFile("file");
-		String fileName = file.getOriginalFilename();
-		
-		try {
-			byte[] b = file.getBytes();
-			File saveFile = new File(defaultDir + System.currentTimeMillis() + fileName);
-			FileOutputStream fos = new FileOutputStream(saveFile);
-			fos.write(b);
-			fos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return this.getTemplate();
-	}
-	
 
+	public ModelAndView managerReserveMenu() {
+		ModelAndView mav = new ModelAndView("managerMenu/managerReserveMenu");
+		
+		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo();
+		List<String> movieList = this.dbService.managerGetMovieTitle();
+		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		mav.addObject("reserveList", reserveList);
+		mav.addObject("movieTitleList", movieList);
+		mav.addObject("theaterList", theaterList);
+		return mav;
+	}
+	
 /*******ID찾기(회원정보) 수진*******/	 //TODO 수진
-
 	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
 		ModelAndView mav = this.getTemplate();
@@ -1022,13 +1002,11 @@ public class MainService implements Action {
 //		return mav;
 //	}
 //	
-
 	
 	public ModelAndView insertPwdCheck() throws Exception {
 		ModelAndView mav = new ModelAndView("/service/include/confirmBoardCheck");
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
 		Integer userInsertPwd   = this.params.getUserInsertPwd(); //비번체크확인   
-		
 		
 		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
 		
@@ -1037,7 +1015,6 @@ public class MainService implements Action {
 		return mav;
 		
 	}
-	
 	
 	
 /*******수진<관리자> .고객센터 자주묻는게시판 폼 열기**********/
@@ -1496,17 +1473,16 @@ public class MainService implements Action {
 /*************SHIN _ 영화상세정보***********/ //TODO
 	public ModelAndView movieDetailInfo() throws Exception {
 		ModelAndView mav = this.getTemplate();
+		
 		String movieTitle = this.params.getMovieInfoTitle();
 		MovieBasicInfo movieBasicInfo = this.dbService.getMovieBasicInfo(movieTitle);
-		
 		boolean reviewResult = true;
+		
 		String movieReleadeDate = movieBasicInfo.getMovieReleaseDate();
 		Date currentTime = new Date ();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		boolean countResult = true;
-		
-		
 		
 		try {
 			date = format.parse(movieReleadeDate);
@@ -1699,7 +1675,6 @@ public class MainService implements Action {
 	
 	public ModelAndView managerMovieInsertForm() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		System.out.println("1. managerMovieInsertForm  MAIN");
 		mav.addObject("directory", "movie/manager");
 		mav.addObject("page", "managerInsertMovie");
 		mav.addObject("contentCSS", "movie/managerInsertMovie");

@@ -163,9 +163,8 @@ public interface DBMapper {
 	public CinemaNoticeBoardDTO updateNoticeBoard(String title, String content, int important, int no);
 	public Integer deleteNoticeBoard(Integer noticeNO);
 /*  shin.  관리자 영화상세정보*/
-//
-//	public MovieBasicInfoDTO updateMovieInfo(String movieTitle, String movieGenre, String movieDirector,
-//			String movieAuthor, String movieCast, String movieReleaseDate, String movieIntro, int movieAgeLimitText,
-//			int movieRuntime, int no);
 	public void updateMovieInfo(MovieBasicInfoDTO dto);
+	public void insertNewMovie(MovieBasicInfo dto);
+	public void insertStillcut(String fileName, String movieTitle);
+	public Integer getMovieNO(String movieTitle);
 }

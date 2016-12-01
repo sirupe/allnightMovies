@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-  <div class="searchID-form js_userFindIdcontainer">
+  <div class="searchID-form js_userFindIdcontainer font">
 		<div class="searchID-form_name_bar"> 
 					아이디 찾기
 		</div>
@@ -34,7 +34,7 @@
 				</div>
 				
 				<div  class="searchID-form_content__gender">
-					<div class="searchID-form_content__gender_label">
+					<div class="searchID-form_content__gender_label js_searchIdBirthInput">
 						<label>성별</label>
 					</div>
 					<select class="searchID-form_content__gender_option js_userFindgender"  name="searchIdUserGender" value="남자">
@@ -80,7 +80,7 @@
 							</div>
 							<div class="searchID-form_content__emailConfirmNumber__input">
 								<input type="text"  class="searchID-form_content__emailConfirmNumber__input_box js_userFindIdConfirmNumber" readonly>
-								<Button class="button__emailConfirmNumber_check js_confirmNumber_Check js_emailConfirmNumberCheck" type="button" readonly>인증확인</Button>
+								<Button class="button__emailConfirmNumber_check js_confirmNumber_Check js_emailConfirmNumberCheck" type="button" disabled>인증확인</Button>
 								
 							</div>
 						

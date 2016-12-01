@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 /*manager*/
 .intro_managerModeButtons {
-    margin: -65px 0px 0px -259px;
+    margin: -64px 0px 0px -259px;
 }
 .intro_managerModeBtn {
     width: 100px;
@@ -47,6 +47,9 @@
 }
 
 /***********tab****************/
+.movieBasicInfo-detail {
+	margin-top: 10px;
+}
 /* 탭 선택 시 표시할 요소(div)
  정의(1번 탭 선택 시 첫 번째 div 요소 표시) */
  

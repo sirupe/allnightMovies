@@ -17,7 +17,7 @@
 				<div class="ReplyQuestionBoard-sub">
 					<div class="ReplyQuestionBoard_subject">
 						<label class="ReplyBoardSub">내용</label>
-						<textarea class="ReplyBoardTextarea js_ReplyBoardTextArea" rows="" cols="">안녕하세요 AllnightMovies 입니다. 이곳에 찾아주신 모든 고객분들께 감사드립니다.
+						<textarea class="ReplyBoardTextarea js_ReplyBoardTextArea">안녕하세요 AllnightMovies 입니다. 이곳에 찾아주신 모든 고객분들께 감사드립니다.
 						</textarea>
 					</div>
 					<div class="ReplyQuestionBoard-pwd">
@@ -36,9 +36,7 @@
 				<div class="ReplyQuestionBoard-sub">
 					<div class="ReplyQuestionBoard_subject">
 						<label class="ReplyBoardSub">내용</label>
-						<textarea class="ReplyBoardTextarea js_ReplyBoardTextArea" rows="" cols="">
-						안녕하세요 AllnightMovies 입니다. 이곳에 찾아주신 모든 고객분들께 감사드립니다.
-						</textarea>
+						<textarea class="ReplyBoardTextarea js_ReplyBoardTextArea">안녕하세요 AllnightMovies 입니다. 이곳에 찾아주신 모든 고객분들께 감사드립니다.</textarea>
 					</div>
 					<div class="ReplyQuestionBoard-pwd">
 						<label class="ReplyBoardPwd">비밀번호</label>

@@ -12,7 +12,7 @@
 			</video>
 		</span>
 		<span class="div-currentFilm__etc">
-			<label class="label-currentFilm-sort  js_currentFilmSortReservation">예매순 </label>|
+			<label class="label-currentFilm-sort  js_currentFilmSortReservation">이름순 </label>|
 			<label class="label-currentFilm-sort  js_currentFilmSortScore">평점순</label>
 		</span>
 		<button class="button-currentFilm-reservation  js_urrentFilmReservationBtn">예매하기</button>

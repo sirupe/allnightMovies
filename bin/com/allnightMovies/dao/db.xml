@@ -1097,5 +1097,46 @@
 		WHERE NO 	   		   = #{no} 
 	</select>
 	
+	<select id="insertNewMovie" parameterType="com.allnightMovies.model.data.movieInfo.MovieBasicInfo">
+		INSERT INTO MOVIE_BASIC_INFO (
+					MOVIE_TITLE,
+					MOVIE_RELEASE_DATE, 
+					MOVIE_DIRECTOR, 
+					MOVIE_AUTHOR, 
+					MOVIE_GENRE,
+					MOVIE_CAST,
+					MOVIE_AGE_LIMIT,
+					MOVIE_RUNTIME,
+					MOVIE_INTRO,
+					MOVIE_POSTER,
+					NO
+			) VALUES (
+					#{movieTitle}, 
+					#{movieReleaseDate},
+					#{movieDirector},
+					#{movieAuthor},
+					#{movieGenre},
+					#{movieCast},
+					#{movieAgeLimit},
+					#{movieRuntime},
+					#{movieIntro},
+					#{moviePoster},
+					MOVIE_BASIC_INFO_SEQ.NEXTVAL 
+			)
+	</select>
+	<select id="insertStillcut" parameterType="java.lang.String">
+		INSERT INTO MOVIE_STEEL_CUT (
+					MOVIE_CUT,
+					MOVIE_TITLE
+			) VALUES (
+				#{param1},
+				#{param2}
+			)
+	</select>
+	<select id="getMovieNO" resultType="java.lang.Integer" parameterType="java.lang.String">
+			SELECT NO
+			FROM MOVIE_BASIC_INFO
+			WHERE MOVIE_TITLE = #{movieTitle}
+	</select>
 	
 </mapper>

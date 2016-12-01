@@ -4,7 +4,7 @@
 <div class="content__join-success">
 	<label class="join-success__label">회원가입 완료되었습니다.</label>
 	<label class="join-success__label">감사합니다.</label>
-	<button type="button" class="join-success__button" onclick="locationMain()">
+	<button type="button" class="join-success__button js_joinResult">
 		메인으로
 	</button>
 </div>

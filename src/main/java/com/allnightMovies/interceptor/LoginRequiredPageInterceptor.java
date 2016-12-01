@@ -11,13 +11,23 @@ public class LoginRequiredPageInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
+		String ajaxCall = (String)request.getHeader("AJAX");
 		
-		if(session.getAttribute("userID") == null) {
-			session.setAttribute("requestURL", request.getRequestURL());
-			response.sendRedirect("/movie/mainService/loginPage");
-			return false;
-		} else {
-			return true;
-		}
+	
+			System.out.println("ajax??" + ajaxCall);
+			if(session.getAttribute("userID") == null) {
+				if(ajaxCall.equals("true")) {
+					response.sendError(500);
+					return false;
+				} else {
+					session.setAttribute("requestURL", request.getRequestURL());
+					response.sendRedirect("/movie/mainService/loginPage");
+					return false;
+				} 
+				
+			} else {
+				return true;
+			}
+			
 	}
 }

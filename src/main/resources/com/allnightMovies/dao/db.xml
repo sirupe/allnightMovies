@@ -862,10 +862,7 @@
 			SELECT MOVIE_TITLE  movieTitle,
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
-<<<<<<< HEAD
-=======
                    REVIEW_EVALUATE score,
->>>>>>> 73015b8ad423e8f6c0d56691be30cd599ddde62a
                    NO no,
                    ROWNUM RNUM
 			FROM (
@@ -874,11 +871,7 @@
 				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1
 				ORDER BY REVIEW_EVALUATE DESC
 			    )
-<<<<<<< HEAD
-			)
-=======
 			)   
->>>>>>> 73015b8ad423e8f6c0d56691be30cd599ddde62a
 	</select>
 	
 	<select id="sortTicketing" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">

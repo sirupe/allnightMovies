@@ -883,8 +883,8 @@ public class MainService implements Action {
 		String result = "";
 		if(questionBoardList.getIsPwd() == 1 && userStatus != 2) {
 			result = "/service/include/reCheckPwdWriteForm";
-		} else if(LoginUserID == null)  { 
-			result = "/service/include/reCheckPwdWriteForm";
+//		} else if(LoginUserID == null)  { 
+//			result = "/service/include/reCheckPwdWriteForm";
 		} else {
 			result = "/service/include/questionViewBoard";
 		}

@@ -862,10 +862,7 @@
 			SELECT MOVIE_TITLE  movieTitle,
                    MOVIE_POSTER moviePoster,
                    DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
-<<<<<<< HEAD
-=======
                    REVIEW_EVALUATE score,
->>>>>>> ddedcc8766eb18d4d2400f8b6daaf5e6d383da18
                    NO no,
                    ROWNUM RNUM
 			FROM (

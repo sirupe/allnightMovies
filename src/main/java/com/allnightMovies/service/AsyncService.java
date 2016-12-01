@@ -386,7 +386,7 @@ public class AsyncService implements AsyncAction {
          System.out.println(confirmNumRandom + " : 인증번호");
          
          //TODO
-         //new SendEmail(String.valueOf(confirmNumRandom), searchIdUserEmail);
+         new SendEmail(String.valueOf(confirmNumRandom), searchIdUserEmail);
          
          //인증번호 세션에 저장
          //인증번호 저장

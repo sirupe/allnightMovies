@@ -46,7 +46,7 @@
 			</c:otherwise>
 		</c:choose>
 			<div class="ReplyQuestionbutton">
-				<button class="ReplyQuestionButton_cancel js_ReplyQuestionButtonCancel">취소</button>
+				<button class="ReplyQuestionButton_cancel js_ReplyQuestionButtonCancel" type="button">취소</button>
 				<button class="ReplyQuestionButton_confirm js_ReplyQuestionButtonConfirm" type="button">확인</button>
 			</div>
 		

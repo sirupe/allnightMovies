@@ -19,10 +19,10 @@ function setEvent() {
 		.on('click', '.js_deleteBtn', reviewDelete)
 		.on('click', '.js_movieModifyBtn', managerMovieModifyForm)
 		.on('click', '.js_movieIntroModifyBtn', managerMovieModifyForm)
-		.on('click', '.js_movieInsertBtn', managerMovieInsertForm)
+//		.on('click', '.js_movieInsertBtn', managerMovieInsertForm)
 }
 
-function managerMovieInsertForm() {
+/*function managerMovieInsertForm() {
 	var url = '/movie/mainService/managerMovieInsertForm';
 	
 	submit(url)
@@ -43,7 +43,7 @@ function stillcutBtnClick() {
 			$('.js_stillcutContainer').html(result);
 		}
 	$.post(url, params, cbf);
-}
+}*/
 
 
 function managerMovieModifyForm() {

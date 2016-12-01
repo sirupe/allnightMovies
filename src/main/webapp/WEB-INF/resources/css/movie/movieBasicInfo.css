@@ -1,7 +1,8 @@
 @CHARSET "UTF-8";
 /*manager*/
 .intro_managerModeButtons {
-    margin: -64px 0px 0px -259px;
+    margin-left: 40px;
+    margin-bottom: 35px;
 }
 .intro_managerModeBtn {
     width: 100px;
@@ -21,7 +22,7 @@
 /****************************/
 .movieBasicInfo-intro {
 	width: 870px;
-	margin: 50px 0px 30px 40px; 
+	margin: 50px 0px 0px 40px; 
 	display: inline-flex;
 	font-size: 18px;
 }

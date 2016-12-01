@@ -1,5 +1,5 @@
 function locationMain() {
-
+	location.href="/";
 }
 
 function locationLogin() {

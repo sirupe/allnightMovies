@@ -166,6 +166,11 @@ function managerMenuBtnClick() {
 		'managerMenu/managerMenu'
 	);
 }
+function locationInsertMovie() {
+	var url = '/movie/mainService/managerMovieInsertForm';
+	
+	submit(url);
+}
 
 function setEventTemplate() {
 	var $form = $('.js_form');
@@ -182,6 +187,8 @@ function setEventTemplate() {
 		 .on('click', '.js_managerMenuBtn', managerMenuBtnClick)
 		 .on('click', '.js_searchIdBack',locationSearchID)
 		 .on('click', '.js_joinResult', locationMain)
+		 .on('click', '.js_mainInsertMovieBtn', locationInsertMovie)
+		 
 }
 
 function initTemplate() {

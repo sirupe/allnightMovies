@@ -119,6 +119,32 @@
 	padding: 4px 2px 1px 3px;
 }
 
+.button-insertMovie {
+    padding: 7px 20px 7px 20px;
+    color: #fcf3f3;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #b79fa1;
+    border-radius: 6px;
+    font-size: 21px;
+    font-weight: 100;
+    font-family: 'Jeju Gothic', serif;
+    text-overflow: clip;
+    background: rgba(206, 159, 161, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    display: block;
+    margin: -37px 0px 29px 750px;
+}
+.button-insertMovie:hover {
+    color: #fcf3f3;
+    background: rgba(107, 78, 79, 0.81);
+    -webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
 
 
 

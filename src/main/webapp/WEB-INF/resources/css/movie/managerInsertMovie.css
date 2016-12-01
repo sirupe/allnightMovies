@@ -1,7 +1,13 @@
 @CHARSET "UTF-8";
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 /*font-family: 'Jeju Gothic', serif;*/
-
+.movieBasicInfo-intro {
+	margin-left: 50px;
+    width: 668px;
+    padding: 10px;
+    margin: 8px;
+    border: 1px solid rgb(216, 216, 216);
+}
 .movieInsertContainer {
 	padding: 50px;
 }
@@ -22,9 +28,6 @@
 	width: 660px;
     height: 300px;
     resize: none;
-}
-.fileupload {
-    margin-bottom: 20px;
 }
 
 .movieResetBtn,
@@ -51,6 +54,13 @@
 }
 input {
 	padding: 5px;
+	background-color: #fbfbee;
+	font-size: 16px;
+	font-family: 'Jeju Gothic', serif;
+}
+
+.input__Stillcut {
+	margin-left: 20px;
 }
 
 .movieResetBtn:hover,

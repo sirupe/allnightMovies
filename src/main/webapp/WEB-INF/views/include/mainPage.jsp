@@ -13,7 +13,11 @@
 	</div>
 <!-- 최신 개봉작 -->	
 	<div class="mainContiner_middle" >
-		<label class="maintitleFont">최신개봉작</label>
+		<label class="maintitleFont">최신개봉작
+			<c:if test="${isManager}">
+				<button class="js_mainInsertMovieBtn movieInsertBtn" type="button">영화등록</button>
+			</c:if>
+		</label>
 		<c:forEach begin="0" end="4" step="1" items="${NewFilmDTO}" var="NewFilmDTO">
 			<span class="mainCurrnetFilm font">
 				<span class="mainFilmImg" style="background-image: url('/../resources/img/poster/${NewFilmDTO.moviePoster}');">

@@ -25,7 +25,7 @@
 			
 			<div class="modifyComplete">
 				<button class="modifyCompleteBtn js_modifyCompleteBtn" type="button" data-movie-no="${movieBasicInfo.no}">수정완료</button>	
-				<button class="modifyCompleteBtn js_modifyResetBtn" data-movie-no="${movieBasicInfo.no}" type="reset">취소</button>	
+				<button class="modifyCompleteBtn js_modifyResetBtn" type="button" data-movie-no="${movieBasicInfo.no}" type="reset">취소</button>	
 			</div>
 		</div> 
 	</div>
@@ -34,34 +34,14 @@
 	<div class="movieBasicInfo-detail">
 		<!-- input -->
 		<input id="tab-intro" type="radio" name="tab" checked="checked"/>	
-		<input id="tab-stillCut" type="radio" name="tab"/>	
-		<input id="tab-review" type="radio" name="tab"/>	
 		
 		<!-- label 화면에 표시되는 탭 제목-->
 		<label for="tab-intro">작품소개</label>
-		<label class="js_tab_stillcut"for="tab-stillCut">스틸컷</label>
-		<label class="js_tab_review" for="tab-review">평점/리뷰</label>
 		
 		<!-- 탭 내용 : 탭 제목을 선택했을 때 표시되는 본문 -->
 		<div class="tab-intro_content">
 			<textarea class="tab-intro_content__intro js_basicInfoMovieIntro resize" cols="91px">${movieBasicInfo.movieIntro}</textarea>
 		</div>
 		
-		<!-- 스틸컷 사진 -->
-		<div class="tab-stillCut_content">
-			<jsp:include page="../include/reviewStillcut.jsp"></jsp:include> 
-		</div>
-		
-		<!-- 평점/리뷰 -->
-		<div class="tab-review_content">
-			<c:choose>
-				<c:when test="${reviewResult}">
-					<jsp:include page="../include/reviewBoard.jsp"></jsp:include> 
-				</c:when>
-				<c:otherwise>
-					<span class="tab-intro_content__reviewfalse">!&nbsp;개봉전에는 평점을 등록할 수  없습니다.</span>
-				</c:otherwise>
-			</c:choose>
-		</div>
 	</div>
 </div>

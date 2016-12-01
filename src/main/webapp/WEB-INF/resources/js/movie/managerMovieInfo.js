@@ -15,12 +15,14 @@ function setEvent() {
 	$container
 		.on('click', '.js_modifyCompleteBtn', modifyComplete)
 		.on('click', '.js_modifyResetBtn', modifyReset)
+		.on('click', '.js_insertMovie', insertMovie)
 		.on('keyup', '.js_basicInfoMovieTitle', checkLength)
 		.on('keyup', '.js_basicInfoMovieGenre', checkLength)
 		.on('keyup', '.js_basicInfoMovieTitle', checkLength)
 		.on('keyup', '.js_basicInfoMovieDirector', checkLength)
 		.on('keyup', '.js_basicInfoMovieAutohor', checkLength)
 		.on('keyup', '.js_basicInfoMovieCast', checkLength)
+		
 		
 }
 
@@ -76,12 +78,12 @@ function modifyComplete(e) {
 
 function modifyReset() {
 	var $movieTitle = $('.js_basicInfoMovieTitle'),
-		movieTitle = $movieTitle.val();
-		$this  = $('.'),
+		movieTitle = $movieTitle.val(),
+		$this  = $('.js_modifyResetBtn'),
 		data   = $this.data(),
-		movieNO = data.noticePage,
+		movieNo = data.movieNo;
 	
-		url	    = '/movie/mainService/movieDetailInfo?movieInfoTitle=' + movieTitle + "&movieNO=" + movieNO;
+		url	    = '/movie/mainService/movieDetailInfo?movieInfoTitle=' + movieTitle + "&movieNO=" + movieNo;
 
 	submit(url);
 }

@@ -12,9 +12,11 @@
 			</video>
 		</span>
 	</div>
-
-	<div class="screeningsPlanned-posters">
 	
+	<div class="screeningsPlanned-posters">
+		<c:if test="${isManager}">
+			<button class="button-insertMovie js_insertMovie" type="button">영화등록</button>
+		</c:if>
 		<c:forEach begin="0" end="${filmNum}" varStatus="filmNum" items="${ScreeningsPlannedDTO}" var="ScreeningsPlannedDTO" > 
 			<c:choose>
 				<c:when test="${filmNum.count % 3 != 0}">

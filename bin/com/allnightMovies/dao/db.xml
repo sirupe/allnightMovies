@@ -829,23 +829,14 @@
 				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1
 				ORDER BY MOVIE_TITLE ASC
 			    )
-			)   
+			)
 	</select>
 	<select id="sortScore" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
-		SELECT * FROM (
-			SELECT MOVIE_TITLE  movieTitle,
-                   MOVIE_POSTER moviePoster,
-                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
-                   REVIEW_EVALUATE score,
-                   NO no,
-                   ROWNUM RNUM
-			FROM (
-				SELECT *
-				FROM MOVIE_BASIC_INFO 
-				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1
-				ORDER BY REVIEW_EVALUATE DESC
-			    )
-			)   
+		SELECT AVG(NVL(REVIEW_EVALUATE,0))
+		FROM MOVIE_BASIC_INFO
+		WHERE MOVIE_RELEASE_DATE <![CDATA[<]]>  SYSDATE AND STATUS = 1
+		GROUP BY MOVIE_TITLE 
+		ORDER BY AVERAGE DESC
 	</select>
 	
 	<select id="sortTicketing" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">

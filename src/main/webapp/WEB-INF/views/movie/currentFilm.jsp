@@ -15,7 +15,14 @@
 			<label class="label-currentFilm-sort  js_currentFilmSortReservation">이름순 </label>|
 			<label class="label-currentFilm-sort  js_currentFilmSortScore">평점순</label>
 		</span>
-		<button class="button-currentFilm-reservation  js_urrentFilmReservationBtn">예매하기</button>
+		<c:choose>
+			<c:when test="${isManager}">
+				<button class="button-insertMovie js_insertMovie" type="button">영화등록</button>
+			</c:when>
+			<c:otherwise>
+				<button class="button-currentFilm-reservation  js_urrentFilmReservationBtn" type="button">예매하기</button>
+			</c:otherwise>
+		</c:choose>
 	</div>
 	<jsp:include page="./include/currentFilmSort.jsp"></jsp:include>
 </div>

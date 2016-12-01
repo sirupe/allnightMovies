@@ -43,7 +43,6 @@ function searchBoard() {
 	}
 }
 
-
 /*목록으로*/
 function locationNoticeBoard(e) {
 	var $this  = $(this),

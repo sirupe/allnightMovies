@@ -309,10 +309,12 @@
 		SET USER_STATES=1
 		WHERE USER_ID=#{userID}
 	</update>
+	
 	<!-- MANAGER PAGING : 관리자메뉴 페이징(회원 총 수 구하기)-->
 	<select id="userInfoTotCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM USER_PERSONAL_INFO WHERE USER_STATES != 2
 	</select>
+	
 	<!-- MANAGER PAGING : 관리자메뉴 페이징(회원 페이징 구하기) -->
 	<select id="userInfoTotList" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
 		SELECT 
@@ -339,7 +341,43 @@
 		WHERE RNUM BETWEEN #{param1} AND #{param2}
 	</select>
 	
+	<select id="managerReservationInfo" resultType="com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO">
+		SELECT
+			USER_TICKET_NUMBER userTicketNumber,
+			TO_CHAR(USER_TICKETING_DATE, 'YYYY.MM.DD HH24:MI') userTicketingDate,
+			USER_ID userID,
+			MOVIE_TITLE movieTitle,
+			THEATER,
+			USER_TICKET_COUNT userTicketCount,
+            TICKETPRICE,
+		    theaterSeat
+		FROM (
+			SELECT 
+		        LISTAGG(THEATER_SEAT, ',') WITHIN GROUP(ORDER BY USER_TICKET_NUMBER) THEATERSEAT,
+		        USER_TICKET_NUMBER,
+		        USER_ID,
+		        USER_TOTAL_PRICE TICKETPRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    FROM USER_TICKETING_INFO
+		    GROUP BY 
+		        USER_TICKET_NUMBER, 
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+			    ORDER BY MOVIE_SCREENING_DATE DESC)
+            ORDER BY userTicketingDate DESC
 	
+	</select>
 	
 	<!-- JI. MANAGER MENU : 매니저메뉴 유저 검색 -->
 	<select id="searchMemberInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
@@ -360,6 +398,19 @@
 			USER_ID LIKE #{param1} AND
 		    USER_NAME LIKE #{param2} AND
 		    USER_BIRTH LIKE #{param3}
+	</select>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 예매정보 영화제목들 가져오가 -->
+	<select id="managerGetMovieTitle" resultType="java.lang.String">
+		SELECT MOVIE_TITLE
+		FROM MOVIE_BASIC_INFO
+	</select>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 예매정보 관 정보 가져오가 -->	
+	<select id="managerGetTheaterCnt" resultType="java.lang.Integer">
+		SELECT DISTINCT THEATER
+		FROM CINEMA_THEATER_SEAT_INFO
+		ORDER BY THEATER
 	</select>
 <!-- JUNG. 상영시간 list -->
 	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">

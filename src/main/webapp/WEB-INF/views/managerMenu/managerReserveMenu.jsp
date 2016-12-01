@@ -14,18 +14,18 @@
 		<div class="member-reservation__find__movie-title">
 			<span>영화 </span>
 			<select>
-					<option>선택</option>
-				<c:forEach begin="1" end="10">
-					<option>Movie Title</option>
+				<option>선택</option>
+				<c:forEach items="${movieTitleList}" var="movieTitle">
+					<option>${movieTitle }</option>
 				</c:forEach>
 			</select>
 		</div>
 		<div class="member-reservation__find__theater">
 			<span>관 </span>
 			<select>
-					<option>선택</option>
-				<c:forEach begin="1" end="3" varStatus="status">
-					<option>${status.count }</option>
+				<option>선택</option>
+				<c:forEach items="${theaterList}" var="theater">
+					<option>${theater}</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -45,23 +45,25 @@
 
 	<div class="member-reservation__contents ">
 		<div class="member-reservation__contents__title member-reservation__tr ">
-			<span class="member-reservation__ticket-num member-reservation__td">예매번호</span>
-			<span class="member-reservation__ticketing-date member-reservation__td">예매일시</span>
-			<span class="member-reservation__user-id member-reservation__td">아이디</span>
-			<span class="member-reservation__movie-title member-reservation__td">영화제목</span>
-			<span class="member-reservation__theater member-reservation__td">상영관</span>
-			<span class="member-reservation__ticket-count member-reservation__td">매수</span>
-			<span class="member-reservation__seat member-reservation__td">좌석</span>
+			<span class="member-reservation__ticket-num member-reservation__th">예매번호</span>
+			<span class="member-reservation__ticketing-date member-reservation__th">예매일시</span>
+			<span class="member-reservation__user-id member-reservation__th">아이디</span>
+			<span class="member-reservation__movie-title member-reservation__th">영화제목</span>
+			<span class="member-reservation__theater member-reservation__th">상영관</span>
+			<span class="member-reservation__ticket-count member-reservation__th">매수</span>
+			<span class="member-reservation__seat member-reservation__th">좌석</span>
+			<span class="member-reservation__seat member-reservation__th">금액</span>
 		</div>
-		<c:forEach begin="1" end="10">
+		<c:forEach items="${reserveList}" var="info">
 			<div class="member-reservation__contents__content member-reservation__tr ">
-				<span class="member-reservation__ticket-num member-reservation__td">1130-22193893</span>
-				<span class="member-reservation__ticketing-date member-reservation__td">2016-11-28 17:36</span>
-				<span class="member-reservation__user-id member-reservation__td">test3</span>
-				<span class="member-reservation__movie-title member-reservation__td">무현, 두 도시 이야기</span>
-				<span class="member-reservation__theater member-reservation__td">1</span>
-				<span class="member-reservation__ticket-count member-reservation__td">4</span>
-				<span class="member-reservation__seat member-reservation__td">A1,A2,A3,A4</span>
+				<span class="member-reservation__ticket-num member-reservation__td">${info.userTicketNumber }</span>
+				<span class="member-reservation__ticketing-date member-reservation__td">${info.userTicketingDate }</span>
+				<span class="member-reservation__user-id member-reservation__td">${info.userID }</span>
+				<span class="member-reservation__movie-title member-reservation__td">${info.movieTitle }</span>
+				<span class="member-reservation__theater member-reservation__td">${info.theater }</span>
+				<span class="member-reservation__ticket-count member-reservation__td">${info.userTicketCount }</span>
+				<span class="member-reservation__seat member-reservation__td">${info.theaterSeat }</span>
+				<span class="member-reservation__seat member-reservation__td">${info.ticketPrice }</span>
 			</div>
 		</c:forEach>
 	</div>

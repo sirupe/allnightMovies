@@ -1,7 +1,5 @@
 package com.allnightMovies.model.data.movieInfo;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -20,15 +18,3 @@ public class MovieBasicInfoDTO {
 	private int no;
 
 }
-//params
-//private String managerMovieTitle;
-//private String managerMovieGenre;
-//private String managerMovieDirector;
-//private String managerMovieAuthor;
-//private String managerMovieCast;
-//private String managerMovieReleaseDate;
-//private String managerMovieIntro;
-//
-//private Integer managerMovieAge;
-//private Integer managerMovieRuntime;
-//+ movieNO

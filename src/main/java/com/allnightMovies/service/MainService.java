@@ -1,7 +1,5 @@
  package com.allnightMovies.service;
 
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.allnightMovies.di.Action;
 import com.allnightMovies.model.data.MainMenu;
@@ -33,7 +30,6 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
-import com.allnightMovies.model.data.cinemaInfo.CinemaWriteBoardPwdCheckDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfoCast;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
@@ -62,6 +58,7 @@ import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
@@ -1694,4 +1691,15 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "movie/managerMovieInfo");
 		return mav;
 	}
+	
+	public ModelAndView managerMovieInsertForm() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		System.out.println("1. managerMovieInsertForm  MAIN");
+		mav.addObject("directory", "movie/manager");
+		mav.addObject("page", "managerInsertMovie");
+		mav.addObject("contentCSS", "movie/managerInsertMovie");
+		mav.addObject("contentjs", "movie/managerInsertMovie");
+		return mav;
+	}
+	
 }

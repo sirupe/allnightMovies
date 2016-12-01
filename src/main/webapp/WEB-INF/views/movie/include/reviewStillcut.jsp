@@ -5,11 +5,6 @@
 <script async="async" type="text/javascript" src="/resources/js/movie/stillcut.js"></script>
 
 <div class="stillCut">
-	<c:if test="${isManager}">
-		<div class="fileUpload">
-			<button class="fileUploadBtn js_fileUpload font" type="button">파일업로드</button>
-		</div>
-	</c:if>
 	<c:forEach items="${ movieStillCutDTO}" var="stillCut" varStatus="status">
 		<c:choose>
 			<c:when test="${movieStillCutCount}">

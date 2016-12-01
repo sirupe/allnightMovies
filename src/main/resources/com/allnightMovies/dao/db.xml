@@ -1007,7 +1007,7 @@
 	</select>
 	
 	<select id="updateMovieInfo" parameterType="com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO">
-		UPDATE MOVIE_BASIC_INFO
+ 		UPDATE MOVIE_BASIC_INFO					
 		SET MOVIE_TITLE        = #{movieTitle},
 			MOVIE_INTRO		   = #{movieIntro},
 		    MOVIE_RELEASE_DATE = #{movieReleaseDate},
@@ -1017,7 +1017,7 @@
 		    MOVIE_CAST         = #{movieCast},
 		    MOVIE_AGE_LIMIT    = #{movieAgeLimitText},
 		    MOVIE_RUNTIME 	   = #{movieRuntime}
-		WHERE NO 	   		   = #{no}
+		WHERE NO 	   		   = #{no} 
 	</select>
 	
 	

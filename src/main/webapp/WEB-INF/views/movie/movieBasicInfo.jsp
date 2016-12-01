@@ -44,7 +44,7 @@
 		<c:if test="${isManager}">
 			<div class="intro_managerModeButtons">
 			<button class="intro_managerModeBtn js_movieModifyBtn" data-movie-no="${movieBasicInfo.no}" type="button">기본정보수정</button>
-			<button class="intro_managerModeBtn js_movieDeleteBtn" data-movie-no="${movieBasicInfo.no}" type="button">영화추가</button>
+			<button class="intro_managerModeBtn js_movieInsertBtn" data-movie-no="${movieBasicInfo.no}" type="button">영화추가</button>
 			</div>
 		</c:if>
 		</span> 

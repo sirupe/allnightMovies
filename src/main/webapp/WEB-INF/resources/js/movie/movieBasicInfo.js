@@ -19,7 +19,15 @@ function setEvent() {
 		.on('click', '.js_deleteBtn', reviewDelete)
 		.on('click', '.js_movieModifyBtn', managerMovieModifyForm)
 		.on('click', '.js_movieIntroModifyBtn', managerMovieModifyForm)
+		.on('click', '.js_movieInsertBtn', managerMovieInsertForm)
 }
+
+function managerMovieInsertForm() {
+	var url = '/movie/mainService/managerMovieInsertForm';
+	
+	submit(url);
+}
+
 
 function managerMovieModifyForm() {
 	var $movieTitle = $('.js_basicInfomovieTitle'),

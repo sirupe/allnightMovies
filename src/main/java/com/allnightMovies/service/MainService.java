@@ -1185,6 +1185,10 @@ public class MainService implements Action {
 	
 /*******연종. MyINFO SHIN*******/	
 	public ModelAndView viewMyInfo() throws Exception {
+		this.params.setDirectory("myInfo");
+		this.params.setPage("myInfo");
+		this.params.setContentCSS("myInfo/myInfo");
+		this.params.setContentjs("myInfo/myInfo");
 		ModelAndView mav = this.getTemplate();
 		HttpSession session = this.params.getSession();
 		String myInfoID = (String)session.getAttribute("userID");

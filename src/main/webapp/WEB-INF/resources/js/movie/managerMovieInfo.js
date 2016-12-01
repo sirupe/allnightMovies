@@ -10,11 +10,13 @@ function init() {
 init();
 
 function setEvent() {
-	var $container = $('.js_managerMovieInfoContainer');
+	var $container = $('.js_managerMovieInfoContainer'),
+		$filmContainer = $('.js_currentFilmContainer');
 	
 	$container
 		.on('click', '.js_modifyCompleteBtn', modifyComplete)
 		.on('click', '.js_modifyResetBtn', modifyReset)
+		.on('click', '.js_insertMovie', insertMovie)
 		.on('keyup', '.js_basicInfoMovieTitle', checkLength)
 		.on('keyup', '.js_basicInfoMovieGenre', checkLength)
 		.on('keyup', '.js_basicInfoMovieTitle', checkLength)
@@ -22,6 +24,15 @@ function setEvent() {
 		.on('keyup', '.js_basicInfoMovieAutohor', checkLength)
 		.on('keyup', '.js_basicInfoMovieCast', checkLength)
 		
+	$filmContainer
+		.on('click', '.js_insertMovie', insertMovie)
+		
+}
+
+function insertMovie() {
+	var url = '/movie/mainService/managerMovieInsertForm';
+	
+	submit(url);
 }
 
 function modifyComplete(e) {

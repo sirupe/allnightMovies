@@ -2,6 +2,7 @@ package com.allnightMovies.service;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -17,6 +18,7 @@ import com.allnightMovies.model.data.AsyncResult;
 import com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
+import com.allnightMovies.model.data.movieInfo.ManagerScreeningPlannedUpdateDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO;
 import com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO;
@@ -172,7 +174,42 @@ public class AsyncService implements AsyncAction {
       async.setData(moviePoster);
       return async;
    }
-/*****연종. chagePwd success check*****/   
+   
+   /*****은정. TICKETING : Manager Screening Planned Update  *****/
+   public AsyncResult<String> screeningPlannedUpdate() {
+	   String[] theaters = this.params.getTheaters().split("#");
+	   String[] movieTitles = this.params.getMovieTitles().split("#");
+	   String[] dateTimes = this.params.getDateTimes().split("#");
+	   String[] prices = this.params.getPrices().split("#");
+	   boolean resultBool = true;
+	   List<ManagerScreeningPlannedUpdateDTO> dtoList = new ArrayList<ManagerScreeningPlannedUpdateDTO>();
+ 	   for(int i = 0, size = theaters.length; i < size; i++) {
+		   ManagerScreeningPlannedUpdateDTO dto = new ManagerScreeningPlannedUpdateDTO();
+		   dto.setMovieTheather(Integer.parseInt(theaters[i]));
+		   dto.setMovieTitle(movieTitles[i]);
+		   dto.setMovieScreeningDate(dateTimes[i]);
+		   dto.setMoviePrice(Integer.parseInt(prices[i]));
+		   dto.setMovieScreeningDate2(dateTimes[i]);
+		   dtoList.add(dto);
+		   if(this.dbService.searchScreeningPlannedCnt(dto) > 0) {
+			   resultBool = false;
+			   break;
+		   }
+	   }
+ 
+	   if(resultBool) {
+		   for(ManagerScreeningPlannedUpdateDTO dto : dtoList) {
+	 	   
+			   this.dbService.insertMovieScreeningInfo(dto);
+		   }
+	   }
+	   AsyncResult<String> async = new AsyncResult<String>();
+	   async.setSuccess(resultBool);
+	   async.setData("/movie/mainService/showtimes");
+	   return async;
+   }
+   
+/*****연종. chagePwd success check*****/   //TODO 연종
    public AsyncResult<String> chagePwdSuccessCheck() throws Exception {
       String newPWD = params.getMyInfoNewPwd();
       String newPWDcheck = params.getMyInfoNewPwdCheck();

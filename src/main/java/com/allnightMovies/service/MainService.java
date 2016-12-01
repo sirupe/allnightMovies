@@ -54,6 +54,7 @@ import com.allnightMovies.utility.RegexCheck;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
 
+
 // @Service 어노테이션
 // 스프링이 구동될 때 내부 메소드들이 미리 만들어져 올라가 있다.
 // 메인 컨트롤러에서는 별도의 생성 없이 사용 가능.
@@ -94,8 +95,8 @@ public class MainService implements Action {
 		mav.addObject("list", list);
 		mav.addObject("directory", this.params.getDirectory());
 		mav.addObject("page", this.params.getPage());
-		mav.addObject("contentCSS", this.params.getContentCSS());
-		mav.addObject("contentjs", this.params.getContentjs());
+		mav.addObject("contentCSS", this.params.getContentCSS() == null ? "mainPage" : this.params.getContentCSS());
+		mav.addObject("contentjs", this.params.getContentjs() == null ? "mainPage" : this.params.getContentjs());
 		mav.addObject("keepLogin", this.params.getKeepLogin());
 		
 		return mav;
@@ -604,6 +605,15 @@ public class MainService implements Action {
 		return this.managerReserveMenu();
 	}
 	
+	public ModelAndView managerScreeningPlannedModify() throws Exception {
+		ModelAndView mav = this.getTemplate();
+		List<String> movieList = this.dbService.managerGetMovieTitle();
+		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		mav.addObject("movieList", movieList);
+		mav.addObject("theaterList", theaterList);
+		return mav;
+	}
+	
 /*******ID찾기(회원정보) 수진*******/	 //TODO 수진
 	@SuppressWarnings("unused")
 	public ModelAndView searchId() throws Exception {
@@ -676,6 +686,7 @@ public class MainService implements Action {
 				}
 			}
 		}
+		System.out.println("showTimes 옵니다.");
 		ModelAndView mav = this.getTemplate();
 		mav.addObject("movieTimeTable", movieTimeTable);
 		return mav;

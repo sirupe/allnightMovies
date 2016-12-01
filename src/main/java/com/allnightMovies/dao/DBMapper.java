@@ -10,6 +10,7 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
 import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
+import com.allnightMovies.model.data.movieInfo.ManagerScreeningPlannedUpdateDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
@@ -78,6 +79,9 @@ public interface DBMapper {
 	public List<String> managerGetMovieTitle();
 	public List<Integer> managerGetTheaterCnt();
 	public void managerTicketCancel(String ticketNum);
+	public Integer searchScreeningPlannedCnt(ManagerScreeningPlannedUpdateDTO dto);
+	public void insertMovieScreeningInfo(ManagerScreeningPlannedUpdateDTO dto);
+	
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	

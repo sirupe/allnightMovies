@@ -556,13 +556,52 @@ public class MainService implements Action {
 	public ModelAndView managerReserveMenu() {
 		ModelAndView mav = new ModelAndView("managerMenu/managerReserveMenu");
 		
-		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo();
+		ManagerUserReserveDTO reserveDto = new ManagerUserReserveDTO();
+		reserveDto.setUserTicketNumber("%%");
+		
+		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo(reserveDto);
 		List<String> movieList = this.dbService.managerGetMovieTitle();
 		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		int totPrice = 0;
+		for(ManagerUserReserveDTO dto : reserveList) {
+			totPrice += dto.getTicketPrice();
+		}
 		mav.addObject("reserveList", reserveList);
 		mav.addObject("movieTitleList", movieList);
 		mav.addObject("theaterList", theaterList);
+		mav.addObject("totPrice", totPrice);
 		return mav;
+	}
+	
+	public ModelAndView searchReserveInfo() {
+		ModelAndView mav = new ModelAndView("managerMenu/managerReserveMenu");
+		ManagerUserReserveDTO dto = new ManagerUserReserveDTO();
+		String ticketNum = this.params.getTicketNumPost() + this.params.getTicketNumBack();
+		dto	.setUserTicketingDate(this.params.getSearchDate())
+			.setMovieTitle(this.params.getManagerMovieTitle())
+			.setTheater(this.params.getSearchTheater())
+			.setUserTicketNumber("%" + (ticketNum == null ? "" : ticketNum) + "%");
+		
+		List<ManagerUserReserveDTO> reserveList = this.dbService.managerReservationInfo(dto);
+		List<String> movieList = this.dbService.managerGetMovieTitle();
+		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
+		int totPrice = 0;
+		for(ManagerUserReserveDTO reserveDto : reserveList) {
+			totPrice += reserveDto.getTicketPrice();
+		}
+		mav.addObject("reserveList", reserveList);
+		mav.addObject("movieTitleList", movieList);
+		mav.addObject("theaterList", theaterList);
+		mav.addObject("totPrice", totPrice);
+		return mav;
+	}
+	
+	public ModelAndView managetTicketCancel() {
+		String[] ticketNumArr = this.params.getTicketNums().split(",");
+		for(String ticketNum : ticketNumArr) {
+			this.dbService.managerTicketCancel(ticketNum);			
+		}
+		return this.managerReserveMenu();
 	}
 	
 /*******ID찾기(회원정보) 수진*******/	 //TODO 수진

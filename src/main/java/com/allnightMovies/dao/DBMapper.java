@@ -74,9 +74,10 @@ public interface DBMapper {
 	public Integer userInfoTotCount();
 	public ArrayList<ManagerMemberInquiryDTO> userInfoTotList(int userInfoListStartPage, int userInfoEndPage);
 	public List<ManagerMemberInquiryDTO> searchMemberInfo(String userID, String userName, String userBirth);
-	public List<ManagerUserReserveDTO> managerReservationInfo();
+	public List<ManagerUserReserveDTO> managerReservationInfo(ManagerUserReserveDTO dto);
 	public List<String> managerGetMovieTitle();
 	public List<Integer> managerGetTheaterCnt();
+	public void managerTicketCancel(String ticketNum);
 /** jung. 상영시간표 **/
 	public List<MovieShowTimesMap> showtimes() throws Exception;
 	

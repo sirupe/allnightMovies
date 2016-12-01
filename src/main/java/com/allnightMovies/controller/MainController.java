@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -29,7 +27,6 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO;
 import com.allnightMovies.model.data.movieInfo.MainPageEventDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
-import com.allnightMovies.model.data.movieInfo.MovieStillCut;
 import com.allnightMovies.model.params.Params;
 import com.allnightMovies.service.DBService;
 
@@ -111,8 +108,7 @@ public class MainController {
 		Integer movieAge  		= params.getManagerMovieAge();
 		Integer movieRuntime  	= params.getManagerMovieRuntime();
 		List<MultipartFile> files = multiReq.getFiles("file");
-		
-		
+
 		try {
 			   
 			for(int i = 0, size = files.size(); i < size; i++) {

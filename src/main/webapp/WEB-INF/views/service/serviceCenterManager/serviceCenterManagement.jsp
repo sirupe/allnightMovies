@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			<div class="managementQuestionbutton">
-				<button class="managementQuestionButton_cancel js_managementQuestionButtonCancel">취소</button>
+				<button class="managementQuestionButton_cancel js_managementQuestionButtonCancel" type="button">취소</button>
 				<button class="managementQuestionButton_confirm js_managementQuestionButtonConfirm" type="button">확인</button>
 			</div>
 		

@@ -1245,7 +1245,6 @@ public class MainService implements Action {
 		mav.addObject("filmNum", filmNum);
 		return mav;
 	}
-	//TODO 현재 가나다순 정렬 중임 
 	public ModelAndView sortTicketing() throws Exception{
 		ModelAndView mav = new ModelAndView("movie/include/currentFilmSort");
 		List<MovieCurrentFilmDTO> currentFilmDTO = this.dbService.sortTicketing();

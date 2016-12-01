@@ -34,7 +34,7 @@
 						<textarea class="reviewTextarea js_reviewText" placeholder="로그인 후 이용해주세요" readonly="readonly"></textarea>
 					</c:when>
 					<c:otherwise>
-						<textarea class="reviewTextarea js_reviewText" placeholder="글자수는 120자로 제한됩니다."></textarea>
+						<textarea class="reviewTextarea js_reviewText" maxlength="120" placeholder="글자수는 120자로 제한됩니다."></textarea>
 					</c:otherwise>
 				</c:choose>
 				<button class="reviewBoardBtn js_reviewInsertBtn" type="button">등록</button>

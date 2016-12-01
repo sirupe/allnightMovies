@@ -19,7 +19,15 @@ function setEvent() {
 		.on('click', '.js_deleteBtn', reviewDelete)
 		.on('click', '.js_movieModifyBtn', managerMovieModifyForm)
 		.on('click', '.js_movieIntroModifyBtn', managerMovieModifyForm)
+		.on('keyup', '.js_reviewText', reviewText)
 //		.on('click', '.js_movieInsertBtn', managerMovieInsertForm)
+}
+
+function reviewText() {
+	if ($(this).val().length > $(this).attr('maxlength')) {
+        alert('최대 120자까지 입력 가능 합니다.');
+        $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+    }
 }
 
 /*function managerMovieInsertForm() {

@@ -32,7 +32,7 @@ function currentFilmStartBtn() {
 }
 
 
-/*예매순 정렬*/ //TODO 현재 가나다순 정렬중임
+/*이름순 정렬*/
 function sortReservation() {
 	var url = '/movie/mainService/sortTicketing',  
 		cbf	= function(mav) {

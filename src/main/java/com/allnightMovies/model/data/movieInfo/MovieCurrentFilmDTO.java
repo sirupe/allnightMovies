@@ -8,5 +8,5 @@ public class MovieCurrentFilmDTO {
 	private String moviePoster;
 	private String movieAgeLimit;
 	private int no;
-	//private int score;
+	private int score;
 }

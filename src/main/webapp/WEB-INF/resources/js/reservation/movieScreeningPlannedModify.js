@@ -42,7 +42,7 @@ function screeningSubmitBtnClick() {
 		},
 		cbf = function(result) {
 			if(result.success) {
-				location.href = result.data;
+				locationMenus('POST','/movie/mainService/showtimes','reservation','showtimes' );
 			} else {
 				alert('중복되는 시간이 있습니다. 다시 입력해주세요.');
 			}

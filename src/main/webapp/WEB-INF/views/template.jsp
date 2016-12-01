@@ -5,7 +5,7 @@
 <html>
 	<jsp:include page="./include/head.jsp"/>
   
-	<body>
+	<body class="js_templateBody">
 		<form class="js_form">
 			<input type="hidden" name="contentCSS" id="hidden-css"/>
 			<input type="hidden" name="contentjs" id="hidden-js"/>

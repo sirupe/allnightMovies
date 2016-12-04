@@ -7,7 +7,7 @@
 	<div class="slider">
 		<figure>
 			<c:forEach begin="0" end="${mainEventImg}" step="1" items="${mainEventDTO}" var="mainEventDTO" >
-				<img class="js_mainEventImage" alt="" src="/../resources/img/mainPage/${mainEventDTO.mainEventImg}" data-notice-no="${mainEventDTO.noticeNo}">
+				<img class="js_mainEventImage main-event-image" alt="" src="/../resources/img/mainPage/${mainEventDTO.mainEventImg}" data-notice-no="${mainEventDTO.noticeNo}">
 			</c:forEach>
 		</figure>
 	</div>

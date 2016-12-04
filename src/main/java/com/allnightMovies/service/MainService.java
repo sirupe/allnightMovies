@@ -1000,11 +1000,19 @@ public class MainService implements Action {
 		mav.addObject("contentjs", "service/service/serviceCenter");
 		return mav;
 	}
-	
+	// TODO 수진 : 여기서 아무것도 안넘겨주니 confirmBoardCheck.jsp 에서 아무것도 체크할 수 없는 것.
 	public ModelAndView insertPwdCheck() throws Exception {
 		ModelAndView mav = new ModelAndView("/service/include/confirmBoardCheck");
 		Integer questionBoardNum = this.params.getQuestionBoardNum();
 		CinemaQuestionBoardDTO questionBoardList = this.dbService.questionBoardList(questionBoardNum);
+		
+		// 은정 변경사항--------------------------------
+		String loginUserID = (String) this.params.getSession().getAttribute("userID");
+		boolean resultBool = loginUserID.equals(questionBoardList.getUser_Id()) ? true : false;
+		
+		
+		mav.addObject("resultBool", resultBool);
+		//---------------------------------------------
 		
 		mav.addObject("questionBoardList", questionBoardList);
 		return mav;

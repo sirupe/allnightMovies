@@ -1005,4 +1005,5 @@ pre.boardViewTextarea {
     border-radius: 10px;
     padding: 14px;
     width: 595px;
+    white-space: pre-line;
 }

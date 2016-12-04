@@ -43,9 +43,9 @@
 					<pre class="boardViewTextarea">${questionBoardList.getContent() }</pre>
 				</div>
 			</div>
-			
+
 			<c:choose>
-				<c:when test="${isUserRight == loginUserId }">
+				<c:when test="${resultBool}">
 					<div class="serviceCenter_viewForm">
 						<button class="serviceCenter_QuestionWrite js_QuestionWriteUpdateBtn" type="button">수정하기</button>
 						<button class="serviceCenter_QuestionWrite js_QuestionWriteDeleteBtn" type="button">삭제하기</button>

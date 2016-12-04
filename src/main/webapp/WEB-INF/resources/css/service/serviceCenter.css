@@ -189,10 +189,10 @@ label.js_questionBoard_title {
 	width: 50px;
 }
 .toptitle {
-	width: 480px;
+	width: 496px;
 }
 .title {
-	width: 460px;
+	width: 475px;
 	text-align: left;
 	margin-left: 20px;
 }
@@ -768,7 +768,7 @@ textarea.managementQuestionUpdateTextarea {
 }
 
 .managementQuestionwriteBoard {
-    width: 620px;
+    width: 703px;
     font-size: 18px;
     height: 25px;
     font-family: 'Jeju Gothic', serif;

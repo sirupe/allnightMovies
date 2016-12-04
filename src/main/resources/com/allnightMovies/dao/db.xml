@@ -973,7 +973,7 @@
 	
 <!-- MAIN PAGE -->	
 	<select id="getMainEvnetImg" resultType="com.allnightMovies.model.data.movieInfo.MainPageEventDTO">
-		SELECT MAIN_EVENT mainEventImg
+		SELECT MAIN_EVENT mainEventImg, NOTICE_NO noticeNO
 		FROM MAIN_PAGE
 	</select>
 	

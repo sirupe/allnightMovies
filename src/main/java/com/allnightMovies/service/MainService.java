@@ -870,16 +870,9 @@ public class MainService implements Action {
 			isUserConfirm=true;
 		}
 		
-		System.out.println(userStatus + " : 로그ㄷ인한사람 상태");
-		System.out.println(questionBoardList.getIsPwd() + " : ??");
-		System.out.println(LoginUserID + " ??"); //로그인 한사람.
-		System.out.println(isUserRight + " : ??"); //게시글 쓴사람
-		
 		String result = "";
 		if(questionBoardList.getIsPwd() == 1 && userStatus != 2) {
 			result = "/service/include/reCheckPwdWriteForm";
-//		} else if(LoginUserID == null)  { 
-//			result = "/service/include/reCheckPwdWriteForm";
 		} else {
 			result = "/service/include/questionViewBoard";
 		}

@@ -40,7 +40,7 @@
 			<div class="questionBoardView-sub">
 				<div class="questionBoardView_subject">
 					<label class="boardViewSub">내용</label>
-					<textarea class="boardViewTextarea"  readonly>${questionBoardList.getContent() }</textarea>
+					<pre class="boardViewTextarea">${questionBoardList.getContent() }</pre>
 				</div>
 			</div>
 			

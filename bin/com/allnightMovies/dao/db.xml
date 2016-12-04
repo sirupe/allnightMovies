@@ -636,39 +636,39 @@
 
 <!-- 수진 . 문의사항게시판 전체 뽑아오기 -->	
 	<select id="questionBoardList" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
-					SELECT * FROM (
-		      				SELECT 
-		      				NO, 
-		      				TITLE, 
-		      				CONTENT, 
-		      				USER_ID, 
-		      				WRITE_DATE, 
-		      				WRITEPWD, 
-		      				ISPWD, 
-		      				REPLYNO, 
-		      				REPLYSTEP, 
-		      				REPLYDEPTH,
-		      				WRITESTATUS,
-	      					ROWNUM RNUM 
-	      				FROM (
-	              			 SELECT 
-	              			 NO, 
-	              			 TITLE, 
-	              			 TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, 
-	              			 USER_ID, 
-	              			 CONTENT, 
-	              			 WRITEPWD, 
-	              			 ISPWD,
-	              			 REPLYNO, 
-	              			 REPLYSTEP, 
-	              			 REPLYDEPTH,
-	              			 WRITESTATUS
-              			 FROM CINEMA_ASKED_BOARD 
-						 WHERE WRITESTATUS = 1
-               			  ORDER BY REPLYNO DESC, REPLYSTEP ASC
-	           			 )		
-	     			 )    
-	      			WHERE NO = #{param1}
+		SELECT * 
+		FROM (
+			SELECT 
+				NO, 
+				TITLE, 
+				CONTENT, 
+				USER_ID, 
+				WRITE_DATE, 
+				WRITEPWD, 
+				ISPWD, 
+				REPLYNO, 
+				REPLYSTEP, 
+				REPLYDEPTH,
+				WRITESTATUS,
+				ROWNUM RNUM 
+			FROM (
+				SELECT 
+					NO, 
+					TITLE, 
+					TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, 
+					USER_ID, 
+					CONTENT, 
+					WRITEPWD, 
+					ISPWD,
+					REPLYNO, 
+					REPLYSTEP, 
+					REPLYDEPTH,
+					WRITESTATUS
+        		FROM CINEMA_ASKED_BOARD 
+				WHERE WRITESTATUS = 1
+        		ORDER BY REPLYNO DESC, REPLYSTEP ASC
+			)		
+		) WHERE NO = #{param1}
 	</select>
 
 <!-- 수진 . 문의사항 글등록 -->

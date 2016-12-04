@@ -108,7 +108,7 @@ function searchQuestionBoard() {
 					.css('display', 'none');
 			};
 			if(userSearchInput == '') {
-				alert('입력바랍니다.');
+				alert('검색하실 단어를 입력해주세요.');
 				return false;
 			}
 			$.post(url, params, cbf);	

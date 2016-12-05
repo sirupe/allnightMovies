@@ -25,6 +25,8 @@ import com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO;
 import com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo;
+import com.allnightMovies.model.data.cinemaInfo.UserClickShowtimesDTO;
+import com.allnightMovies.model.data.movieInfo.ManagerMovieTimeAddDTO;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfo;
 import com.allnightMovies.model.data.movieInfo.MovieBasicInfoCast;
 import com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO;
@@ -230,6 +232,10 @@ public class MainService implements Action {
 	
 /*****은정. ticketing *****/
 	public ModelAndView ticketing() throws Exception {
+		System.out.println(this.params.getMovieTime());
+		System.out.println(this.params.getMovieTitle());
+		System.out.println(this.params.getTheater());
+		System.out.println(this.params.getScreeningDate());
 		this.params.setDirectory("reservation/ticketing");
 		this.params.setPage("ticketing");
 		this.params.setContentCSS("reservation/ticketing");
@@ -238,10 +244,17 @@ public class MainService implements Action {
 		MovieScreeningDateInfo screeningDate = this.dbService.getMaxScreeningDate();
 		screeningDate.setScreeningDate();
 		
+		UserClickShowtimesDTO dto = new UserClickShowtimesDTO();
+		dto.setMovieTime(this.params.getMovieTime())
+		   .setMovieTitle(this.params.getMovieTitle())
+		   .setMovieTheater(this.params.getTheater())
+		   .setMovieDate(this.params.getScreeningDate());
+		
 		ModelAndView mav = this.getTemplate();
 		mav.addObject("cal", new MonthCalendar());
 		mav.addObject("screening", screeningDate);
 		mav.addObject("movieTitle", this.dbService.getMovieTitle());
+		mav.addObject("userChoiceInfo", dto);
 		return mav;
 	}
 		
@@ -591,7 +604,7 @@ public class MainService implements Action {
 	
 	public ModelAndView managerScreeningPlannedModify() throws Exception {
 		ModelAndView mav = this.getTemplate();
-		List<String> movieList = this.dbService.managerGetMovieTitle();
+		List<ManagerMovieTimeAddDTO> movieList = this.dbService.getManagerMovieTitleScreeningDate();
 		List<Integer> theaterList = this.dbService.managerGetTheaterCnt();
 		mav.addObject("movieList", movieList);
 		mav.addObject("theaterList", theaterList);

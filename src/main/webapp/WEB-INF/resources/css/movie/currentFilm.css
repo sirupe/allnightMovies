@@ -1,0 +1,184 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif;*/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/*font-family: 'Nanum Gothic', serif; 비밀번호*/
+
+.video-currentFilm__mainFilm {
+    width: 980px;
+    height: 380px;
+    cursor: pointer;
+}
+.div-currentFilm {
+	display: block;
+}
+/*현재상영작 제목*/
+.div-currentFilm__title {
+	font-family: 'Jeju Gothic', serif;
+    margin: 33px 0px 20px 10px;
+	font-size: 25px;
+}
+/*현재상영작 포스터가 들어갈 구역*/
+.div-currentFilm-images {
+	margin-left: 20px;
+}
+.span-currentFilm-images {
+    display: inline-block;
+}
+/*현재상영작 포스터 하나*/
+.span-filmImgs {
+	width: 240px;
+    height: 340px;
+    background-repeat: no-repeat;
+	background-size: 240px 340px;
+	display: inline-block;
+    margin: 0px 35px 10px 30px;
+} 
+.span-filmImgs:hover {
+    box-shadow: 1px 1px 1px 120px rgba(50, 50, 50, 0.77) inset;
+}
+.span-filmImgs:hover .hiddenText{
+    opacity: 0.9;
+}
+.hiddenText {
+    position: absolute;
+    width: 110px;
+    cursor: pointer;
+    margin: 150px 46px;
+    padding: 15px 10px 10px 30px;
+    opacity: 0;
+    color: #d7cdac;
+    border-radius: 7px;
+    border: 1px solid #d7cdac;
+    text-decoration: none;
+    font-size: 24px;
+    font-family: 'Jeju Gothic', serif;
+}
+
+/*비디오 */
+.span-currentFilm__mainFilm {
+	display: flex;
+	align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+	background-repeat:no-repeat;
+	width: 980px;
+	height: 380px;
+	background-color: rgb(34, 33, 36);
+}
+.span-currentFilm__mainFilm:hover {
+	opacity: 1;
+    box-shadow: inset rgba(13, 32, 50, 0.27) 0 0 0 0;
+}
+
+/*예매순/평점순/예매하기 버튼*/
+.div-currentFilm__etc {
+	display: inline-block;
+    margin: 30px 580px 30px 70px;
+}
+
+/*예매순 / 평점순*/
+.label-currentFilm-sort {
+	font-family: 'Jeju Gothic', serif;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+}
+.label-currentFilm-sort:hover {
+	color: #b79fa1;
+	font-weight: bold;
+}
+
+/*영화제목*/
+.span-currentFilm-text {
+	text-align: -webkit-center;
+    display: -webkit-box;
+}
+.label-currentFilm__movieTitle {
+	padding-left: 7px;
+	font-family: 'Jeju Gothic', serif;
+    font-size: 17px;
+    margin-top: 15px;
+}
+
+/*관람등급*/
+.ageLimit15 {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #fd9800;
+	padding: 4px 2px 1px 3px;
+}
+.ageLimit12 {
+	font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #037eb7;
+	padding: 4px 2px 1px 3px;
+}
+.ageLimitAll {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 13px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #7fc41b;
+	padding: 4px 2px 2px 2px;
+}
+.ageLimit19 {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #ff0000;
+	padding: 4px 2px 1px 3px;
+}
+/*예약하기 버튼*/
+.button-currentFilm-reservation {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 18px;
+    background-color: #d7cdac;
+	border: 3px solid rgba(156, 156, 156, 0.25);
+    padding: 3px 13px;
+    color: #000000;
+    font-weight: 100;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.button-currentFilm-reservation:hover {
+	color: #4f4f4f;
+	background: #d0c8b3;
+    border: 2px solid #d7cdac;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.button-insertMovie {
+    padding: 7px 20px 7px 20px;
+    color: #fcf3f3;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #b79fa1;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: 100;
+    font-family: 'Jeju Gothic', serif;
+    text-overflow: clip;
+    background: rgba(206, 159, 161, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+}
+.button-insertMovie:hover {
+    color: #fcf3f3;
+    background: rgba(107, 78, 79, 0.81);
+    -webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}

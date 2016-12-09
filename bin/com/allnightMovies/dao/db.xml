@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.allnightMovies.dao.DBMapper">
-<!-- /* SELECT MENU */ --> 	
+<!-- 	<insert id="doTestInsert" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO">
+		INSERT INTO CINEMA_THEATER_SEAT_INFO (
+			CNT,
+		    THEATER,
+		    SEAT_ROWS,
+		    SEAT_COLS,
+		    NAME,
+		    STATUS
+		) VALUES (
+			CINEMA_THEATER_SEAT_INFO_SEQ.NEXTVAL,
+		    #{theater},
+		    #{row},
+		    #{col},
+		    #{name},
+		    #{status}
+		)
+	</insert>
+ -->
+<!-- /* JI. SELECT MENU */ --> 	
 	<resultMap type="com.allnightMovies.model.data.SubMenu" id="SubMenu">
 		<result column="subMenuName" property="subMenuName"/>
 		<result column="subMenuPage" property="subMenuPage"/>
@@ -12,21 +30,1167 @@
 		<result column="mainMenuPage" property="mainMenuPage"/>
 		<collection property="subMenuList" resultMap="SubMenu"/>
 	</resultMap>
-	
+
 	<select id="getMenus" resultMap="MainMenu">
-		SELECT 
-		    MAIN_MENU_NAME mainMenuName, 
-		    MAIN_MENU_PAGE mainMenuPage,
-		    SUB_MENU_NAME subMenuName,
-		    SUB_MENU_PAGE subMenuPage 
-		FROM SUB_MENU  
-		JOIN MAIN_MENU  
-		ON(SUB_MAIN_MENU = MAIN_MENU_PAGE)
+		<![CDATA[
+			SELECT 
+			    MAIN_MENU_NAME mainMenuName, 
+			    MAIN_MENU_PAGE mainMenuPage,
+			    SUB_MENU_NAME subMenuName,
+			    SUB_MENU_PAGE subMenuPage 
+			FROM SUB_MENU  
+			JOIN MAIN_MENU  
+			ON(SUB_MAIN_MENU = MAIN_MENU_PAGE)
+		]]>
+	</select>
+<!-- /* JI. LOGIN */ -->		
+	<select id="login" resultType="com.allnightMovies.model.data.userInfo.UserPersonalLoginInfoDTO" parameterType="com.allnightMovies.model.params.Params">
+		SELECT USER_ID userID, USER_STATES userStates, USER_PWD userPwd
+		FROM USER_PERSONAL_INFO
+		WHERE USER_ID = #{userID}
+	</select>
+		
+<!-- /* JI. JOIN */ -->	
+	<select id="idCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(USER_ID) FROM USER_PERSONAL_INFO WHERE USER_ID=#{id}
+	</select>
+
+	<insert id="insertJoinUserInfo" parameterType="com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO">
+		INSERT INTO USER_PERSONAL_INFO(
+			USER_ID,
+		    USER_PWD,
+		    USER_NAME,
+		    USER_EMAIL,
+		    USER_BIRTH,
+		    USER_GENDER
+		) VALUES (
+			#{userID},
+		    #{userPWD},
+		    #{userName},
+		    #{userEmail},
+		    #{userBirth},
+		    #{userGender}
+		)
+	</insert>
+
+<!-- /* JI. TICKETING */ -->
+	<!-- TICKETING : 예매 가능일자 가져오기 -->
+	<select id="getMaxScreeningDate" resultType="com.allnightMovies.model.data.movieInfo.MovieScreeningDateInfo">
+		SELECT TO_CHAR(SYSDATE, 'YYYY.MM.DD HH:MI') SCREENINGMINDATE, MAX(MOVIE_SCREENING_DATE) SCREENINGMAXDATE
+		FROM MOVIE_SCREENING_PRICE
 	</select>
 	
-	<select id="login" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
-		SELECT USER_ID
-		FROM USER_PERSONAL_INFO
-		WHERE USER_ID = #{userID} AND USER_PWD = #{userPWD}
+	<!-- TICKETING : 상영일자에 맞추어 영화제목들 가져오기 -->
+	<select id="getMovieTitle" resultType="com.allnightMovies.model.data.movieInfo.TicketingMovieTitleInfo">
+		<![CDATA[
+		SELECT 
+        	DISTINCT MOVIE_TITLE MOVIETITLE,
+			DECODE(MOVIE_AGE_LIMIT, 0, 'All', MOVIE_AGE_LIMIT) MOVIEAGELIMIT
+		FROM MOVIE_BASIC_INFO MBI 
+        JOIN (
+        	SELECT * 
+            FROM MOVIE_SCREENING_PRICE
+            WHERE MOVIE_SCREENING_DATE >= TO_CHAR(SYSDATE, 'YYYY-MM-DD')) USING(MOVIE_TITLE)
+        WHERE MOVIE_RELEASE_DATE < TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+        ]]>
 	</select>
+	
+	<!-- TICKETING : 영화관, 영화 상영시간 정보 가져오기 -->
+	<resultMap type="java.lang.String" id="movieTime">
+		<result column="movieTime" property="movieTime"/>
+	</resultMap>
+	
+	<resultMap type="com.allnightMovies.model.data.movieInfo.TicketingMovieTimeInfo" id="movieTimeInfo">
+		<result column="movieTheather" property="movieTheather"/>
+		<collection property="movieTime" resultMap="movieTime"/>
+	</resultMap>
+	
+	<select id="getMovieTime" resultMap="movieTimeInfo">
+		SELECT MOVIE_THEATHER MOVIETHEATHER, SUBSTR(MOVIE_SCREENING_DATE, 12, 5) MOVIETIME 
+		FROM MOVIE_SCREENING_PRICE
+		WHERE MOVIE_TITLE=#{param1} AND MOVIE_SCREENING_DATE LIKE #{param2}||'%'
+		ORDER BY MOVIETHEATHER, MOVIETIME
+	</select>
+
+	<!-- TICKETING : 영화 금액정보 가져오기 -->
+	<select id="getTicketPriceInfo" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT MOVIE_PRICE MOVIEPRICE 
+		FROM MOVIE_SCREENING_PRICE
+		WHERE MOVIE_SCREENING_DATE=#{param1} AND MOVIE_THEATHER=#{param2}
+	</select>
+	
+	<!-- TICKETING : 영화 포스터 가져오기 -->
+	<select id="getMoviePoster" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT MOVIE_POSTER MOVIEPOSTER
+		FROM MOVIE_BASIC_INFO
+		WHERE MOVIE_TITLE=#{title}
+	</select>
+	
+	<!-- TICKETING : 고객이 선택한 좌석이 예매되어있는지 확인 -->
+	<select id="checkEmptySeats" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.data.userInfo.UserCheckEmptySeatsDTO">
+		SELECT COUNT(*) CNT 
+		FROM USER_TICKETING_INFO
+		WHERE MOVIE_TITLE=#{movieTitle}
+		AND THEATER=#{theater}
+		AND MOVIE_SCREENING_DATE=#{movieScreeningDate}
+		AND (
+			<foreach collection="seatsList" index="index" item="type" separator="OR">
+		    	THEATER_SEAT=#{type}
+		    </foreach>
+		)
+	</select>
+	
+	<!-- TICKETING : 좌석정보 가져오기 -->
+	<select id="getTheaterSeatInfo" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatDTO" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaSeatReserveInfo">
+		SELECT 
+			THEATER,
+			NAME,
+		    SEAT_ROWS SEATROW,
+		    SEAT_COLS SEATCOL,
+		    STATUS,
+		    THEATERSEAT
+		FROM CINEMA_THEATER_SEAT_INFO M
+		LEFT OUTER JOIN (
+			SELECT DISTINCT(THEATER_SEAT) THEATERSEAT
+		    FROM USER_TICKETING_INFO
+		    WHERE MOVIE_TITLE=#{movieTitle}
+		    AND THEATER=#{theater}
+		    AND MOVIE_SCREENING_DATE=#{movieScreeningDate}
+		) Y ON(M.NAME = Y.THEATERSEAT)
+		WHERE THEATER=#{theater}
+		ORDER BY CNT
+	</select>
+	
+	<!-- TICKETING : 좌석 COL 갯수 가져오기 -->
+	<select id="getTheaterSeatColCnt" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(DISTINCT SEAT_COLS) cnt
+		FROM CINEMA_THEATER_SEAT_INFO
+		WHERE THEATER=#{theater}
+	</select>
+		
+	<!-- TICKETING : 예매정보 insert -->
+	<insert id="userTicketingInfoInsert" parameterType="com.allnightMovies.model.data.userInfo.UserTicketingInfo">
+		<foreach collection="theaterSeat" index="index" item="seat" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
+			INTO USER_TICKETING_INFO (
+				USER_ID, 
+				MOVIE_TITLE, 
+				THEATER, 
+				MOVIE_SCREENING_DATE, 
+				THEATER_SEAT, 
+				USER_TICKET_COUNT, 
+				USER_TOTAL_PRICE, 
+				USER_TICKETING_DATE, 
+				USER_TICKET_NUMBER,
+				MOVIE_SCREENING_DATE_TYPE
+			) VALUES (
+				#{userID}, 
+				#{movieTitle},
+				#{theater}, 
+				#{movieScreeningDate}, 
+				#{seat}, 
+				#{userTicketCount}, 
+				#{userTotalPrice}, 
+				SYSDATE, 
+				#{userTicketNumber},
+				#{movieScreeningDateType}
+			)
+		</foreach>
+	</insert>
+	
+<!-- JI. TICKET CONFIRMATION : 예매내역 확인 -->
+	<!-- TICKET CONFIRMATION : 예매된 좌석정보 가져오기 -->
+	<select id="reservationSeatInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.UserSelectTicketingInfo">
+		SELECT
+			THEATERSEAT,
+		    USER_TICKET_NUMBER userTicketNumber,
+		    USER_TOTAL_PRICE userTotalPrice,
+		    USER_TICKET_COUNT userTicketCount,
+		    TO_CHAR(USER_TICKETING_DATE, 'YYYY.MM.DD HH24:MI') userTicketingDate,
+		    THEATER,
+		    MOVIE_TITLE movieTitle,
+		    MOVIE_SCREENING_DATE movieScreeningDate,
+	        MOVIE_SCREENING_DATE_TYPE movieScreeningDateType
+		FROM (SELECT 
+		        LISTAGG(THEATER_SEAT, ',') WITHIN GROUP(ORDER BY USER_TICKET_NUMBER) THEATERSEAT,
+		        USER_TICKET_NUMBER,
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    FROM USER_TICKETING_INFO
+		    GROUP BY 
+		        USER_TICKET_NUMBER, 
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    ORDER BY MOVIE_SCREENING_DATE DESC)
+		WHERE USER_ID=#{userID} AND MOVIE_SCREENING_DATE_TYPE > SYSDATE
+	</select>
+
+	<!-- TICKET CONFIRMATION 영화 상영 종료시간 구하기 -->
+	<select id="getMovieEndTime" resultType="com.allnightMovies.model.data.userInfo.MovieEndTimeDTO" parameterType="java.lang.String">
+		SELECT 
+			DISTINCT TO_CHAR(MOVIE_SCREENING_DATE_TYPE + MOVIE_RUNTIME/(24*60), 'HH24:MI') movieEndTime,
+		    MOVIE_POSTER moviePoster
+		FROM USER_TICKETING_INFO JOIN (
+		    SELECT MOVIE_RUNTIME, MOVIE_TITLE, MOVIE_POSTER
+		    FROM MOVIE_BASIC_INFO
+		) USING(MOVIE_TITLE)
+		WHERE USER_TICKET_NUMBER=#{ticketNum}
+	</select>
+	
+	<!-- CANCEL TICKET : 예매취소 -->
+	<delete id="cancelTicket" parameterType="java.lang.String">
+		DELETE FROM USER_TICKETING_INFO
+		WHERE USER_TICKET_NUMBER=#{param1} AND USER_ID=#{param2}
+	</delete>
+
+<!-- JI. SEARCH MOVIE INFO : 영화정보검색 -->
+	<select id="searchMovieInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.movieInfo.MovieBasicInfo">
+		SELECT 
+		    MOVIE_AGE_LIMIT MOVIEAGELIMIT,
+		    MOVIE_AUTHOR MOVIEAUTHOR,
+		    MOVIE_CAST MOVIECAST,
+		    MOVIE_DIRECTOR MOVIEDIRECTOR,
+		    MOVIE_GENRE MOVIEGENRE,
+		    MOVIE_INTRO MOVIEINTRO,
+		    MOVIE_POSTER MOVIEPOSTER,
+		    MOVIE_RELEASE_DATE MOVIERELEASEDATE,
+		    MOVIE_RUNTIME MOVIERUNTIME,
+		    MOVIE_TITLE MOVIETITLE
+		FROM MOVIE_BASIC_INFO 
+		WHERE
+		    MOVIE_TITLE LIKE #{searchWord} OR
+ 		    MOVIE_DIRECTOR LIKE #{searchWord} OR
+		    MOVIE_AUTHOR LIKE #{searchWord} OR
+		    MOVIE_GENRE LIKE #{searchWord} OR
+		    MOVIE_CAST LIKE #{searchWord} OR
+		    MOVIE_INTRO LIKE #{searchWord}
+		ORDER BY MOVIE_TITLE, MOVIE_INTRO, MOVIE_CAST
+	</select>
+<!-- JI. MANAGER MENU -->
+	<!-- JI. MANAGER MENU : 메니저메뉴 전체 회원정보 가져오기 -->
+	<select id="getMemberInfo" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
+		SELECT 
+			USER_ID USERID,
+		    USER_NAME USERNAME,
+		    USER_BIRTH USERBIRTH,
+		    USER_GENDER USERGENDER,
+		    USER_EMAIL USEREMAIL,
+		    TO_CHAR(USER_REGDATE, 'YYYY-MM-DD') USERREGDATE,
+		    CASE  
+		    WHEN USER_STATES = 1 THEN '정상'
+		    WHEN USER_STATES = 0 THEN '탈퇴' 
+		    END USERSTATUS
+		FROM USER_PERSONAL_INFO
+		WHERE USER_STATES != 2
+		ORDER BY USER_STATES DESC, USER_REGDATE
+	</select>
+	
+	<!-- JI. MANAGER MENU : 메니저메뉴 유저 탈퇴 -->
+	<update id="managerWithdrawalMember" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO
+		SET USER_STATES=0
+		WHERE USER_ID=#{userID}
+	</update>
+	
+	<!-- JI. MANAGER MENU : 메니저메뉴 유저 탈퇴 복구 -->
+	<update id="managerRestoreMember" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO
+		SET USER_STATES=1
+		WHERE USER_ID=#{userID}
+	</update>
+	
+	<!-- MANAGER PAGING : 관리자메뉴 페이징(회원 총 수 구하기)-->
+	<select id="userInfoTotCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM USER_PERSONAL_INFO WHERE USER_STATES != 2
+	</select>
+	
+	<!-- MANAGER PAGING : 관리자메뉴 페이징(회원 페이징 구하기) -->
+	<select id="userInfoTotList" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
+		SELECT 
+			USER_ID USERID,
+			USER_NAME USERNAME,
+			USER_BIRTH USERBIRTH,
+			USER_GENDER USERGENDER,
+			USER_EMAIL USEREMAIL,
+			TO_CHAR(USER_REGDATE, 'YYYY-MM-DD') USERREGDATE,
+			CASE  
+			WHEN USER_STATES = 1 THEN '정상'
+			WHEN USER_STATES = 0 THEN '탈퇴' 
+			END USERSTATUS,
+			RNUM
+		FROM USER_PERSONAL_INFO 
+		JOIN (
+			SELECT
+			ROWNUM RNUM,
+			USER_ID
+			FROM USER_PERSONAL_INFO
+			WHERE USER_STATES != 2
+			ORDER BY USER_STATES DESC, USER_REGDATE
+		) USING(USER_ID)
+		WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 예매정보 영화제목들 가져오가 -->
+	<select id="getManagerMovieTitleScreeningDate" resultType="com.allnightMovies.model.data.movieInfo.ManagerMovieTimeAddDTO">
+		SELECT MOVIE_TITLE movieTitle, MOVIE_RELEASE_DATE movieReleaseDate
+		FROM MOVIE_BASIC_INFO
+	</select>
+	
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 유저 검색 -->
+	<select id="searchMemberInfo" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.userInfo.ManagerMemberInquiryDTO">
+		SELECT 
+		    USER_ID USERID,
+		    USER_NAME USERNAME,
+		    USER_BIRTH USERBIRTH,
+		    USER_GENDER USERGENDER,
+		    USER_EMAIL USEREMAIL,
+		    TO_CHAR(USER_REGDATE, 'YYYY-MM-DD') USERREGDATE,
+		    CASE  
+		    WHEN USER_STATES = 1 THEN '정상'
+		    WHEN USER_STATES = 0 THEN '탈퇴' 
+		    END USERSTATUS
+		FROM USER_PERSONAL_INFO
+		WHERE
+			USER_STATES != 2 AND
+			USER_ID LIKE #{param1} AND
+		    USER_NAME LIKE #{param2} AND
+		    USER_BIRTH LIKE #{param3}
+	</select>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 예매정보 영화제목들 가져오가 -->
+	<select id="managerGetMovieTitle" resultType="java.lang.String">
+		SELECT MOVIE_TITLE
+		FROM MOVIE_BASIC_INFO
+	</select>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 예매정보 관 정보 가져오가 -->	
+	<select id="managerGetTheaterCnt" resultType="java.lang.Integer">
+		SELECT DISTINCT THEATER
+		FROM CINEMA_THEATER_SEAT_INFO
+		ORDER BY THEATER
+	</select>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 예매정보 -->
+	<select id="managerReservationInfo" resultType="com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO" parameterType="com.allnightMovies.model.data.userInfo.ManagerUserReserveDTO">
+		SELECT
+			USER_TICKET_NUMBER userTicketNumber,
+			TO_CHAR(USER_TICKETING_DATE, 'YYYY.MM.DD HH24:MI') userTicketingDate,
+			USER_ID userID,
+			MOVIE_TITLE movieTitle,
+			THEATER,
+			USER_TICKET_COUNT userTicketCount,
+            TICKETPRICE,
+		    theaterSeat
+		FROM (
+			SELECT 
+		        LISTAGG(THEATER_SEAT, ',') WITHIN GROUP(ORDER BY USER_TICKET_NUMBER) THEATERSEAT,
+		        USER_TICKET_NUMBER,
+		        USER_ID,
+		        USER_TOTAL_PRICE TICKETPRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+		    FROM USER_TICKETING_INFO
+		    GROUP BY 
+		        USER_TICKET_NUMBER, 
+		        USER_ID,
+		        USER_TOTAL_PRICE,
+		        USER_TICKET_COUNT,
+		        USER_TICKETING_DATE,
+		        THEATER,
+		        MOVIE_TITLE,
+		        MOVIE_SCREENING_DATE,
+	            MOVIE_SCREENING_DATE_TYPE
+			    ORDER BY MOVIE_SCREENING_DATE DESC)
+			WHERE
+        		USER_TICKET_NUMBER LIKE #{userTicketNumber} 
+        		<if test="movieTitle != null">
+        			<if test="movieTitle != ''">
+        				AND MOVIE_TITLE=#{movieTitle}
+        			</if>
+        		</if>
+        		<if test="theater != null">
+        			<if test="theater != ''">
+        				AND THEATER=#{theater}
+        			</if>
+        		</if>
+        		<if test="userTicketingDate != null">
+        			<if test="userTicketingDate != ''">
+        				AND USER_TICKETING_DATE LIKE TO_DATE(#{userTicketingDate},'YYYY.MM.DD')
+        			</if>
+        		</if>
+            ORDER BY userTicketingDate DESC
+	
+	</select>
+	
+	<delete id="managerTicketCancel" parameterType="java.lang.String">
+		DELETE FROM USER_TICKETING_INFO
+		WHERE USER_TICKET_NUMBER=#{param1} 
+	</delete>
+		<!-- JI. MANAGER MENU : 매니저메뉴 상영일자 등록내용 검색 -->	
+	<select id="searchScreeningPlannedCnt" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.data.movieInfo.ManagerScreeningPlannedUpdateDTO">
+		SELECT COUNT(*)
+		FROM MOVIE_SCREENING_PRICE
+		WHERE
+			MOVIE_SCREENING_DATE = #{movieScreeningDate} AND
+		    MOVIE_THEATHER = #{movieTheather}
+	</select>
+	
+	<!-- JI. MANAGER MENU : 매니저메뉴 상영일자 등록하기 -->	
+	<insert id="insertMovieScreeningInfo" parameterType="com.allnightMovies.model.data.movieInfo.ManagerScreeningPlannedUpdateDTO">
+		INSERT INTO MOVIE_SCREENING_PRICE (
+			MOVIE_PRICE,
+		    MOVIE_SCREENING_DATE,
+			MOVIE_SCREENING_DATETYPE,
+		    MOVIE_THEATHER,
+		    MOVIE_TITLE
+		) VALUES (
+			#{moviePrice},
+		    #{movieScreeningDate},
+ 		    TO_DATE('${movieScreeningDate2}', 'YYYY.MM.DD HH24:MI'),
+		    #{movieTheather},
+		    #{movieTitle}
+		)
+	</insert>
+	
+	<!-- JI. MANAGER MOVIE DELETE -->
+	<update id="movieDelete" parameterType="java.lang.Integer">
+		UPDATE MOVIE_BASIC_INFO
+        SET STATUS = 0
+        WHERE NO=#{movieNo}
+	</update>
+	
+	<select id="movieReleaseDateCheck" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT 
+        	CASE  
+		    WHEN TO_DATE(MOVIE_RELEASE_DATE, 'YYYY.MM.DD HH24:MI') > SYSDATE THEN 1
+		    WHEN TO_DATE(MOVIE_RELEASE_DATE, 'YYYY.MM.DD HH24:MI') < SYSDATE THEN 0
+		    END RELEASEDATECHECK
+        FROM MOVIE_BASIC_INFO
+        WHERE NO=#{movieNo}
+        ]]>
+	</select>
+<!-- JUNG. 상영시간 list -->
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieshowTableDTO" id="MovieshowTableDTO">
+		<result column="screening_time"	property="screening_time"/>
+		<result column="movie_theather" property="movie_theather"/>
+	</resultMap>
+	
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieShowTitleDTO" id="MovieShowTitleDTO">
+		<result column="movie_title"	property="movie_title"/>
+		<collection property="movieshowTableDTO" resultMap="MovieshowTableDTO"/>
+	</resultMap>
+
+	<resultMap type="com.allnightMovies.model.data.movieInfo.MovieShowTimesMap" id="MovieShowTimesMap">
+		<result column="screening_Date" property="screening_Date" />
+		<result column="screeningYear" property="screeningYear"/>
+		<collection property="movieShowTitleDTO" resultMap="MovieShowTitleDTO"/>	
+	</resultMap>
+	
+<!-- JUNG. 상영시간표  -> 상영날짜 LIST -->
+	<select id="showtimes" resultMap="MovieShowTimesMap" parameterType="java.lang.String"> 
+		SELECT 
+		    DISTINCT SUBSTR(MOVIE_SCREENING_DATE,6,5) AS SCREENING_DATE,
+		    SUBSTR(MOVIE_SCREENING_DATE, 0,4) SCREENINGYEAR,
+		    MOVIE_THEATHER,
+		    SUBSTR(MOVIE_SCREENING_DATE,12,5) AS SCREENING_TIME,
+		    MOVIE_TITLE
+		FROM MOVIE_SCREENING_PRICE 
+		WHERE MOVIE_SCREENING_DATETYPE > SYSDATE
+		ORDER BY SCREENING_DATE ASC, MOVIE_TITLE ASC, SCREENING_DATE ASC
+	</select>
+	
+	<!--아이디(회원정보)-->
+<!--JUNG. 아이디 찾기-->
+	<select id = "searchId" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
+		SELECT 
+			USER_ID 
+			FROM USER_PERSONAL_INFO 
+		WHERE USER_NAME = #{param1} AND  USER_BIRTH = #{param2} AND USER_GENDER = #{param3}
+	</select>
+	
+	
+<!--JUNG. 아이디 (유무)-->
+	<select id= "searchIdCount" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
+		SELECT COUNT(USER_ID) 
+			FROM USER_PERSONAL_INFO 
+		WHERE USER_NAME = #{param1} AND  USER_BIRTH = #{param2} AND USER_GENDER = #{param3}	
+	</select>
+
+<!--수진 .  아이디(이메일) -->
+ 	<select id="searchEmailCount" resultType="java.lang.Integer" parameterType="com.allnightMovies.model.params.Params">
+		SELECT COUNT(USER_ID)
+			FROM USER_PERSONAL_INFO
+		WHERE USER_EMAIL = #{param1}
+	</select> 
+	
+	<select id ="searchIDEmail" resultType="java.lang.String" parameterType="com.allnightMovies.model.params.Params">
+		SELECT USER_ID
+			FROM USER_PERSONAL_INFO
+		WHERE USER_EMAIL = #{param1}
+	</select>
+	
+<!-- 수진 . 자주묻는질문게시판 -->
+	<select id="serviceCenter" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
+		SELECT
+			NO,
+			QUESTION,
+			ASKED
+		FROM CINEMA_FREQUENTLY_BOARD
+		ORDER BY NO DESC
+	</select>	
+
+ 	<select id="serviceCentergetBoard" parameterType="java.lang.Integer" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
+		SELECT * FROM (
+              SELECT NO, QUESTION, ASKED, ROWNUM RNUM 
+         FROM (
+                SELECT NO, QUESTION, ASKED
+                  FROM CINEMA_FREQUENTLY_BOARD
+                  ORDER BY NO DESC
+                )
+             )
+                 WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="serviceCentergetBoardCount" resultType ="java.lang.Integer">
+		 SELECT COUNT(*) 
+		 	FROM CINEMA_FREQUENTLY_BOARD
+	</select>
+<!--수진 . 자주묻는게시판 검색 갯수-->
+	<select id="userSearchList" resultType="java.lang.Integer" >
+		SELECT COUNT(*)
+			 FROM CINEMA_FREQUENTLY_BOARD 
+			 	WHERE QUESTION LIKE #{serviceCenterSearchWord} 
+			 			OR ASKED LIKE #{serviceCenterSearchWord}
+	</select>	
+	
+<!--수진 . 리스트불러오기 -->
+	<select id="getUserSearchList" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardNumberDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">
+		SELECT * 
+		FROM (
+			SELECT 
+				NO, 
+				QUESTION, 
+				ASKED,
+           		ROWNUM RNUM
+  			FROM (
+	        	SELECT 
+	        		NO, 
+	        		QUESTION, 
+	        		ASKED
+	        	FROM CINEMA_FREQUENTLY_BOARD
+	        	WHERE QUESTION LIKE #{param3} OR ASKED LIKE #{param3}
+	        )
+	    ) WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	
+<!-- 수진 . 문의사항게시판 -->
+	<select id="questionBoardCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM CINEMA_ASKED_BOARD
+	</select>
+
+	 <select id="questionBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
+			SELECT * FROM (
+      				SELECT NO, 
+      					   TITLE, 
+      					   WRITE_DATE, 
+      					   USER_ID, 
+      					   CONTENT, 
+      					   WRITEPWD, 
+      					   ISPWD, 
+      					   REPLYNO, 
+      					   REPLYSTEP, 
+      					   REPLYDEPTH, 
+      					   WRITESTATUS, 
+      					   ROWNUM RNUM 
+      				FROM (
+              			 SELECT NO, 
+              			 		TITLE, 
+              			 		TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, 
+              			 		USER_ID, 
+              			 		CONTENT, 
+              			 		WRITEPWD, 
+              			 		ISPWD, 
+              			 		REPLYNO, 
+              			 		REPLYSTEP, 
+              			 		REPLYDEPTH,
+              			 		WRITESTATUS
+              			 FROM CINEMA_ASKED_BOARD 
+              			  WHERE WRITESTATUS = 1
+               			 ORDER BY REPLYNO DESC, REPLYSTEP ASC
+           			 )		
+     			 )    
+      			WHERE RNUM BETWEEN #{param1} and #{param2}
+	</select> 
+
+<!-- 수진 . 문의사항게시판 전체 뽑아오기 -->	
+	<select id="questionBoardList" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" parameterType="java.lang.Integer">
+		SELECT * 
+		FROM (
+			SELECT 
+				NO, 
+				TITLE, 
+				CONTENT, 
+				USER_ID, 
+				WRITE_DATE, 
+				WRITEPWD, 
+				ISPWD, 
+				REPLYNO, 
+				REPLYSTEP, 
+				REPLYDEPTH,
+				WRITESTATUS,
+				ROWNUM RNUM 
+			FROM (
+				SELECT 
+					NO, 
+					TITLE, 
+					TO_CHAR(WRITE_DATE, 'MM/DD') AS WRITE_DATE, 
+					USER_ID, 
+					CONTENT, 
+					WRITEPWD, 
+					ISPWD,
+					REPLYNO, 
+					REPLYSTEP, 
+					REPLYDEPTH,
+					WRITESTATUS
+        		FROM CINEMA_ASKED_BOARD 
+				WHERE WRITESTATUS = 1
+        		ORDER BY REPLYNO DESC, REPLYSTEP ASC
+			)		
+		) WHERE NO = #{param1}
+	</select>
+
+<!-- 수진 . 문의사항 글등록 -->
+	<select id="InsertAskWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		INSERT INTO CINEMA_ASKED_BOARD(
+		    NO,
+		    TITLE,
+		    CONTENT,
+		    USER_ID,
+		    WRITE_DATE,
+		    WRITEPWD,
+		    ISPWD,
+		    REPLYNO,
+		    REPLYSTEP,
+		    REPLYDEPTH,
+		    WRITESTATUS
+   		 ) VALUES (
+       		ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+       		#{title},
+       		#{content},
+       		#{user_Id},
+       		SYSDATE,
+       		#{writePwd},
+       		#{isPwd},
+       		ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+       		0,
+       		0,
+       		1
+       	)
+
+	</select>
+	
+<!-- 수진 . 문의사항게시판 수정 -->
+	<select id="completeUPdateWriteBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		UPDATE 
+			CINEMA_ASKED_BOARD 
+			SET TITLE = #{param1}, 
+				CONTENT = #{param2},
+				WRITEPWD = #{param3}, 
+				ISPWD = #{param4} 
+			WHERE NO = #{param5}
+	</select>
+
+<!-- 수진 . 문의사항게시판 삭제 (보류시키기)-->
+	<select id="completeDeleteQuestionBoard" parameterType="java.lang.String"  >
+<!-- 		DELETE 
+			FROM CINEMA_ASKED_BOARD
+		WHERE NO = #{param1} -->
+		  UPDATE 
+		  	CINEMA_ASKED_BOARD 
+		  		SET WRITESTATUS = 0 
+		  		WHERE NO = #{param1}
+	</select> 
+	<!-- 문의사항 답글 삭제 -> 보류시키기 -->
+	<select id="completeDeleteReplyQuestionBoard" parameterType="java.lang.String"  >
+		UPDATE 
+			CINEMA_ASKED_BOARD 
+				SET WRITESTATUS = 0  
+				WHERE REPLYNO = #{param1}
+	</select>
+	
+
+<!-- 수진. 관리자(고객센터) 자주묻는게시판-->
+	<select id="managementWriteBoard" parameterType="java.lang.String" >
+		INSERT INTO 
+			CINEMA_FREQUENTLY_BOARD(
+				NO, 
+				QUESTION, 
+				ASKED
+			) VALUES(
+				FREQUENTLY_QUESTIONS_BOARD_SEQ.NEXTVAL, 
+				#{param1},
+				#{param2}
+			)
+	</select>
+<!-- 관리자(자주묻는게시판 리스트 ) -->
+	<select id="managementFrequentlyBoardCount" parameterType="java.lang.String" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO">	
+		SELECT NO,
+		 	   QUESTION, 
+		 	   ASKED 
+		 FROM CINEMA_FREQUENTLY_BOARD 
+		 	WHERE NO = #{param1}
+ 	</select>
+<!-- 관리자(자주묻는게시판 수정 -->
+	<select id="managementUpdateFormComplete" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaFrequentlyBoardDTO" >
+		UPDATE 
+			CINEMA_FREQUENTLY_BOARD SET 
+				QUESTION = #{param1}, 
+				ASKED = #{param2} 
+			WHERE NO = #{param3}
+	</select>
+	
+<!-- 관리자(자주묻는게시판 삭제) -->
+	<select id="managementDeleteFormComplete" parameterType="java.lang.String" >
+		 DELETE 
+		 		CINEMA_FREQUENTLY_BOARD 
+		 	WHERE NO = #{param1}
+	</select>
+	
+<!-- 문의사항 답글달기 -->
+	<select id="updateDepth" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		UPDATE 
+			CINEMA_ASKED_BOARD 
+			SET REPLYSTEP = REPLYSTEP + 1
+			WHERE REPLYNO = #{param1} AND REPLYSTEP > #{param2}
+	</select>
+	
+	
+	<select id="insertReplyBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaQuestionBoardDTO" >
+		INSERT INTO 
+		CINEMA_ASKED_BOARD (
+			NO,
+			TITLE,
+			CONTENT,
+			USER_ID, 
+			WRITE_DATE, 
+			WRITEPWD, 
+			ISPWD, 
+			REPLYNO, 
+			REPLYSTEP, 
+			REPLYDEPTH,
+			WRITESTATUS
+		) VALUES(
+			ASKED_QUESTIONS_BOARD_SEQ.NEXTVAL,
+			#{param1},
+			#{param2},
+			#{param3},
+			SYSDATE,
+			#{param4},
+			#{param5},
+			#{param6},
+			#{param7},
+			#{param8},
+			1
+			)
+			
+			
+		
+		
+	</select>
+<!-- /* SHIN. SEARCH PWD */ -->	
+	<select id="searchPWD" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(*) 
+		FROM USER_PERSONAL_INFO 
+		WHERE USER_ID = #{searchPwdUserID}
+	</select>	
+	<select id="searchEmail" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT USER_EMAIL 
+		FROM USER_PERSONAL_INFO 
+		WHERE USER_ID = #{searchPwdUserID}
+	</select>
+	<select id="updateNewPwd" resultType="java.lang.String" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO 
+		SET USER_PWD = #{param2}
+		WHERE USER_ID = #{param1}
+	</select>	
+	
+<!-- SHIN. MY INFO -->
+   <select id="selectMyInfo" resultType="com.allnightMovies.model.data.userInfo.UserPersonalInfoDTO" parameterType="java.lang.String">
+      SELECT 
+         USER_ID      as userID,
+         USER_PWD     as userPWD,
+         USER_NAME    as userName,
+         USER_GENDER as userGender,
+         USER_BIRTH   as userBirth,
+         USER_EMAIL   as userEmail,
+         USER_REGDATE as userRegDate,
+         USER_STATES  as userStates
+      FROM USER_PERSONAL_INFO
+      WHERE USER_ID = #{myInfoID}   
+   </select> 
+   
+   <select id="selectUserPWD" resultType="java.lang.String" parameterType="java.lang.String">
+      SELECT USER_PWD
+      	FROM USER_PERSONAL_INFO
+      WHERE USER_ID = #{myInfoID}
+   </select>
+
+	<select id="updateWithdraw" resultType="java.lang.String" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO 
+			SET USER_STATES = 0
+		WHERE USER_ID = #{myInfoID}
+	</select>
+	
+	<select id="updateEmailAddr" resultType="java.lang.String" parameterType="java.lang.String">
+		UPDATE USER_PERSONAL_INFO 
+			SET USER_EMAIL = #{param1}
+		WHERE USER_ID = #{param2}
+	</select>
+
+<!-- SHIN. MOVIE  CURRENTFILM // SORT-->	
+	<select id="getCurrentFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
+		SELECT * FROM (
+			SELECT MOVIE_TITLE  movieTitle,
+                   MOVIE_POSTER moviePoster,
+                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
+                   ROWNUM RNUM
+			FROM (
+				SELECT *
+				FROM MOVIE_BASIC_INFO 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1
+				ORDER BY MOVIE_TITLE ASC
+			    )
+			)
+	</select>
+	
+	<select id="sortScore" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
+		SELECT * FROM (
+			SELECT MOVIE_TITLE  movieTitle,
+                   MOVIE_POSTER moviePoster,
+                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   REVIEW_EVALUATE score,
+                   NO no,
+                   ROWNUM RNUM
+			FROM (
+				SELECT *
+				FROM MOVIE_BASIC_INFO 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1
+				ORDER BY REVIEW_EVALUATE DESC
+			    )
+			)   
+	</select>
+	
+	<select id="sortTicketing" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
+		SELECT * FROM (
+			SELECT MOVIE_TITLE  movieTitle,
+                   MOVIE_POSTER moviePoster,
+                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
+                   ROWNUM RNUM
+			FROM (
+				SELECT *
+				FROM MOVIE_BASIC_INFO 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1
+				ORDER BY MOVIE_TITLE ASC
+			    )
+			)  
+	</select>
+	
+	
+	
+<!-- SHIN. MOVIE  plannedFilm -->		
+	<select id="getPlannedFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieScreeningsPlannedDTO">
+		SELECT * FROM (
+			SELECT MOVIE_TITLE  movieTitle,
+                   MOVIE_POSTER moviePoster,
+                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+                   NO no,
+                   ROWNUM RNUM
+			FROM (
+				SELECT *
+				FROM MOVIE_BASIC_INFO 
+				WHERE MOVIE_RELEASE_DATE <![CDATA[>]]> SYSDATE AND STATUS = 1
+				ORDER BY MOVIE_TITLE ASC
+			    )
+			)   
+	</select>
+	
+<!-- SHIN. SERVICE noticeBoard -->
+	<select id="getNoticeBoardCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM CINEMA_NOTICE_BOARD
+	</select>
+	
+	<select id="getCinemaNoticeBoardDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.Integer">
+		SELECT * FROM (
+			SELECT NO		  no, 
+			       TITLE	  title,
+			       writeDate, 
+			       CONTENT	  content,
+			       IMPORTANT  important,
+			       ROWNUM RNUM 
+			FROM (
+			         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
+			         FROM CINEMA_NOTICE_BOARD 
+			         ORDER BY IMPORTANT DESC, writeDate DESC, NO DESC
+			      )
+			)    
+		WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="getNoticeBoardContent" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="java.lang.Integer">
+		SELECT TITLE title, 
+			   TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') writeDate,  
+			   CONTENT content,
+			   IMPORTANT important
+		FROM CINEMA_NOTICE_BOARD
+		WHERE NO = #{noticeNo}
+	</select>
+	
+	<select id="searchBoardCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM CINEMA_NOTICE_BOARD
+		WHERE TITLE LIKE #{searchWord} OR CONTENT LIKE #{searchWord}
+	</select>
+	
+	<select id="searchBoard" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeSearchBoardDTO">
+		SELECT * FROM (
+		SELECT NO		  no, 
+		       TITLE	  title,
+		       writeDate, 
+		       CONTENT	  content,
+		       IMPORTANT  important,
+		       ROWNUM RNUM 
+		FROM (
+		         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
+		         FROM CINEMA_NOTICE_BOARD 
+		         WHERE TITLE LIKE #{param3} OR CONTENT LIKE #{param3}
+		         ORDER BY IMPORTANT DESC, writeDate DESC, NO DESC
+		      )
+		)    
+		WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+<!-- SHIN. theater introduce -->
+
+	<select id="getCinemaIntroImg" resultType="com.allnightMovies.model.data.theater.CinemaIntroduceDTO">
+		SELECT CINEMA_INTRO_IMAGE cinemaIntroImg
+		FROM CINEMA_INTRODUCE 
+	</select>
+	
+<!-- MAIN PAGE -->	
+	<select id="getMainEvnetImg" resultType="com.allnightMovies.model.data.movieInfo.MainPageEventDTO">
+		SELECT MAIN_EVENT mainEventImg, NOTICE_NO noticeNO
+		FROM MAIN_PAGE
+	</select>
+	
+	<select id="getNewFilmDTO" resultType="com.allnightMovies.model.data.movieInfo.MovieCurrentFilmDTO">
+		SELECT * FROM (
+				SELECT MOVIE_TITLE  movieTitle,
+	                   MOVIE_POSTER moviePoster,
+	                   MOVIE_RELEASE_DATE,
+	                   DECODE(MOVIE_AGE_LIMIT, 0, 'All', 12 ,'12', 15, '15', 19, '19') movieAgeLimit,
+	                   NO no,
+	                   ROWNUM RNUM
+				FROM (
+					SELECT *
+					FROM MOVIE_BASIC_INFO 
+					WHERE MOVIE_RELEASE_DATE <![CDATA[<]]> SYSDATE AND STATUS = 1
+					ORDER BY MOVIE_TITLE ASC
+				    )
+				) 
+	      WHERE RNUM <![CDATA[<]]>= 4
+	</select>
+	<select id="getMainNoticeDTO" resultType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
+		SELECT * FROM (
+			SELECT NO		  no, 
+			       TITLE	  title,
+			       writeDate, 
+			       CONTENT	  content,
+			       IMPORTANT  important,
+			       ROWNUM RNUM 
+			FROM (
+			         SELECT NO, TITLE, TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, CONTENT, IMPORTANT
+			         FROM CINEMA_NOTICE_BOARD 
+			         ORDER BY IMPORTANT DESC, writeDate DESC, NO DESC
+			      )
+			)    
+		WHERE RNUM <![CDATA[<]]> = 10
+	</select>
+<!-- 영화  상세정보보기 -->
+	<select id="getMovieBasicInfo" resultType="com.allnightMovies.model.data.movieInfo.MovieBasicInfo" parameterType="java.lang.String">
+		SELECT MOVIE_TITLE 			movieTitle,
+    		   MOVIE_RELEASE_DATE   movieReleaseDate,
+    		   MOVIE_DIRECTOR       movieDirector,
+			   MOVIE_AUTHOR			movieAuthor,
+			   MOVIE_GENRE			movieGenre,
+			   MOVIE_CAST			movieCast,
+			   DECODE(MOVIE_AGE_LIMIT, 0, '전체', 12, '12세', 15, '15세', 19, '19세') as movieAgeLimitText,
+			   MOVIE_RUNTIME		movieRuntime,
+			   MOVIE_INTRO			movieIntro,
+			   MOVIE_POSTER			moviePoster,
+			   REVIEW_EVALUATE		reviewEvaluate,
+			   NO                   no
+	   FROM MOVIE_BASIC_INFO
+	   WHERE MOVIE_TITLE = #{movieTitle}
+	</select>
+	
+	<select id="getReviewBoard" resultType="com.allnightMovies.model.data.movieInfo.MovieReviewBoard" parameterType="java.lang.String">
+		SELECT REVIEW_EVALUATE  				 AS reviewEvaluate,  
+		       REVIEW_CONTENTS 				 	 AS reviewContents,   
+		       USER_ID		   					 AS reviewWriter,    
+		       TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate,
+		       NO								 AS reviewNo    
+		FROM MOVIE_REVIEW_BOARD                         
+		WHERE MOVIE_TITLE = #{movieTitle} AND STATUS = 1
+	</select>
+	
+	<select id="getReviewBoardList" resultType="com.allnightMovies.model.data.movieInfo.MovieReviewBoard" parameterType="com.allnightMovies.model.data.movieInfo.MovieReviewBoardDTO">
+		SELECT * FROM (
+	       SELECT REVIEW_EVALUATE  	 AS reviewEvaluate,  
+			       REVIEW_CONTENTS 	 AS reviewContents,   
+			       USER_ID		   	 AS reviewWriter,    
+			       writeDate,
+			       NO                AS reviewNo,
+	           	   ROWNUM RNUM
+			   FROM (
+			          SELECT REVIEW_EVALUATE, REVIEW_CONTENTS, USER_ID,  TO_CHAR(WRITE_DATE, 'YYYY/MM/DD') AS writeDate, NO
+			          FROM MOVIE_REVIEW_BOARD
+			          WHERE MOVIE_TITLE LIKE #{param3} AND STATUS = 1
+			          ORDER BY WRITE_DATE DESC
+	      			 )
+	   		 )
+	    WHERE RNUM BETWEEN #{param1} AND #{param2}
+	</select>
+	<select id="insertReview" parameterType="com.allnightMovies.model.data.movieInfo.MovieReviewBoard">
+		INSERT INTO 
+		MOVIE_REVIEW_BOARD (
+								REVIEW_EVALUATE,
+					  			REVIEW_CONTENTS, 
+								USER_ID, 
+					  			WRITE_DATE,
+					 			MOVIE_TITLE,
+					 			NO
+				 			)
+		VALUES (#{param1}, #{param2}, #{param3}, SYSDATE, #{param4}, MOVIE_REVIEW_SEQ.NEXTVAL)
+	</select>
+	<select id="deleteReview" parameterType="java.lang.Integer">
+		UPDATE MOVIE_REVIEW_BOARD
+		SET STATUS = 0
+		WHERE NO = #{reviewNo} 
+	</select>
+	<select id="getStillcut" resultType="com.allnightMovies.model.data.movieInfo.MovieStillCut" parameterType="java.lang.String">
+		SELECT MOVIE_CUT AS movieCut
+		FROM MOVIE_STEEL_CUT 
+		WHERE MOVIE_TITLE = #{movieTitle}
+	</select>
+	
+<!-- 관리자 / 공지사항 -->
+	<select id="insertNoticeBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
+		INSERT INTO CINEMA_NOTICE_BOARD (
+				NO,
+				TITLE, 
+				WRITE_DATE, 
+				CONTENT, 
+				IMPORTANT
+		) VALUES (
+				NOTICE_BOARD_SEQ.NEXTVAL, 
+				#{param1}, 
+				SYSDATE,
+				#{param2}, 
+				#{param3}
+		)
+	</select>
+	<select id="updateNoticeBoard" parameterType="com.allnightMovies.model.data.cinemaInfo.CinemaNoticeBoardDTO">
+		UPDATE CINEMA_NOTICE_BOARD
+		SET TITLE = #{param1}, CONTENT = #{param2}, IMPORTANT = #{param3}
+		WHERE NO = #{param4}
+	</select>
+	<select id="deleteNoticeBoard" parameterType="java.lang.Integer">
+		DELETE CINEMA_NOTICE_BOARD
+		WHERE NO = #{noticeNO}
+	</select>
+<!-- 관리자 영화삭제 -->	
+	<select id="deleteMovieFilm" parameterType="java.lang.String">
+		UPDATE MOVIE_BASIC_INFO
+		SET STATUS = 0
+		WHERE = #{no}
+	</select>
+	
+	<select id="updateMovieInfo" parameterType="com.allnightMovies.model.data.movieInfo.MovieBasicInfoDTO">
+ 		UPDATE MOVIE_BASIC_INFO					
+		SET MOVIE_TITLE        = #{movieTitle},
+			MOVIE_INTRO		   = #{movieIntro},
+		    MOVIE_RELEASE_DATE = #{movieReleaseDate},
+		    MOVIE_DIRECTOR 	   = #{movieDirector},
+		    MOVIE_AUTHOR 	   = #{movieAuthor},
+		    MOVIE_GENRE 	   = #{movieGenre},
+		    MOVIE_CAST         = #{movieCast},
+		    MOVIE_AGE_LIMIT    = #{movieAgeLimitText},
+		    MOVIE_RUNTIME 	   = #{movieRuntime}
+		WHERE NO 	   		   = #{no} 
+	</select>
+	
+	<select id="insertNewMovie" parameterType="com.allnightMovies.model.data.movieInfo.MovieBasicInfo">
+		INSERT INTO MOVIE_BASIC_INFO (
+					MOVIE_TITLE,
+					MOVIE_RELEASE_DATE, 
+					MOVIE_DIRECTOR, 
+					MOVIE_AUTHOR, 
+					MOVIE_GENRE,
+					MOVIE_CAST,
+					MOVIE_AGE_LIMIT,
+					MOVIE_RUNTIME,
+					MOVIE_INTRO,
+					MOVIE_POSTER,
+					NO
+			) VALUES (
+					#{movieTitle}, 
+					#{movieReleaseDate},
+					#{movieDirector},
+					#{movieAuthor},
+					#{movieGenre},
+					#{movieCast},
+					#{movieAgeLimit},
+					#{movieRuntime},
+					#{movieIntro},
+					#{moviePoster},
+					MOVIE_BASIC_INFO_SEQ.NEXTVAL 
+			)
+	</select>
+	<select id="insertStillcut" parameterType="java.lang.String">
+		INSERT INTO MOVIE_STEEL_CUT (
+					MOVIE_CUT,
+					MOVIE_TITLE
+			) VALUES (
+				#{param1},
+				#{param2}
+			)
+	</select>
+	<select id="getMovieNO" resultType="java.lang.Integer" parameterType="java.lang.String">
+			SELECT NO
+			FROM MOVIE_BASIC_INFO
+			WHERE MOVIE_TITLE = #{movieTitle}
+	</select>
+	
 </mapper>

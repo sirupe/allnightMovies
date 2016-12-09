@@ -1,0 +1,160 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif;*/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/*font-family: 'Nanum Gothic', serif; 비밀번호*/
+
+/**************MYINFO ChangeEmail***************/
+.div-myInfoChangeEmail__Form {
+	width: 700px;
+    display: flex;
+    flex-direction: column;
+    line-height: 40px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.div-myInfoChangeEmail__title {
+	font-family: 'Jeju Gothic', serif;
+	background-color: rgb(202, 147, 129);
+    color: white;
+    padding-left: 20px;	
+    font-size: 20px;
+}
+
+.div-myInfoChangeEmail__content {
+	display: flex;
+	align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid gray;
+    font-size: 12px;
+    line-height: 1.5em;
+    background-color: white;
+}
+.input-myInfoChangeEmail {
+	height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font-family: 'Jeju Gothic', serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+    font-size: 13px;
+    width: 250px;
+    margin: 5px 0px 5px 0px;
+}
+
+.input-myInfoChangeEmail__confirm {
+	height: 20px;
+    font-size: 13px;
+    padding: 5px 10px;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    font-family: 'Jeju Gothic', serif;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2) inset;
+    height: 20px;
+    font-size: 13px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+    background-color: #dcdcdc;
+}
+
+.label-myInfoChangeEmail__content {
+	font-family: 'Jeju Gothic', serif;
+	font-size: 16px;
+	margin-top: 18px;
+}
+
+.text-confirm-thread {
+	font-family: 'Jeju Gothic', serif;
+	font-size: 13px;
+	color: #8BACD9;
+	margin: 5px -5px;
+}
+
+.text-myInfoChangeEmail {
+	font-family: 'Jeju Gothic', serif;
+	margin-top: 5px;
+	font-size: 13px;
+	color: #8BACD9;
+}
+
+/**************MYINFO ChangeEmailResult***************/
+.div-myInfoChageEmailResult-title {
+	font-family: 'Jeju Gothic', serif;
+    background-color: rgb(202, 147, 129);
+    color: white;
+    padding-left: 20px;	
+    font-size: 20px;	
+}
+
+.div-myInfoChageEmailResult-content {
+	display: flex;
+	align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid gray;
+    font-size: 12px;
+    line-height: 1.5em;
+    background-color: white;	
+}
+
+.label-myInfoChageEmailResult {
+	font-family: 'Jeju Gothic', serif;
+	font-size: 16px;
+	margin-top: 18px;	
+}
+
+/**************BUTTONS***************/
+
+
+.button-myInfoChageEmailResult__main,
+.button-myInfoChangeEmail__submit,
+.button-myInfoChangeEmail__reset {
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 8px 17px;                
+    border: 1px solid #d4b2b3;
+    border-radius: 3px;
+    font: normal medium/normal Arial, Helvetica, sans-serif;
+    color: rgba(255,255,255,0.9);
+    text-overflow: clip;
+    background: #d18a8d;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgb(96, 31, 31);
+    transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+    font-family: 'Jeju Gothic', serif;
+	margin: 20px 5px 30px 0px;
+}
+
+.button-myInfoChageEmailResult__main:hover,
+.button-myInfoChangeEmail__submit:hover,
+.button-myInfoChangeEmail__reset:hover {
+	background: #ff9b9f;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);	
+}
+
+.button-myInfoChangeEmail__sendmail {
+	font-family: 'Jeju Gothic', serif;
+	background-color: #8BACD9;
+	padding: 6px 10px;
+	border: 1px solid #c0c0c0;
+	border-radius: 3px;
+	font: 15px;
+	color: rgba(255,255,255,0.9);
+	cursor: pointer;
+}
+
+.button-myInfoChangeEmail__sendmail:hover {
+	border: 1px solid #c0c0c0;
+    background: #41688c;
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}

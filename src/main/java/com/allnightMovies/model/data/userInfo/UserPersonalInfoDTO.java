@@ -1,18 +1,17 @@
 package com.allnightMovies.model.data.userInfo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
-
-@Getter
-@Setter
-public class UserPersonalInfoDTO {
-	private String userName;
+@Accessors(chain = true)
+public @Data class UserPersonalInfoDTO {
 	private String userID;
 	private String userPWD;
+	private String userName;
 	private String userGender;
+	private String userBirth;
 	private String userEmail;
-	private String usrBirth;
 	private String userRegDate;
 	private String userStates;
+	
 }

@@ -1,0 +1,225 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+/*공통*/
+.maintitleFont {
+    display: block;
+    text-align: center;
+    border-bottom: 7px dotted darksalmon;
+    font-size: 28px;
+    border: asdasd;
+    padding: 10px;
+    margin: 80px 0px 20px 0px;
+    font-family: 'Jeju Gothic', serif;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	color: tomato;
+}
+@keyframes slidy {
+	0% { left: 0%; }
+	20% { left: 0%; }
+	25% { left: -100%; }
+	45% { left: -100%; }
+	50% { left: -200%; }
+	70% { left: -200%; }
+	75% { left: -300%; }
+	95% { left: -300%; }
+	100% { left: -400%; }
+}
+.slider { 
+    overflow: hidden;
+    width: 1000px;
+    height: 529px;
+    margin: auto;
+}
+.slider figure img {
+	width: 20%;
+	float: left; 
+    height: 530px;
+    cursor: pointer;
+}
+.slider figure {
+	position: relative;
+	width: 500%;
+	margin: 0;
+	top:0;
+	left: 0;
+	text-align: left;
+	font-size: 0;
+	-webkit-animation: 10s slidy ease-in-out infinite;
+	animation: 10s slidy ease-in-out infinite;
+}
+
+/********************최근상영작********************/
+.mainContiner_middle {
+	display: block;
+}
+.mainCurrnetFilm {
+	display: table-cell;
+    padding: 0px 10px 30px 20px;
+}
+.mainFilmImg {
+	width: 200px;
+	height: 300px;
+	background-size: 200px 300px;
+    margin-right: 38px;
+    display: inline-block;
+}
+.mainFilmImg__title {
+    display: block;
+    margin: 15px 0px 0px -40px;
+    text-align: center;
+    font-size: 20px;
+}
+.movieInsertBtn {
+	
+}
+
+.mainFilmImg:hover {
+    box-shadow: 1px 1px 1px 120px rgba(50, 50, 50, 0.77) inset;
+}
+.mainFilmImg:hover .hiddenText{
+    opacity: 0.9;
+}
+/*상세보기*/
+.hiddenText {
+    font-family: 'Jeju Gothic', serif;
+    cursor: pointer;
+    position: absolute;
+    margin: 120px 26px;
+    color: #d7cdac;
+    font-size: 24px;
+    width: 110px;
+    border-radius: 7px;
+    border: 1px solid #d7cdac;
+    padding: 15px 10px 10px 30px;
+    opacity: 0;
+}
+
+/*관람등급*/
+.ageLimit15 {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #fd9800;
+	padding: 4px 2px 1px 3px;
+}
+.ageLimit12 {
+	font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #037eb7;
+	padding: 4px 2px 1px 3px;
+}
+.ageLimitAll {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 13px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #7fc41b;
+	padding: 4px 2px 2px 2px;
+}
+.ageLimit19 {
+    font-family: 'Jeju Gothic', serif;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 2px solid;
+    background-color: #ff0000;
+	padding: 4px 2px 1px 3px;
+}
+
+/*하단 공지사항 */
+.mainContiner_bottom {
+	display: inline-flex;
+	margin-bottom: 50px;
+	margin-left: 40px;
+}
+.mainContiner-notice {
+	margin-top: -50px;
+	width: 500px;
+}
+.locationNotice {
+	margin-left: 280px;
+	color: black;
+	font-size: 35px;
+}
+.mainContiner-notice-title {
+	display: flex;
+	text-align: center;
+	border-bottom: 2px solid #c9c6ad;
+	padding: 7px;
+	font-size: 18px;
+	margin: 0px 20px 0px 20px;
+}
+.mainContiner-notice-content {
+	display: flex;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 7px;
+	font-size: 15px;
+	margin: 0px 20px 0px 20px;
+}
+.noticeTitle {
+	margin-left:5px;
+	width: 350px;
+	color: black;
+}
+.noticeDate {
+	width: 100px;
+	text-align: center;
+}
+.titleHover {
+	cursor: pointer;
+}
+.titleHover:hover {
+	color:gray;
+	font-weight: bold;
+}
+
+.import {
+	color: tomato;
+}
+.importImg {
+	width: 16px;
+	height: 16px;
+}
+.movieInsertBtn {
+    display: flex;
+    margin-left: 940px;
+    padding: 5px 15px 5px 15px;
+    color: #fcf3f3;
+	box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #b79fa1;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: 100;
+    font-family: 'Jeju Gothic', serif;
+    text-overflow: clip;
+    background: rgba(206, 159, 161, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+}
+.movieInsertBtn:hover {
+    color: #fcf3f3;
+    background: rgba(107, 78, 79, 0.81);
+    -webkit-box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3) ;
+    -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+.movieInsertBtn:active{
+	border: 1px solid #575757;
+  	-webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2) inset;
+  	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2) inset;
+ 	 text-shadow: none;
+ 	 -webkit-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+ 	 -moz-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+ 	 -o-transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+ 	 transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1);
+}

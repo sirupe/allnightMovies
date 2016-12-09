@@ -1,26 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="header__logon">
 	<div class="header__logon__top">
-		<div class="header__logon__top__wellcom-text">
-			환영합니다. ${userID } 님.
-		</div>
 		<div class="header__logon__top__buttons">
-			<button type="button">
+			<label class="header__logon__top__welcome-text">${userID }님 </label>
+			<button class="header__logon__top__buttons__myinfo js_myInfo" type="button">
 				내정보
 			</button>
-			<button type="button" onclick="">
+			<button class="header__logon__top__buttons__logout js_logout" type="button">
 				로그아웃
 			</button>
-		</div>
-	</div>
-	<div class="header__logon__bottom">
-		<div class="header__logon__bottom__reserve">
-			예매정보
-		</div>
-		<div class="header__logon__bottom__service">
-			고객센터
+			<c:if test="${isManager }">
+				<div class="manager-menu-btn">
+					<button class="js_managerMenuBtn" type="button">
+						관리자 메뉴
+					</button>
+				</div>
+			</c:if>
 		</div>
 	</div>
 </div>

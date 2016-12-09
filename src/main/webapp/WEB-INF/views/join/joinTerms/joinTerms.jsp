@@ -28,8 +28,8 @@
 			<label>약관에 동의합니다.</label>
 		</div>
 		
-		<div class="content__terms__join">
-			<button onclick="agree()">
+		<div class="content__terms__join js_joinTerms">
+			<button onclick="agree()" type="button">
 				회원가입
 			</button>
 

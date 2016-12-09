@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+.modifyComplete {
+    margin: 30px 0px -30px 40px;
+}
+.resize {
+	resize: none;
+	color: #5f5f5f;
+}
+.intro__input__date {
+	width: 200px;
+    font-size: 17px;
+}
+.intro__input__runtime {
+	width: 100px;
+}
+
+
+/*파일 업로드*/
+.fileUpload {
+	display: flex;
+    margin: 40px;
+}
+
+/*공통*/
+.intro__input {
+	width: 91%;
+}
+.intro__input__width {
+	width: 40%;
+}
+
+.font {
+	font-family: 'Jeju Gothic', serif;
+	font-size: 18px;
+}
+
+
+.modifyCompleteBtn {
+ 	width: 100px;
+    height: 27px;
+    padding: 3px;
+    font-size: 18px;
+    color: #fcf3f3;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #b79fa1;
+    border-radius: 6px;
+    font-family: 'Jeju Gothic', serif;
+    background: rgba(206, 159, 161, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+}
+.modifyCompleteBtn:hover {
+    color: #fcf3f3;
+    background: rgba(107, 78, 79, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}

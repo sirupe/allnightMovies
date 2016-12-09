@@ -1,0 +1,416 @@
+@CHARSET "UTF-8";
+.border-dashed {
+    border: 0.1em dashed darkgray;
+    border-radius: 10px;	
+    padding: 10px;
+}
+
+.font-family {
+	font-family: 'Jeju Gothic', serif;
+}
+
+.subject {
+	background-color: rosybrown;
+    margin: 0px;
+    padding: 10px 25px;
+    border-radius: 10px;
+    color: white;
+    font-size: large;
+    margin-bottom: 10px;
+}
+
+.cursor {
+	cursor: pointer;
+}
+
+.display-flex {
+	display: flex;
+}
+
+.ticketing {
+	margin : 20px;
+}
+
+/* calendar */
+.calendar {
+    text-align: center;
+    width: 270px;
+    padding: 10px;
+}
+
+.calendar__dayTable {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
+.calendar__month {
+    margin: 10px 0px;
+}
+
+.calendar__week__row {
+    background-color: rosybrown;
+    border-radius: 10px;
+    height: 25px;
+}
+
+.calendar__day__row {
+    height: 30px;
+}
+
+.calendar__year {
+	font-size: 19px;
+    padding: 5px;
+    margin-bottom: 3px;
+    color: indianred;
+}
+
+.calendar__month {
+    font-size: 17px;
+}
+
+.calendar__day__data:hover {
+    background-color: #dac7cd;
+    color: #805c5c;
+}
+
+
+.calendar__day-color-possible {
+	color: #875c5c;
+}
+
+.calendar__day-color-impossible {
+	color: #d1c9c9;
+}
+
+.calendar__day-background {
+	background-color: lavenderblush;
+}
+
+.calendar__day-hover-background:hover {
+	background-color: #ffd5e3;
+}
+
+.calendar table tr:first-child td:first-child {
+    border-top-left-radius: 10px;
+}
+.calendar table tr:first-child td:last-child {
+    border-top-right-radius: 10px;
+}
+
+.calendar table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+.calendar table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+.calendar span.icono-caretRightCircle, span.icono-caretLeftCircle {
+	color: lightpink;
+}
+.calendar span.icono-caretRightCircle:hover, span.icono-caretLeftCircle:hover {
+	color: lightcoral;
+}
+
+/* movie title*/
+.movie-title {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.movie-title__body {
+	list-style-type: none;
+  	padding: 0;
+    margin: 0px;
+    margin-bottom: 10px;
+}
+.movie-title__body__li {
+	padding: 10px;
+    padding-left: 25px;
+}
+.movie-title__body li:hover {
+	background-color: #e8e3e5;
+}
+.movie-title__body__limit {
+	display: inline-block;
+    border-radius: 12px;
+    padding: 2px;
+    font-size: x-small;
+    font-weight: bold;
+}
+.movie-title__body__limit.limitAll {
+	background-color: #079a3e;
+}
+.movie-title__body__limit.limit12 {
+	background-color: #00a1e9;
+}
+.movie-title__body__limit.limit15 {
+	background-color: #efa025;
+}
+.movie-title__body__limit.limit19 {
+	background-color: #c30e23;
+}
+
+.screening {
+    margin-left: 10px;
+    width: 500px;
+}
+
+.screening__default-text {
+    margin: 30px 0 20px 30px;
+}
+
+/* movie screening time */
+.movie-time-list {
+    padding: 10px;
+}
+
+.movie-time-list__label {
+    line-height: 2em;
+}
+
+.movie-time-theater {
+    padding-right: 10px;
+    font-size: larger;
+    color: lightslategrey;
+}
+
+.movie-time {
+    padding-right: 10px;
+}
+
+.movie-time:hover {
+	color: lightcoral;
+	cursor: pointer;
+}
+
+/* theater seat info */
+
+.theater-seat {
+	margin: 10px;
+	text-align: right;
+	margin-top: 30px;
+}
+
+.theater-seat__count {
+	display: flex;
+    margin: auto;
+}
+
+.theater-seat__count__text {
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.theater-seat__count__num {
+	padding: 7px 10px 3px;
+    margin: 2px;
+    background-color: gainsboro;
+    border-radius: 4px;
+    display: inline-block;
+}
+.theater-seat__count__num:hover {
+    background-color: rosybrown;
+    color: white;
+}
+
+.theater-seat__count__person {
+	flex-grow: 1;
+}
+
+/* seat info table */
+.theater-seat__seat-info {
+	padding: 30px;
+}
+
+
+.theater-seat__seat-info__td {
+    width: 15px;
+    text-align: center;
+    padding: 5px 4px;
+    font-size: smaller;
+    display: inline-block;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.theater-seat__seat-info__td__color {
+    background-color: #fdbcbc;
+    color: brown;	
+}
+
+.theater-seat__seat-info__td-impossible {
+    background-color: lightgray;
+    color: white;
+}
+
+.theater-seat__seat-info__tr {
+    height: 22px;
+}
+
+.theater-seat__seat-info__th {
+    padding-right: 10px;
+    color: #c0716b;
+	text-align: center;
+    display: inline-block;
+    width: 20px;
+}
+.theater-seat__count__price {
+    padding-left: 40px;
+    flex-Grow: 1;
+}
+
+.theater-seat__price__won {
+    padding: 5px 3px 3px 5px;
+    border-radius: 6px;
+    border-style: inset;
+    display: inline-block;
+    width: 60px;
+}
+
+
+
+.theater-seat__seat-info__td__color:hover {
+    background-color: #cb7575;
+    color: #ffd6d6;
+    cursor: pointer;
+}
+
+.theater-seat__ticketing-btn {
+    margin: 40px 20px 0px 0px;
+    padding: 13px 20px 8px;
+    font-size: 22px;
+    background-color: rosybrown;
+    color: white;
+    border-radius: 10px;
+    buffered-rendering: inherit;
+    text-shadow: 1px 1px 0px #8c7a7a;
+    font-family: 'Jeju Gothic', serif;
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #bc8f8f;
+    text-overflow: clip;
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    visibility: hidden;
+}
+
+.theater-seat__ticketing-btn:hover {
+    background-color: #dfb3b3;
+    border: 2px solid #d4acac;
+}
+.theater-seat__ticketing-btn:active {
+	background-color: #af8383;
+    border: 2px solid #bc8f8f;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    margin: 42px 18px 0px 0px;
+}
+
+.margin-auto {
+	margin: auto;
+}
+
+.theater-seat__container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.theater-seat__screen {
+    text-align: center;
+    width: 70%;
+    background-color: #f6e9e7;
+    padding: 6px;
+    font-size: 15px;
+    color: #87706c;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+
+/* paying popup*/
+.padding20 {
+	padding-top: 30px;
+    padding-left: 20px;
+}
+
+.pay-popup-page {
+	position: absolute;
+	background-color: rgba(92, 92, 92, 0.31);
+	width: 100%;
+	height: 150%;
+	z-index: 1;
+	display: none;
+}
+
+.pay-popup-page__background {
+    width: 650px;
+    height: 350px;
+    background-color: white;
+    margin: auto;
+    margin-top: 200px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.pay-popup-page__border {
+    width: 100%;
+    height: 100%;
+    border: 0.1em dashed darkgray;
+    border-radius: 10px;
+    display: flex;
+}
+
+.pay-popup-page__title {
+	font-size: 30px;
+    color: lightslategray;
+    margin-bottom: 10px;
+}
+
+.pay-popup-page__result {
+	font-size: large;
+    border-top: 2px dotted lightgray;
+    padding: 12px 0px;
+}
+.pay-popup-page__result__label {
+    color: palevioletred;
+}
+
+.pay-popup-page__btn button {
+    font-family: 'Jeju Gothic', serif;
+    display: inline-block;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 9px;
+    font: normal medium/normal "Trebuchet MS", Helvetica, sans-serif;
+    color: #fcf3f3;
+    text-overflow: clip;
+    background: rgb(53, 88, 121);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);
+    text-shadow: -1px -1px 0 rgb(97, 116, 120);
+    transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.pay-popup-page__btn button:hover {
+    background-color: #4f769b;
+}
+
+.pay-popup-page__btn {
+    text-align: center;
+}
+
+.pay-popup-page__result__label {
+    color: palevioletred;
+    margin-right: 15px;
+}
+
+.padding-right {
+	padding-right: 10px;
+}
+
+.pay-popup-page__result__message {
+    font-size: 18px;
+    color: dimgrey;
+    margin: 20px 0px;
+}

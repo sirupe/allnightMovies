@@ -1,0 +1,74 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+/*font-family: 'Jeju Gothic', serif;*/
+.movieBasicInfo-intro {
+	margin-left: 50px;
+    width: 668px;
+    padding: 10px;
+    margin: 8px;
+    border: 1px solid rgb(216, 216, 216);
+}
+.movieInsertContainer {
+	padding: 50px;
+}
+.movieBasicInfo-intro {
+	padding: 20px;
+}
+.movieInsert-label{
+	font-size: 25px;
+}
+.font {
+	font-size: 18px;
+	font-family: 'Jeju Gothic', serif;
+}
+.movieInsert__label {
+    display: flex;
+}
+.movieInsert__Textarea {
+	width: 660px;
+    height: 300px;
+    resize: none;
+}
+
+.movieResetBtn,
+.movieInsertBtn {
+ 	width: 100px;
+    height: 27px;
+    padding: 3px;
+    font-size: 18px;
+    color: #fcf3f3;
+    box-sizing: content-box;
+    cursor: pointer;
+    border: 2px solid #b79fa1;
+    border-radius: 6px;
+    font-family: 'Jeju Gothic', serif;
+    background: rgba(206, 159, 161, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.2);	
+}
+.movieInsertBtns {
+	margin: 10px;
+	text-align: center;
+}
+.input__import {
+    width: 600px;
+}
+input {
+	padding: 5px;
+	background-color: #fbfbee;
+	font-size: 16px;
+	font-family: 'Jeju Gothic', serif;
+}
+
+.input__Stillcut {
+	margin-left: 20px;
+}
+
+.movieResetBtn:hover,
+.movieInsertBtn:hover {
+    color: #fcf3f3;
+    background: rgba(107, 78, 79, 0.81);
+    box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.3);
+    -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);	
+}

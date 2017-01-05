@@ -3,6 +3,8 @@ package com.allnightMovies.utility;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import org.springframework.util.StringUtils;
+
 import lombok.Data;
 
 @Data
@@ -14,6 +16,7 @@ public class MonthCalendar {
 	private int startDay;
 	private ArrayList<ArrayList<Integer>> days;
 	
+	
 	public MonthCalendar() {
 		Calendar calendar = Calendar.getInstance();
 		this.getInfo(calendar); 
@@ -24,7 +27,7 @@ public class MonthCalendar {
 		calendar.set(year, month - 1, 1);
 		this.getInfo(calendar);
 	}
-	
+
 	private void getInfo(Calendar calendar) {
 		this.year = calendar.get(Calendar.YEAR);                
 		this.month = calendar.get(Calendar.MONTH) + 1;          

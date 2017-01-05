@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.allnightMovies.di.Action;
@@ -53,6 +54,7 @@ import com.allnightMovies.utility.Paging;
 import com.allnightMovies.utility.Paging2;
 import com.allnightMovies.utility.ParseCheck;
 import com.allnightMovies.utility.RegexCheck;
+import com.allnightMovies.utility.ScreeningDateFormat;
 import com.allnightMovies.utility.SendEmail;
 import com.allnightMovies.utility.UtilityEnums;
 
@@ -280,7 +282,10 @@ public class MainService implements Action {
 	
 	public ModelAndView screeningPlanned() {
 		ModelAndView mav = new ModelAndView("reservation/ticketing/screeningPlanned");
-		List<TicketingMovieTimeInfo> list = this.dbService.getMovieTime(this.params.getMovieTitle(), this.params.getScreeningDate());
+		
+		String screeningDate = ScreeningDateFormat.reservationDateFormat(this.params.getScreeningDate());
+
+		List<TicketingMovieTimeInfo> list = this.dbService.getMovieTime(this.params.getMovieTitle(), screeningDate);
 		UserClickShowtimesDTO dto = new UserClickShowtimesDTO();
 		dto.setMovieTime(this.params.getUserChoiceMovieTime())
 		   .setMovieTheater(this.params.getUserChoiceMovieTheater());
@@ -292,7 +297,8 @@ public class MainService implements Action {
 	
 	public ModelAndView seatInfo() {
 		ModelAndView mav = new ModelAndView("reservation/ticketing/seatInfo");
-		String screeningDateTime = this.params.getScreeningDate() + " " + this.params.getMovieTime();
+		String screeningDate = ScreeningDateFormat.reservationDateFormat(this.params.getScreeningDate());
+		String screeningDateTime = screeningDate + " " + this.params.getMovieTime();
 		String movieTitle = this.params.getMovieTitle();
 		int theater = this.params.getTheater();
 		String strTheater = String.valueOf(theater);
@@ -306,8 +312,9 @@ public class MainService implements Action {
 		int colCnt = this.dbService.getTheaterSeatColCnt(strTheater);
 		colCnt = theater == 1 ? colCnt + 1 : colCnt;
 
-		
-		int moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, strTheater);
+		System.out.println("screeningDateTime >>" + screeningDateTime);
+		System.out.println("strTheater >>" + strTheater);
+		Integer moviePrice = this.dbService.getTicketPriceInfo(screeningDateTime, strTheater);
 
 		mav.addObject("moviePrice", moviePrice);
 		mav.addObject("seatInfoList", seatInfoList);

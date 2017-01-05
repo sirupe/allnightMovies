@@ -386,7 +386,7 @@ public class MainService implements Action {
 		List<String> seatsList = Arrays.asList(seatArr);
 		if(result) {
 			String userID 		 = (String) this.params.getSession().getAttribute("userID");
-			String screeningDate = this.params.getScreeningDate();
+			String screeningDate = ScreeningDateFormat.reservationDateFormat(this.params.getScreeningDate());
 			String movieTitle 	 = this.params.getMovieTitle();
 			int theater 		 = this.params.getTheater();
 			
